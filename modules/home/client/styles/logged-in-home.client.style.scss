@@ -1,0 +1,65 @@
+.nav-link {
+	float: right;
+	margin-top: 20px;
+	margin-right: 200px;
+}
+
+@mixin textStyle ($textAl, $textColor){
+	text-align: $textAl;
+	color: $textColor;
+}
+
+.logged-in-home {
+	&__title {
+		@include textStyle(center, red);
+		font-weight: bolder;
+	}
+
+	&__desc {
+		@include textStyle(right, blue);
+	}
+
+	&__create-input {
+		margin: 0 auto 5px;
+		width: 300px;
+	}
+
+	&__output {
+		@include textStyle(center, green);
+		text-decoration: underline;
+	}
+
+	&__button {
+		display: block;
+		margin: 0 auto 20px;
+	}
+}
+
+
+.todos {
+	&__create-input {
+		margin: 0 auto 5px;
+		width: 300px;
+	}
+
+	&__create-button {
+		display: block;
+		margin: 0 auto 20px;
+	}
+
+	&__task {
+		&--completed {
+			text-decoration: line-through;
+		}
+	}
+
+	&__update-input {
+		margin: 0 auto;
+		width: 300px;
+	}
+}
+
+th, td {
+	font-size: 20px;
+	text-align: center;
+}

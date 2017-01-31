@@ -1,0 +1,1 @@
+import homeModule from '../../home/client/home.client.packages';
