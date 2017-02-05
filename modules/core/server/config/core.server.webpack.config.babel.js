@@ -10,7 +10,7 @@ const webpackConfig = {
 		'./modules/core/client/core.client.modules'
 	],
 	output: {
-		path: path.join(__dirname, 'public'),
+		path: path.join(__dirname, '../../../../public'),
 		filename: 'bundle.js'
 	},
 	resolve: {

@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon modules/core/server/core.server.app.js --exec babel-node",
     "dev": "npm start & webpack-dev-server --config modules/core/server/config/core.server.webpack.config.babel.js --progress --colors",
-    "build": "babel modules/core/server/core.server.app.js -d dist",
+    "build": "babel modules -d dist",
     "serve": "node dist/core/server/core.server.app.js & webpack-dev-server --config dist/core/server/config/core.server.webpack.config.babel.js --progress --colors"
   },
   "repository": {
