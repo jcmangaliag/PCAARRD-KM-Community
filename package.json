@@ -4,10 +4,10 @@
   "description": "An application called PCAARRD KM Communities allows its users to communicate through virtual spaces.",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server --exec babel-node",
-    "dev": "npm start & webpack-dev-server --config webpack.config.babel.js --progress --colors",
-    "build": "babel modules -d dist",
-    "serve": "node dist/server.js & webpack-dev-server --config webpack.config.babel.js --progress --colors"
+    "start": "nodemon modules/core/server/core.server.app.js --exec babel-node",
+    "dev": "npm start & webpack-dev-server --config modules/core/server/config/core.server.webpack.config.babel.js --progress --colors",
+    "build": "babel modules/core/server/core.server.app.js -d dist",
+    "serve": "node dist/core/server/core.server.app.js & webpack-dev-server --config dist/core/server/config/core.server.webpack.config.babel.js --progress --colors"
   },
   "repository": {
     "type": "git",
