@@ -1,0 +1,18 @@
+layout-header {
+	display: block;
+	margin-bottom: 5em;
+}
+
+.notification {
+	&__count {
+		font-weight: bolder; 
+		font-size: 1.3em;
+	}
+
+}
+
+.user-profile {
+	&__pic {
+		margin-right: 10px;
+	}
+}

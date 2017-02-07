@@ -24,6 +24,6 @@
 		$locationProvider.html5Mode(true);
 	}
 
-	angular.bootstrap(document, ['home.routes']);
+	//angular.bootstrap(document, ['home.routes']);
 })();
 

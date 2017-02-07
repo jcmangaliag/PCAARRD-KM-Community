@@ -1,5 +1,3 @@
-import angular from 'angular';
-
 import homeModules from './config/home.client.modules-init';
 
 import homeloggedInService from './services/logged-in-home.client.service';

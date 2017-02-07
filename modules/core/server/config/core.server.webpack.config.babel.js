@@ -7,7 +7,7 @@ const webpackConfig = {
 		'webpack-dev-server/client?http://127.0.0.1:8080/',
 		'webpack/hot/only-dev-server',
 		'bootstrap-loader',
-		'./modules/core/client/core.client.modules'
+		'./modules/core/client/core.client.modules-init'
 	],
 	output: {
 		path: path.join(__dirname, '../../../../public'),
