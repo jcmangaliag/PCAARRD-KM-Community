@@ -1,7 +1,9 @@
+$footer-height: 100px;
+
 html {
   position: relative;
   min-height: 100%;
 }
 body {
-  margin-bottom: 100px; // Margin bottom by footer height
+  margin-bottom: $footer-height;
 }

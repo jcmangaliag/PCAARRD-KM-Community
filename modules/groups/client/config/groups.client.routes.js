@@ -2,7 +2,7 @@
 	'use strict';
 	
 	angular
-		.module('groups.routes')
+		.module('groups')
 		.config(groupRoutes);
 
 	groupRoutes.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];

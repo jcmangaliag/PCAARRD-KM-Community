@@ -4,7 +4,7 @@ import _ from 'lodash';
 	'use strict';
 	
 	angular
-		.module('home.controllers')
+		.module('home')
 		.controller('LoggedInHomeController', LoggedInHomeController);
 
 	LoggedInHomeController.$inject = ['$scope', 'LoggedInHomeService'];

@@ -1,18 +1,20 @@
+$footer-height: 100px;
+
 layout-footer {
 	position: absolute;
 	bottom: 0;
 	width: 100%;
-	height: 100px;	// fixed height of the footer
+	height: $footer-height;
 	bottom: 0;
 	color: white;
 	padding-top: 2.5em;
 }
 
 .site-footer {
-	&__about{
-		text-align: center;
-	}
-
 	padding: 2%;
 	background-color: #424242;
+
+	&__about {
+		text-align: center;
+	}
 }

@@ -2,7 +2,7 @@
 	'use strict';
 	
 	angular
-		.module('home.routes')
+		.module('home')
 		.config(homeRoutes);
 
 	homeRoutes.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
@@ -23,7 +23,6 @@
 
 		$locationProvider.html5Mode(true);
 	}
-
-	//angular.bootstrap(document, ['home.routes']);
+	
 })();
 

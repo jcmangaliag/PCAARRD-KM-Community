@@ -2,7 +2,7 @@
 	'use strict';
 	
 	angular
-		.module('layout.directives')
+		.module('layout')
 		.directive('layoutHeader', layoutHeader);
 
 	function layoutHeader () {
