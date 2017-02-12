@@ -1,4 +1,4 @@
-import homeModules from './config/home.client.init-module';
+import homeModule from './config/home.client.init-module';
 
 import homeloggedInService from './services/logged-in-home.client.service';
 import homeloggedInController from './controllers/logged-in-home.client.controller';

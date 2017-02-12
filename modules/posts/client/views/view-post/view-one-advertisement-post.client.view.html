@@ -1,0 +1,38 @@
+<div class="container" style="padding: 2%;">
+	<div class="row">
+		<div class="col-xs-12 col-sm-3">
+			<button ui-sref="bananaGroup.viewPosts-ads" type="button" class="btn btn-danger"><span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span> Go Back</button>
+		</div>
+		<div class="col-xs-12 col-sm-6">
+			<h3 style="display: inline; font-weight: bolder;">{{post.adTitle}}</h3>
+		</div>
+
+
+		<div class="col-xs-12 col-sm-12" style="padding: 2% 0 2% 0">
+			<p>submitted by {{post.postedBy}} on {{post.datePosted}}</p>
+		</div>
+		
+
+		<div class="col-xs-12 col-sm-12">
+	      <div style="border-style: groove; margin: 2%; border-radius: 8px;">
+
+	      	<h4 style="padding: 2%;">{{post.details}}</h4>
+
+	      </div>
+	    </div>
+
+	    <div class="col-xs-12 col-sm-12">
+	    	<h4 style="text-align:left; font-weight: bold;">File/s uploaded:</h4>
+	    	
+	    	<h4 ng-repeat="file in post.files"><a href="#">Nestle_adsPromo.jpg</a></h4>
+	    	<h4><a href="#">Nestle_free_poster.jpg</a></h4>
+	    </div>
+
+	    <div class="col-xs-12 col-sm-12">
+	    	<h4 style="text-align:left; font-weight: bold;">Hashtags: </h4>
+	    	<div ng-repeat="hashtag in post.hashtags">
+	    		<h4>#{{hashtag}}</h4>
+	    	</div>
+	    </div>
+	</div>
+</div>

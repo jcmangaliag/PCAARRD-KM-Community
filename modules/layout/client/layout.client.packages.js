@@ -1,4 +1,4 @@
-import layoutModules from './config/layout.client.init-module';
+import layoutModule from './config/layout.client.init-module';
 
 import layoutHeaderDirective from './directives/layout-header.client.directive';
 import layoutHeaderStyle from './styles/layout-header.client.style.scss';

@@ -1,0 +1,16 @@
+.post-categories {
+	padding: 2%;
+
+	&__title {
+		padding-bottom: 2%;
+	}
+
+	&__buttons{
+		margin: 4% 0.5%;
+
+		&--border {
+			border-style: groove;
+			border-radius: 8px;
+		}
+	}
+}

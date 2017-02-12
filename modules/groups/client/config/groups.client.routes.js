@@ -12,8 +12,22 @@
 
 		$stateProvider
 			.state('bananaGroup', {
-				url: '/groups/12724293',
-				template: require('../views/sampleBananaGroup.html')
+				url: '/groups/banana',
+				templateUrl: 'groups/client/views/sampleBananaGroup.html',
+				controller: 'SampleBananaGroupController',
+				abstract: true
+			})
+			.state('bananaGroup.about', {
+				url: '',
+				templateUrl: 'groups/client/views/sampleBananaGroup.about.html',
+			})
+/*			.state('bananaGroup.members', {
+				url: '/members',
+				templateUrl: 'users/client/views/sampleBananaGroup.html',
+			})*/
+			.state('bananaGroup.settings', {
+				url: '/settings',
+				templateUrl: 'groups/client/views/sampleBananaGroup.settings.html'
 			});
 
 		$locationProvider.html5Mode(true);

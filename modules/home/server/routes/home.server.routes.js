@@ -1,6 +1,6 @@
 import loggedInHome from '../controllers/logged-in-home.server.controller';
 
-const homeRoutes = app => {
+const homeRoutes = (app) => {
 
   app.route('/api/home')
     .get(loggedInHome.list)

@@ -1,0 +1,6 @@
+<div class="post-categories">
+  <h3 class="post-categories__title">Choose View Posts Category</h3>
+  <div class="post-categories__buttons--border" >
+    <button type="button" class="btn btn-primary post-categories__buttons" ng-repeat="postButton in postButtons" ui-sref="bananaGroup.viewPosts-{{postButton.category}}"> <span class="glyphicon glyphicon-{{postButton.logo}}" aria-hidden="true"></span> {{postButton.name}} </button>
+  </div>
+</div>

@@ -13,16 +13,16 @@
 		$stateProvider
 			.state('home', {
 				url: '/',
-				template: require('../views/logged-in-home.client.view.html'),
+				templateUrl: 'home/client/views/logged-in-home.client.view.html',
 				controller: 'LoggedInHomeController'
 			})
 			.state('about', {
 				url: '/about',
-				template: require('../views/about.client.view.html')
+				templateUrl: 'home/client/views/about.client.view.html'
 			});
 
 		$locationProvider.html5Mode(true);
 	}
-	
+
 })();
 

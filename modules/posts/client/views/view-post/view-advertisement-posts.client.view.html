@@ -1,0 +1,25 @@
+<div class="container view-ads" style="padding: 2%;">
+  <div class="row view-ads__list">
+  	<div class="col-xs-12 col-sm-3">
+  		<button type="button" class="btn btn-danger view-ads__goback" ui-sref="bananaGroup.viewPosts"> <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span> Go Back</button>
+  	</div>
+    <div class="col-xs-12 col-sm-6">
+      <h3 style="display: inline;">Advertisements</h3>
+    </div>
+
+    <div class="col-xs-12 col-sm-12" ng-if="posts.length == 0" style="margin:4% 0;">
+      <h4>No advertisements yet.</h4>
+    </div>
+  
+    <div class="col-xs-12 col-sm-12" ng-repeat="post in posts | filter: {category: 'ads'}">
+      <div style="border-style: groove; margin: 2%; border-radius: 8px;">
+      	<h3 style="text-decoration: underline; font-weight: bolder;"><a ui-sref="bananaGroup.viewPostsOne({category: 'ads', id: post._id})">{{post.adTitle}}</a></h3>
+      	<p>submitted by {{post.postedBy}} on {{post.datePosted}}</p>
+
+      	<h4 style="padding: 2%;">{{post.details}}</h4>
+
+      	<p>10 comments</p>
+      </div>
+    </div>
+  </div>
+</div>
