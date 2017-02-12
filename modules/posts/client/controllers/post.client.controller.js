@@ -1,4 +1,5 @@
 import moment from 'moment';
+import _ from 'lodash';
 
 (() => {
 	'use strict';
@@ -11,14 +12,13 @@ import moment from 'moment';
 
 	function PostController ($scope, $stateParams, $state, PostService) {
 
-		const {submitPost, getOnePost} = PostService;
+		const {submitPost, getOnePost, setReaction} = PostService;
 		$scope.submitPost = _.partial(submitPost);
-		$scope.getOnePost = _.partial(getOnePost, $scope);
+		$scope.setReaction = _.partial(setReaction, $scope);
 		
-		$scope.getData = () => {
+		$scope.getPostData = () => {
 			switch($stateParams.postType){
 				case "add-post":
-					$scope.hashtags = [''];
 					$scope.addPostFormData = {}; // will be filled with add post's fields and values
 					break;
 				case "view-posts":
@@ -34,24 +34,34 @@ import moment from 'moment';
 			}
 		}
 
-		$scope.addPostHashtag = () => {
-			if ($scope.hashtags.length < 5){
-				$scope.hashtags.push('');
-			}
-		}
-
-		$scope.removePostHashtag = () => {
-			if ($scope.hashtags.length > 1){
-				$scope.hashtags.pop();
-			}
-		}
-
 		$scope.onProcessPostData = (postCategory) => {
 			$scope.addPostFormData.category = postCategory;
 			$scope.addPostFormData.hashtags = $scope.hashtags;
 			$scope.addPostFormData.datePosted = moment().format('MMMM Do YYYY, h:mm:ss a');
+			$scope.addPostFormData.reactions = [
+				{ 
+				  name: "comments", 
+				  count: 0 
+				},
+				{ 
+				  name: "thumbsUp", 
+				  count: 0 
+				},
+				{ 
+				  name: "happy", 
+				  count: 0 
+				},
+				{ 
+				  name: "sad", 
+				  count: 0 
+				},
+				{ 
+				  name: "angry", 
+				  count: 0 
+				}
+			];
 
-			// hardcoded as of now
+			// hardcoded as of now, should be Object IDs
 			$scope.addPostFormData.postedBy = "Mark Doe";
 			$scope.addPostFormData.groupBelonged = "Banana";
 
@@ -60,7 +70,7 @@ import moment from 'moment';
 			alert("Posted successfully!");
 		}
 		
-		$scope.getData();
+		$scope.getPostData();
 	}
 
 })();

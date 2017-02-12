@@ -1,0 +1,12 @@
+.shared{
+	&__hashtags {
+		&--body {
+			white-space: nowrap;
+    		overflow-x: auto;
+		}
+
+		&--field.form-control {
+			width: 83%;
+		}
+	}
+}

@@ -31,7 +31,8 @@
 			$scope.activeTab = groupTab;
 		}
 
-		$scope.groupTabs.forEach((groupTab)=> {
+		// sets the initial activeTab based on the current state
+		$scope.groupTabs.forEach((groupTab)=> {	 
 			if ($state.current.name.indexOf(groupTab.state) >= 0){
 				$scope.activeTab = groupTab.name;
 			}

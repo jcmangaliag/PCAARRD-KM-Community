@@ -30,10 +30,20 @@
 			});
 		}
 
+		const setReaction = ($scope, reactionIndex) => {
+			$scope.post.reactions[reactionIndex].count++;
+			$http.put(`/api/posts/reactions/${$scope.post._id}`, {
+				reactions: $scope.post.reactions
+			}).then(response => {
+				getOnePost($scope, $scope.post._id);
+			});
+		}
+
 		return {
 			getPosts,
 			getOnePost,
-			submitPost
+			submitPost,
+			setReaction
 		};
 	}
 

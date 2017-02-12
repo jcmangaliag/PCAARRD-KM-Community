@@ -1,19 +1,19 @@
 import mongoose from 'mongoose';
 
-const PostSchema = mongoose.Schema({
-	category: {
+const CommentSchema = mongoose.Schema({
+	referredPost: {
 		type: String,
 		required: true
 	},
-	groupBelonged: {
+	comment: {
 		type: String,
 		required: true
 	},
-	postedBy: {
+	commentedBy: {
 		type: String,
 		required: true
 	},
-	datePosted: {
+	dateCommented: {
 	   type: String,
        required: true
     },
@@ -28,12 +28,7 @@ const PostSchema = mongoose.Schema({
 	thumbsUpUsers: Array,
 	happyUsers: Array,
 	sadUsers: Array,
-	angryUsers: Array,
-	question: String,
-	description: String,
-	files: Array,
-	adTitle: String,
-	details: String
+	angryUsers: Array
 });
 
-export default mongoose.model('Post', PostSchema);
+export default mongoose.model('Comment', CommentSchema);

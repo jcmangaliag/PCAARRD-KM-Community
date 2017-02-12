@@ -25,7 +25,17 @@ const postControls = {
 
 			res.send('Post saved.');
 		});
-	}
+	},
+	updateReactions : (req, res) => {
+		const id = req.params.id;
+		Post.update({ _id: mongoose.Types.ObjectId(id) }, {
+			$set: { reactions: req.body.reactions }
+		}, (err) => {
+			if (err) { console.log(err); };
+
+			res.send("Post updated");
+		});
+	},
 }
 
 export default postControls;

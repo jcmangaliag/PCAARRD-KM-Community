@@ -1,0 +1,21 @@
+<div class="col-xs-12 col-sm-12" style="margin: 2% 0 2% 0; padding:1%">
+	<form ng-submit="onProcessCommentData(post._id)">
+		<h4 style="font-weight: bold;">Comment on This Post</h4>
+		<div class="form-group">
+	      <textarea class="form-control" rows="4" placeholder="Enter a comment here" ng-model="addCommentFormData.comment" required></textarea>
+	      
+	        <div class="input-group" style="margin-top: 1%;">
+	          <label class="input-group-btn">
+	            <span class="btn btn-primary"> <span class="glyphicon glyphicon-open-file" aria-hidden="true"></span> Browse <input type="file" style="display: none;" multiple />
+	            </span>
+	          </label>
+	          <input type="text" class="form-control" placeholder="Click 'Browse' to upload photos or files" readonly>
+	        </div>
+
+	        <shared-hashtag></shared-hashtag>
+
+	      <button style="margin: 1%;" type="submit" class="btn btn-success"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Post Comment</button>
+	    </div>
+	</form>
+</div>
+

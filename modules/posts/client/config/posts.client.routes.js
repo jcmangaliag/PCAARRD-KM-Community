@@ -50,7 +50,7 @@
 			})
 
 			// View One Post
-			.state('bananaGroup.viewPostsOne', {
+			.state('bananaGroup.viewPosts-one-ads', {
 				url: '/view-posts/:category/:id',
 				templateUrl: 'posts/client/views/view-post/view-one-advertisement-post.client.view.html',
 				controller: 'PostController',
