@@ -12,8 +12,9 @@ import _ from 'lodash';
 
 	function CommentController ($scope, CommentService, PostService) {
 		$scope.addCommentFormData = {};
-		const {submitComment} = CommentService;
+		const {submitComment, setCommentReaction} = CommentService;
 		$scope.submitComment = _.partial(submitComment);
+		$scope.setCommentReaction = _.partial(setCommentReaction, $scope);
 		
 		$scope.onProcessCommentData = (postID) => {
 			$scope.addCommentFormData.referredPost = postID;

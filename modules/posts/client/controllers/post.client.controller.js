@@ -12,9 +12,9 @@ import _ from 'lodash';
 
 	function PostController ($scope, $stateParams, $state, PostService) {
 
-		const {submitPost, getOnePost, setReaction} = PostService;
+		const {submitPost, getOnePost, setPostReaction} = PostService;
 		$scope.submitPost = _.partial(submitPost);
-		$scope.setReaction = _.partial(setReaction, $scope);
+		$scope.setPostReaction = _.partial(setPostReaction, $scope);
 		
 		$scope.getPostData = () => {
 			switch($stateParams.postType){

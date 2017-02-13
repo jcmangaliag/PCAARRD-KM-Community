@@ -23,9 +23,19 @@
 			});
 		}
 
+		const setCommentReaction = ($scope, reactionIndex) => {
+	/*		$scope.post.reactions[reactionIndex].count++;
+			$http.put(`/api/posts/comments/${$scope.post._id}`, {
+				reactions: $scope.post.reactions
+			}).then(response => {
+				getOnePost($scope, $scope.post._id);
+			});*/
+		}
+
 		return {
 			getComments,
-			submitComment
+			submitComment,
+			setCommentReaction
 		};
 	}
 
