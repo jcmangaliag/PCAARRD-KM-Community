@@ -1,0 +1,49 @@
+<!-- <div class="container-fluid">
+  <div class="row"> -->
+    <div class="col-sm-3 col-md-2 sidebar">
+      <!-- <div style="background-color:#9d9d9d; padding: 2%; border-radius: 5%;">
+        <div style="padding: 4%; background-color: #9d9d9d;">
+          <img src="/layout/client/assets/images/john-cena-562300-1-402.jpg" class="user-profile__pic" alt="Pic" style="width: 25%; border-radius: 8%;" />
+           <a href="#" style="color: #333333;"><h4 style="margin: 0;">John Cena</h4></a>
+        </div>
+        <div style="background-color: #ddd; padding: 5%;">
+          
+        </div>
+      </div> -->
+       <ul class="nav nav-sidebar" style="white-space: nowrap;">
+          <li ng-class="{active: activeState === 'profile'}"><a href="#"><img src="/layout/client/assets/images/john-cena-562300-1-402.jpg" class="user-profile__pic" alt="Pic" style="width: 15%; border-radius: 8%;" />
+           <h4 style="margin: 0; display: inline-block; color: #333333; width: 170px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;">John Felix Cena</h4></a></li>
+          <li ng-class="{active: activeState === 'home'}"><a ui-sref="home"><i class="fa fa-home fa-lg" aria-hidden="true"></i> Home <!-- <i style="margin-left: 30%;" class="fa fa-caret-right" aria-hidden="true"></i> --></a></li>
+          <li ng-class="{active: activeState === 'notifications'}"><a href="#"><i class="fa fa-bell fa-lg" aria-hidden="true"></i> Notifications <span style="font-weight:bolder;">(2)</span> <!-- <i style="margin-left: 30%;" class="fa fa-caret-right" aria-hidden="true"></i> --></a></li>
+        </ul>
+      <h5 style="margin-top: 15%;">MY GROUPS</h5>
+        <ul class="nav nav-sidebar">
+          <li ng-class="{active: activeState.indexOf('bananaGroup') >= 0}"><a ui-sref="bananaGroup.vPosts.addPost-ads"><img src="/groups/client/assets/images/Fruit_02.png" class="user-profile__pic" alt="Pic" style="width: 10%; border-radius: 8%;" />Banana </a></li>
+        </ul>
+
+        <ul class="nav nav-sidebar">
+           <li><a href="#"><i class="fa fa-globe fa-lg" aria-hidden="true"></i> Discover Groups </a></li>
+        </ul>
+
+      <h5 style="margin-top: 15%;">ADMIN PANEL</h5>
+        <ul class="nav nav-sidebar">
+          <li><a href="#"><i class="fa fa-bar-chart fa-lg" aria-hidden="true"></i>
+Analytics</a></li>
+          <li><a href="#"><i class="fa fa-flag fa-lg" aria-hidden="true"></i>
+Reports</a></li>
+        </ul>
+
+      <ul class="nav nav-sidebar">
+          <li><a href="#"><i class="fa fa-sign-out fa-lg" aria-hidden="true"></i>
+Log Out</a></li>
+        </ul>
+
+     
+    </div>
+<!--     <a ui-sref="bananaGroup.about" style="margin-left:50%;">Go to a sample Banana Group!</a>
+  </div>
+</div> -->
+

@@ -1,4 +1,4 @@
-<div class="container post-ads">
+<!-- <div class="container post-ads">
   <div class="row">
     <div class="col-xs-12 col-sm-12">
       <h3 class="post-ads__title">Post an Advertisement</h3>
@@ -35,4 +35,32 @@
       </form>
     </div>
   </div>
-</div>
+</div> -->
+
+
+<form class="post-ads__form" ng-submit="onProcessPostData('ads')">
+  <div class="form-group">
+    <label for="post-ads__name">Ad Title</label>
+    <input type="text" class="form-control" id="post-ads__name" placeholder="Enter your ads here" ng-model="addPostFormData.adTitle" required />
+  </div>
+
+  <div class="form-group">
+    <label for="post-ads__desc">Details </label>
+    <textarea class="form-control" id="post-ads__desc" rows="3" placeholder="Enter the details here" ng-model="addPostFormData.details" required></textarea>
+  </div>
+
+  <label>Photos or Files Upload (optional)</label>
+  <div class="input-group post-ads__input-group">
+    <label class="input-group-btn">
+      <span class="btn btn-primary"> <span class="glyphicon glyphicon-open-file" aria-hidden="true"></span> Browse <input type="file" class="post-ads post-ads__file" multiple />
+      </span>
+    </label>
+    <input type="text" class="form-control" placeholder="Click 'Browse' to upload photos or files" readonly>
+  </div>
+
+  <shared-hashtag></shared-hashtag>
+
+  <div class="text-right">
+    <button type="submit" class="btn btn-success"> <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit </button>
+  </div>
+</form>

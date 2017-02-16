@@ -28,7 +28,6 @@ const PostSchema = mongoose.Schema({
 	thumbsUpUsers: Array,
 	happyUsers: Array,
 	sadUsers: Array,
-	angryUsers: Array,
 	question: String,
 	description: String,
 	files: Array,

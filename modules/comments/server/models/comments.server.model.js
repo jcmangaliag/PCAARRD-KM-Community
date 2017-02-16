@@ -27,8 +27,7 @@ const CommentSchema = mongoose.Schema({
 	},
 	thumbsUpUsers: Array,
 	happyUsers: Array,
-	sadUsers: Array,
-	angryUsers: Array
+	sadUsers: Array
 });
 
 export default mongoose.model('Comment', CommentSchema);

@@ -15,6 +15,34 @@ import _ from 'lodash';
 		const {submitPost, getOnePost, setPostReaction} = PostService;
 		$scope.submitPost = _.partial(submitPost);
 		$scope.setPostReaction = _.partial(setPostReaction, $scope);
+
+		$scope.postLabel = "Post Advertisement"
+
+		$scope.setPostLabel = (chosenState) => {
+			switch(chosenState){
+				case "ads":
+					$scope.postLabel = "Post Advertisement";
+					break;
+				case "question":
+					$scope.postLabel = "Post Question";
+					break;
+				case "news":
+					$scope.postLabel = "Post News";
+					break;
+				case "event":
+					$scope.postLabel = "Post Event";
+					break;
+				case "report":
+					$scope.postLabel = "Post Incidence Report";
+					break;
+				case "media":
+					$scope.postLabel = "Post Media Resource";
+					break;
+				default:
+					$scope.postLabel = "Post Others";
+					break;
+			}
+		}
 		
 		$scope.getPostData = () => {
 			switch($stateParams.postType){
@@ -53,10 +81,6 @@ import _ from 'lodash';
 				},
 				{ 
 				  name: "sad", 
-				  count: 0 
-				},
-				{ 
-				  name: "angry", 
 				  count: 0 
 				}
 			];

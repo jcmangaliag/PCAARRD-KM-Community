@@ -1,32 +1,36 @@
 .group {
 	&-photo{
 		width: 100%; 
-		height: 20em; 
+		height: 12em; 
 		object-fit: cover; 
 		border-radius:8px;
 	}
 
 	&-header{
-		display: flex;
+
 	    align-items: center;
-	    margin: 2%;
+	    margin: 1%;
+	    background-color: #eeeeee;
+    	border-radius: 8px;
 
 	    &__icon {
+	    	width: 30%;
 	    	border: 1px solid black;
     		border-radius: 4px;
     		padding: 5px;
 	    }
 
 	    &--align__name {
-	    	text-align: center; 
-	    	vertical-align: middle;
+	    	padding-top: 1%;
 	    }
 
 	    &__actions {
 	    	text-align: right;
+	    	padding-top:2%;
 
 	    	& button{
-	    		margin: 2%;
+	    		display: block;
+	    		margin: 2% auto;
 	    	} 
 	    }
 	}

@@ -1,5 +1,6 @@
 import angular from 'angular';
 import coreModule from './core.client.packages';
+import font_awesome from "font-awesome-sass-loader";
 
 (function () {
 	'use strict';

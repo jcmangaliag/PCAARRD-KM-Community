@@ -32,10 +32,6 @@ import _ from 'lodash';
 				{ 
 				  name: "sad", 
 				  count: 0 
-				},
-				{ 
-				  name: "angry", 
-				  count: 0 
 				}
 			];
 
@@ -43,7 +39,7 @@ import _ from 'lodash';
 			$scope.addCommentFormData.commentedBy = "John Doe";
 
 			$scope.submitComment(_.cloneDeep($scope.addCommentFormData));
-			PostService.setReaction($scope, 0);
+			PostService.setPostReaction($scope, 0);
 		}
 
 		CommentService.getComments($scope);

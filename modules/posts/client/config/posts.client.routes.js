@@ -17,7 +17,7 @@
 				templateUrl: 'posts/client/views/add-post/add-post-categories.client.view.html',
 				controller: 'PostCategoriesController'
 			})
-			.state('bananaGroup.addPost-question', {
+			.state('bananaGroup.vPosts.addPost-question', {
 				url: '/add-post/question',
 				templateUrl: 'posts/client/views/add-post/add-question-post.client.view.html',
 				controller: 'PostController',
@@ -25,7 +25,7 @@
 					postType: "add-post"
 				}
 			})
-			.state('bananaGroup.addPost-ads', {
+			.state('bananaGroup.vPosts.addPost-ads', {
 				url: '/add-post/ads',
 				templateUrl: 'posts/client/views/add-post/add-advertisement-post.client.view.html',
 				controller: 'PostController',
@@ -40,8 +40,8 @@
 				templateUrl: 'posts/client/views/view-post/view-post-categories.client.view.html',
 				controller: 'PostCategoriesController'
 			})
-			.state('bananaGroup.viewPosts-ads', {
-				url: '/view-posts/ads',
+			.state('bananaGroup.vPosts', {
+				url: '',
 				templateUrl: 'posts/client/views/view-post/view-advertisement-posts.client.view.html',
 				controller: 'PostController',
 				params: {

@@ -17,10 +17,10 @@
 				controller: 'SampleBananaGroupController',
 				abstract: true
 			})
-			.state('bananaGroup.about', {
+/*			.state('bananaGroup.about', {
 				url: '',
 				templateUrl: 'groups/client/views/sampleBananaGroup.about.html',
-			})
+			})*/
 /*			.state('bananaGroup.members', {
 				url: '/members',
 				templateUrl: 'users/client/views/sampleBananaGroup.html',
