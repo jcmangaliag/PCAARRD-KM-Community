@@ -33,6 +33,14 @@
 					postType: "add-post"
 				}
 			})
+			.state('bananaGroup.vPosts.addPost-others', {
+				url: '/add-post/others',
+				templateUrl: 'posts/client/views/add-post/add-others-post.client.view.html',
+				controller: 'PostController',
+				params: {
+					postType: "add-post"
+				}
+			})
 
 			// View Posts by Category
 			.state('bananaGroup.viewPosts', {
@@ -53,6 +61,14 @@
 			.state('bananaGroup.viewPosts-one-ads', {
 				url: '/view-posts/:category/:id',
 				templateUrl: 'posts/client/views/view-post/view-one-advertisement-post.client.view.html',
+				controller: 'PostController',
+				params: {
+					postType: "view-one-post"
+				}
+			})
+			.state('bananaGroup.viewPosts-one-others', {
+				url: '/view-posts/:category/:id',
+				templateUrl: 'posts/client/views/view-post/view-one-others-post.client.view.html',
 				controller: 'PostController',
 				params: {
 					postType: "view-one-post"

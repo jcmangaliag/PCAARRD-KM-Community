@@ -90,7 +90,7 @@ import _ from 'lodash';
 			$scope.addPostFormData.groupBelonged = "Banana";
 
 			$scope.submitPost(_.cloneDeep($scope.addPostFormData));
-			$state.go('bananaGroup.addPost');
+			$state.go('bananaGroup.vPosts');
 			alert("Posted successfully!");
 		}
 		

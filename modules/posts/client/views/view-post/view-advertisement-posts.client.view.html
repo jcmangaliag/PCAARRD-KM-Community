@@ -50,7 +50,7 @@
               <li ng-click= setPostLabel('event')><a ui-sref="bananaGroup.addPost-event">Post Event</a></li>
               <li ng-click= setPostLabel('media')><a ui-sref="bananaGroup.addPost-media">Post Media Resource</a></li>
               <li role="separator" class="divider"></li>
-              <li ng-click= setPostLabel('others')><a ui-sref="bananaGroup.addPost-others">Post Others</a></li>
+              <li ng-click= setPostLabel('others')><a ui-sref="bananaGroup.vPosts.addPost-others">Post Others</a></li>
             </ul>
           </div>
 
@@ -66,24 +66,43 @@
       <hr />
 
 
-      <div class="post-ads" ng-repeat="post in posts" style="margin-top: 4%; background-color: #eeeeee; border-radius: 8px;">
-          <div style="margin: 2%; border-radius: 8px;">
+      <div ng-if="post.category == 'ads'" class="post-ads" ng-repeat="post in posts" style="margin: 2% 0; background-color: #eeeeee; border-radius: 8px;">
+          <div style="margin: 2%; border-radius: 8px;"> 
           <h3 style="text-decoration: underline; font-weight: bolder;"><a style="color: #333333;" ui-sref="bananaGroup.viewPosts-one-ads({category: 'ads', id: post._id})">{{post.adTitle}}</a></h3>
           <p style="color: gray;">submitted by <a href="#" style="text-decoration: underline; color: gray; font-weight: bold;">{{post.postedBy}}</a> on {{post.datePosted}}</p>
 
           <h4 style="padding: 4% 0; white-space: pre-wrap;">{{post.details}}</h4>
 
-             <p style="display: inline; padding: 0 4% 0 0;" ng-repeat="reaction in post.reactions"> 
-             <span ng-show="reaction.name=='comments'"><i class="fa fa-comment-o fa-lg" aria-hidden="true"></i>
+             <h5 style="display: inline; padding-right:3%;" ng-repeat="reaction in post.reactions">
+                <span ng-show="reaction.name=='comments'"><i ui-sref="bananaGroup.viewPosts-one-ads({category: 'ads', id: post._id})" class="fa fa-comment-o fa-2x" aria-hidden="true" style="cursor: pointer;"></i>
               </span>
-              <span ng-show="reaction.name=='thumbsUp'"><i class="fa fa-thumbs-o-up fa-lg" aria-hidden="true"></i>
-              </span>
-              <span ng-show="reaction.name=='happy'"><i class="fa fa-smile-o fa-lg" aria-hidden="true"></i>
-              </span>
-              <span ng-show="reaction.name=='sad'"><i class="fa fa-frown-o fa-lg" aria-hidden="true"></i>
-              </span>
-              {{reaction.count}} 
-              </p>
+                <span ng-show="reaction.name=='thumbsUp'"><i ng-click="setPostReaction($index)" class="fa fa-thumbs-o-up fa-2x" aria-hidden="true" style="cursor: pointer;"></i>
+                </span>
+                <span ng-show="reaction.name=='happy'"><i ng-click="setPostReaction($index)" class="fa fa-smile-o fa-2x" aria-hidden="true" style="cursor: pointer;"></i>
+                </span>
+                <span ng-show="reaction.name=='sad'"><i ng-click="setPostReaction($index)" class="fa fa-frown-o fa-2x" aria-hidden="true" style="cursor: pointer;"></i>
+                </span>
+                <span style="margin-left: 1%;">{{reaction.count}} </span>
+            </h5>
         </div>
       </div>
- 
+
+
+      <div ng-if="post.category == 'others'" class="post-ads" ng-repeat="post in posts" style="margin: 2% 0; background-color: #eeeeee; border-radius: 8px;">
+          <div style="margin: 2%; border-radius: 8px;">
+          <h3 style="text-decoration: underline; font-weight: bolder;"><a style="color: #333333;" ui-sref="bananaGroup.viewPosts-one-others({category: 'others', id: post._id})">{{post.post}}</a></h3>
+          <p style="color: gray;">submitted by <a href="#" style="text-decoration: underline; color: gray; font-weight: bold;">{{post.postedBy}}</a> on {{post.datePosted}}</p>
+
+             <h5 style="display: inline; padding-right:3%;" ng-repeat="reaction in post.reactions">
+                <span ng-show="reaction.name=='comments'"><i ui-sref="bananaGroup.viewPosts-one-ads({category: 'ads', id: post._id})" class="fa fa-comment-o fa-2x" aria-hidden="true" style="cursor: pointer;"></i>
+              </span>
+                <span ng-show="reaction.name=='thumbsUp'"><i ng-click="setPostReaction($index)" class="fa fa-thumbs-o-up fa-2x" aria-hidden="true" style="cursor: pointer;"></i>
+                </span>
+                <span ng-show="reaction.name=='happy'"><i ng-click="setPostReaction($index)" class="fa fa-smile-o fa-2x" aria-hidden="true" style="cursor: pointer;"></i>
+                </span>
+                <span ng-show="reaction.name=='sad'"><i ng-click="setPostReaction($index)" class="fa fa-frown-o fa-2x" aria-hidden="true" style="cursor: pointer;"></i>
+                </span>
+                <span style="margin-left: 1%;">{{reaction.count}} </span>
+            </h5>
+        </div>
+      </div>

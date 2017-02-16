@@ -32,7 +32,8 @@ const PostSchema = mongoose.Schema({
 	description: String,
 	files: Array,
 	adTitle: String,
-	details: String
+	details: String,
+	post: String
 });
 
 export default mongoose.model('Post', PostSchema);
