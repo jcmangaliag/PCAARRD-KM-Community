@@ -1,4 +1,4 @@
-$footer-height: 448px;
+$footer-height: 440px;
 
 html {
   position: relative;
@@ -6,4 +6,12 @@ html {
 }
 body {
   margin-bottom: $footer-height;
+}
+
+.ng-toast__list {
+	list-style: none;
+}
+
+li.ng-toast__message:first-letter {
+    text-transform: capitalize;
 }

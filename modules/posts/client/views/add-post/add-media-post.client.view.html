@@ -1,0 +1,30 @@
+<form class="post-ads__form" ng-submit="onProcessPostData('media')">
+  <div class="form-group">
+    <label for="post-ads__name">Title</label>
+    <input type="text" class="form-control" id="post-ads__name" placeholder="Enter the media title" ng-model="addPostFormData.title" required />
+  </div>
+
+  <div class="form-group">
+    <label for="post-ads__desc">Description (optional)</label>
+    <textarea class="form-control" id="post-ads__desc" rows="3" placeholder="Enter the description" ng-model="addPostFormData.description"></textarea>
+  </div>
+
+  <div class="form-group">
+  <label style="display: block;">Media Type</label>
+  <select class="form-control" style="width: 30%; display: inline-block;">
+    <option selected>Photo</option>
+    <option>Video</option>
+    <option>Document</option>
+    <option>URL</option>
+    <option>Others</option>
+  </select>
+  </div>
+
+  <shared-add-files></shared-add-files>
+
+  <shared-add-hashtags></shared-add-hashtags>
+
+  <div class="text-right">
+    <button type="submit" class="btn btn-success"> <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit </button>
+  </div>
+</form>

@@ -1,0 +1,24 @@
+<form class="post-ads__form" ng-submit="onProcessPostData('news')">
+  <div class="form-group">
+    <label for="post-ads__name">Title</label>
+    <input type="text" class="form-control" id="post-ads__name" placeholder="Enter the news title" ng-model="addPostFormData.title" required />
+  </div>
+
+  <div class="form-group">
+    <label for="post-ads__name">Author/s</label>
+    <input type="text" class="form-control" id="post-ads__name" placeholder="Enter the news authors" ng-model="addPostFormData.authors" required />
+  </div>
+
+  <div class="form-group">
+    <label for="post-ads__desc">Body </label>
+    <textarea class="form-control" id="post-ads__desc" rows="7" placeholder="Enter the news body" ng-model="addPostFormData.body" required></textarea>
+  </div>
+
+  <shared-add-files></shared-add-files>
+
+  <shared-add-hashtags></shared-add-hashtags>
+
+  <div class="text-right">
+    <button type="submit" class="btn btn-success"> <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit </button>
+  </div>
+</form>

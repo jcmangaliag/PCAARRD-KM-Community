@@ -6,6 +6,9 @@ const postsRoutes = (app) => {
     .get(postCtrl.list)
     .post(postCtrl.post);
 
+  app.route('/api/posts/category/:category')
+  	.get(postCtrl.listByCategory);
+
   app.route('/api/posts/:id')
   	.get(postCtrl.listOne);
 

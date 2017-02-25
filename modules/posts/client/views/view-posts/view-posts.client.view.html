@@ -1,0 +1,20 @@
+<view-posts-categories></view-posts-categories>
+
+<div class="post-ads" ng-repeat="post in posts.contents | orderBy:'':true" style="margin: 2% 0; background-color: #eeeeee; border-radius: 8px; border-style:groove;">
+
+	<div ng-switch="post.category">
+		<div ng-switch-when="advertisement">
+			<view-all-advertisement-posts></view-all-advertisement-posts>
+		</div>
+
+		<div ng-switch-when="question">
+			<view-all-question-posts></view-all-question-posts>
+		</div>
+
+		<div ng-switch-when="others">
+			<view-all-others-posts></view-all-others-posts>
+		</div>
+
+
+	</div>
+</div>

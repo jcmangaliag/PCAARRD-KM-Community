@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import Comment from '../models/comments.server.model';
 
 const commentControls = { 
@@ -15,6 +14,15 @@ const commentControls = {
 			if (err) { console.log(err); }
 
 			res.send('Comment saved.');
+		});
+	},
+	updateReactions : (req, res) => {
+		const id = req.params.id;
+
+		Comment.findByIdAndUpdate(id, { reactions: req.body.reactions }, (err) => {
+			if (err) { console.log(err); };
+
+			res.send("Comment updated");
 		});
 	}
 }

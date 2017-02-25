@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import Post from '../models/posts.server.model';
 
 const postControls = { 
@@ -9,10 +8,17 @@ const postControls = {
 	        res.send({ posts: results });
 	    });
 	},
+	listByCategory : (req, res) => {
+		Post.find({category: req.params.category}, (err, results) => {
+	        if (err) { console.log(err); }
+
+	        res.send({ posts: results });
+	    });
+	},
 	listOne : (req, res) => {
 		const id = req.params.id;
 
-		Post.findOne({_id: mongoose.Types.ObjectId(id)}, (err, result) => {
+		Post.findById(id, (err, result) => {
 			if (err) { console.log(err); };
 
 			res.send({post: result});
@@ -28,14 +34,13 @@ const postControls = {
 	},
 	updateReactions : (req, res) => {
 		const id = req.params.id;
-		Post.update({ _id: mongoose.Types.ObjectId(id) }, {
-			$set: { reactions: req.body.reactions }
-		}, (err) => {
+
+		Post.findByIdAndUpdate(id, { reactions: req.body.reactions }, (err) => {
 			if (err) { console.log(err); };
 
 			res.send("Post updated");
 		});
-	},
+	}
 }
 
 export default postControls;

@@ -1,21 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>PCAARRD KM Communities</title>
-		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta charset="utf-8" />
+		<title>PCAARRD KM Communities</title>
 		<base href="/">
 	</head>
 	<body>
-		<layout-header></layout-header>
 		<div class="container-fluid">
-			<layout-sidebar></layout-sidebar>
 			<div class="row">
-				<div class="col-sm-3 col-md-2">
-
+				<div class="col-sm-12 col-md-11 col-md-offset-1" style="padding: 0;">
+					<layout-header></layout-header>
 				</div>
-				<div class="col-sm-9 col-md-10">
+
+				<toast style="position:fixed; top: 70px; right: 50px; z-index: 400;"></toast>
+
+				<div class="col-sm-1 col-md-1">
+					<layout-sidebar></layout-sidebar>
+				</div>
+				<div class="col-sm-11 col-md-11 ">
 					<div ui-view></div>
 				</div>
 			</div>

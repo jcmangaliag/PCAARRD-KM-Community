@@ -6,6 +6,9 @@ const commentsRoutes = (app) => {
     .get(commentCtrl.list)
     .post(commentCtrl.post);
 
+  app.route('/api/comments/reactions/:id')
+  	.put(commentCtrl.updateReactions);
+
 };
 
 export default commentsRoutes;

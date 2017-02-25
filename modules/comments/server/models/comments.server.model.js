@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const CommentSchema = mongoose.Schema({
 	referredPost: {
-		type: String,
+		type: mongoose.Schema.Types.ObjectId,
 		required: true
 	},
 	comment: {
@@ -10,7 +10,7 @@ const CommentSchema = mongoose.Schema({
 		required: true
 	},
 	commentedBy: {
-		type: String,
+		type: String, // mongoose.Schema.Types.ObjectId,
 		required: true
 	},
 	dateCommented: {
@@ -24,10 +24,7 @@ const CommentSchema = mongoose.Schema({
 	reactions: {
 		type: Array,
 		required: true
-	},
-	thumbsUpUsers: Array,
-	happyUsers: Array,
-	sadUsers: Array
+	}
 });
 
 export default mongoose.model('Comment', CommentSchema);

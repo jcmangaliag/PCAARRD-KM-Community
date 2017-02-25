@@ -1,0 +1,44 @@
+.group {
+	&-photo{
+		width: 100%; 
+		height: 14em; 
+		object-fit: cover; 
+		border-radius:8px;
+	}
+
+	&-header{
+
+	    align-items: center;
+	    margin: 0;
+	    background-color: #eeeeee;
+    	border-radius: 8px;
+    	border-style:groove;
+
+	    &__icon {
+	    	width: 30%;
+	    	border: 1px solid black;
+    		border-radius: 4px;
+    		padding: 5px;
+	    }
+
+	    &--align__name {
+	    	padding-top: 1%;
+	    }
+
+	    &__actions {
+	    	text-align: right;
+	    	padding-top:2%;
+
+	    	& button{
+	    		display: block;
+	    		margin: 2% auto;
+	    	} 
+	    }
+	}
+
+	&-tabs {
+	    &__content {
+	    	text-align: center;
+	    }
+	}
+}

@@ -1,0 +1,10 @@
+.shared__addhashtags{
+	&--body {
+		white-space: nowrap;
+		overflow-x: auto;
+	}
+
+	&--field.form-control {
+		width: 87%;
+	}
+}

@@ -1,0 +1,10 @@
+<div class="form-group">
+  <label>Hashtag/s (Max of 5)</label>
+
+  <div class="input-group shared__addhashtags--body" ng-repeat="hashtag in hashtags track by $index">
+    <span class="input-group-addon">#</span>
+    <input type="text" disable-spaces class="form-control shared__addhashtags--field" placeholder="Enter a hashtag here" ng-model="hashtags[$index]" required /> 
+    <button type="button" class="btn btn-danger" ng-show="$last" ng-click="removeHashtag()"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button>
+    <button type="button" class="btn btn-primary" ng-show="$last" ng-click="addHashtag()"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+  </div>
+</div>

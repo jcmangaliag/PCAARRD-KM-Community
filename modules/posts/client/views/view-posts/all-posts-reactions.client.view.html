@@ -1,0 +1,29 @@
+<h5 style="display: inline; padding-right:3%;" ng-repeat="reaction in post.reactions">
+    <i ng-if="$first" ui-sref="oneGroup.viewOneAdvertisementPost({id: post._id, '#': 'write-comment'})" class="fa fa-comment-o fa-2x" aria-hidden="true" style="cursor: pointer;" ng-style="reaction.users.indexOf(userid) >=0 ? { 'color':'#286090' } : { 'color': '#333333' }"></i>
+
+    <i ng-if="!$first" ng-click="setPostReaction(post, $index)" class="fa fa-2x" ng-class="{'fa-thumbs-o-up' : reaction.name=='thumbsUp', 'fa-smile-o': reaction.name=='happy', 'fa-frown-o': reaction.name=='sad'}" aria-hidden="true" style="cursor: pointer;" ng-style="reaction.users.indexOf(userid) >=0 ? { 'color':'#286090' } : { 'color': '#333333' }"></i>
+
+    <a href="#" style="margin-left: 1%; color: #333333;" data-toggle="modal" data-target="#{{post._id + reaction.name}}">{{reaction.count}}</a>
+
+    <div class="modal fade" id="{{post._id + reaction.name}}" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">People who 
+              <span ng-if="reaction.name=='comments'"> commented on </span>
+              <span ng-if="reaction.name=='thumbsUp'"> liked </span>
+              <span ng-if="reaction.name=='happy'"> are happy with </span>
+              <span ng-if="reaction.name=='sad'"> are sad with </span>
+            this post</h4>
+          </div>
+          <div class="modal-body">
+            <h5 ng-repeat="user in reaction.users">{{user}}</h5>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</h5>

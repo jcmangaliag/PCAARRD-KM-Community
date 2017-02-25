@@ -12,9 +12,6 @@ import _ from 'lodash';
 
 	function SidebarController ($scope, $state) {
 
-		$scope.activeState = $state.current.name;
-
-		console.log($state.current.name);
 	}
 
 })();

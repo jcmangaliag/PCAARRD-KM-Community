@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 (() => {
 	'use strict';
 	
@@ -5,38 +7,78 @@
 		.module('comments')
 		.factory('CommentService', CommentService);
 
-	CommentService.$inject = ['$http'];
+	CommentService.$inject = ['$http', 'ngToast'];
 
-	function CommentService ($http) {
+	function CommentService ($http, ngToast) {
 
-		const getComments = ($scope) => {
+		let commentList = {
+			contents: []
+		};
+
+		/* temporary user */
+		const username = "Mark Eric Cabanli";
+		const userid = "Mark's id";
+
+		const getCommentList = () => {
+			return commentList;
+		}
+
+		const getComments = () => {
 			$http.get('/api/comments')
 			.then(response => {
-				$scope.comments = response.data.comments;
+				commentList.contents = response.data.comments;
 			});
 		}
 
 		const submitComment = (addPostCommentData) => {
 			$http.post('/api/comments', addPostCommentData)
 			.then(response => {
-				location.reload();
+				getComments();
+
+				ngToast.create({
+		    		className: 'success',
+		    		content: `Comment was successfully posted. `
+		    	});
 			});
 		}
 
-		const setCommentReaction = ($scope, reactionIndex) => {
-	/*		$scope.post.reactions[reactionIndex].count++;
-			$http.put(`/api/posts/comments/${$scope.post._id}`, {
-				reactions: $scope.post.reactions
+		const setCommentReaction = (comment, reactionIndex) => {
+			let reactions = comment.reactions;
+			const reactionsLength = reactions.length;
+			let duplicateReactionIndex = -1;
+
+			// remove user and count duplicates in reactions
+			for (let i = 0; i < reactionsLength; i++){
+				if (reactions[i].users.indexOf(userid) >= 0){ // remove duplicate user and count
+					duplicateReactionIndex = i;
+					const removeUserIndex = reactions[i].users.indexOf(userid);
+					reactions[i].users.splice(removeUserIndex, 1);
+					reactions[i].count--;
+					break;
+				}
+			}
+
+			// prevent reposting the same reaction
+			if (reactionIndex != duplicateReactionIndex){
+				// increments the reaction count and adds the user in reaction userlist
+				reactions[reactionIndex].count++;
+				reactions[reactionIndex].users.push(userid);
+			}
+
+			$http.put(`/api/comments/reactions/${comment._id}`, {
+				reactions
 			}).then(response => {
-				getOnePost($scope, $scope.post._id);
-			});*/
+
+			});
 		}
 
 		return {
+			getCommentList,
 			getComments,
 			submitComment,
-			setCommentReaction
-		};
+			setCommentReaction,
+			userid 
+		};	/* temporary userid */
 	}
 
 })();

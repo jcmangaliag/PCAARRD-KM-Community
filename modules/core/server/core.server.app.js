@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'path';
 import bodyParser from 'body-parser';
 import config from './config/core.server.config';
+import mongoDB from './config/core.server.db';
 import moduleRoutes from './routes/core.server.routes';
 
 const app = express();

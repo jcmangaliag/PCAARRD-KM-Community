@@ -11,23 +11,44 @@
 		$urlRouterProvider.otherwise('/');
 
 		$stateProvider
-			.state('bananaGroup', {
-				url: '/groups/banana',
-				templateUrl: 'groups/client/views/sampleBananaGroup.html',
-				controller: 'SampleBananaGroupController',
-				abstract: true
+			.state('oneGroup', {
+				url: '/groups/banana',	// should be /groups/:groupID
+				templateUrl: 'groups/client/views/view-one-group.client.view.html',
+				controller: 'OneGroupController'
 			})
-/*			.state('bananaGroup.about', {
-				url: '',
-				templateUrl: 'groups/client/views/sampleBananaGroup.about.html',
-			})*/
-/*			.state('bananaGroup.members', {
-				url: '/members',
-				templateUrl: 'users/client/views/sampleBananaGroup.html',
-			})*/
-			.state('bananaGroup.settings', {
+
+			/* View One Post */
+
+			.state('oneGroup.viewOneQuestionPost', {
+				url: '/view-posts/question/:id',
+				templateUrl: 'posts/client/views/view-posts/view-one-question-post.client.view.html',
+				controller: 'PostController',
+				params: {
+					postType: "view-one-post"
+				}
+			})
+			.state('oneGroup.viewOneAdvertisementPost', {
+				url: '/view-posts/advertisement/:id',
+				templateUrl: 'posts/client/views/view-posts/view-one-advertisement-post.client.view.html',
+				controller: 'PostController',
+				params: {
+					postType: "view-one-post"
+				}
+			})
+			.state('oneGroup.viewOneOthersPost', {
+				url: '/view-posts/others/:id',
+				templateUrl: 'posts/client/views/view-posts/view-one-others-post.client.view.html',
+				controller: 'PostController',
+				params: {
+					postType: "view-one-post"
+				}
+			})
+
+			/* Settings */
+
+			.state('oneGroup.settings', {
 				url: '/settings',
-				templateUrl: 'groups/client/views/sampleBananaGroup.settings.html'
+				templateUrl: 'groups/client/views/view-group-settings.client.view.html'
 			});
 
 		$locationProvider.html5Mode(true);

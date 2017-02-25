@@ -1,66 +1,19 @@
-<!-- <div class="container post-question">
-  <div class="row">
-    <div class="col-xs-12 col-sm-12">
-      <h3 class="post-question__title">Post a Question</h3>
-    </div>
-  
-    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-      <form class="post-question__form" ng-submit="onProcessPostData('question')">
-        <div class="form-group">
-          <label for="post-question__name">Question</label>
-          <input type="text" class="form-control" id="post-question__name" placeholder="Enter your question here" ng-model="addPostFormData.question" required />
-        </div>
-
-        <div class="form-group">
-          <label for="post-question__desc">Description (optional)</label>
-          <textarea class="form-control" id="post-question__desc" rows="3" placeholder="Enter the description here" ng-model="addPostFormData.description"></textarea>
-        </div>
-
-        <label>Photos or Files Upload (optional)</label>
-        <div class="input-group post-question__input-group">
-          <label class="input-group-btn">
-            <span class="btn btn-primary"> <span class="glyphicon glyphicon-open-file" aria-hidden="true"></span> Browse <input type="file" class="post-question post-question__file" multiple />
-            </span>
-          </label>
-          <input type="text" class="form-control" placeholder="Click 'Browse' to upload photos or files" readonly>
-        </div>
-
-        <shared-hashtag></shared-hashtag>
-
-        <div class="text-center post-question__action">
-          <button type="button" class="btn btn-danger post-question__goback" ui-sref="bananaGroup.addPost"> <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span> Go Back</button>
-
-          <button type="submit" class="btn btn-success"> <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit </button>
-        </div>
-      </form>
-    </div>
+<form class="post-question__form" ng-submit="onProcessPostData('question')">
+  <div class="form-group">
+    <label for="post-question__name">Question</label>
+    <input type="text" class="form-control" id="post-question__name" placeholder="Enter your question" ng-model="addPostFormData.question" required />
   </div>
-</div> -->
 
+  <div class="form-group">
+    <label for="post-question__desc">Description (optional)</label>
+    <textarea class="form-control" id="post-question__desc" rows="3" placeholder="Enter the description" ng-model="addPostFormData.description"></textarea>
+  </div>
 
-      <form class="post-question__form" ng-submit="onProcessPostData('question')">
-        <div class="form-group">
-          <label for="post-question__name">Question</label>
-          <input type="text" class="form-control" id="post-question__name" placeholder="Enter your question here" ng-model="addPostFormData.question" required />
-        </div>
+  <shared-add-files></shared-add-files>
 
-        <div class="form-group">
-          <label for="post-question__desc">Description (optional)</label>
-          <textarea class="form-control" id="post-question__desc" rows="3" placeholder="Enter the description here" ng-model="addPostFormData.description"></textarea>
-        </div>
+  <shared-add-hashtags></shared-add-hashtags>
 
-        <label>Photos or Files Upload (optional)</label>
-        <div class="input-group post-question__input-group">
-          <label class="input-group-btn">
-            <span class="btn btn-primary"> <span class="glyphicon glyphicon-open-file" aria-hidden="true"></span> Browse <input type="file" class="post-question post-question__file" multiple />
-            </span>
-          </label>
-          <input type="text" class="form-control" placeholder="Click 'Browse' to upload photos or files" readonly>
-        </div>
-
-        <shared-hashtag></shared-hashtag>
-
-        <div class="text-right">
-          <button type="submit" class="btn btn-success"> <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit </button>
-        </div>
-      </form>
+  <div class="text-right">
+    <button type="submit" class="btn btn-success"> <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit </button>
+  </div>
+</form>

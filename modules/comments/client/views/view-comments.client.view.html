@@ -1,36 +1,44 @@
 <div class="col-xs-12 col-sm-12">
 	
-	<div ng-repeat="comment in comments | filter: {referredPost: post._id}" style="border-radius: 8px; background-color: #eeeeee; padding: 3%; margin: 3% 0;">
+	<div ng-repeat="comment in comments.contents | filter: {referredPost: selectedPost._id} | orderBy:'':true" style="border-radius: 8px; background-color: #eeeeee; padding: 3%; margin: 3% 0; border-style:groove;">
 
       	<h4 style="display: inline-block;"><a href="#" style="font-weight: bold; color: #333333;">{{comment.commentedBy}}</a></h4>
       	<p style="display: inline-block; color:gray">wrote on {{comment.dateCommented}}</p>
 
-      	<h5 style="padding: 3% 0; white-space: pre-wrap;">{{comment.comment}}</h5>
+      	<h4 style="padding: 3% 0; white-space: pre-wrap;">{{comment.comment}}</h4>
 	    	
-    	<h4 ng-repeat="file in comment.files"><a href="#">filename.jpg</a></h4>
+    	<shared-view-files selected-files="comment.files"></shared-view-files>
 
-    	<div ng-repeat="hashtag in post.hashtags" style="background-color: #ccc; padding: 3px; margin-right: 2%; border-radius:8px; display: inline-block; cursor:pointer; border-style: outset;">
-	    		<p style="margin: 2% 0">#{{hashtag}}</p>
-	    	</div>
-
-<!--       	<div style=" margin: 1% 0 2% 0; border-radius: 5px; padding:1%">
-	    	<div style="display:inline-block; margin: 0.25%" ng-repeat="reaction in comment.reactions track by $index">
-	    		<h4>{{reaction.count}}</h4>
-	    		<button type="button" class="btn btn-primary" ng-click="setCommentReaction($index)">{{reaction.name}}</button>
-	    	</div>
-      	</div> -->
+    	<shared-view-hashtags selected-hashtags="comment.hashtags"></shared-view-hashtags>
 
       	<div style=" margin-top: 2%; border-radius: 8px; background-color: #eeeeee; padding-top: 2%;">
+
       		<h5 style="display: inline; padding-right:3%;" ng-repeat="reaction in comment.reactions">
-	              <span ng-show="reaction.name=='thumbsUp'"><i ng-click="setCommentReaction($index)" class="fa fa-thumbs-o-up fa-2x" aria-hidden="true" style="cursor: pointer;"></i>
-	              </span>
-	              <span ng-show="reaction.name=='happy'"><i ng-click="setCommentReaction($index)" class="fa fa-smile-o fa-2x" aria-hidden="true" style="cursor: pointer;"></i>
-	              </span>
-	              <span ng-show="reaction.name=='sad'"><i ng-click="setCommentReaction($index)" class="fa fa-frown-o fa-2x" aria-hidden="true" style="cursor: pointer;"></i>
-	              </span>
-	              <span style="margin-left: 1%;">{{reaction.count}} </span>
+		        <i ng-click="setCommentReaction(comment, $index)" class="fa fa-2x" ng-class="{'fa-thumbs-o-up' : reaction.name=='thumbsUp', 'fa-smile-o': reaction.name=='happy', 'fa-frown-o': reaction.name=='sad'}" aria-hidden="true" style="cursor: pointer;" ng-style="reaction.users.indexOf(userid) >=0 ? { 'color':'#286090' } : { 'color': '#333333' }"></i>
+
+		        <a href="#" style="margin-left: 1%; color: #333333;" data-toggle="modal" data-target="#{{comment._id + reaction.name}}">{{reaction.count}}</a>
+
+		        <div class="modal fade" id="{{comment._id + reaction.name}}" tabindex="-1" role="dialog">
+		          <div class="modal-dialog" role="document">
+		            <div class="modal-content">
+		              <div class="modal-header">
+		                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		                <h4 class="modal-title">People who 
+		                  <span ng-if="reaction.name=='thumbsUp'"> liked </span>
+		                  <span ng-if="reaction.name=='happy'"> are happy with </span>
+		                  <span ng-if="reaction.name=='sad'"> are sad with </span>
+		                this comment</h4>
+		              </div>
+		              <div class="modal-body">
+		                <h5 ng-repeat="user in reaction.users">{{user}}</h5>
+		              </div>
+		              <div class="modal-footer">
+		                <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+		              </div>
+		            </div>
+		          </div>
+		        </div>
             </h5>
       	</div>
-
 	</div>
 </div>

@@ -1,6 +1,8 @@
-<div class="post-categories">
-  <h3 class="post-categories__title">Choose Add Post Category</h3>
-  <div class="post-categories__buttons--border" >
-    <button type="button" class="btn btn-primary post-categories__buttons" ng-repeat="postButton in postButtons" ui-sref="bananaGroup.addPost-{{postButton.category}}"> <span class="glyphicon glyphicon-{{postButton.logo}}" aria-hidden="true"></span> {{postButton.name}} </button>
-  </div>
+<div class="btn-group">
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      {{currentAddPostCategory.postCategory.title}} <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+      <li ng-repeat="addPostCategory in addPostCategories" ng-click="setCurrentAddPostCategory(addPostCategory.category);"> <a href="#">{{addPostCategory.title}}</a></li>
+    </ul>
 </div>

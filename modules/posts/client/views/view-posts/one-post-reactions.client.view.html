@@ -1,0 +1,29 @@
+<div class="col-xs-12 col-sm-12" style=" margin: 2% 0 2% 0; border-radius: 8px; background-color: #eeeeee; padding: 4%; border-style:groove;">
+  <h4 style="margin-bottom: 3%;">Tell us your reaction</h4>
+  <h4 ng-if="!$first" style="display: inline; padding-right:3%;" ng-repeat="reaction in selectedPost.reactions">
+  	<i ng-click="setPostReaction(selectedPost, $index)" class="fa fa-2x" ng-class="{'fa-thumbs-o-up' : reaction.name=='thumbsUp', 'fa-smile-o': reaction.name=='happy', 'fa-frown-o': reaction.name=='sad'}" aria-hidden="true" style="cursor: pointer;" ng-style="reaction.users.indexOf(userid) >=0 ? { 'color':'#286090' } : { 'color': '#333333' }"></i>
+
+      <a href="#" style="margin-left: 1%; color: #333333;" data-toggle="modal" data-target="#{{selectedPost._id + reaction.name}}">{{reaction.count}}</a>
+
+      <div class="modal fade" id="{{selectedPost._id + reaction.name}}" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">People who 
+                <span ng-if="reaction.name=='thumbsUp'"> liked </span>
+                <span ng-if="reaction.name=='happy'"> are happy with </span>
+                <span ng-if="reaction.name=='sad'"> are sad with </span>
+              this post</h4>
+            </div>
+            <div class="modal-body">
+              <h5 ng-repeat="user in reaction.users">{{user}}</h5>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+  </h4>
+</div>

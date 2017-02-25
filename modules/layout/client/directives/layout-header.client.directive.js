@@ -5,6 +5,7 @@
 		.module('layout')
 		.directive('layoutHeader', layoutHeader);
 
+
 	function layoutHeader () {
 
 		const directive = {

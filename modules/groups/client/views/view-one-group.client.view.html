@@ -1,0 +1,42 @@
+<div>
+  <img src="/groups/client/assets/images/744849-banana-wallpaper.jpg" class="group-photo" />
+  <hr />
+  <div class="row group-header">
+    <div class="col-xs-12 col-sm-4 " style="padding-top: 1%;" >
+      <img src="/groups/client/assets/images/Fruit_02.png" class="group-header__icon" />
+      <a ui-sref="oneGroup" style="color: #333333;"><h2 style="padding-left: 4%; display: inline-block; font-weight:bold;">Banana</h2></a>
+      <div style="padding-top:3%">
+      <a href="#"  style="color: #333333;"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></a>
+       <a href="#"  style="color: #333333;"><i style="padding-left: 4%" class="fa fa-cog fa-2x" aria-hidden="true"></i></a>
+       </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-5 group-header--align__name" style="text-align: justify;">
+     <p> Welcome to Banana Community! <br/> <br/>As we all know, banana has several nutritional benefits that is why it is a very important fruit for the Filipino citizens. Our goal is not only to inform people about these nutritional benefits, but also to allow members to share and communicate their own insights, events, news, questions, incident reports, or media resources that are related to banana so other members will learn a lot more about banana.</p>
+    </div> 
+
+    <div class="col-xs-12 col-sm-3 group-header__actions">
+      <button type="button" class="btn btn-danger" ng-click="showToast()"> Leave Group </button>
+    </div>
+  </div>
+  <hr />
+
+
+  <div>
+    <div class="col-xs-12 col-sm-8">
+      <div ng-if="viewOnePost">
+        <div ui-view></div>
+      </div>
+
+      <div ng-if="!viewOnePost">
+        <add-post></add-post>
+        <view-posts></view-posts>
+      </div>
+    </div>
+    
+    <div class="col-xs-12 col-sm-4">
+      <group-members></group-members>
+      <group-statistics></group-statistics>
+    </div>
+  </div>
+</div>

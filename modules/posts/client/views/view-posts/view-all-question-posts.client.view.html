@@ -1,0 +1,9 @@
+<div style="margin: 2%; border-radius: 8px;"> 
+  <span class="label label-info">Question</span>
+  <h3 style="text-decoration: underline; font-weight: bolder;"><a style="color: #333333;" ui-sref="oneGroup.viewOneQuestionPost({id: post._id})">{{post.question}}</a></h3>
+  <p style="color: gray;">submitted by <a href="#" style="text-decoration: underline; color: gray; font-weight: bold;">{{post.postedBy}}</a> on {{post.datePosted}}</p>
+
+  <h4 style="padding: 4% 0; white-space: pre-wrap;">{{post.description}}</h4>
+
+   <all-posts-reactions></all-posts-reactions>
+</div>

@@ -1,49 +1,93 @@
-<!-- <div class="container-fluid">
-  <div class="row"> -->
-    <div class="col-sm-3 col-md-2 sidebar">
-      <!-- <div style="background-color:#9d9d9d; padding: 2%; border-radius: 5%;">
-        <div style="padding: 4%; background-color: #9d9d9d;">
-          <img src="/layout/client/assets/images/john-cena-562300-1-402.jpg" class="user-profile__pic" alt="Pic" style="width: 25%; border-radius: 8%;" />
-           <a href="#" style="color: #333333;"><h4 style="margin: 0;">John Cena</h4></a>
-        </div>
-        <div style="background-color: #ddd; padding: 5%;">
-          
-        </div>
-      </div> -->
-       <ul class="nav nav-sidebar" style="white-space: nowrap;">
-          <li ng-class="{active: activeState === 'profile'}"><a href="#"><img src="/layout/client/assets/images/john-cena-562300-1-402.jpg" class="user-profile__pic" alt="Pic" style="width: 15%; border-radius: 8%;" />
-           <h4 style="margin: 0; display: inline-block; color: #333333; width: 170px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;">John Felix Cena</h4></a></li>
-          <li ng-class="{active: activeState === 'home'}"><a ui-sref="home"><i class="fa fa-home fa-lg" aria-hidden="true"></i> Home <!-- <i style="margin-left: 30%;" class="fa fa-caret-right" aria-hidden="true"></i> --></a></li>
-          <li ng-class="{active: activeState === 'notifications'}"><a href="#"><i class="fa fa-bell fa-lg" aria-hidden="true"></i> Notifications <span class="badge" style="background-color:#0800ff;">2</span> <!-- <i style="margin-left: 30%;" class="fa fa-caret-right" aria-hidden="true"></i> --></a></li>
-        </ul>
-      <h5 style="margin-top: 15%;">MY GROUPS</h5>
-        <ul class="nav nav-sidebar">
-          <li ng-class="{active: activeState.indexOf('bananaGroup') >= 0}"><a ui-sref="bananaGroup.vPosts.addPost-ads"><img src="/groups/client/assets/images/Fruit_02.png" class="user-profile__pic" alt="Pic" style="width: 10%; border-radius: 8%;" />Banana </a></li>
-        </ul>
+<div class="col-sm-1 col-md-1 sidebar" style="text-align:center;">
+  <div style="height: 100%; overflow-y: auto;">
 
-        <ul class="nav nav-sidebar">
-           <li><a href="#"><i class="fa fa-globe fa-lg" aria-hidden="true"></i> Discover Groups </a></li>
-        </ul>
+    <ul class="nav nav-sidebar"> 
+      <div class="dropdown-content text-left">
+        <a href="#">Welcome to the Community</a>
+        <a href="#">Publishing &amp; Gallery</a>
+      </div>  
+      <li><a href="#" style="border-top: 1px solid #14a99d;"><i class="fa fa-comments-o fa-2x" aria-hidden="true"></i><h6>DISCUSSIONS</h6></a></li>
+    </ul>
 
-      <h5 style="margin-top: 15%;">ADMIN PANEL</h5>
-        <ul class="nav nav-sidebar">
-          <li><a href="#"><i class="fa fa-bar-chart fa-lg" aria-hidden="true"></i>
-Analytics</a></li>
-          <li><a href="#"><i class="fa fa-flag fa-lg" aria-hidden="true"></i>
-Reports</a></li>
-        </ul>
+    <ul class="nav nav-sidebar"> 
+      <div class="dropdown-content text-left">
+        <a href="#">Book Series</a>
+        <a href="#">Information Series</a>
+        <a href="#">Investment Brief</a>
+        <a href="#">Komiks</a>
+        <a href="#">PCAARRD Annual Reports</a>
+        <a href="#">PCAARRD Farm Primer</a>
+        <a href="#">PCAARRD Training Module</a>
+        <a href="#">PHilippines Recommends</a>
+        <a href="#">Profitability Analysis</a>
+        <a href="#">Regional Farm Primer</a>
+        <a href="#">Regional Publication</a>
+      </div>
+    <li><a href="#" style="border-top: 1px solid #14a99d;"><i class="fa fa-book fa-2x" aria-hidden="true"></i><h6>KNOWLEDGE</h6></a></li>
+    </ul>
 
-      <ul class="nav nav-sidebar">
-          <li><a href="#"><i class="fa fa-sign-out fa-lg" aria-hidden="true"></i>
-Log Out</a></li>
-        </ul>
+    <ul class="nav nav-sidebar">
+    <div class="dropdown-content text-left">
+        <a href="#">Training 1</a>
+        <a href="#">Training 2</a>
+    </div> 
+    <li><a href="#" style="border-top: 1px solid #14a99d;"><i class="fa fa-graduation-cap fa-2x" aria-hidden="true"></i><h6>TRAINING</h6></a></li>
+    </ul>
 
-     
-    </div>
-<!--     <a ui-sref="bananaGroup.about" style="margin-left:50%;">Go to a sample Banana Group!</a>
+    <ul class="nav nav-sidebar">
+      <div class="dropdown-content text-left">
+        <a href="#">Rice</a>
+        <a href="#">Corn</a>
+        <a ui-sref="oneGroup">Banana</a>
+        <a href="#">Coconut</a>
+        <a href="#">Swine</a>
+        <a href="#">See all groups</a>
+      </div> 
+    <li><a href="#" style="border-top: 1px solid #14a99d;"><i class="fa fa-users fa-2x" aria-hidden="true"></i><h6>MY GROUPS</h6></a></li>
+    </ul>
+
+    <ul class="nav nav-sidebar"> 
+    <li><a href="#" style="border-top: 1px solid #14a99d;"><i class="fa fa-globe fa-2x" aria-hidden="true"></i><h6>DISCOVER GROUPS</h6></a></li>
+    </ul>
+
+    <ul class="nav nav-sidebar"> 
+      <div class="dropdown-content text-left">
+        <a href="#">Sweet Potato FIESTA</a>
+        <a href="#">SIPAG FIESTA</a>
+        <a href="#">Rootcrop FIESTA</a>
+        <a href="#">Pistang Kalabaw</a>
+        <a href="#">Seaweed FIESTA</a>
+        <a href="#">Sardines FIESTA</a>
+      </div>
+    <li><a href="#" style="border-top: 1px solid #14a99d;"><i class="fa fa-calendar fa-2x" aria-hidden="true"></i><h6>EVENTS</h6></a></li>
+    </ul>
+
+    <ul class="nav nav-sidebar"> 
+    <div class="dropdown-content text-left">
+        <a href="#">PCAARRD KM Community News</a>
+    </div> 
+    <li><a href="#" style="border-top: 1px solid #14a99d;"><i class="fa fa-pencil fa-2x" aria-hidden="true"></i><h6>BLOGS</h6></a></li>
+    </ul>
+
+    <ul class="nav nav-sidebar"> 
+      <div class="dropdown-content text-left">
+        <a href="#">Photos</a>
+        <a href="#">Videos</a>
+        <a href="#">Links</a>
+      </div>
+    <li><a href="#" style="border-top: 1px solid #14a99d;"><i class="fa fa-laptop fa-2x" aria-hidden="true"></i><h6>MULTIMEDIA RESOURCES</h6></a></li>
+    </ul>
+
+    <ul class="nav nav-sidebar"> 
+      <div class="dropdown-content text-left">
+        <a href="#">Alerts</a>
+        <a href="#">FAQs</a>
+        <a href="#">Guidelines</a>
+        <a href="#">Memos and Issuances</a>
+      </div>
+    <li><a href="#" style="border-top: 1px solid #14a99d;"><i class="fa fa-life-ring fa-2x" aria-hidden="true"></i><h6>SUPPORT</h6></a></li>
+    </ul>
+
+
   </div>
-</div> -->
-
+</div>
