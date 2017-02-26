@@ -1,7 +1,7 @@
 {
-  "name": "cmsc190-special-project",
+  "name": "PCAARRD-KM-Community",
   "version": "1.0.0",
-  "description": "An application called PCAARRD KM Communities allows its users to communicate through virtual spaces.",
+  "description": "An application that allows members to communicate with each other in virtual spaces or groups.",
   "main": "index.js",
   "scripts": {
     "start": "nodemon modules/core/server/core.server.app.js --exec babel-node",
@@ -9,18 +9,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jcmangaliag/cmsc190-special-project.git"
+    "url": "git+https://github.com/jcmangaliag/PCAARRD-KM-Community.git"
   },
   "keywords": [
+    "DOST-PCAARRD"
     "KM",
     "Community"
   ],
   "author": "Juan Carlo Mangaliag",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jcmangaliag/cmsc190-special-project/issues"
+    "url": "https://github.com/jcmangaliag/PCAARRD-KM-Community/issues"
   },
-  "homepage": "https://github.com/jcmangaliag/cmsc190-special-project#readme",
+  "homepage": "https://github.com/jcmangaliag/PCAARRD-KM-Community#readme",
   "dependencies": {
     "angular": "^1.6.2",
     "angular-animate": "^1.6.2",
