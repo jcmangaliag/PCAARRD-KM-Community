@@ -20,7 +20,7 @@
 			},
 			{
 				category: "media",
-				title: "Post Media"
+				title: "Post Media or URL"
 			},
 			{
 				category: "news",

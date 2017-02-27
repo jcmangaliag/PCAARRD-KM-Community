@@ -17,7 +17,30 @@ import _ from 'lodash';
 
 		$scope.addPostFormData = {};
 
+		$scope.authors = [''];
+
+		$scope.addAuthor = () => {
+			if ($scope.authors.length < 5){
+				$scope.authors.push('');
+			}
+		}
+
+		$scope.removeAuthor = () => {
+			if ($scope.authors.length > 1){
+				$scope.authors.pop();
+			}
+		}
+
+		$scope.clearAuthors = () => {
+			$scope.authors.length = 0;
+			$scope.authors.push('');
+		}
+
 		$scope.onProcessPostData = (postCategory) => {
+			if (postCategory === 'news'){
+				$scope.addPostFormData.authors = $scope.authors;
+			}
+
 			$scope.addPostFormData.category = postCategory;
 			$scope.addPostFormData.hashtags = $scope.hashtags;
 			$scope.addPostFormData.datePosted = moment().format('MMMM Do YYYY, h:mm:ss a');
@@ -52,6 +75,7 @@ import _ from 'lodash';
 
 			$scope.addPostFormData = null;
 			$scope.clearHashtags();
+			$scope.clearAuthors();
 		}
 	}
 

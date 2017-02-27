@@ -24,7 +24,7 @@
 			},
 			{
 				category: "media",
-				title: "Media Posts"
+				title: "Media or URL Posts"
 			},
 			{
 				category: "news",

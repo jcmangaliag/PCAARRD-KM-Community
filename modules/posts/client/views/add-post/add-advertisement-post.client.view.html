@@ -5,8 +5,13 @@
   </div>
 
   <div class="form-group">
-    <label for="post-ads__desc">Details </label>
-    <textarea class="form-control" id="post-ads__desc" rows="3" placeholder="Enter the details" ng-model="addPostFormData.details" required></textarea>
+      <label for="post-ads__name">Price (in Philippine Peso, optional)</label>
+      <input type="number" step="0.01" class="form-control" id="post-ads__name" placeholder="Enter the price" ng-model="addPostFormData.price" />
+    </div>
+
+  <div class="form-group">
+    <label for="post-ads__desc">Features and Other Details </label>
+    <textarea class="form-control" id="post-ads__desc" rows="3" placeholder="Enter the features and other details" ng-model="addPostFormData.details" required></textarea>
   </div>
 
   <shared-add-files></shared-add-files>
@@ -15,7 +20,5 @@
 
   <shared-add-hashtags></shared-add-hashtags>
 
-  <div class="text-right">
-    <button type="submit" class="btn btn-success"> <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit </button>
-  </div>
+  <shared-reset-submit-buttons></shared-reset-submit-buttons>
 </form>
