@@ -12,15 +12,17 @@
   <div class="form-group">
   <label style="display: block;">Media Type</label>
   <select class="form-control" style="width: 30%; display: inline-block;">
-    <option selected>Photo</option>
-    <option>Video</option>
-    <option>Document</option>
-    <option>URL</option>
-    <option>Others</option>
+    <option value="photo" selected>Photo</option>
+    <option value="video">Video</option>
+    <option value="document">Document</option>
+    <option value="url">URL</option>
+    <option value="others">Others</option>
   </select>
   </div>
 
   <shared-add-files></shared-add-files>
+
+  <shared-add-technology-handle selected-technology-handle="addPostFormData.technologyHandle"></shared-add-technology-handle>
 
   <shared-add-hashtags></shared-add-hashtags>
 
