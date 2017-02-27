@@ -8,6 +8,9 @@ import SharedViewHashtagsDirective from './directives/shared-view-hashtags.clien
 import SharedAddFilesDirective from './directives/shared-add-files.client.directive';
 import SharedViewFilesDirective from './directives/shared-view-files.client.directive';
 import SharedDisableSpacesDirective from './directives/shared-disable-spaces.client.directive';
+import SharedAddTechnologyHandleDirective from './directives/shared-add-technology-handle.client.directive';
+import SharedViewTechnologyHandleDirective from './directives/shared-view-technology-handle.client.directive';
+import SharedResetSubmitButtonsDirective from './directives/shared-reset-submit-buttons.client.directive';
 
 import SharedAddHashtagsStyle from './styles/shared-add-hashtags.client.style.scss';
 import SharedAddFilesStyle from './styles/shared-add-files.client.style.scss';

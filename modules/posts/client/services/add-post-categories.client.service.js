@@ -19,8 +19,8 @@
 				title: "Post Incident Report"
 			},
 			{
-				category: "advertisement",
-				title: "Post Advertisement"
+				category: "media",
+				title: "Post Media or URL"
 			},
 			{
 				category: "news",
@@ -31,8 +31,8 @@
 				title: "Post Event"
 			},
 			{
-				category: "media",
-				title: "Post Media"
+				category: "advertisement",
+				title: "Post Advertisement"
 			},
 			{
 				category: "others",
