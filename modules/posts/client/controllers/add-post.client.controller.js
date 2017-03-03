@@ -16,6 +16,30 @@ import _ from 'lodash';
 		$scope.submitPost = _.partial(submitPost);
 
 		$scope.addPostFormData = {};
+		$scope.date = {
+			months: [
+				'January',
+				'February',
+				'March',
+				'April',
+				'May',
+				'June',
+				'July',
+				'August',
+				'September',
+				'October',
+				'November',
+				'December'
+			]
+		}
+
+		$scope.getRange = (start, end) => {
+			let range = [];
+			for (let i = start; i < end; i++){
+				range.push(i);
+			}
+			return range;
+		}
 
 		$scope.authors = [''];
 
