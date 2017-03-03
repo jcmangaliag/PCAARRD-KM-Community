@@ -14,8 +14,10 @@ import _ from 'lodash';
 
 		const {submitPost} = AddPostService;
 		$scope.submitPost = _.partial(submitPost);
-
+		$scope.MIN_AUTHOR = 1;
+		$scope.MAX_AUTHOR = 5;
 		$scope.addPostFormData = {};
+		$scope.authors = [''];
 		$scope.date = {
 			months: [
 				'January',
@@ -41,16 +43,14 @@ import _ from 'lodash';
 			return range;
 		}
 
-		$scope.authors = [''];
-
 		$scope.addAuthor = () => {
-			if ($scope.authors.length < 5){
+			if ($scope.authors.length < $scope.MAX_AUTHOR){
 				$scope.authors.push('');
 			}
 		}
 
 		$scope.removeAuthor = () => {
-			if ($scope.authors.length > 1){
+			if ($scope.authors.length > $scope.MIN_AUTHOR){
 				$scope.authors.pop();
 			}
 		}

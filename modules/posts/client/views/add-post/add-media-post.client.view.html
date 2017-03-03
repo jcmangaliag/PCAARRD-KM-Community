@@ -1,7 +1,7 @@
 <form class="post-ads__form" ng-submit="onProcessPostData('media')">
   <div class="form-group">
-    <label for="post-ads__name">Title</label>
-    <input type="text" class="form-control" id="post-ads__name" placeholder="Enter the media title" ng-model="addPostFormData.title" required />
+    <label for="post-ads__name">Media Title</label>
+    <input type="text" class="form-control" id="post-ads__name" placeholder="Enter the media title" ng-model="addPostFormData.mediaTitle" required />
   </div>
 
   <div class="form-group">
@@ -10,21 +10,21 @@
   </div>
 
   <div class="form-group">
-  <label style="display: block;">Media Type</label>
-  <select ng-model="addPostFormData.mediaType" class="form-control" style="width: 30%; display: inline-block;" required>
-    <option value="" selected>---Select Media Type---</option>
-    <option value="photo">Photo</option>
-    <option value="video">Video</option>
-    <option value="document">Document</option>
-    <option value="url">URL</option>
-    <option value="others">Others</option>
-  </select>
+    <label style="display: block;">Media Type</label>
+    <select ng-model="addPostFormData.mediaType" class="form-control" style="width: 30%; display: inline-block;" required>
+      <option value="" selected>---Select Media Type---</option>
+      <option value="photo">Photo</option>
+      <option value="video">Video</option>
+      <option value="document">Document</option>
+      <option value="url">URL</option>
+      <option value="others">Others</option>
+    </select>
   </div>
 
   <div ng-if="addPostFormData.mediaType === 'url'">
     <div class="form-group">
       <label for="post-ads__name">URL</label>
-      <input type="url" class="form-control" id="post-ads__name" placeholder="Enter the URL" ng-model="addPostFormData.url" required />
+      <input type="url" class="form-control" id="post-ads__name" placeholder="Enter the URL" ng-model="addPostFormData.url" ng-required="addPostFormData.mediaType === 'url'" />
     </div>
   </div>
 

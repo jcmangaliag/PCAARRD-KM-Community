@@ -25,15 +25,21 @@ const PostSchema = mongoose.Schema({
 		type: Array,
 		required: true
 	},
+	files: Array,
 	technologyHandle: String,
 	question: String,
 	description: String,
-	files: Array,
 	adTitle: String,
 	details: String,
 	post: String,
+	newsTitle: String,
 	authors: Array,
-	price: Number
+	newsBody: String,
+	price: Number,
+	mediaTitle: String,
+	mediaType: String,
+	url: String
+
 });
 
 export default mongoose.model('Post', PostSchema);
