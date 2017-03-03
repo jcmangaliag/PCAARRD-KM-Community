@@ -5,61 +5,11 @@
     </div>
 
     <div class="form-group">
-      <label style="display: block;">Date <span style="color:red;">*</span></label>
-      <select class="form-control" style="width: 25%; display: inline-block;" required>
-        <option value="" selected>---Month---</option>
-        <option ng-repeat="month in date.months" value="{{month}}" >{{month}}</option>
-      </select>
-
-      <select class="form-control" style="width: 15%; display: inline-block;" required>
-        <option value="" selected>---Day---</option>
-        <option ng-repeat="day in getRange(1, 61)" value="{{day}}" >{{day}}</option>
-      </select>
-
-      <select class="form-control" style="width: 15%; display: inline-block;" required>
-        <option value="" selected>---Year---</option>
-        <option ng-repeat="year in getRange(2017, 2031)" value="{{year}}" >{{year}}</option>    
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label style="display: block;">Start Time <span style="color:red;">*</span></label>
-      <select class="form-control" style="width: 15%; display: inline-block;" required>
-          <option value="" selected>---HH---</option>
-          <option ng-repeat="hour in getRange(1, 13)" value="{{hour}}" >{{hour}}</option>       
-      </select>
-
-      :
-      <select class="form-control" style="width: 15%; display: inline-block;" required>
-          <option value="" selected>---MM---</option>
-          <option ng-repeat="minute in getRange(1, 61)" value="{{minute}}" >{{minute}}</option>                  
-      </select>
-      
-        <select class="form-control" style="width: 18%; display: inline-block;" required>
-          <option value="" selected>---AM/PM---</option>
-          <option value= "AM">AM</option>      
-          <option value= "PM">PM</option>                 
-        </select>
-    </div>
-
-    <div class="form-group">
-      <label style="display: block;">End Time</label>
-      <select class="form-control" style="width: 15%; display: inline-block;">
-          <option value="" selected>---HH---</option>
-          <option ng-repeat="hour in getRange(1, 13)" value="{{hour}}" >{{hour}}</option>       
-      </select>
-
-      :
-      <select class="form-control" style="width: 15%; display: inline-block;">
-          <option value="" selected>---MM---</option>
-          <option ng-repeat="minute in getRange(1, 61)" value="{{minute}}" >{{minute}}</option>                  
-      </select>
-      
-        <select class="form-control" style="width: 18%; display: inline-block;">
-          <option value="" selected>---AM/PM---</option>
-          <option value= "AM">AM</option>      
-          <option value= "PM">PM</option>                 
-        </select>
+      <label>Date and Start Time <span style="color:red;">*</span></label>
+      <div class="input-group">
+         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+        <input type="text" class="form-control" placeholder="Enter the date and time" ng-model="addPostFormData.dateTime" ng-value="defaultDatetime" datetime-picker date-format="MMMM d yyyy, h:mm a" future-only style="background-color: white;" readonly />
+      </div>
     </div>
 
     <div class="form-group">
@@ -68,13 +18,13 @@
     </div>
 
     <div class="form-group">
-      <label for="post-question__name">Target Audiences <span style="color:red;">*</span></label>
+      <label for="post-question__name">Target Audience <span style="color:red;">*</span> <span style="font-style: italic;">(e.g. Everyone, Senior Citizens Only)</span></label>
       <input type="text" class="form-control" id="post-question__name" placeholder="Enter the target audiences" ng-model="addPostFormData.audience" required />
     </div>
 
     <div class="form-group">
       <label for="post-question__desc">Event Details <span style="color:red;">*</span></label>
-      <textarea class="form-control" id="post-question__desc" rows="3" placeholder="Enter the details" ng-model="addPostFormData.description" required></textarea>
+      <textarea class="form-control" id="post-question__desc" rows="3" placeholder="Enter the details" ng-model="addPostFormData.details" required></textarea>
     </div>
 
     <shared-add-files></shared-add-files>

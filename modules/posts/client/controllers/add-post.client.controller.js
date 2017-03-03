@@ -18,30 +18,8 @@ import _ from 'lodash';
 		$scope.MAX_AUTHOR = 5;
 		$scope.addPostFormData = {};
 		$scope.authors = [''];
-		$scope.date = {
-			months: [
-				'January',
-				'February',
-				'March',
-				'April',
-				'May',
-				'June',
-				'July',
-				'August',
-				'September',
-				'October',
-				'November',
-				'December'
-			]
-		}
-
-		$scope.getRange = (start, end) => {
-			let range = [];
-			for (let i = start; i < end; i++){
-				range.push(i);
-			}
-			return range;
-		}
+		$scope.defaultDatetime = moment().format('MMMM D YYYY, h:mm A');
+		$scope.addPostFormData.dateTime = $scope.defaultDatetime;
 
 		$scope.addAuthor = () => {
 			if ($scope.authors.length < $scope.MAX_AUTHOR){
@@ -58,6 +36,17 @@ import _ from 'lodash';
 		$scope.clearAuthors = () => {
 			$scope.authors.length = 0;
 			$scope.authors.push('');
+		}
+
+		$scope.clearForm = (postCategory) => {
+			$scope.addPostFormData = null;
+			$scope.clearHashtags();
+			if (postCategory === 'news'){
+				$scope.clearAuthors();
+			}
+			if (postCategory === 'event' || postCategory === 'report'){
+				$scope.addPostFormData = { dateTime: $scope.defaultDatetime};
+			}
 		}
 
 		$scope.onProcessPostData = (postCategory) => {
@@ -96,10 +85,7 @@ import _ from 'lodash';
 			$scope.addPostFormData.groupBelonged = "Banana";
 
 			$scope.submitPost(_.cloneDeep($scope.addPostFormData));
-
-			$scope.addPostFormData = null;
-			$scope.clearHashtags();
-			$scope.clearAuthors();
+			$scope.clearForm(postCategory);
 		}
 	}
 

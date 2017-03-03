@@ -38,7 +38,13 @@ const PostSchema = mongoose.Schema({
 	price: Number,
 	mediaTitle: String,
 	mediaType: String,
-	url: String
+	url: String,
+	reportTitle: String,
+	dateTime: String,
+	location: String,
+	details: String,
+	eventName: String,
+	audience: String
 
 });
 
