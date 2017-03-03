@@ -1,30 +1,30 @@
 <form class="post-question__form" ng-submit="onProcessPostData('report')">
         <div class="form-group">
-          <label for="post-question__name">Title</label>
+          <label for="post-question__name">Incident Report Title <span style="color:red;">*</span></label>
           <input type="text" class="form-control" id="post-question__name" placeholder="Enter the title" ng-model="addPostFormData.title" required />
         </div>
 
 
         <div class="form-group">
-          <label style="display: block;">Date Occured</label>
-          <select  class="form-control" style="width: 25%; display: inline-block;">
+          <label style="display: block;">Date Occured <span style="color:red;">*</span></label>
+          <select  class="form-control" style="width: 25%; display: inline-block;" required>
             <option value="" selected>---Month---</option>
             <option ng-repeat="month in date.months" value="{{month}}" >{{month}}</option>
           </select>
 
-          <select class="form-control" style="width: 15%; display: inline-block;">
+          <select class="form-control" style="width: 15%; display: inline-block;" required>
             <option value="" selected>---Day---</option>
             <option ng-repeat="day in getRange(1, 61)" value="{{day}}" >{{day}}</option>
           </select>
 
-          <select class="form-control" style="width: 15%; display: inline-block;">
+          <select class="form-control" style="width: 15%; display: inline-block;" required>
             <option value="" selected>---Year---</option>
             <option ng-repeat="year in getRange(2010, 2018)" value="{{year}}" >{{year}}</option>    
           </select>
         </div>
 
         <div class="form-group">
-          <label style="display: block;">Time Occured (optional)</label>
+          <label style="display: block;">Time Occured</label>
           <select class="form-control" style="width: 15%; display: inline-block;">
               <option value="" selected>---HH---</option>
               <option ng-repeat="hour in getRange(1, 13)" value="{{hour}}" >{{hour}}</option>       
@@ -44,13 +44,13 @@
         </div>
 
         <div class="form-group">
-          <label for="post-question__name">Location</label>
+          <label for="post-question__name">Incident Report Location <span style="color:red;">*</span></label>
           <input type="text" class="form-control" id="post-question__name" placeholder="Enter the location" ng-model="addPostFormData.location" required />
         </div>
 
         <div class="form-group">
-          <label for="post-question__desc">Details (optional)</label>
-          <textarea class="form-control" id="post-question__desc" rows="3" placeholder="Enter the details" ng-model="addPostFormData.description"></textarea>
+          <label for="post-question__desc">Incident Report Details <span style="color:red;">*</span></label>
+          <textarea class="form-control" id="post-question__desc" rows="3" placeholder="Enter the details" ng-model="addPostFormData.description" required></textarea>
         </div>
 
         <shared-add-files></shared-add-files>
@@ -58,6 +58,8 @@
         <shared-add-technology-handle selected-technology-handle="addPostFormData.technologyHandle"></shared-add-technology-handle>
 
         <shared-add-hashtags></shared-add-hashtags>
+
+        <shared-form-legends></shared-form-legends>
 
         <shared-reset-submit-buttons></shared-reset-submit-buttons>
       </form>
