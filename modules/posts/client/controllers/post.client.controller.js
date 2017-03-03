@@ -8,13 +8,21 @@ import _ from 'lodash';
 		.module('posts')
 		.controller('PostController', PostController);
 
-	PostController.$inject = ['$scope', '$stateParams', 'PostService', 'ViewPostsCategoriesService'];
+	PostController.$inject = ['$scope', '$state', '$stateParams', 'PostService', 'ViewPostsCategoriesService'];
 
-	function PostController ($scope, $stateParams, PostService, ViewPostsCategoriesService) {
+	function PostController ($scope, $state, $stateParams, PostService, ViewPostsCategoriesService) {
 
 		const {getOnePost, setPostReaction} = PostService;
 		$scope.setPostReaction = _.partial(setPostReaction, $scope);
 		$scope.userid = PostService.userid;	// temporary userid
+
+		$scope.goBackToViewAllPosts = () => {
+			console.log($state);
+			if (window.history.length > 1)
+				window.history.back();
+			else
+				$state.go('oneGroup');	// specify what group
+		}
 
 		$scope.getPostData = () => {
 			if ($stateParams.postType === "view-one-post"){
