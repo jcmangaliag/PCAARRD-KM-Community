@@ -8,9 +8,9 @@
 	OneGroupController.$inject = ['$scope', '$state'];
 
 	function OneGroupController ($scope, $state) {
-		$scope.$watch(function(){
+		$scope.$watch(() => {
 		    return $state.$current.name
-		}, function(newCurrentStateName){
+		}, (newCurrentStateName) => {
 		    $scope.viewOnePost = $state.current.name.indexOf('oneGroup.viewOne') >= 0? true: false;
 		});
 	}

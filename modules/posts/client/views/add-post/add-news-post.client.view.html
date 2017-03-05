@@ -6,12 +6,12 @@
 
   <div class="form-group">
     <label for="post-ads__name">News Author/s <span style="color:red;">*</span></label>
-    <div class="shared__addhashtags--body" ng-repeat="author in authors track by $index">
-      <input type="text" style="display: inline-block;" class="form-control shared__addhashtags--field" placeholder="Enter an author" ng-model="authors[$index]" required />
+    <div class="shared__addhashtags--body" ng-repeat="author in multipleFields.authors track by $index">
+      <input type="text" style="display: inline-block;" class="form-control shared__addhashtags--field" placeholder="Enter an author" ng-model="multipleFields.authors[$index]" required />
   
-      <button type="button" ng-hide="{{authors.length >= MAX_AUTHOR}}"  class="btn btn-primary" ng-if="$last" ng-click="addAuthor()"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+      <button type="button" ng-hide="{{multipleFields.authors.length >= MAX_AUTHOR}}"  class="btn btn-primary" ng-if="$last" ng-click="addField(multipleFields.authors, MAX_AUTHOR)"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
 
-      <button type="button" ng-hide="{{authors.length <= MIN_AUTHOR}}" class="btn btn-danger" ng-if="$last" ng-click="removeAuthor()"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button>
+      <button type="button" ng-hide="{{multipleFields.authors.length <= MIN_AUTHOR}}" class="btn btn-danger" ng-if="$last" ng-click="removeField(multipleFields.authors, MIN_AUTHOR)"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button>
     </div>
   </div>
 
@@ -20,7 +20,7 @@
     <textarea class="form-control" id="post-ads__desc" rows="7" placeholder="Enter the news body" ng-model="addPostFormData.newsBody" required></textarea>
   </div>
 
-  <shared-add-files></shared-add-files>
+  <shared-add-files form-data="addPostFormData"></shared-add-files>
 
   <shared-add-technology-handle selected-technology-handle="addPostFormData.technologyHandle"></shared-add-technology-handle>
 

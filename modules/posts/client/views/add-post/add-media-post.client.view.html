@@ -11,26 +11,23 @@
 
   <div class="form-group">
     <label style="display: block;">Media Type <span style="color:red;">*</span></label>
-    <select ng-model="addPostFormData.mediaType" class="form-control" style="width: 30%; display: inline-block;" required>
-      <option value="" selected>---Select Media Type---</option>
-      <option value="photo">Photo</option>
-      <option value="video">Video</option>
-      <option value="document">Document</option>
-      <option value="url">URL</option>
-      <option value="others">Others</option>
-    </select>
+    <label class="radio-inline"><input type="radio" ng-model="addPostFormData.mediaType" value="files" name="mediaType" required />Files</label>
+    <label class="radio-inline"><input type="radio" ng-model="addPostFormData.mediaType" ng-click="removeFiles()" value="url" name="mediaType" required />URL</label>
   </div>
 
-  <div ng-if="addPostFormData.mediaType === 'url'">
-    <div class="form-group">
-      <label for="post-ads__name">URL <span style="color:red;">*</span></label>
-      <input type="url" class="form-control" id="post-ads__name" placeholder="Enter the URL" ng-model="addPostFormData.url" ng-required="addPostFormData.mediaType === 'url'" />
+  <div ng-if="addPostFormData.mediaType === 'url'" class="form-group">
+    <label for="post-ads__name">URL/s <span style="color:red;">*</span></label>
+    <div class="shared__addhashtags--body" ng-repeat="url in multipleFields.urls track by $index">
+      <input type="url" style="display: inline-block;" class="form-control shared__addhashtags--field" id="post-ads__name" placeholder="Enter an URL" ng-model="multipleFields.urls[$index]" required />
+  
+      <button type="button" ng-hide="{{multipleFields.urls.length >= MAX_URL}}"  class="btn btn-primary" ng-if="$last" ng-click="addField(multipleFields.urls, MAX_URL)"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+
+      <button type="button" ng-hide="{{multipleFields.urls.length <= MIN_URL}}" class="btn btn-danger" ng-if="$last" ng-click="removeField(multipleFields.urls, MIN_URL)"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button>
     </div>
   </div>
 
-  <div ng-if="addPostFormData.mediaType !== 'url'">
-    <shared-add-files></shared-add-files>
-  </div>
+  <shared-add-files ng-if="addPostFormData.mediaType && addPostFormData.mediaType !== 'url'" form-data="addPostFormData"></shared-add-files>
+
 
   <shared-add-technology-handle selected-technology-handle="addPostFormData.technologyHandle"></shared-add-technology-handle>
 

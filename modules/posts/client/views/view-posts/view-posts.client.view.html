@@ -1,6 +1,6 @@
 <view-posts-categories></view-posts-categories>
 
-<div class="post-ads" ng-repeat="post in posts.contents | orderBy:'':true" style="margin: 2% 0; background-color: #eeeeee; border-radius: 8px; border-style:groove;">
+<div class="post-ads" ng-repeat="post in posts.contents | orderBy:'':true" style="margin: 2% 0; background-color: white; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 
 	<div ng-switch="post.category">
 		<div ng-switch-when="question">

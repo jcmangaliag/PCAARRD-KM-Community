@@ -38,7 +38,7 @@ const PostSchema = mongoose.Schema({
 	price: Number,
 	mediaTitle: String,
 	mediaType: String,
-	url: String,
+	urls: Array,
 	reportTitle: String,
 	dateTime: String,
 	location: String,

@@ -39,6 +39,7 @@
     "lodash": "^4.17.4",
     "moment": "^2.17.1",
     "mongoose": "^4.8.4",
+    "ng-files-model": "^1.0.4",
     "ng-toast": "^2.0.0"
   },
   "devDependencies": {
