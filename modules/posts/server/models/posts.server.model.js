@@ -44,6 +44,8 @@ const PostSchema = mongoose.Schema({
 	location: String,
 	details: String,
 	eventName: String,
+	startDateTime: String,
+	endDateTime: String,
 	audience: String
 
 });

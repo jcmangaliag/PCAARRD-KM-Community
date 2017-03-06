@@ -16,6 +16,14 @@ import _ from 'lodash';
 		$scope.setPostReaction = _.partial(setPostReaction, $scope);
 		$scope.userid = PostService.userid;	// temporary userid
 
+		$scope.commentOnOnePost = (postCategory, postID) => {
+			$state.go(`oneGroup.viewOne${postCategory.charAt(0).toUpperCase() + postCategory.slice(1)}Post`, {id: postID, '#': 'write-comment'});
+		}
+
+		$scope.clearForm = () => {
+			$scope.clearHashtags();
+		}
+
 		$scope.goBackToViewAllPosts = () => {
 			if (window.history.length > 1)
 				window.history.back();

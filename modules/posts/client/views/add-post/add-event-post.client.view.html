@@ -5,12 +5,25 @@
     </div>
 
     <div class="form-group">
-      <label>Date and Start Time <span style="color:red;">*</span></label>
+      <label>Start Date and Time <span style="color:red;">*</span></label>
       <div class="input-group">
          <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-        <input type="text" class="form-control" placeholder="Enter the date and time" ng-model="addPostFormData.dateTime" ng-value="defaultDatetime" datetime-picker date-format="MMMM d yyyy, h:mm a" future-only style="background-color: white;" readonly />
+        <input type="text" class="form-control" ng-model="addPostFormData.startDateTime" ng-value="defaultDatetime" datetime-picker date-format="MMMM d yyyy, h:mm a" future-only style="background-color: white;" readonly />
       </div>
     </div>
+
+    <div style="padding: 0 0 2% 0;">
+      <a href="#" ng-click="toggleEndDateTime()"> <i class="fa" ng-class="{'fa-calendar-plus-o' : !endDateTime.enable, 'fa-calendar-minus-o': endDateTime.enable}" aria-hidden="true"></i> End Date and Time</a>
+    </div>
+
+    <div ng-if="endDateTime.enable" class="form-group">
+      <label>End Date and Time <span style="color:red;">*</span></label>
+      <div class="input-group">
+         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+        <input type="text" class="form-control" ng-model="endDateTime.selected" ng-value="defaultDatetime" datetime-picker date-format="MMMM d yyyy, h:mm a" future-only style="background-color: white;" readonly />
+      </div>
+    </div>
+
 
     <div class="form-group">
       <label for="post-question__name">Event Location <span style="color:red;">*</span></label>
@@ -35,5 +48,5 @@
 
     <shared-form-legends></shared-form-legends>
 
-    <shared-reset-submit-buttons></shared-reset-submit-buttons>
+    <shared-reset-submit-buttons form-data="addPostFormData"></shared-reset-submit-buttons>
   </form>

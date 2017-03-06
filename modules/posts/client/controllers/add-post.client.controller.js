@@ -8,23 +8,38 @@ import _ from 'lodash';
 		.module('posts')
 		.controller('AddPostController', AddPostController);
 
-	AddPostController.$inject = ['$scope', 'AddPostService'];
+	AddPostController.$inject = ['$scope', 'AddPostService', 'AddPostCategoriesService'];
 
-	function AddPostController ($scope, AddPostService) {
+	function AddPostController ($scope, AddPostService, AddPostCategoriesService) {
 
 		const {submitPost} = AddPostService;
 		$scope.submitPost = _.partial(submitPost);
-		$scope.addPostFormData = {};
+		$scope.addPostFormData = {
+			category: AddPostCategoriesService.getCurrentAddPostCategory().postCategory.category
+		};
 		$scope.multipleFields = {
 			authors: [''],
 			urls: ['']
-		}
+		};
 		$scope.MIN_AUTHOR = 1;
 		$scope.MAX_AUTHOR = 5;
 		$scope.MIN_URL = 1;
 		$scope.MAX_URL = 10;
 		$scope.defaultDatetime = moment().format('MMMM D YYYY, h:mm A');
-		$scope.addPostFormData.dateTime = $scope.defaultDatetime;
+		
+		$scope.loadAdditionalFormFields = () => {
+			if ($scope.addPostFormData.category === "event"){
+				$scope.addPostFormData.startDateTime = $scope.defaultDatetime;
+				$scope.endDateTime = { 
+					enable: false, 
+					selected: $scope.defaultDatetime 
+				};
+			}
+		}
+
+		$scope.toggleEndDateTime = () => {
+			$scope.endDateTime.enable = !$scope.endDateTime.enable;
+		}
 
 		$scope.addField = (fieldArray, maxField) => {
 			if (fieldArray.length < maxField){
@@ -49,19 +64,33 @@ import _ from 'lodash';
 			$scope.addPostFormData.files = [];
 		}
 
-		$scope.clearForm = (postCategory) => {
+		$scope.clearForm = () => {
+			const category = $scope.addPostFormData.category;
 			$scope.addPostFormData = null;
 			$scope.clearHashtags();
 			$scope.clearMultipleFields();
 
-			if (postCategory === 'event' || postCategory === 'report'){
-				$scope.addPostFormData = { dateTime: $scope.defaultDatetime};
+			if (category === 'event'){
+				$scope.addPostFormData = { 
+					startDateTime: $scope.defaultDatetime
+				};
+				//delete $scope.addPostFormData.endDateTime;
+				$scope.endDateTime.enable = false;
+			}
+
+			if (category === 'report'){
+				$scope.addPostFormData = { dateTime: $scope.defaultDatetime };
 			}
 		}
 
 		$scope.onProcessPostData = (postCategory) => {
-			if (postCategory === 'advertisement' && $scope.addPostFormData.price){
-				$scope.addPostFormData.price = $scope.addPostFormData.price.toFixed(2);
+
+			if (postCategory === 'advertisement' && $scope.price){
+				$scope.addPostFormData.price = $scope.price.toFixed(2);
+			}
+
+			if (postCategory === 'event' && $scope.endDateTime.enable){
+				$scope.addPostFormData.endDateTime = $scope.endDateTime.selected;
 			}
 
 			if (postCategory === 'news'){
@@ -108,10 +137,12 @@ import _ from 'lodash';
 			$scope.addPostFormData.groupBelonged = "Banana";
 
 			$scope.submitPost($scope.addPostFormData)
-			.then((addPostFormData) => {
-				$scope.clearForm(postCategory);
+			.then(() => {
+				$scope.clearForm();
 			});
 		}
+
+		$scope.loadAdditionalFormFields();
 	}
 
 })();
