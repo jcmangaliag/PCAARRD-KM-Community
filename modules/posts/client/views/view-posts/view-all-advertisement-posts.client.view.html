@@ -1,10 +1,15 @@
 <div style="margin: 2%; border-radius: 8px;"> 
   <span class="label label-info">Advertisement</span>
-  <h3 style="text-decoration: underline; font-weight: bolder;"><a style="color: #333333;" ui-sref="oneGroup.viewOneAdvertisementPost({id: post._id})">{{post.adTitle}}</a></h3>
-  <p style="color: gray;">submitted by <a href="#" style="text-decoration: underline; color: gray; font-weight: bold;">{{post.postedBy}}</a> on {{post.datePosted}}</p>
+  <a style="color: #333333;" ng-click="autoScrollPost(true)" ui-sref="oneGroup.viewOneAdvertisementPost({id: post._id})">
+  <h4 style="text-decoration: underline; font-weight: bolder; max-height: 70px; white-space: pre-wrap;" data-ellipsis data-ng-bind="post.adTitle"></h4> </a>
+  <p style="color: gray; padding-bottom: 2%;">submitted by <a href="#" style="text-decoration: underline; color: gray; font-weight: bold;">{{post.postedBy}}</a> on {{post.datePosted}}</p>
 
-  <h4 style="padding: 4% 0; white-space: pre-wrap;">{{post.details}}</h4>
-
+  <p ng-if="post.price"><img src="posts/client/assets/images/philippine-peso.png" alt="Php" style="height: 30px; margin-right: 10px;" />{{post.price}}</p>
+	
+  <p style="padding: 1% 0; white-space: pre-wrap; max-height: 80px;" data-ng-bind="post.details" data-ellipsis></p>
+  <div style="margin: -1% 0 2% 0;">
+  	(<a ui-sref="oneGroup.viewOneAdvertisementPost({id: post._id})" ng-click="autoScrollPost(true)">Read More</a>)
+  </div>
   <all-posts-reactions></all-posts-reactions>
 </div>
 

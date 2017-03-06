@@ -23,8 +23,8 @@
 				title: "Incident Report Posts"
 			},
 			{
-				category: "advertisement",
-				title: "Advertisement Posts"
+				category: "media",
+				title: "Media or URL Posts"
 			},
 			{
 				category: "news",
@@ -35,8 +35,8 @@
 				title: "Event Posts"
 			},
 			{
-				category: "media",
-				title: "Media Posts"
+				category: "advertisement",
+				title: "Advertisement Posts"
 			},
 			{
 				category: "others",

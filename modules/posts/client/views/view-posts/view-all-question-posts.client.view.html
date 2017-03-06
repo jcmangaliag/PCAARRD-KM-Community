@@ -1,9 +1,12 @@
 <div style="margin: 2%; border-radius: 8px;"> 
   <span class="label label-info">Question</span>
-  <h3 style="text-decoration: underline; font-weight: bolder;"><a style="color: #333333;" ui-sref="oneGroup.viewOneQuestionPost({id: post._id})">{{post.question}}</a></h3>
-  <p style="color: gray;">submitted by <a href="#" style="text-decoration: underline; color: gray; font-weight: bold;">{{post.postedBy}}</a> on {{post.datePosted}}</p>
+  <a style="color: #333333;" ng-click="autoScrollPost(true)" ui-sref="oneGroup.viewOneQuestionPost({id: post._id})">
+  <h4 style="text-decoration: underline; font-weight: bolder; max-height: 70px; white-space: pre-wrap;" data-ellipsis data-ng-bind="post.question"></h4> </a>
+  <p style="padding-bottom: 2%; color: gray;">submitted by <a href="#" style="text-decoration: underline; color: gray; font-weight: bold;">{{post.postedBy}}</a> on {{post.datePosted}}</p>
 
-  <h4 style="padding: 4% 0; white-space: pre-wrap;">{{post.description}}</h4>
-
+  <p ng-if="post.description" style="padding: 1% 0; white-space: pre-wrap; max-height: 80px;" data-ng-bind="post.description" data-ellipsis></p>
+  <div style="margin: -1% 0 2% 0;">
+  	(<a ui-sref="oneGroup.viewOneQuestionPost({id: post._id})" ng-click="autoScrollPost(true)">Read More</a>)
+  </div>
    <all-posts-reactions></all-posts-reactions>
 </div>

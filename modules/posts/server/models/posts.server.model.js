@@ -25,12 +25,29 @@ const PostSchema = mongoose.Schema({
 		type: Array,
 		required: true
 	},
+	files: Array,
+	technologyHandle: String,
 	question: String,
 	description: String,
-	files: Array,
 	adTitle: String,
 	details: String,
-	post: String
+	post: String,
+	newsTitle: String,
+	authors: Array,
+	newsBody: String,
+	price: String,
+	mediaTitle: String,
+	mediaType: String,
+	urls: Array,
+	reportTitle: String,
+	dateTime: String,
+	location: String,
+	details: String,
+	eventName: String,
+	startDateTime: String,
+	endDateTime: String,
+	audience: String
+
 });
 
 export default mongoose.model('Post', PostSchema);

@@ -1,0 +1,22 @@
+<div style="margin: 2%; border-radius: 8px;"> 
+
+  <span class="label label-info">Media</span> <span class="label label-warning">{{post.mediaType}}</span>
+  <a style="color: #333333;" ng-click="autoScrollPost(true)" ui-sref="oneGroup.viewOneMediaPost({id: post._id})">
+  <h4 style="text-decoration: underline; font-weight: bolder; max-height: 70px; white-space: pre-wrap;" data-ellipsis data-ng-bind="post.mediaTitle"></h4> </a>
+  <p style="color: gray; padding-bottom: 2%;">submitted by <a href="#" style="text-decoration: underline; color: gray; font-weight: bold;">{{post.postedBy}}</a> on {{post.datePosted}}</p>
+
+  <p ng-if="post.description" style="padding: 1% 0; white-space: pre-wrap; max-height: 80px;" data-ng-bind="post.description" data-ellipsis></p>
+
+  <div ng-if="post.urls.length > 0">
+    <ul class="list-group">
+      <li class="list-group-item" ng-repeat="url in post.urls | limitTo: 3"><a href="{{url}}">{{url}}</a></li>
+    </ul>
+    <span ng-if="post.urls.length > 3">…</span>
+  </div>
+
+  <div style="margin: 2% 0 2% 0;">
+  	(<a ui-sref="oneGroup.viewOneMediaPost({id: post._id})" ng-click="autoScrollPost(true)">Read More</a>)
+  </div>
+
+  <all-posts-reactions></all-posts-reactions>
+</div>

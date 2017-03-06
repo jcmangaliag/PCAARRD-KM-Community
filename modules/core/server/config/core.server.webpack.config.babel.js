@@ -32,7 +32,7 @@ const webpackConfig = {
 				loader: 'raw'
 			},
 			{
-				test: /\.scss$/,
+				test: /(\.scss|\.css)$/,
 				loaders: [
 					'style',
 					'css',

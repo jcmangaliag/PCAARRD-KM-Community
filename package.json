@@ -26,7 +26,9 @@
     "angular": "^1.6.2",
     "angular-animate": "^1.6.2",
     "angular-bootstrap-affix": "^0.2.4",
+    "angular-ellipsis": "^1.0.1",
     "angular-ui-router": "^0.4.2",
+    "angularjs-datetime-picker-v2": "^0.2.2",
     "babel-polyfill": "^6.23.0",
     "body-parser": "^1.16.1",
     "bootstrap-sass": "^3.3.7",
@@ -38,6 +40,7 @@
     "lodash": "^4.17.4",
     "moment": "^2.17.1",
     "mongoose": "^4.8.4",
+    "ng-files-model": "^1.0.4",
     "ng-toast": "^2.0.0"
   },
   "devDependencies": {

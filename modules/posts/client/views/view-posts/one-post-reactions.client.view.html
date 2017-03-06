@@ -1,4 +1,4 @@
-<div class="col-xs-12 col-sm-12" style=" margin: 2% 0 2% 0; border-radius: 8px; background-color: #eeeeee; padding: 4%; border-style:groove;">
+<div class="col-xs-12 col-sm-12" style=" margin: 2% 0 2% 0; border-radius: 5px; background-color: white; padding: 4%; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
   <h4 style="margin-bottom: 3%;">Tell us your reaction</h4>
   <h4 ng-if="!$first" style="display: inline; padding-right:3%;" ng-repeat="reaction in selectedPost.reactions">
   	<i ng-click="setPostReaction(selectedPost, $index)" class="fa fa-2x" ng-class="{'fa-thumbs-o-up' : reaction.name=='thumbsUp', 'fa-smile-o': reaction.name=='happy', 'fa-frown-o': reaction.name=='sad'}" aria-hidden="true" style="cursor: pointer;" ng-style="reaction.users.indexOf(userid) >=0 ? { 'color':'#286090' } : { 'color': '#333333' }"></i>

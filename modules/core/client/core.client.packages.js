@@ -1,4 +1,4 @@
-import baseViewStyle from './base-view/core-content.client.style.scss';
+import coreContentStyle from './base-view/core-content.client.style.scss';
 
 import sharedModule from '../../shared/client/shared.client.packages';
 import homeModule from '../../home/client/home.client.packages';

@@ -13,7 +13,7 @@ moduleRoutes(app);
 app.use(express.static(__dirname + '/../../'));
 
 app.all('/*', (req, res) => {
-	res.sendFile(path.join(`${__dirname}/../client/base-view/core.client.base-view.html`));
+	res.sendFile(path.join(`${__dirname}/../client/base-view/core-content.client.view.html`));
 });
 
 app.listen(config.port, () => {

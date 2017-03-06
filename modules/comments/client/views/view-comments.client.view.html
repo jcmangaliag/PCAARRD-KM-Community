@@ -1,6 +1,6 @@
-<div class="col-xs-12 col-sm-12">
+<div class="col-xs-12 col-sm-12" style="padding: 0px;">
 	
-	<div ng-repeat="comment in comments.contents | filter: {referredPost: selectedPost._id} | orderBy:'':true" style="border-radius: 8px; background-color: #eeeeee; padding: 3%; margin: 3% 0; border-style:groove;">
+	<div ng-repeat="comment in comments.contents | filter: {referredPost: selectedPost._id} | orderBy:'':true" style="border-radius: 5px; background-color: white; padding: 2%; margin: 3% 0; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 
       	<h4 style="display: inline-block;"><a href="#" style="font-weight: bold; color: #333333;">{{comment.commentedBy}}</a></h4>
       	<p style="display: inline-block; color:gray">wrote on {{comment.dateCommented}}</p>
@@ -9,9 +9,11 @@
 	    	
     	<shared-view-files selected-files="comment.files"></shared-view-files>
 
+    	<shared-view-technology-handle selected-technology-handle="comment.technologyHandle"></shared-view-technology-handle>
+
     	<shared-view-hashtags selected-hashtags="comment.hashtags"></shared-view-hashtags>
 
-      	<div style=" margin-top: 2%; border-radius: 8px; background-color: #eeeeee; padding-top: 2%;">
+      	<div style=" margin-top: 2%; border-radius: 5px; background-color: white;">
 
       		<h5 style="display: inline; padding-right:3%;" ng-repeat="reaction in comment.reactions">
 		        <i ng-click="setCommentReaction(comment, $index)" class="fa fa-2x" ng-class="{'fa-thumbs-o-up' : reaction.name=='thumbsUp', 'fa-smile-o': reaction.name=='happy', 'fa-frown-o': reaction.name=='sad'}" aria-hidden="true" style="cursor: pointer;" ng-style="reaction.users.indexOf(userid) >=0 ? { 'color':'#286090' } : { 'color': '#333333' }"></i>

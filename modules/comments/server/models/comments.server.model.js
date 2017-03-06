@@ -24,7 +24,8 @@ const CommentSchema = mongoose.Schema({
 	reactions: {
 		type: Array,
 		required: true
-	}
+	},
+	technologyHandle: String
 });
 
 export default mongoose.model('Comment', CommentSchema);

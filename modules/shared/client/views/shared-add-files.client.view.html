@@ -1,8 +1,8 @@
-<label>Photos or Files Upload (optional)</label>
+<label>Photos or Files Upload <span ng-if="formData.mediaType == 'files'" style="color:red;">*</span></label>
 <div class="input-group shared__addfiles__input-group">
 <label class="input-group-btn">
-  <span class="btn btn-primary"> <span class="glyphicon glyphicon-open-file" aria-hidden="true"></span> Browse <input type="file" class="shared__addfiles shared__addfiles__file" multiple />
+  <span class="btn btn-primary"> <span class="glyphicon glyphicon-open-file" aria-hidden="true"></span> Browse <input type="file" class="shared__addfiles shared__addfiles__file" ng-files-model model="formData.files" multiple />
   </span>
 </label>
-<input type="text" class="form-control" placeholder="Click 'Browse' to upload photos or files" readonly>
+<input type="text" class="form-control" placeholder="Click 'Browse' to upload photos or files" style="background-color: white;" readonly>
 </div>

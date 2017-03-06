@@ -1,30 +1,39 @@
 <form class="post-ads__form" ng-submit="onProcessPostData('media')">
   <div class="form-group">
-    <label for="post-ads__name">Title</label>
-    <input type="text" class="form-control" id="post-ads__name" placeholder="Enter the media title" ng-model="addPostFormData.title" required />
+    <label for="post-ads__name">Media Title <span style="color:red;">*</span></label>
+    <input type="text" class="form-control" id="post-ads__name" placeholder="Enter the media title" ng-model="addPostFormData.mediaTitle" required />
   </div>
 
   <div class="form-group">
-    <label for="post-ads__desc">Description (optional)</label>
+    <label for="post-ads__desc">Description</label>
     <textarea class="form-control" id="post-ads__desc" rows="3" placeholder="Enter the description" ng-model="addPostFormData.description"></textarea>
   </div>
 
   <div class="form-group">
-  <label style="display: block;">Media Type</label>
-  <select class="form-control" style="width: 30%; display: inline-block;">
-    <option selected>Photo</option>
-    <option>Video</option>
-    <option>Document</option>
-    <option>URL</option>
-    <option>Others</option>
-  </select>
+    <label style="display: block;">Media Type <span style="color:red;">*</span></label>
+    <label class="radio-inline"><input type="radio" ng-model="addPostFormData.mediaType" value="files" name="mediaType" required />Files</label>
+    <label class="radio-inline"><input type="radio" ng-model="addPostFormData.mediaType" ng-click="removeFiles()" value="url" name="mediaType" required />URL</label>
   </div>
 
-  <shared-add-files></shared-add-files>
+  <div ng-if="addPostFormData.mediaType === 'url'" class="form-group">
+    <label for="post-ads__name">URL/s <span style="color:red;">*</span></label>
+    <div class="shared__addhashtags--body" ng-repeat="url in multipleFields.urls track by $index">
+      <input type="url" style="display: inline-block;" class="form-control shared__addhashtags--field" id="post-ads__name" placeholder="Enter a URL" ng-model="multipleFields.urls[$index]" required />
+  
+      <button type="button" ng-hide="{{multipleFields.urls.length >= MAX_URL}}"  class="btn btn-primary" ng-if="$last" ng-click="addField(multipleFields.urls, MAX_URL)"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+
+      <button type="button" ng-hide="{{multipleFields.urls.length <= MIN_URL}}" class="btn btn-danger" ng-if="$last" ng-click="removeField(multipleFields.urls, MIN_URL)"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button>
+    </div>
+  </div>
+
+  <shared-add-files ng-if="addPostFormData.mediaType && addPostFormData.mediaType !== 'url'" form-data="addPostFormData"></shared-add-files>
+
+
+  <shared-add-technology-handle selected-technology-handle="addPostFormData.technologyHandle"></shared-add-technology-handle>
 
   <shared-add-hashtags></shared-add-hashtags>
 
-  <div class="text-right">
-    <button type="submit" class="btn btn-success"> <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit </button>
-  </div>
+  <shared-form-legends></shared-form-legends>
+
+  <shared-reset-submit-buttons></shared-reset-submit-buttons>
 </form>

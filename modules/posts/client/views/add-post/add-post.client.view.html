@@ -1,22 +1,10 @@
-<div class="post-ads" style="background-color: #eeeeee; border-radius: 8px; border-style:groove;">
+<div class="post-ads" style="background-color: white; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 
   <add-post-categories></add-post-categories>
 
   	<div ng-switch="currentAddPostCategory.postCategory.category">
 		<div ng-switch-when="question">
 			<add-question-post></add-question-post>
-		</div>
-
-		<div ng-switch-when="advertisement">
-			<add-advertisement-post></add-advertisement-post>
-		</div>
-
-		<div ng-switch-when="event">
-			<add-event-post></add-event-post>
-		</div>
-
-		<div ng-switch-when="news">
-			<add-news-post></add-news-post>
 		</div>
 
 		<div ng-switch-when="report">
@@ -26,6 +14,18 @@
 		<div ng-switch-when="media">
 			<add-media-post></add-media-post>
 		</div>
+
+		<div ng-switch-when="news">
+			<add-news-post></add-news-post>
+		</div>
+
+		<div ng-switch-when="event">
+			<add-event-post></add-event-post>
+		</div>
+
+		<div ng-switch-when="advertisement">
+			<add-advertisement-post></add-advertisement-post>
+		</div>		
 
 		<div ng-switch-when="others">
 			<add-others-post></add-others-post>

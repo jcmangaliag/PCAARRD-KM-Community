@@ -1,15 +1,17 @@
 <form class="post-ads__form" ng-submit="onProcessPostData('others')">
 
   <div class="form-group">
-    <label for="post-ads__desc">Post </label>
+    <label for="post-ads__desc">Post <span style="color:red;">*</span></label>
     <textarea class="form-control" id="post-ads__desc" rows="3" placeholder="Enter the post" ng-model="addPostFormData.post" required></textarea>
   </div>
 
-  <shared-add-files></shared-add-files>
+  <shared-add-files form-data="addPostFormData"></shared-add-files>
+
+  <shared-add-technology-handle selected-technology-handle="addPostFormData.technologyHandle"></shared-add-technology-handle>
 
   <shared-add-hashtags></shared-add-hashtags>
 
-  <div class="text-right">
-    <button type="submit" class="btn btn-success"> <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit </button>
-  </div>
+  <shared-form-legends></shared-form-legends>
+
+  <shared-reset-submit-buttons></shared-reset-submit-buttons>
 </form>
