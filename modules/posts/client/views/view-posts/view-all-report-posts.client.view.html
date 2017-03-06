@@ -1,0 +1,12 @@
+<div style="margin: 2%; border-radius: 8px;"> 
+  <span class="label label-info">Incident Report</span>
+  <a style="color: #333333;" ng-click="autoScrollPost(true)" ui-sref="oneGroup.viewOneReportPost({id: post._id})">
+  <h4 style="text-decoration: underline; font-weight: bolder; max-height: 70px; white-space: pre-wrap;" data-ellipsis data-ng-bind="post.reportTitle"></h4> </a>
+  <p style="color: gray;">submitted by <a href="#" style="text-decoration: underline; color: gray; font-weight: bold;">{{post.postedBy}}</a> on {{post.datePosted}}</p>
+	<p style="padding-bottom: 2%; color: gray;"> occured on {{post.dateTime}} at {{post.location}}</p>
+  <p style="padding: 1% 0; white-space: pre-wrap; max-height: 80px;" data-ng-bind="post.details" data-ellipsis></p>
+  <div style="margin: -1% 0 2% 0;">
+  	(<a ui-sref="oneGroup.viewOneReportPost({id: post._id})" ng-click="autoScrollPost(true)">Read More</a>)
+  </div>
+  <all-posts-reactions></all-posts-reactions>
+</div>
