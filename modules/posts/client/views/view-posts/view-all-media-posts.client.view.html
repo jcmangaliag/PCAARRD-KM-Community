@@ -2,7 +2,7 @@
 
   <span class="label label-info">Media</span> <span class="label label-warning">{{post.mediaType}}</span>
   <h4 style="text-decoration: underline; font-weight: bolder;"><a style="color: #333333;" ui-sref="oneGroup.viewOneMediaPost({id: post._id})" ng-click="autoScrollPost(true)">{{post.mediaTitle}}</a></h4>
-  <p style="color: gray;">submitted by <a href="#" style="text-decoration: underline; color: gray; font-weight: bold;">{{post.postedBy}}</a> on {{post.datePosted}}</p>
+  <p style="color: gray; padding-bottom: 2%;">submitted by <a href="#" style="text-decoration: underline; color: gray; font-weight: bold;">{{post.postedBy}}</a> on {{post.datePosted}}</p>
 
   <p ng-if="post.description" style="padding: 1% 0; white-space: pre-wrap; max-height: 80px;" data-ng-bind="post.description" data-ellipsis></p>
 

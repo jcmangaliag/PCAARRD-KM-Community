@@ -8,6 +8,6 @@ import ngFilesModel from 'ng-files-model';
 (function () {
 	'use strict';
 
-	angular.module('shared', [uiRouter, 'ngToast', 'ngAnimate', 'ng-files-model']);
+	angular.module('shared', [uiRouter, 'ngToast', 'ngAnimate', 'ngSanitize', 'ng-files-model']);
 
 })();
