@@ -1,0 +1,46 @@
+<div style="padding: 2%;">
+	<button ng-click="goBackToViewAllPosts()" type="button" class="btn btn-danger"><span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span> Go Back</button>
+		
+	<div class="row" style="padding: 4%; background-color: white; margin: 2% 0 2% 0; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+	<span class="label label-info">Media</span> <span class="label label-warning">{{selectedPost.mediaType}}</span><br/><br/>
+		<a ui-sref="oneGroup.viewOneMediaPost({id: selectedPost._id})" style="color: #333333;"><h3 style="display: inline; font-weight: bolder;">{{selectedPost.mediaTitle}}</h3></a>
+
+		<div style="padding: 2% 0 2% 0">
+			<p style="color: gray;">submitted by <a href="#" style="font-weight: bold; color: gray; text-decoration:underline;">{{selectedPost.postedBy}}</a> on {{selectedPost.datePosted}}</p>
+		</div>
+		
+		<div ng-if="selectedPost.description" style="margin: 2% 0 5% 0;">
+			<p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Description</p>
+	      	<h4 style="white-space: pre-wrap;">{{selectedPost.description}}</h4>
+	    </div>
+
+	    <div ng-if="selectedPost.urls.length > 0" style="margin: 2% 0 5% 0;">
+			<p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">URL/s</p>
+			<ul class="list-group">
+	      		<li class="list-group-item" ng-repeat="url in selectedPost.urls"><a href="{{url}}">{{url}}</a></li>
+	      	</ul>
+	    </div>
+
+	    <shared-view-files ng-if="selectedPost.files" selected-files="selectedPost.files"></shared-view-files>
+
+	    <shared-view-technology-handle ng-if="selectedPost.technologyHandle" selected-technology-handle="selectedPost.technologyHandle"></shared-view-technology-handle>
+
+    	<shared-view-hashtags selected-hashtags="selectedPost.hashtags"></shared-view-hashtags>
+
+	</div>
+	    		
+	    <one-post-reactions></one-post-reactions>
+
+
+      	<section id="write-comment">
+      		<add-comment></add-comment>
+      	</section>
+
+      	
+      	<div class="col-xs-12 col-sm-12">
+      	<hr />
+      	<h4 style="padding: 0 10px;">{{selectedPost.reactions[0].count}} Comment<span ng-show="selectedPost.reactions[0].count > 1">s</span></h4>
+      	</div>
+      	
+	    <view-comments></view-comments>
+</div>
