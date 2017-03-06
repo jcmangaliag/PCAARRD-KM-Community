@@ -19,6 +19,7 @@
 		});
 
 		$scope.autoScrollPost = (option) => {
+			console.log("pasok sa autoscroll post");
 			$scope.autoScroll.status = option;
 		}
 	}
