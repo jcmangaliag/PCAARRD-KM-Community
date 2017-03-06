@@ -1,0 +1,12 @@
+<div style="margin: 2%; border-radius: 8px;"> 
+  <span class="label label-info">News</span>
+  <a style="color: #333333;" ng-click="autoScrollPost(true)" ui-sref="oneGroup.viewOneNewsPost({id: post._id})">
+  <h4 style="text-decoration: underline; font-weight: bolder; max-height: 70px; white-space: pre-wrap;" data-ellipsis data-ng-bind="post.newsTitle"></h4> </a>
+  <p style="color: gray;">submitted by <a href="#" style="text-decoration: underline; color: gray; font-weight: bold;">{{post.postedBy}}</a> on {{post.datePosted}}</p>
+	<p style="padding-bottom: 2%; color: gray;"> authored by <span ng-repeat="author in post.authors"><span ng-if="$last && post.authors.length > 1"> and </span>{{author}}<span ng-if="!$last">,</span> </span></p>
+  <p style="padding: 1% 0; white-space: pre-wrap; max-height: 85px;" data-ng-bind="post.newsBody" data-ellipsis></p>
+  <div style="margin: -1% 0 2% 0;">
+  	(<a ui-sref="oneGroup.viewOneNewsPost({id: post._id})" ng-click="autoScrollPost(true)">Read More</a>)
+  </div>
+  <all-posts-reactions></all-posts-reactions>
+</div>

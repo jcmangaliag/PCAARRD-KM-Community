@@ -11,6 +11,7 @@ import SharedDisableSpacesDirective from './directives/shared-disable-spaces.cli
 import SharedAddTechnologyHandleDirective from './directives/shared-add-technology-handle.client.directive';
 import SharedViewTechnologyHandleDirective from './directives/shared-view-technology-handle.client.directive';
 import SharedResetSubmitButtonsDirective from './directives/shared-reset-submit-buttons.client.directive';
+import SharedFormLegendsDirective from './directives/shared-form-legends.client.directive';
 
 import SharedAddHashtagsStyle from './styles/shared-add-hashtags.client.style.scss';
 import SharedAddFilesStyle from './styles/shared-add-files.client.style.scss';

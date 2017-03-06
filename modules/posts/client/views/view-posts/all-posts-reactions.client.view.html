@@ -1,5 +1,5 @@
 <h5 style="display: inline; padding-right:3%;" ng-repeat="reaction in post.reactions">
-    <i ng-if="$first" ui-sref="oneGroup.viewOneAdvertisementPost({id: post._id, '#': 'write-comment'})" class="fa fa-comment-o fa-2x" aria-hidden="true" style="cursor: pointer;" ng-style="reaction.users.indexOf(userid) >=0 ? { 'color':'#286090' } : { 'color': '#333333' }"></i>
+    <i ng-if="$first" ng-click="autoScrollPost(false); commentOnOnePost(post.category, post._id);" class="fa fa-comment-o fa-2x" aria-hidden="true" style="cursor: pointer;" ng-style="reaction.users.indexOf(userid) >=0 ? { 'color':'#286090' } : { 'color': '#333333' }"></i>
 
     <i ng-if="!$first" ng-click="setPostReaction(post, $index)" class="fa fa-2x" ng-class="{'fa-thumbs-o-up' : reaction.name=='thumbsUp', 'fa-smile-o': reaction.name=='happy', 'fa-frown-o': reaction.name=='sad'}" aria-hidden="true" style="cursor: pointer;" ng-style="reaction.users.indexOf(userid) >=0 ? { 'color':'#286090' } : { 'color': '#333333' }"></i>
 

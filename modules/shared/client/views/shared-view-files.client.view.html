@@ -1,5 +1,5 @@
-<div ng-if="selectedFiles.length > 0" style="padding: 4% 0">
-	<h5 style="text-align:left;">File/s uploaded:</h5>
+<div ng-if="selectedFiles.length > 0" style="padding: 2% 0 4% 0;">
+	<p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Uploaded Files</p>
 	<div ng-repeat="file in selectedFiles">
 		<div ng-switch on ="file">
 			<div ng-switch-when="(/\.(gif|jpg|jpeg|tiff|png|bmp)$/i).test(file)">
@@ -11,8 +11,18 @@
 				</video> 
 			</div>
 			<div ng-switch-default>
-				<h4><a href="{{file}}">{{file}}</a></h4>
+				<h4><a href="{{file}}">{{file.name}}</a></h4>
 			</div>
 		</div>
 	</div>
 </div>	
+
+<!-- <div style="padding: 2% 0 4% 0">
+	<p style="color: gray; margin-bottom: 2%;  border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Uploaded Files</p>
+
+			<div>
+				<img style="width: 300px;" src="groups/client/assets/images/Fruit_02.png" />
+				<img style="width: 300px;" src="groups/client/assets/images/Fruit_02.png" />
+			</div>
+
+</div>	 -->

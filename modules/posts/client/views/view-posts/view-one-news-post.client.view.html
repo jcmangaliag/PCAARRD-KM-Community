@@ -2,22 +2,19 @@
 	<button ng-click="goBackToViewAllPosts()" type="button" class="btn btn-danger"><span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span> Go Back</button>
 		
 	<div class="row" style="padding: 4%; background-color: white; margin: 2% 0 2% 0; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-	<span class="label label-info" >Advertisement</span><br/><br/>
-		<a ui-sref="oneGroup.viewOneAdvertisementPost({id: selectedPost._id})" style="color: #333333;"><h3 style="display: inline; font-weight: bolder;">{{selectedPost.adTitle}}</h3></a>
+	<span class="label label-info">News</span><br/><br/>
+		<a ui-sref="oneGroup.viewOneNewsPost({id: selectedPost._id})" style="color: #333333;"><h3 style="display: inline; font-weight: bolder;">{{selectedPost.newsTitle}}</h3></a>
 
 
 		<div style="padding: 2% 0 2% 0">
 			<p style="color: gray;">submitted by <a href="#" style="font-weight: bold; color: gray; text-decoration:underline;">{{selectedPost.postedBy}}</a> on {{selectedPost.datePosted}}</p>
+			<p style="color: gray;">authored by <span ng-repeat="author in selectedPost.authors"><span ng-if="$last && selectedPost.authors.length > 1"> and </span>{{author}}<span ng-if="!$last">, </span></span></p>
 		</div>
 		
-		<div ng-if="selectedPost.price" style="margin: 2% 0 5% 0;">
-			<p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Price</p>
-			<h4><img src="posts/client/assets/images/philippine-peso.png" alt="Php" style="height: 40px; margin-right: 10px;" />{{selectedPost.price}}</h4>
-		</div>
+
 
 		<div style="margin: 2% 0 5% 0;">
-			<p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Features and Other Details</p>
-	      	<h4 style="white-space: pre-wrap;">{{selectedPost.details}}</h4>
+	      	<h4 style="white-space: pre-wrap;">{{selectedPost.newsBody}}</h4>
 	    </div>
 
 	    <shared-view-files ng-if="selectedPost.files" selected-files="selectedPost.files"></shared-view-files>

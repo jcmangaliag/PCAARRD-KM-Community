@@ -1,7 +1,7 @@
 <div style="margin: 2%; border-radius: 8px;">
-  <span class="label label-info">Others</span>
-  <h3 style="text-decoration: underline; font-weight: bolder;"><a style="color: #333333;" ui-sref="oneGroup.viewOneOthersPost({id: post._id})">{{post.post}}</a></h3>
-  <p style="color: gray;">submitted by <a href="#" style="text-decoration: underline; color: gray; font-weight: bold;">{{post.postedBy}}</a> on {{post.datePosted}}</p>
+  <span class="label label-info">Others</span> <a style="color: #333333;" ng-click="autoScrollPost(true)" ui-sref="oneGroup.viewOneOthersPost({id: post._id})">
+  <h4 style="text-decoration: underline; font-weight: bolder; max-height: 70px; white-space: pre-wrap;" data-ellipsis data-ng-bind="post.post"></h4> </a>
+  <p style="padding-bottom: 2%; color: gray;">submitted by <a href="#" style="text-decoration: underline; color: gray; font-weight: bold;">{{post.postedBy}}</a> on {{post.datePosted}}</p>
 
    <all-posts-reactions></all-posts-reactions>
 </div>

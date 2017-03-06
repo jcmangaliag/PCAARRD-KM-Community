@@ -1,5 +1,5 @@
 <div>
-  <img src="/groups/client/assets/images/744849-banana-wallpaper.jpg" class="group-photo" />
+  <img src="/groups/client/assets/images/744849-banana-wallpaper.jpg" class="group-photo" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);" />
   <hr />
   <div class="row group-header">
     <div class="col-xs-12 col-sm-4 " style="padding-top: 1%;" >
@@ -25,7 +25,7 @@
   <div>
     <div class="col-xs-12 col-sm-8">
       <div ng-if="viewOnePost">
-        <div ui-view></div>
+        <div ui-view autoscroll="autoScroll.status"></div>
       </div>
 
       <div ng-if="!viewOnePost">
