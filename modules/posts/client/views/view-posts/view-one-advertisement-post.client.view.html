@@ -10,9 +10,14 @@
 			<p style="color: gray;">submitted by <a href="#" style="font-weight: bold; color: gray; text-decoration:underline;">{{selectedPost.postedBy}}</a> on {{selectedPost.datePosted}}</p>
 		</div>
 		
+		<div ng-if="selectedPost.price" style="margin: 2% 0 5% 0;">
+			<p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Price</p>
+			<h4><img src="posts/client/assets/images/philippine-peso.png" alt="Php" style="height: 40px; margin-right: 10px;" />{{selectedPost.price}}</h4>
+		</div>
 
-		<div>
-	      	<h4 style="padding: 4% 0; white-space: pre-wrap;">{{selectedPost.details}}</h4>
+		<div style="margin: 2% 0 5% 0;">
+			<p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Features and Other Details</p>
+	      	<h4 style="white-space: pre-wrap;">{{selectedPost.details}}</h4>
 	    </div>
 
 	    <shared-view-files selected-files="selectedPost.files"></shared-view-files>

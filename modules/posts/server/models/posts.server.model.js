@@ -35,7 +35,7 @@ const PostSchema = mongoose.Schema({
 	newsTitle: String,
 	authors: Array,
 	newsBody: String,
-	price: Number,
+	price: String,
 	mediaTitle: String,
 	mediaType: String,
 	urls: Array,

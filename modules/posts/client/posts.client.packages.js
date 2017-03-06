@@ -20,8 +20,12 @@ import ViewPostsDirective from './directives/view-posts/view-posts.client.direct
 import AllPostsReactionsDirective from './directives/view-posts/all-posts-reactions.client.directive';
 import OnePostReactionsDirective from './directives/view-posts/one-post-reactions.client.directive';
 import ViewAllAdvertisementPostsDirective from './directives/view-posts/view-all-advertisement-posts.client.directive';
+import ViewAllEventPostsDirective from './directives/view-posts/view-all-event-posts.client.directive';
+import ViewAllMediaPostsDirective from './directives/view-posts/view-all-media-posts.client.directive';
+import ViewAllNewsPostsDirective from './directives/view-posts/view-all-news-posts.client.directive';
 import ViewAllOthersPostsDirective from './directives/view-posts/view-all-others-posts.client.directive';
 import ViewAllQuestionPostsDirective from './directives/view-posts/view-all-question-posts.client.directive';
+import ViewAllReportPostsDirective from './directives/view-posts/view-all-report-posts.client.directive';
 
 import PostService from './services/post.client.service';
 import AddPostService from './services/add-post.client.service';

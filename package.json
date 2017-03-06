@@ -26,6 +26,7 @@
     "angular": "^1.6.2",
     "angular-animate": "^1.6.2",
     "angular-bootstrap-affix": "^0.2.4",
+    "angular-ellipsis": "^1.0.1",
     "angular-ui-router": "^0.4.2",
     "angularjs-datetime-picker-v2": "^0.2.2",
     "babel-polyfill": "^6.23.0",

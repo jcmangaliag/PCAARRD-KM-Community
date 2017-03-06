@@ -17,7 +17,6 @@ import _ from 'lodash';
 		$scope.userid = PostService.userid;	// temporary userid
 
 		$scope.goBackToViewAllPosts = () => {
-			console.log($state);
 			if (window.history.length > 1)
 				window.history.back();
 			else

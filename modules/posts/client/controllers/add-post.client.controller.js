@@ -60,6 +60,10 @@ import _ from 'lodash';
 		}
 
 		$scope.onProcessPostData = (postCategory) => {
+			if (postCategory === 'advertisement' && $scope.addPostFormData.price){
+				$scope.addPostFormData.price = $scope.addPostFormData.price.toFixed(2);
+			}
+
 			if (postCategory === 'news'){
 				$scope.addPostFormData.authors = $scope.multipleFields.authors;
 			}
