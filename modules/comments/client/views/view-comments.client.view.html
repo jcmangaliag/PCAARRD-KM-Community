@@ -2,7 +2,7 @@
 	
 	<div ng-repeat="comment in comments.contents | filter: {referredPost: selectedPost._id} | orderBy:'':true" style="border-radius: 5px; background-color: white; padding: 2%; margin: 3% 0; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 
-      	<h5 style="display: inline-block; text-decoration: underline;"><a href="#" style="font-weight: bold; color: #333333;">{{comment.commentedBy}}</a></h5>
+      	<h5 style="display: inline-block;"><a href="#" style="font-weight: bold; color: #333333;">{{comment.commentedBy}}</a></h5>
       	<p style="display: inline-block; color:gray">wrote on {{comment.dateCommented}}</p>
 
       	<p style="padding: 2% 0; white-space: pre-wrap;">{{comment.comment}}</p>
