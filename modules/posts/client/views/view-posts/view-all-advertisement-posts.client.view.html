@@ -1,7 +1,7 @@
 <div style="margin: 2%; border-radius: 8px;"> 
   <span class="label label-info">Advertisement</span>
   <a style="color: #333333;" ng-click="autoScrollPost(true)" ui-sref="oneGroup.viewOneAdvertisementPost({id: post._id})">
-  <h4 style="text-decoration: underline; font-weight: bolder; max-height: 70px; white-space: pre-wrap;" data-ellipsis data-ng-bind="post.adTitle"></h4> </a>
+  <h4 style="text-decoration: underline; font-weight: bolder; white-space: pre-wrap;"><span ng-bind="post.adTitle | limitTo: 200"></span><span ng-if="post.adTitle.length > 200" >...</span></h4></a>
   <p style="color: gray; padding-bottom: 2%;">submitted by <a href="#" style="text-decoration: underline; color: gray; font-weight: bold;">{{post.postedBy}}</a> on {{post.datePosted}}</p>
 
   <p ng-if="post.price"><img src="posts/client/assets/images/philippine-peso.png" alt="Php" style="height: 30px; margin-right: 10px;" />{{post.price}}</p>
