@@ -6,7 +6,7 @@
 		<a ui-sref="oneGroup.viewOneMediaPost({id: selectedPost._id})" style="color: #333333;"><h3 style="display: inline; font-weight: bolder;">{{selectedPost.mediaTitle}}</h3></a>
 
 		<div style="padding: 2% 0 2% 0">
-			<p style="color: gray;">submitted by <a href="#" style="font-weight: bold; color: gray; text-decoration:underline;">{{selectedPost.postedBy}}</a> on {{selectedPost.datePosted}}</p>
+			<p style="color: gray;">submitted by <a href="#" style="font-weight: bold; color: gray;">{{selectedPost.postedBy}}</a> on {{selectedPost.datePosted}}</p>
 		</div>
 		
 		<div ng-if="selectedPost.description" style="margin: 2% 0 5% 0;">
