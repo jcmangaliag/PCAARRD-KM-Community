@@ -1,6 +1,13 @@
 <div style="margin: 2%; border-radius: 8px;"> 
-  <span class="label label-info">Advertisement</span>
-  <a style="color: #333333;" ng-click="autoScrollPost(true)" ui-sref="oneGroup.viewOneAdvertisementPost({id: post._id})">
+  <div class="row">
+    <div class="col-xs-6 col-sm-6">
+      <span class="label label-info">Advertisement</span>
+    </div>
+    <div class="col-xs-6 col-sm-6" style="text-align: right;">
+      <edit-delete-post></edit-delete-post>
+    </div>
+  </div>
+  <a style="color: #333333; display: inline-block;" ng-click="autoScrollPost(true)" ui-sref="oneGroup.viewOneAdvertisementPost({id: post._id})">
   <h4 style="font-weight: bolder; white-space: pre-wrap;"><span ng-bind="post.adTitle | limitTo: 200"></span><span ng-if="post.adTitle.length > 200" >...</span></h4></a>
   <p style="color: gray; padding-bottom: 2%;">submitted by <a href="#" style="color: gray; font-weight: bold;">{{post.postedBy}}</a> on {{post.datePosted}}</p>
 

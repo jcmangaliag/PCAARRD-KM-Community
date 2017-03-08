@@ -41,6 +41,11 @@ import _ from 'lodash';
 			}
 		}
 
+		$scope.editPost = (postCategory, postID) => {
+			$state.go(`oneGroup.viewOne${postCategory.charAt(0).toUpperCase() + postCategory.slice(1)}Post`, {id: postID});
+			
+		}
+
 		$scope.getPostData();
 	}
 

@@ -26,6 +26,7 @@ import ViewAllNewsPostsDirective from './directives/view-posts/view-all-news-pos
 import ViewAllOthersPostsDirective from './directives/view-posts/view-all-others-posts.client.directive';
 import ViewAllQuestionPostsDirective from './directives/view-posts/view-all-question-posts.client.directive';
 import ViewAllReportPostsDirective from './directives/view-posts/view-all-report-posts.client.directive';
+import EditDeletePostDirective from './directives/edit-delete-post.client.directive';
 
 import PostService from './services/post.client.service';
 import AddPostService from './services/add-post.client.service';
