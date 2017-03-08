@@ -9,7 +9,7 @@
 
   <div ng-if="post.urls.length > 0">
     <ul class="list-group">
-      <li class="list-group-item" ng-repeat="url in post.urls | limitTo: 3"><a href="{{url}}">{{url}}</a></li>
+      <li class="list-group-item" ng-repeat="url in post.urls track by $index | limitTo: 3"><a href="{{url}}">{{url}}</a></li>
     </ul>
     <span ng-if="post.urls.length > 3">…</span>
   </div>
