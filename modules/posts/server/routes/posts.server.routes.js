@@ -10,7 +10,8 @@ const postsRoutes = (app) => {
   	.get(postCtrl.listByCategory);
 
   app.route('/api/posts/:id')
-  	.get(postCtrl.listOne);
+  	.get(postCtrl.listOne)
+  	.delete(postCtrl.removeOne)
 
   app.route('/api/posts/reactions/:id')
   	.put(postCtrl.updateReactions);

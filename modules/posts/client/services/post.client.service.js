@@ -5,9 +5,9 @@
 		.module('posts')
 		.factory('PostService', PostService);
 
-	PostService.$inject = ['$http', 'ngToast'];
+	PostService.$inject = ['$http', 'ngToast', '$q'];
 
-	function PostService ($http, ngToast) {
+	function PostService ($http, ngToast, $q) {
 
 		let postList = {
 			contents: []
@@ -36,10 +36,16 @@
 		}
 
 		const getOnePost = ($scope, postID) => {
+			const deferred = $q.defer();
+			
 			$http.get(`/api/posts/${postID}`)
-			.then(response => {
-				$scope.selectedPost = response.data.post;
+			.then((response) => {
+				deferred.resolve(response.data.post);
+			}, (response) => {
+				deferred.reject(response);
 			});
+
+			return deferred.promise;
 		}
 
 		const setPostReaction = ($scope, post, reactionIndex) => {
@@ -79,12 +85,25 @@
 			});
 		}
 
+		const deleteOnePost = ($scope, postID) => {
+			$http.delete(`/api/posts/${postID}`)
+			.then(response => {
+				$scope.getPostData();
+
+				ngToast.create({
+		    		className: 'success',
+		    		content: `The post was successfully deleted.`
+		    	});
+			});
+		}
+
 		return {
 			getPostList,
 			getPostsByCategory,
 			getAllPosts,
 			getOnePost,
 			setPostReaction,
+			deleteOnePost,
 			userid 
 		};	/* temporary userid */
 	}

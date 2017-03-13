@@ -12,8 +12,9 @@ import _ from 'lodash';
 
 	function PostController ($scope, $state, $stateParams, PostService, ViewPostsCategoriesService) {
 
-		const {getOnePost, setPostReaction} = PostService;
+		const {setPostReaction, deleteOnePost} = PostService;
 		$scope.setPostReaction = _.partial(setPostReaction, $scope);
+		$scope.deleteOnePost = _.partial(deleteOnePost, $scope);
 		$scope.userid = PostService.userid;	// temporary userid
 
 		$scope.commentOnOnePost = (postCategory, postID) => {
@@ -33,7 +34,12 @@ import _ from 'lodash';
 
 		$scope.getPostData = () => {
 			if ($stateParams.postType === "view-one-post"){
-				PostService.getOnePost($scope, $stateParams.id);
+				PostService.getOnePost($scope, $stateParams.id)
+				.then((result) => {
+					$scope.selectedPost = result;
+				}, (error) => {
+					console.log("may error");
+				});
 			} else {
 				const currentViewPostsCategory = ViewPostsCategoriesService.getCurrentViewPostsCategory().postCategory.category;
 				ViewPostsCategoriesService.retrievePostsByCategory(currentViewPostsCategory);
