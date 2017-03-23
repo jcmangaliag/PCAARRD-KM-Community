@@ -13,7 +13,7 @@
 	<p style="color: gray; margin-bottom: 2px;"> event on {{post.startDateTime}} at {{post.location}}</p>
   <p style="padding: 4px 0; white-space: pre-wrap; max-height: 80px;" data-ng-bind="post.details" data-ellipsis></p>
   <div style="margin: -1% 0 1% 0;">
-  	(<a ui-sref="oneGroup.viewOneEventPost({id: post._id})" ng-click="autoScrollPost(true)">See More</a>)
+  	<a ui-sref="oneGroup.viewOneEventPost({id: post._id})" ng-click="autoScrollPost(true)">See More</a>
   </div>
   <all-posts-reactions></all-posts-reactions>
 </div>
