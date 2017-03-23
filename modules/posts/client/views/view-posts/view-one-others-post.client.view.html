@@ -2,11 +2,11 @@
 
 			<button ng-click="goBackToViewAllPosts()" type="button" class="btn btn-danger"><span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span> Go Back</button>
 		
-	<div class="row" style="padding: 4%; background-color: white; margin: 2% 0 2% 0; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+	<div class="row" style="padding: 2%; background-color: white; margin: 2% 0 2% 0; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 	<span class="label label-info" >Others</span><br/><br/>
 		<h4 style="display: inline; white-space: pre-wrap;">{{selectedPost.post}}</h4>
 
-		<div style="padding: 2% 0 2% 0">
+		<div style="padding: 1% 0 1% 0">
 			<p style="color: gray;">submitted by <a href="#" style="font-weight: bold; color: gray;">{{selectedPost.postedBy}}</a> on {{selectedPost.datePosted}}</p>
 		</div>
 
@@ -24,7 +24,6 @@
       	</section>
       	
       	<div class="col-xs-12 col-sm-12">
-      	<hr />
       	<h4 style="padding: 0 10px;">{{selectedPost.reactions[0].count}} Comment<span ng-show="selectedPost.reactions[0].count > 1">s</span></h4>
       	</div>
       	

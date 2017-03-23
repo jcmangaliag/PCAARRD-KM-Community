@@ -1,10 +1,8 @@
 <div class="btn-group" style="padding-right: 10px; text-align: left;">
-  <button type="button" style="padding: 0 8px;" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span class="caret"></span> </button>
+	<div>
+  		<button style="padding:2px 6px;" type="button" class="btn btn-default" data-toggle="modal" data-target="#{{'delete' + post._id}}"><i class="fa fa-lg fa-trash" aria-hidden="true"></i></button>
+  	</div>
 
-  <ul class="dropdown-menu" style="min-width: 0; z-index: 1;">
-    <li ng-click="editPost(post.category, post._id); autoScrollPost(true);"><a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit Post</a></li>
-    <li><a href="#" data-toggle="modal" data-target="#{{'delete' + post._id}}"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete Post</a></li>
-  </ul>
   <div class="modal fade" id="{{'delete' + post._id}}" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">

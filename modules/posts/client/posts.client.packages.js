@@ -15,6 +15,8 @@ import AddNewsPostDirective from './directives/add-post/add-news-post.client.dir
 import AddOthersPostDirective from './directives/add-post/add-others-post.client.directive';
 import AddReportPostDirective from './directives/add-post/add-report-post.client.directive';
 
+import DeletePostDirective from './directives/delete-post.client.directive';
+
 import ViewPostsCategoriesDirective from './directives/view-posts/view-posts-categories.client.directive';
 import ViewPostsDirective from './directives/view-posts/view-posts.client.directive';
 import AllPostsReactionsDirective from './directives/view-posts/all-posts-reactions.client.directive';
@@ -26,7 +28,7 @@ import ViewAllNewsPostsDirective from './directives/view-posts/view-all-news-pos
 import ViewAllOthersPostsDirective from './directives/view-posts/view-all-others-posts.client.directive';
 import ViewAllQuestionPostsDirective from './directives/view-posts/view-all-question-posts.client.directive';
 import ViewAllReportPostsDirective from './directives/view-posts/view-all-report-posts.client.directive';
-import EditDeletePostDirective from './directives/edit-delete-post.client.directive';
+
 
 import PostService from './services/post.client.service';
 import AddPostService from './services/add-post.client.service';

@@ -4,12 +4,14 @@
       <span class="label label-info">Others</span>
     </div>
     <div class="col-xs-6 col-sm-6" style="text-align: right;">
-      <edit-delete-post></edit-delete-post>
+      <delete-post></delete-post>
     </div>
   </div>
    <a style="color: #333333; display: inline-block;" ng-click="autoScrollPost(true)" ui-sref="oneGroup.viewOneOthersPost({id: post._id})">
   <h4 style="font-weight: bolder; max-height: 70px; white-space: pre-wrap;" data-ellipsis data-ng-bind="post.post"></h4> </a>
-  <p style="color: gray;">submitted by <a href="#" style="color: gray; font-weight: bold;">{{post.postedBy}}</a> on {{post.datePosted}}</p>
-
+  <p style="color: gray; margin-bottom: 2px;">submitted by <a href="#" style="color: gray; font-weight: bold;">{{post.postedBy}}</a> on {{post.datePosted}}</p>
+  <div style="margin: 1% 0 1% 0;">
+  	(<a ui-sref="oneGroup.viewOneOthersPost({id: post._id})" ng-click="autoScrollPost(true)">See More</a>)
+  </div>
    <all-posts-reactions></all-posts-reactions>
 </div>

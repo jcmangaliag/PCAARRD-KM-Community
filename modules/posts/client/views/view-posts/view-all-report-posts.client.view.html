@@ -4,16 +4,16 @@
       <span class="label label-info">Incident Report</span>
     </div>
     <div class="col-xs-6 col-sm-6" style="text-align: right;">
-      <edit-delete-post></edit-delete-post>
+      <delete-post></delete-post>
     </div>
   </div>
   <a style="color: #333333; display: inline-block;" ng-click="autoScrollPost(true)" ui-sref="oneGroup.viewOneReportPost({id: post._id})">
   <h4 style="font-weight: bolder; white-space: pre-wrap;"><span ng-bind="post.reportTitle | limitTo: 200"></span><span ng-if="post.reportTitle.length > 200" >...</span></h4> </a>
-  <p style="color: gray;">submitted by <a href="#" style="color: gray; font-weight: bold;">{{post.postedBy}}</a> on {{post.datePosted}},</p>
-	<p style="color: gray;"> occured on {{post.dateTime}} at {{post.location}}</p>
-  <p style="padding: 1% 0; white-space: pre-wrap; max-height: 80px;" data-ng-bind="post.details" data-ellipsis></p>
-  <div style="margin: -1% 0 2% 0;">
-  	(<a ui-sref="oneGroup.viewOneReportPost({id: post._id})" ng-click="autoScrollPost(true)">Read More</a>)
+  <p style="color: gray; margin-bottom: 2px;">submitted by <a href="#" style="color: gray; font-weight: bold;">{{post.postedBy}}</a> on {{post.datePosted}},</p>
+	<p style="color: gray; margin-bottom: 2px;"> occured on {{post.dateTime}} at {{post.location}}</p>
+  <p style="padding: 4px 0; white-space: pre-wrap; max-height: 80px;" data-ng-bind="post.details" data-ellipsis></p>
+  <div style="margin: -1% 0 1% 0;">
+  	<a ui-sref="oneGroup.viewOneReportPost({id: post._id})" ng-click="autoScrollPost(true)">See More</a>
   </div>
   <all-posts-reactions></all-posts-reactions>
 </div>
