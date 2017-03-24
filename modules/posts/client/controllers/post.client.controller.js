@@ -14,7 +14,7 @@ import _ from 'lodash';
 
 		const {setPostReaction, deleteOnePost} = PostService;
 		$scope.setPostReaction = _.partial(setPostReaction, $scope);
-		$scope.deleteOnePost = _.partial(deleteOnePost, $scope);
+		$scope.deleteOnePost = _.partial(deleteOnePost, $scope, $stateParams.postType);
 		$scope.userid = PostService.userid;	// temporary userid
 
 		$scope.commentOnOnePost = (postCategory, postID) => {
@@ -29,7 +29,7 @@ import _ from 'lodash';
 			if (window.history.length > 1)
 				window.history.back();
 			else
-				$state.go('oneGroup');	// specify what group
+				$scope.returnToGroup();	
 		}
 
 		$scope.getPostData = () => {
@@ -38,7 +38,7 @@ import _ from 'lodash';
 				.then((result) => {
 					$scope.selectedPost = result;
 				}, (error) => {
-					console.log("may error");
+					// show 404 not found page
 				});
 			} else {
 				const currentViewPostsCategory = ViewPostsCategoriesService.getCurrentViewPostsCategory().postCategory.category;
@@ -50,6 +50,10 @@ import _ from 'lodash';
 		$scope.editPost = (postCategory, postID) => {
 			$state.go(`oneGroup.viewOne${postCategory.charAt(0).toUpperCase() + postCategory.slice(1)}Post`, {id: postID});
 			
+		}
+
+		$scope.returnToGroup = () => { // specify what group
+			$state.go('oneGroup');
 		}
 
 		$scope.getPostData();

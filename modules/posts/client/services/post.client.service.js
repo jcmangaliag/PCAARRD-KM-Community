@@ -7,7 +7,7 @@
 
 	PostService.$inject = ['$http', 'ngToast', '$q'];
 
-	function PostService ($http, ngToast, $q) {
+	function PostService ($http, ngToast, $q) { // to do: check if there's err in http requests
 
 		let postList = {
 			contents: []
@@ -85,10 +85,15 @@
 			});
 		}
 
-		const deleteOnePost = ($scope, postID) => {
-			$http.delete(`/api/posts/${postID}`)
-			.then(response => {
-				$scope.getPostData();
+		const deleteOnePost = ($scope, postType, post) => {
+			//const groupBelonged = post.groupBelonged; // specify the group id
+			$http.delete(`/api/posts/${post._id}`)
+			.then(response => {	
+				if (postType === "view-one-post"){
+					$scope.returnToGroup(/* groupBelonged here */);	
+				} else {
+					$scope.getPostData();	
+				}
 
 				ngToast.create({
 		    		className: 'success',
