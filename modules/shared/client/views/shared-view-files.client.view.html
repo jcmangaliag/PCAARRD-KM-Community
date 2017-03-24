@@ -1,6 +1,6 @@
-<div ng-if="selectedFiles.length > 0" style="padding: 2% 0 4% 0;">
+<div ng-if="selectedFiles.length > 0" style="padding-bottom: 2%;">
 	<p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Uploaded Files</p>
-	<div ng-repeat="file in selectedFiles">
+	<div ng-repeat="file in selectedFiles track by $index">
 		<div ng-switch on ="file">
 			<div ng-switch-when="(/\.(gif|jpg|jpeg|tiff|png|bmp)$/i).test(file)">
 				<img style="width: 300px;" src="{{file}}" />

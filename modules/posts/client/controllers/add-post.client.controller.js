@@ -35,6 +35,9 @@ import _ from 'lodash';
 					selected: $scope.defaultDatetime 
 				};
 			}
+			if ($scope.addPostFormData.category === "report"){
+				$scope.addPostFormData.dateTime = $scope.defaultDatetime;
+			}
 		}
 
 		$scope.toggleEndDateTime = () => {

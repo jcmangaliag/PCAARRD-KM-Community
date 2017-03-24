@@ -47,7 +47,6 @@ const PostSchema = mongoose.Schema({
 	startDateTime: String,
 	endDateTime: String,
 	audience: String
-
 });
 
 export default mongoose.model('Post', PostSchema);
