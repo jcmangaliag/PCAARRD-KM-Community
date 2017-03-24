@@ -49,6 +49,13 @@ import _ from 'lodash';
 			$scope.clearHashtags();
 		}
 
+		$scope.onDeleteComment = (comment) => {
+			let userCommentsCount = 0;
+			// continue here
+			CommentService.deleteOneComment(comment);
+			PostService.decrementCommentsCount($scope.selectedPost, comment);
+		}
+
 		CommentService.getComments();
 	}
 

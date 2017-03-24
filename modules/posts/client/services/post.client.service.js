@@ -85,6 +85,16 @@
 			});
 		}
 
+		const decrementCommentsCount = (post, comment) => {
+			post.reactions[0].count--;
+
+			$http.put(`/api/posts/reactions/${post._id}`, {
+				reactions: post.reactions
+			}).then(response => {
+
+			});
+		}
+
 		const deleteOnePost = ($scope, postType, post) => {
 			//const groupBelonged = post.groupBelonged; // specify the group id
 			$http.delete(`/api/posts/${post._id}`)
@@ -111,6 +121,7 @@
 			getOnePost,
 			setPostReaction,
 			deleteOnePost,
+			decrementCommentsCount,
 			userid 
 		};	/* temporary userid */
 	}

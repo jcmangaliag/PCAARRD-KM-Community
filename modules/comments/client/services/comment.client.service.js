@@ -79,12 +79,25 @@ import _ from 'lodash';
 			});
 		}
 
+		const deleteOneComment = (comment) => {
+			$http.delete(`/api/comments/${comment._id}`)
+			.then(response => {	
+				getComments();
+
+				ngToast.create({
+		    		className: 'success',
+		    		content: `The comment was successfully deleted.`
+		    	});
+			});
+		}
+
 		return {
 			getCommentList,
 			getComments,
 			submitComment,
 			setCommentReaction,
 			deleteCommentsByReferredPost,
+			deleteOneComment,
 			userid 
 		};	/* temporary userid */
 	}
