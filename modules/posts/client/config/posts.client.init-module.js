@@ -6,6 +6,6 @@ import angularEllipsis from 'angular-ellipsis/src/angular-ellipsis.min.js';
 (function () {
 	'use strict';
 
-	angular.module('posts', [uiRouter, 'angularjs-datetime-picker', 'dibari.angular-ellipsis']);
+	angular.module('posts', ['comments', uiRouter, 'angularjs-datetime-picker', 'dibari.angular-ellipsis']);
 
 })();

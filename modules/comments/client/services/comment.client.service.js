@@ -72,11 +72,19 @@ import _ from 'lodash';
 			});
 		}
 
+		const deleteCommentsByReferredPost = (postID) => {
+			$http.delete(`/api/comments/referredPost/${postID}`)
+			.then(response => {	
+
+			});
+		}
+
 		return {
 			getCommentList,
 			getComments,
 			submitComment,
 			setCommentReaction,
+			deleteCommentsByReferredPost,
 			userid 
 		};	/* temporary userid */
 	}

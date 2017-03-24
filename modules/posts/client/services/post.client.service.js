@@ -5,9 +5,9 @@
 		.module('posts')
 		.factory('PostService', PostService);
 
-	PostService.$inject = ['$http', 'ngToast', '$q'];
+	PostService.$inject = ['$http', 'ngToast', '$q', 'CommentService'];
 
-	function PostService ($http, ngToast, $q) { // to do: check if there's err in http requests
+	function PostService ($http, ngToast, $q, CommentService) { // to do: check if there's err in http requests
 
 		let postList = {
 			contents: []
@@ -89,6 +89,8 @@
 			//const groupBelonged = post.groupBelonged; // specify the group id
 			$http.delete(`/api/posts/${post._id}`)
 			.then(response => {	
+				CommentService.deleteCommentsByReferredPost(post._id);
+
 				if (postType === "view-one-post"){
 					$scope.returnToGroup(/* groupBelonged here */);	
 				} else {

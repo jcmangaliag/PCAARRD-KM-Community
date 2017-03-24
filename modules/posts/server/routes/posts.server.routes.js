@@ -11,7 +11,7 @@ const postsRoutes = (app) => {
 
   app.route('/api/posts/:id')
   	.get(postCtrl.listOne)
-  	.delete(postCtrl.removeOne)
+  	.delete(postCtrl.removeOne);
 
   app.route('/api/posts/reactions/:id')
   	.put(postCtrl.updateReactions);
