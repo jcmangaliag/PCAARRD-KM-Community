@@ -7,9 +7,9 @@ import _ from 'lodash';
 		.module('comments')
 		.factory('CommentService', CommentService);
 
-	CommentService.$inject = ['$http', 'ngToast'];
+	CommentService.$inject = ['$http', '$q', 'ngToast'];
 
-	function CommentService ($http, ngToast) {
+	function CommentService ($http, $q, ngToast) {
 
 		let commentList = {
 			contents: []
@@ -23,17 +23,30 @@ import _ from 'lodash';
 			return commentList;
 		}
 
-		const getComments = () => {
-			$http.get('/api/comments')
+		const getComments = (referredPost) => {
+			$http.get(`/api/comments/referredPost/${referredPost}`)
 			.then(response => {
 				commentList.contents = response.data.comments;
 			});
 		}
 
+		const getCommentsByUser = (referredPost, userID) => {
+			const deferred = $q.defer();
+
+			$http.get(`/api/comments/referredPost/${referredPost}/commentedBy/${userID}`)
+			.then((response) => {
+				deferred.resolve(response.data.comments);
+			}, (response) => {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		}
+
 		const submitComment = (addPostCommentData) => {
 			$http.post('/api/comments', addPostCommentData)
 			.then(response => {
-				getComments();
+				getComments(addPostCommentData.referredPost);
 
 				ngToast.create({
 		    		className: 'success',
@@ -82,7 +95,7 @@ import _ from 'lodash';
 		const deleteOneComment = (comment) => {
 			$http.delete(`/api/comments/${comment._id}`)
 			.then(response => {	
-				getComments();
+				getComments(comment.referredPost);
 
 				ngToast.create({
 		    		className: 'success',
@@ -94,6 +107,7 @@ import _ from 'lodash';
 		return {
 			getCommentList,
 			getComments,
+			getCommentsByUser,
 			submitComment,
 			setCommentReaction,
 			deleteCommentsByReferredPost,

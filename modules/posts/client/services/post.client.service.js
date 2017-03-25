@@ -85,8 +85,11 @@
 			});
 		}
 
-		const decrementCommentsCount = (post, comment) => {
+		const decrementCommentsCount = (post, comment, userCommentsCount, userID) => {
 			post.reactions[0].count--;
+			
+			if (userCommentsCount < 1)
+				post.reactions[0].users.splice(post.reactions[0].users.indexOf(userID), 1);
 
 			$http.put(`/api/posts/reactions/${post._id}`, {
 				reactions: post.reactions

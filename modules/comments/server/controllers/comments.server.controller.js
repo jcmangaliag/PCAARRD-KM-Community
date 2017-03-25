@@ -1,10 +1,23 @@
 import Comment from '../models/comments.server.model';
 
 const commentControls = { 
-	list : (req, res) => {
-		Comment.find((err, results) => {
+	listByReferredPost : (req, res) => {
+		const referredPost = req.params.referredPost;
+
+		Comment.find({referredPost}, (err, results) => {
 	        if (err) { console.log(err); }
 
+	        res.send({ comments: results });
+	    });
+	},
+	listByUserComments : (req, res) => {
+		const referredPost = req.params.referredPost;
+		//const commentedBy = req.params.commentedBy;
+		const commentedBy = "Mark Eric Cabanli";	// temporary
+
+		Comment.find({referredPost, commentedBy}, (err, results) => {
+	        if (err) { return (err); }
+	        if (results === null) return res.status(404).send('Comments not found!');
 	        res.send({ comments: results });
 	    });
 	},

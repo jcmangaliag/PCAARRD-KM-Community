@@ -8,9 +8,9 @@ import _ from 'lodash';
 		.module('comments')
 		.controller('CommentController', CommentController);
 
-	CommentController.$inject = ['$scope', 'CommentService', 'PostService'];
+	CommentController.$inject = ['$scope', '$state', 'CommentService', 'PostService'];
 
-	function CommentController ($scope, CommentService, PostService) {
+	function CommentController ($scope, $state, CommentService, PostService) {
 		$scope.addCommentFormData = {};
 		const {submitComment, setCommentReaction} = CommentService;
 		$scope.submitComment = _.partial(submitComment);
@@ -50,13 +50,17 @@ import _ from 'lodash';
 		}
 
 		$scope.onDeleteComment = (comment) => {
-			let userCommentsCount = 0;
-			// continue here
 			CommentService.deleteOneComment(comment);
-			PostService.decrementCommentsCount($scope.selectedPost, comment);
+
+			CommentService.getCommentsByUser($state.params.id, "MarkEricCabanli")
+			.then((results) => {
+				PostService.decrementCommentsCount($scope.selectedPost, comment, results.length, "Mark's id");
+			}, (error) => {
+				// show 404 not found page
+			});
 		}
 
-		CommentService.getComments();
+		CommentService.getComments($state.params.id);
 	}
 
 })();
