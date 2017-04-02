@@ -18,7 +18,7 @@ layout-header {
 
 .affix {
   top: 0;
-  width: 92%;
+  width: 100%;
   z-index: 100;
 }
 
@@ -41,4 +41,16 @@ layout-header {
   text-align:center;
   min-width:2em;
   font-weight:bold;
+}
+
+#versionbutton {
+  background-color: #FFC131;
+  color: #484848;
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: -20px;
+  height: 40px;
+  width: 160px;
+  border-radius: 5px;
+  font-family: 'Open Sans', sans-serif;
 }

@@ -1,4 +1,4 @@
-$footer-height: 440px;
+$footer-height: 333px;
 
 layout-footer {
 	position: absolute;
@@ -6,12 +6,12 @@ layout-footer {
 	width: 100%;
 	height: $footer-height;
 	bottom: 0;
-	color: black;
+	color: white;
 	padding-top: 2.5em;
 }
 
 .site-footer {
-	background-color: #ccc !important;
+	background-color: rgba(0,0,0,0.9) !important;
 	border-top: solid 1px;
 
 	&__about {
@@ -19,9 +19,9 @@ layout-footer {
 	}
 
 	&__copyright {
-		background-color: #9d9d9d;
-		padding: 1.5% 0 0.5% 0;
-		text-align: center;
+		background-color: #000;
+		padding: 0.5% 0;
+		color: gray;
 	}
 }
 
@@ -29,10 +29,10 @@ layout-footer {
   layout-footer {
 		position: absolute;
 		right: 0;
-		width: 92%;
+		width: 100%;
 		height: $footer-height;
 		bottom: 0;
-		color: black;
+		color: white;
 		padding-top: 2.5em;
 	}
 }
