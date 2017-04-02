@@ -8,15 +8,15 @@ import _ from 'lodash';
 		.module('posts')
 		.controller('PostController', PostController);
 
-	PostController.$inject = ['$scope', '$state', '$stateParams', 'PostService', 'ViewPostsCategoriesService'];
+	PostController.$inject = ['$scope', '$state', '$stateParams', 'PostService', 'ViewPostsCategoriesService', '$filter'];
 
-	function PostController ($scope, $state, $stateParams, PostService, ViewPostsCategoriesService) {
+	function PostController ($scope, $state, $stateParams, PostService, ViewPostsCategoriesService, $filter) {
 
 		const {setPostReaction, deleteOnePost} = PostService;
 		$scope.setPostReaction = _.partial(setPostReaction, $scope);
 		$scope.deleteOnePost = _.partial(deleteOnePost, $scope, $stateParams.postType);
 		$scope.userid = PostService.userid;	// temporary userid
-
+		
 		$scope.commentOnOnePost = (postCategory, postID) => {
 			$state.go(`oneGroup.viewOne${postCategory.charAt(0).toUpperCase() + postCategory.slice(1)}Post`, {id: postID, '#': 'write-comment'});
 		}
@@ -44,6 +44,7 @@ import _ from 'lodash';
 				const currentViewPostsCategory = ViewPostsCategoriesService.getCurrentViewPostsCategory().postCategory.category;
 				ViewPostsCategoriesService.retrievePostsByCategory(currentViewPostsCategory);
 				$scope.posts = PostService.getPostList();
+				$scope.postsCopy = PostService.getPostListCopy();
 			}
 		}
 
@@ -55,6 +56,12 @@ import _ from 'lodash';
 		$scope.returnToGroup = () => { // specify what group
 			$state.go('oneGroup');
 		}
+
+		$scope.$watch('searchValue', function(value){ 
+			if ($scope.posts){
+        		$scope.posts.contents = $filter('filter')($scope.postsCopy.contents, value);
+			}
+    	});
 
 		$scope.getPostData();
 	}

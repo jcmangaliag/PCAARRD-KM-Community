@@ -9,7 +9,7 @@
 
 	function ViewPostsCategoriesController ($scope, ViewPostsCategoriesService) {
 		const {setCurrentViewPostsCategory} = ViewPostsCategoriesService;
-		$scope.setCurrentViewPostsCategory = _.partial(setCurrentViewPostsCategory);
+		$scope.setCurrentViewPostsCategory = _.partial(setCurrentViewPostsCategory, $scope);
 		$scope.currentViewPostsCategory = ViewPostsCategoriesService.getCurrentViewPostsCategory();
 		$scope.viewPostsCategories = ViewPostsCategoriesService.getViewPostsCategories();
 	}

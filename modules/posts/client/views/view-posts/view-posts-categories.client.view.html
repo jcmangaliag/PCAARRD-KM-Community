@@ -1,15 +1,16 @@
 <div class="row" style="margin: 3% 0px;">
-	<div class="col-xs-6 col-sm-6">
-		<h4 style="padding: 0 10px; display: inline-block;">{{currentViewPostsCategory.postCategory.title}}</h4>
-	</div>
-
-	<div class="col-xs-6 col-sm-6 text-right">
+	
+	<div class="col-xs-6 col-sm-6" style="padding: 0;">
 		<div class="btn-group" style="padding-right: 10px;">
-		  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> View By <span class="caret"></span> </button>
+		  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> View {{currentViewPostsCategory.postCategory.title}} <span class="caret"></span> </button>
 
 		  <ul class="dropdown-menu">
-		    <li ng-repeat="viewPostsCategory in viewPostsCategories" ng-click="setCurrentViewPostsCategory(viewPostsCategory.category);"><a href="#">{{viewPostsCategory.title}}</a></li>
+		    <li ng-repeat="viewPostsCategory in viewPostsCategories" ng-click="setCurrentViewPostsCategory(viewPostsCategory.category);"><a href="#">View {{viewPostsCategory.title}}</a></li>
 		  </ul>
 		</div>
+	</div>
+
+	<div class="col-xs-6 col-sm-6 text-right" style="padding: 0;">
+		<input type="text" ng-model="searchValue" style="width: 70%; display: inline-block;" class="form-control" placeholder="Search from {{currentViewPostsCategory.postCategory.title}}">
 	</div>
 </div>

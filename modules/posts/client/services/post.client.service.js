@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 (() => {
 	'use strict';
 	
@@ -9,9 +11,7 @@
 
 	function PostService ($http, ngToast, $q, CommentService) { // to do: check if there's err in http requests
 
-		let postList = {
-			contents: []
-		};
+		let postList = { contents: [] }, postListCopy = { contents: [] };
 
 		/* temporary user */
 		const username = "Mark Eric Cabanli";
@@ -21,10 +21,15 @@
 			return postList;
 		}
 
+		const getPostListCopy = () => {
+			return postListCopy;
+		}
+
 		const getPostsByCategory = (category) => {
 			$http.get(`/api/posts/category/${category}`)
 			.then(response => {
 				postList.contents = response.data.posts;
+				postListCopy.contents = _.toArray(response.data.posts);
 			});
 		}
 
@@ -32,6 +37,7 @@
 			$http.get('/api/posts')
 			.then(response => {
 				postList.contents = response.data.posts;
+				postListCopy.contents = _.toArray(response.data.posts);
 			});
 		}
 
@@ -119,6 +125,7 @@
 
 		return {
 			getPostList,
+			getPostListCopy,
 			getPostsByCategory,
 			getAllPosts,
 			getOnePost,
