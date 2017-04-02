@@ -56,8 +56,7 @@
 			return currentViewPostsCategory;
 		}
 
-		const setCurrentViewPostsCategory = ($scope, category) => {
-			$scope.searchValue = "";
+		const setCurrentViewPostsCategory = (category) => {
 			const categoryIndex = viewPostsCategories.map((postCategory) => postCategory.category).indexOf(category);
 			currentViewPostsCategory.postCategory = viewPostsCategories[categoryIndex];
 			retrievePostsByCategory(currentViewPostsCategory.postCategory.category);

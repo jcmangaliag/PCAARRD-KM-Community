@@ -25,7 +25,8 @@ const CommentSchema = mongoose.Schema({
 		type: Array,
 		required: true
 	},
-	technologyHandle: String
+	technologyHandle: String,
+	files: Array
 });
 
 export default mongoose.model('Comment', CommentSchema);

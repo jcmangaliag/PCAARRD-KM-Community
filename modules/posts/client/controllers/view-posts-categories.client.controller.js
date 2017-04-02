@@ -9,9 +9,13 @@
 
 	function ViewPostsCategoriesController ($scope, ViewPostsCategoriesService) {
 		const {setCurrentViewPostsCategory} = ViewPostsCategoriesService;
-		$scope.setCurrentViewPostsCategory = _.partial(setCurrentViewPostsCategory, $scope);
+		$scope.setCurrentViewPostsCategory = _.partial(setCurrentViewPostsCategory);
 		$scope.currentViewPostsCategory = ViewPostsCategoriesService.getCurrentViewPostsCategory();
 		$scope.viewPostsCategories = ViewPostsCategoriesService.getViewPostsCategories();
+
+		$scope.resetSearchBar = () => {
+			$scope.searchValue = "";
+		}
 	}
 
 })();

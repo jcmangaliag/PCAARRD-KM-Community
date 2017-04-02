@@ -5,7 +5,7 @@
 		  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> View {{currentViewPostsCategory.postCategory.title}} <span class="caret"></span> </button>
 
 		  <ul class="dropdown-menu">
-		    <li ng-repeat="viewPostsCategory in viewPostsCategories" ng-click="setCurrentViewPostsCategory(viewPostsCategory.category);"><a href="#">View {{viewPostsCategory.title}}</a></li>
+		    <li ng-repeat="viewPostsCategory in viewPostsCategories" ng-click="setCurrentViewPostsCategory(viewPostsCategory.category); resetSearchBar();"><a href="#">View {{viewPostsCategory.title}}</a></li>
 		  </ul>
 		</div>
 	</div>
