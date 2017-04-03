@@ -16,7 +16,7 @@ import _ from 'lodash';
 		$scope.deleteOnePost = _.partial(deleteOnePost, $scope, $stateParams.postType);
 		$scope.userid = PostService.userid;	// temporary userid
 		$scope.pagination = {
-			postsPerPage: 2,
+			postsPerPage: 5,
 			currentPage: 1
 		}
 		

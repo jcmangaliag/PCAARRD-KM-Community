@@ -15,8 +15,11 @@ import _ from 'lodash';
 		const {submitComment} = CommentService;
 		$scope.submitComment = _.partial(submitComment);
 		$scope.userid = CommentService.userid;	// temporary userid
-
 		$scope.comments = CommentService.getCommentList();
+		$scope.pagination = {
+			commentsPerPage: 5,
+			currentPage: 1
+		}
 		
 		$scope.onProcessCommentData = (postID) => {
 			$scope.addCommentFormData.referredPost = postID;
@@ -86,6 +89,22 @@ import _ from 'lodash';
 				});
 
 		}
+
+		$scope.pageLimit = () => {
+    		return $scope.pagination.commentsPerPage *$scope.pagination.currentPage;
+    	}
+
+    	$scope.loadMoreComments = () => {
+    		$scope.pagination.currentPage++;
+    	}
+
+    	$scope.hasMoreComments = () => {
+    		return $scope.pagination.currentPage < ($scope.comments.contents.length / $scope.pagination.commentsPerPage);
+    	}
+
+    	$scope.resetPagination = () => {
+    		$scope.pagination.currentPage = 1;
+    	}
 
 		CommentService.getComments($state.params.id);
 	}
