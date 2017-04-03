@@ -26,19 +26,34 @@ import _ from 'lodash';
 		}
 
 		const getPostsByCategory = (category) => {
+			const deferred = $q.defer();
+
 			$http.get(`/api/posts/category/${category}`)
-			.then(response => {
+			.then((response) => {
 				postList.contents = response.data.posts;
 				postListCopy.contents = _.toArray(response.data.posts);
+
+				deferred.resolve(response.data.posts);
+			}, (response) => {
+				deferred.reject(response);
 			});
+
+			return deferred.promise;
 		}
 
 		const getAllPosts = () => {
+			const deferred = $q.defer();
+
 			$http.get('/api/posts')
-			.then(response => {
+			.then((response) => {
 				postList.contents = response.data.posts;
 				postListCopy.contents = _.toArray(response.data.posts);
+				deferred.resolve(response.data.posts);
+			}, (response) => {
+				deferred.reject(response);
 			});
+
+			return deferred.promise;
 		}
 
 		const getOnePost = (postID) => {

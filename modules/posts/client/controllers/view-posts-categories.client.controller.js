@@ -12,10 +12,6 @@
 		$scope.setCurrentViewPostsCategory = _.partial(setCurrentViewPostsCategory);
 		$scope.currentViewPostsCategory = ViewPostsCategoriesService.getCurrentViewPostsCategory();
 		$scope.viewPostsCategories = ViewPostsCategoriesService.getViewPostsCategories();
-
-		$scope.resetSearchBar = () => {
-			$scope.searchValue = "";
-		}
 	}
 
 })();

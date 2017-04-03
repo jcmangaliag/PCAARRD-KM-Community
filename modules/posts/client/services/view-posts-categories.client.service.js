@@ -5,9 +5,9 @@
 		.module('posts')
 		.factory('ViewPostsCategoriesService', ViewPostsCategoriesService);
 
-	ViewPostsCategoriesService.$inject = ['PostService'];
+	ViewPostsCategoriesService.$inject = ['PostService', '$q'];
 
-	function ViewPostsCategoriesService (PostService) {
+	function ViewPostsCategoriesService (PostService, $q) {
 
 		const viewPostsCategories = [
 			{
@@ -63,11 +63,27 @@
 		}
 
 		const retrievePostsByCategory = (category) => {
+			const deferred = $q.defer();
+
 			if (category == "all"){
-				PostService.getAllPosts();
+				PostService.getAllPosts()
+				.then((results) => {
+					deferred.resolve();
+				}, (error) => {
+					// posts not found
+					deferred.reject(error);
+				});
 			} else {
-				PostService.getPostsByCategory(currentViewPostsCategory.postCategory.category);
+				PostService.getPostsByCategory(currentViewPostsCategory.postCategory.category)
+				.then((results) => {
+					deferred.resolve();
+				}, (error) => {
+					// posts not found
+					deferred.reject(error);
+				});
 			}
+
+			return deferred.promise;
 		}
 
 		return {

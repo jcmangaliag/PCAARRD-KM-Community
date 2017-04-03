@@ -5,12 +5,10 @@
 		  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> View {{currentViewPostsCategory.postCategory.title}} <span class="caret"></span> </button>
 
 		  <ul class="dropdown-menu">
-		    <li ng-repeat="viewPostsCategory in viewPostsCategories" ng-click="setCurrentViewPostsCategory(viewPostsCategory.category); resetSearchBar();"><a href="#">View {{viewPostsCategory.title}}</a></li>
+		    <li ng-repeat="viewPostsCategory in viewPostsCategories" ng-click="setCurrentViewPostsCategory(viewPostsCategory.category); resetSearchBar(); resetPagination();"><a href="#">View {{viewPostsCategory.title}}</a></li>
 		  </ul>
 		</div>
 	</div>
 
-	<div class="col-xs-6 col-sm-6 text-right" style="padding: 0;">
-		<input type="text" ng-model="searchValue" style="width: 70%; display: inline-block;" class="form-control" placeholder="Search from {{currentViewPostsCategory.postCategory.title}}">
-	</div>
+	<search-posts></search-posts>
 </div>
