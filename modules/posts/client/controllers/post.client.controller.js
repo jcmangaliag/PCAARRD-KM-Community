@@ -8,12 +8,11 @@ import _ from 'lodash';
 		.module('posts')
 		.controller('PostController', PostController);
 
-	PostController.$inject = ['$scope', '$state', '$stateParams', 'PostService', 'ViewPostsCategoriesService', '$filter'];
+	PostController.$inject = ['$scope', '$state', '$stateParams', 'PostService', 'CommentService', 'ViewPostsCategoriesService', '$filter'];
 
-	function PostController ($scope, $state, $stateParams, PostService, ViewPostsCategoriesService, $filter) {
+	function PostController ($scope, $state, $stateParams, PostService, CommentService, ViewPostsCategoriesService, $filter) {
 
-		const {setPostReaction, deleteOnePost} = PostService;
-		$scope.setPostReaction = _.partial(setPostReaction, $scope);
+		const {deleteOnePost} = PostService;
 		$scope.deleteOnePost = _.partial(deleteOnePost, $scope, $stateParams.postType);
 		$scope.userid = PostService.userid;	// temporary userid
 		
@@ -34,7 +33,7 @@ import _ from 'lodash';
 
 		$scope.getPostData = () => {
 			if ($stateParams.postType === "view-one-post"){
-				PostService.getOnePost($scope, $stateParams.id)
+				PostService.getOnePost($stateParams.id)
 				.then((result) => {
 					$scope.selectedPost = result;
 				}, (error) => {
@@ -46,6 +45,16 @@ import _ from 'lodash';
 				$scope.posts = PostService.getPostList();
 				$scope.postsCopy = PostService.getPostListCopy();
 			}
+		}
+
+		$scope.onSetPostReaction = (post, reactionIndex) => {
+			PostService.getOnePost(post._id)
+				.then((result) => {
+					PostService.setPostReaction($scope, result, reactionIndex);
+					post.reactions = result.reactions;
+				}, (error) => {
+					// show 404 not found page
+				});
 		}
 
 		$scope.editPost = (postCategory, postID) => {

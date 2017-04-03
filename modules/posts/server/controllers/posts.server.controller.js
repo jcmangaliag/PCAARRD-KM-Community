@@ -19,8 +19,12 @@ const postControls = {
 		const id = req.params.id;
 
 		Post.findById(id, (err, result) => {
-			if (err) { return (err);  }
-			if (result === null) return res.status(404).send('Post not found!');
+			if (err) { 
+				return (err);  
+			} else if (result === null) {
+				return res.status(404).send('Post not found!');
+			}
+			
 			res.send({post: result});
 		});
 	},

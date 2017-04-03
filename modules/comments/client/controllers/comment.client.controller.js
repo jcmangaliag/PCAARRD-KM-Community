@@ -8,13 +8,12 @@ import _ from 'lodash';
 		.module('comments')
 		.controller('CommentController', CommentController);
 
-	CommentController.$inject = ['$scope', '$state', 'CommentService', 'PostService'];
+	CommentController.$inject = ['$scope', '$state', '$q', 'CommentService', 'PostService'];
 
-	function CommentController ($scope, $state, CommentService, PostService) {
+	function CommentController ($scope, $state, $q, CommentService, PostService) {
 		$scope.addCommentFormData = {};
-		const {submitComment, setCommentReaction} = CommentService;
+		const {submitComment} = CommentService;
 		$scope.submitComment = _.partial(submitComment);
-		$scope.setCommentReaction = _.partial(setCommentReaction);
 		$scope.userid = CommentService.userid;	// temporary userid
 
 		$scope.comments = CommentService.getCommentList();
@@ -44,20 +43,48 @@ import _ from 'lodash';
 			// hardcoded as of now, should be Object ID
 			$scope.addCommentFormData.commentedBy = "Mark Eric Cabanli";
 			$scope.submitComment(_.cloneDeep($scope.addCommentFormData));
-			PostService.setPostReaction($scope, $scope.selectedPost, 0);
+			PostService.getOnePost($scope.selectedPost._id)	// check post for update
+				.then((result) => {
+					PostService.setPostReaction($scope, result, 0);	// increment post's comment count
+				}, (error) => {
+					// show 404 not found page
+				});
+			
 			$scope.addCommentFormData = null;
 			$scope.clearHashtags();
 		}
 
-		$scope.onDeleteComment = (comment) => {
-			CommentService.deleteOneComment(comment);
+		$scope.onSetCommentReaction = (comment, reactionIndex) => {
+			CommentService.getOneComment(comment._id)
+				.then((result) => {
+					CommentService.setCommentReaction(result, reactionIndex);
+					comment.reactions = result.reactions;
+				}, (error) => {
+					// show 404 not found page
+				});
+		}
 
-			CommentService.getCommentsByUser($state.params.id, "MarkEricCabanli")
-			.then((results) => {
-				PostService.decrementCommentsCount($scope.selectedPost, comment, results.length, "Mark's id");
-			}, (error) => {
-				// show 404 not found page
-			});
+		$scope.onDeleteComment = (comment) => {
+			CommentService.deleteOneComment(comment)
+				.then((result) => {
+					return PostService.getOnePost($scope.selectedPost._id);
+				}, (error) => {
+					return $q.reject(error);
+					// comment to be deleted not found
+				})
+				.then((result) => {
+					$scope.selectedPost = result;
+					return CommentService.getCommentsByUser($state.params.id, "MarkEricCabanli");
+				}, (error) => {
+					return $q.reject(error);
+					// referred post not found
+				})
+				.then((results) => {
+					PostService.decrementCommentsCount($scope.selectedPost, comment, results.length, "Mark's id");
+				}, (error) => {
+					// all comments of the author are not found
+				});
+
 		}
 
 		CommentService.getComments($state.params.id);

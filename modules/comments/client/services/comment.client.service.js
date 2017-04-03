@@ -43,6 +43,19 @@ import _ from 'lodash';
 			return deferred.promise;
 		}
 
+		const getOneComment = (commentID) => {
+			const deferred = $q.defer();
+			
+			$http.get(`/api/comments/${commentID}`)
+			.then((response) => {
+				deferred.resolve(response.data.comment);
+			}, (response) => {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		}
+
 		const submitComment = (addPostCommentData) => {
 			$http.post('/api/comments', addPostCommentData)
 			.then(response => {
@@ -93,21 +106,31 @@ import _ from 'lodash';
 		}
 
 		const deleteOneComment = (comment) => {
+			const deferred = $q.defer();
+
 			$http.delete(`/api/comments/${comment._id}`)
-			.then(response => {	
+			.then((response) => {	
 				getComments(comment.referredPost);
 
 				ngToast.create({
 		    		className: 'success',
 		    		content: `The comment was successfully deleted.`
 		    	});
+
+		    	deferred.resolve(response);
+
+			}, (response) => {
+				deferred.reject(response);
 			});
+
+			return deferred.promise;
 		}
 
 		return {
 			getCommentList,
 			getComments,
 			getCommentsByUser,
+			getOneComment,
 			submitComment,
 			setCommentReaction,
 			deleteCommentsByReferredPost,

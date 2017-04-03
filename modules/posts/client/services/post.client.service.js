@@ -41,7 +41,7 @@ import _ from 'lodash';
 			});
 		}
 
-		const getOnePost = ($scope, postID) => {
+		const getOnePost = (postID) => {
 			const deferred = $q.defer();
 			
 			$http.get(`/api/posts/${postID}`)

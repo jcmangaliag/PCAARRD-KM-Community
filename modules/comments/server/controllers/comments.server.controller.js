@@ -16,8 +16,12 @@ const commentControls = {
 		const commentedBy = "Mark Eric Cabanli";	// temporary
 
 		Comment.find({referredPost, commentedBy}, (err, results) => {
-	        if (err) { return (err); }
-	        if (results === null) return res.status(404).send('Comments not found!');
+	        if (err) { 
+	        	return (err); 
+	        } else if (results === null) { 
+	        	return res.status(404).send('Comments not found!'); 
+	        }
+
 	        res.send({ comments: results });
 	    });
 	},
@@ -25,8 +29,12 @@ const commentControls = {
 		const id = req.params.id;
 
 		Comment.findById(id, (err, result) => {
-			if (err) { return (err);  }
-			if (result === null) return res.status(404).send('Comment not found!');
+			if (err) { 
+				return (err);  
+			} else if (result === null) { 
+				return res.status(404).send('Comment not found!'); 
+			}
+
 			res.send({comment: result});
 		});
 	},
@@ -51,7 +59,11 @@ const commentControls = {
 		const id = req.params.id;
 
 		Comment.findByIdAndRemove(id, (err, result) => {
-			if (err) { return (err); }
+			if (err) { 
+				return (err); 
+			} else if (result === null) { 
+				return res.status(404).send('Comment not found!'); 
+			}
 
 			res.send("Comment deleted.");
 		});

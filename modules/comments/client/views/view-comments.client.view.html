@@ -24,7 +24,7 @@
       	<div style=" margin-top: 1%; border-radius: 5px; background-color: white;">
 
       		<h5 style="display: inline; padding-right:3%;" ng-repeat="reaction in comment.reactions">
-		        <i ng-click="setCommentReaction(comment, $index)" class="fa fa-2x" ng-class="{'fa-thumbs-o-up' : reaction.name=='thumbsUp', 'fa-smile-o': reaction.name=='happy', 'fa-frown-o': reaction.name=='sad'}" aria-hidden="true" style="cursor: pointer;" ng-style="reaction.users.indexOf(userid) >=0 ? { 'color':'#286090' } : { 'color': '#333333' }"></i>
+		        <i ng-click="onSetCommentReaction(comment, $index)" class="fa fa-2x" ng-class="{'fa-thumbs-o-up' : reaction.name=='thumbsUp', 'fa-smile-o': reaction.name=='happy', 'fa-frown-o': reaction.name=='sad'}" aria-hidden="true" style="cursor: pointer;" ng-style="reaction.users.indexOf(userid) >=0 ? { 'color':'#286090' } : { 'color': '#333333' }"></i>
 
 		        <a href="#" style="margin-left: 1%; color: #333333;" data-toggle="modal" data-target="#{{comment._id + reaction.name}}">{{reaction.count}}</a>
 
