@@ -26,7 +26,7 @@ const PostSchema = mongoose.Schema({
 		required: true
 	},
 	files: Array,
-	technologyHandle: String,
+	technologyHandles: Array,
 	question: String,
 	description: String,
 	adTitle: String,

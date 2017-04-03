@@ -71,6 +71,8 @@ import _ from 'lodash';
 			const category = $scope.addPostFormData.category;
 			$scope.addPostFormData = null;
 			$scope.clearHashtags();
+			$scope.clearTechnologyHandles();
+			$scope.technologyHandle.enable = false;
 			$scope.clearMultipleFields();
 
 			if (category === 'event'){
@@ -84,6 +86,8 @@ import _ from 'lodash';
 			if (category === 'report'){
 				$scope.addPostFormData = { dateTime: $scope.defaultDatetime };
 			}
+
+			$scope.addPostFormData = {category: category};
 		}
 
 		$scope.onProcessPostData = (postCategory) => {
@@ -110,6 +114,9 @@ import _ from 'lodash';
 			}
 
 			$scope.addPostFormData.category = postCategory;
+			if ($scope.technologyHandle.enable){
+				$scope.addPostFormData.technologyHandles = $scope.selectedTechnologies;
+			}
 			$scope.addPostFormData.hashtags = $scope.hashtags;
 			$scope.addPostFormData.datePosted = moment().format('MMMM Do YYYY, h:mm:ss a');
 			$scope.addPostFormData.reactions = [

@@ -25,7 +25,7 @@ const CommentSchema = mongoose.Schema({
 		type: Array,
 		required: true
 	},
-	technologyHandle: String,
+	technologyHandles: Array,
 	files: Array
 });
 

@@ -20,9 +20,19 @@ import _ from 'lodash';
 			commentsPerPage: 5,
 			currentPage: 1
 		}
+
+		$scope.clearCommentForm = () => {
+			$scope.addCommentFormData = null;
+			$scope.clearTechnologyHandles();
+			$scope.technologyHandle.enable = false;
+			$scope.clearHashtags();
+		}
 		
 		$scope.onProcessCommentData = (postID) => {
 			$scope.addCommentFormData.referredPost = postID;
+			if ($scope.technologyHandle.enable){
+				$scope.addCommentFormData.technologyHandles = $scope.selectedTechnologies;
+			}
 			$scope.addCommentFormData.hashtags = $scope.hashtags;
 			$scope.addCommentFormData.dateCommented = moment().format('MMMM Do YYYY, h:mm:ss a');
 			$scope.addCommentFormData.reactions = [
@@ -53,8 +63,7 @@ import _ from 'lodash';
 					// show 404 not found page
 				});
 			
-			$scope.addCommentFormData = null;
-			$scope.clearHashtags();
+			$scope.clearCommentForm();
 		}
 
 		$scope.onSetCommentReaction = (comment, reactionIndex) => {
