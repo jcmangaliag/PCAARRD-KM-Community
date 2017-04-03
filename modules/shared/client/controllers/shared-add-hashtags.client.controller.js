@@ -10,12 +10,9 @@
 	function SharedAddHashtagsController ($scope) {
 		$scope.hashtags = [''];
 		$scope.MIN_HASHTAG = 1;
-		$scope.MAX_HASHTAG = 5;
 
 		$scope.addHashtag = () => {
-			if ($scope.hashtags.length < $scope.MAX_HASHTAG){
-				$scope.hashtags.push('');
-			}
+			$scope.hashtags.push('');
 		}
 
 		$scope.removeHashtag = () => {
