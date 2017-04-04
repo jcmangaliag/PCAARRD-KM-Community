@@ -14,5 +14,7 @@ import SharedViewTechnologyHandlesDirective from './directives/shared-view-techn
 import SharedResetSubmitButtonsDirective from './directives/shared-reset-submit-buttons.client.directive';
 import SharedFormLegendsDirective from './directives/shared-form-legends.client.directive';
 
+import sharedParseURL from './filters/shared-parse-url.client.filter';
+
 import SharedAddHashtagsStyle from './styles/shared-add-hashtags.client.style.scss';
 import SharedAddFilesStyle from './styles/shared-add-files.client.style.scss';

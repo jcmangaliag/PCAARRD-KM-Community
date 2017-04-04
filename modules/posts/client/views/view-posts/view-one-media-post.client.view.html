@@ -20,7 +20,7 @@
 		
 		<div ng-if="selectedPost.description" style="margin-bottom: 3%;">
 			<p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Description</p>
-	      	<h4 style="white-space: pre-wrap;">{{selectedPost.description}}</h4>
+	      	<h4 ng-bind-html="selectedPost.description | parseURL" style="white-space: pre-wrap;"></h4>
 	    </div>
 
 	    <div ng-if="selectedPost.urls.length > 0" style="margin-bottom: 3%;">

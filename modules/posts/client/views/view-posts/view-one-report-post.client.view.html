@@ -26,12 +26,12 @@
 
 	    <div style="margin-bottom: 3%;">
 			<p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Located at</p>
-	      	<h4>{{selectedPost.location}}</h4>
+	      	<h4 ng-bind-html="selectedPost.location | parseURL"></h4>
 	    </div>
 
 		<div style="margin-bottom: 3%;">
 			<p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Incident Report Details</p>
-	      	<h4 style="white-space: pre-wrap;">{{selectedPost.details}}</h4>
+	      	<h4 ng-bind-html="selectedPost.details | parseURL" style="white-space: pre-wrap;"></h4>
 	    </div>
 
 	    <shared-view-files ng-if="selectedPost.files" selected-files="selectedPost.files"></shared-view-files>

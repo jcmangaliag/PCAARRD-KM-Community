@@ -87,6 +87,10 @@ import _ from 'lodash';
 				$scope.addPostFormData = { dateTime: $scope.defaultDatetime };
 			}
 
+			if (category === 'advertisement'){
+				$scope.price = null;
+			}
+
 			$scope.addPostFormData = {category: category};
 		}
 

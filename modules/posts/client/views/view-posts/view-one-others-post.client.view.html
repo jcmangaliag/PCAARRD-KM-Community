@@ -13,7 +13,7 @@
 		    </div>
 	  	</div>
 
-		<h4 style="margin: 10px 0 0 0; white-space: pre-wrap;">{{selectedPost.post}}</h4>
+		<h4 ng-bind-html="selectedPost.post | parseURL" style="margin: 10px 0 0 0; white-space: pre-wrap;"></h4>
 
 		<div style="padding: 1% 0 1% 0">
 			<p style="color: gray;">submitted by <a href="#" style="font-weight: bold; color: gray;">{{selectedPost.postedBy}}</a> on {{selectedPost.datePosted}}</p>
