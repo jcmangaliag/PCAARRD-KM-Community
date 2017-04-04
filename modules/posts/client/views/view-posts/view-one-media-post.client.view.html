@@ -26,7 +26,7 @@
 	    <div ng-if="selectedPost.urls.length > 0" style="margin-bottom: 3%;">
 			<p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">URL/s</p>
 			<ul class="list-group">
-	      		<li class="list-group-item" ng-repeat="url in selectedPost.urls  track by $index"><a href="{{url}}">{{url}}</a></li>
+	      		<li class="list-group-item" ng-repeat="url in selectedPost.urls"><a href="{{url.url}}" target="_blank">{{url.urlTitle}}</a></li>
 	      	</ul>
 	    </div>
 

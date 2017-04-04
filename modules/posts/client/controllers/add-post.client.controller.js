@@ -19,7 +19,7 @@ import _ from 'lodash';
 		};
 		$scope.multipleFields = {
 			authors: [''],
-			urls: ['']
+			urls: [{url: '', urlTitle: ''}]
 		};
 		$scope.MIN_AUTHOR = 1;
 		$scope.MAX_AUTHOR = 5;
@@ -46,7 +46,11 @@ import _ from 'lodash';
 
 		$scope.addField = (fieldArray, maxField) => {
 			if (fieldArray.length < maxField){
-				fieldArray.push('');
+				if (fieldArray === $scope.multipleFields.urls){
+					fieldArray.push({url: '', urlTitle: ''});
+				} else {
+					fieldArray.push('');
+				}
 			}
 		}
 
@@ -59,7 +63,11 @@ import _ from 'lodash';
 		$scope.clearMultipleFields = () => {
 			_.forOwn($scope.multipleFields, (fieldArray) => { 
 				fieldArray.length = 0;
-				fieldArray.push('');
+				if (fieldArray === $scope.multipleFields.urls){
+					fieldArray.push({url: '', urlTitle: ''});
+				} else {
+					fieldArray.push('');
+				}
 			});
 		}
 

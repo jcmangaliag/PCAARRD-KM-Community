@@ -16,9 +16,11 @@
   </div>
 
   <div ng-if="addPostFormData.mediaType === 'url'" class="form-group">
-    <label for="post-ads__name">URL/s <span style="color:red;">*</span></label>
+    <label for="post-ads__name">URL/s <span style="color:red;">*</span> <span style="font-style: italic;">(e.g. http://www.wikihow.com/Use-Facebook, Facebook Tutorial)</span></label>
     <div class="shared__addhashtags--body" ng-repeat="url in multipleFields.urls track by $index">
-      <input type="url" style="display: inline-block;" class="form-control shared__addhashtags--field" id="post-ads__name" placeholder="Enter a URL" ng-model="multipleFields.urls[$index]" required />
+      <input type="url" style="display: inline-block; width: 57%;" class="form-control" id="post-ads__name" placeholder="Enter a URL" ng-model="multipleFields.urls[$index].url" required />
+
+      <input type="text" style="display: inline-block; width: 30%;" class="form-control shared__addhashtags--field" id="post-ads__name" placeholder="Enter URL's title" ng-model="multipleFields.urls[$index].urlTitle" required />
   
       <button type="button" ng-hide="{{multipleFields.urls.length >= MAX_URL}}"  class="btn btn-primary" ng-if="$last" ng-click="addField(multipleFields.urls, MAX_URL)"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
 

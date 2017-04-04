@@ -15,12 +15,12 @@
 
   <div ng-if="post.urls.length > 0">
     <ul class="list-group">
-      <li class="list-group-item" ng-repeat="url in post.urls track by $index | limitTo: 3"><a href="{{url}}">{{url}}</a></li>
+      <li class="list-group-item" ng-repeat="url in post.urls | limitTo: 3"><a href="{{url.url}}" target="_blank">{{url.urlTitle}}</a></li>
     </ul>
     <span ng-if="post.urls.length > 3">…</span>
   </div>
 
-  <div style="margin: -1% 0 1% 0;">
+  <div style="margin: 0% 0 1% 0;">
   	<a ui-sref="oneGroup.viewOneMediaPost({id: post._id})" ng-click="autoScrollPost(true)">See More</a>
   </div>
 
