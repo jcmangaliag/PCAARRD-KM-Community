@@ -25,6 +25,10 @@ const PostSchema = mongoose.Schema({
 		type: Array,
 		required: true
 	},
+	showPublic: {
+		type: Boolean,
+		required: true
+	},
 	files: Array,
 	technologyHandles: Array,
 	question: String,

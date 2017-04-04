@@ -15,7 +15,8 @@ import _ from 'lodash';
 		const {submitPost} = AddPostService;
 		$scope.submitPost = _.partial(submitPost);
 		$scope.addPostFormData = {
-			category: AddPostCategoriesService.getCurrentAddPostCategory().postCategory.category
+			category: AddPostCategoriesService.getCurrentAddPostCategory().postCategory.category,
+			showPublic: true
 		};
 		$scope.multipleFields = {
 			authors: [''],
@@ -99,7 +100,7 @@ import _ from 'lodash';
 				$scope.price = null;
 			}
 
-			$scope.addPostFormData = {category: category};
+			$scope.addPostFormData = {category: category, showPublic: true};
 		}
 
 		$scope.onProcessPostData = (postCategory) => {

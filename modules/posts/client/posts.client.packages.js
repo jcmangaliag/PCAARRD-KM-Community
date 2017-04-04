@@ -14,6 +14,7 @@ import AddMediaPostDirective from './directives/add-post/add-media-post.client.d
 import AddNewsPostDirective from './directives/add-post/add-news-post.client.directive';
 import AddOthersPostDirective from './directives/add-post/add-others-post.client.directive';
 import AddReportPostDirective from './directives/add-post/add-report-post.client.directive';
+import AddPostPrivacyDirective from './directives/add-post/add-post-privacy.client.directive';
 
 import DeletePostDirective from './directives/delete-post.client.directive';
 import SearchPostsDirective from './directives/search-posts.client.directive';
