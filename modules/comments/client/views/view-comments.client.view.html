@@ -13,7 +13,7 @@
 		  </div>
 		
 
-      	<p ng-bind-html="comment.comment | parseURL" style="white-space: pre-wrap; margin-top: 5px;"></p>
+      	<p ng-bind-html="comment.comment | parseURL | emoji" style="white-space: pre-wrap; margin-top: 5px;"></p>
 	    	
     	<shared-view-files selected-files="comment.files"></shared-view-files>
 

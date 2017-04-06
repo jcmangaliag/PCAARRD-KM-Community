@@ -23,7 +23,7 @@
 
 		<div ng-if="selectedPost.description" style="margin-bottom: 3%;">
 			<p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Description</p>
-	      	<h4 ng-bind-html="selectedPost.description | parseURL" style="white-space: pre-wrap;"></h4>
+	      	<h4 ng-bind-html="selectedPost.description | parseURL | emoji" style="white-space: pre-wrap;"></h4>
 	    </div>
 
 	    <shared-view-files ng-if="selectedPost.files" selected-files="selectedPost.files"></shared-view-files>

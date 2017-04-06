@@ -23,7 +23,7 @@
 
 
 		<div style="margin-bottom: 3%;">
-	      	<h4 ng-bind-html="selectedPost.newsBody | parseURL" style="white-space: pre-wrap;"></h4>
+	      	<h4 ng-bind-html="selectedPost.newsBody | parseURL | emoji" style="white-space: pre-wrap;"></h4>
 	    </div>
 
 	    <shared-view-files ng-if="selectedPost.files" selected-files="selectedPost.files"></shared-view-files>

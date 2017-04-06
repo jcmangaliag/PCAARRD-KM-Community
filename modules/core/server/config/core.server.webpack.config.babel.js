@@ -49,7 +49,7 @@ const webpackConfig = {
 				loader: "url-loader?limit=10000&mimetype=application/font-woff" 
 			},
       		{ 
-      			test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, 
+      			test: /\.(ttf|eot|svg|jpe?g|png|gif|ico)(\?v=[0-9]\.[0-9]\.[0-9])?$/, 
       			loader: "file-loader" 
       		}
 		]
