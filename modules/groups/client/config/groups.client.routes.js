@@ -11,6 +11,12 @@
 		$urlRouterProvider.otherwise('/');
 
 		$stateProvider
+			.state('groups', {
+				url: '/',
+				templateUrl: 'groups/client/views/view-group-list.client.view.html',
+				controller: 'GroupListController'
+			})
+
 			.state('oneGroup', {
 				url: '/groups/banana',	// should be /groups/:groupID
 				templateUrl: 'groups/client/views/view-one-group.client.view.html',
