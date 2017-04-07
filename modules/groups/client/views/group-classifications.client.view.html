@@ -1,7 +1,15 @@
 <section id="group-classifications">
 	<div style="padding: 1.5%; background-color: white; margin: 2% 1% 2%; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-		<div style="margin-bottom: 1%;">
-			<h3 style="margin: 0;"><i class="fa fa-list-alt" aria-hidden="true"></i> Group Classifications</h3>
+		<div class="row">
+			<div class="col-xs-6 col-sm-6" style="margin-bottom: 1%;">
+				<h3 style="margin: 0;"><i class="fa fa-list-alt" aria-hidden="true"></i> Group Classifications</h3>
+			</div>
+			<div class="col-xs-6 col-sm-6">
+				<div class="input-group pull-right" style="width: 70%;">
+					<span class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></span>
+					<input type="text" ng-model="searchClassificationsValue" style="display: inline-block;" class="form-control" placeholder="Search from Group Classifications">
+				</div>
+			</div>
 		</div>
 		<hr />
 		<div class="table-responsive">
@@ -17,48 +25,23 @@
 			      </tr>
 			    </thead>
 			    <tbody>
-			      <tr>
-			      	<td>1</td>
-			        <td>Agriculture</td>
-			        <td>Crops</td>
-			        <td>Abaca</td>
-			        <td>NULL</td>
-			        <td><i class="fa fa-lg fa-trash" data-toggle="modal" data-target="#delete" style="cursor: pointer;" aria-hidden="true"></i></td>
-			      </tr>
-			      <tr>
-			      	<td>2</td>
-			        <td>Agriculture</td>
-			        <td>Crops</td>
-			        <td>Banana</td>
-			        <td>NULL</td>
-			        <td><i class="fa fa-lg fa-trash" data-toggle="modal" data-target="#delete" style="cursor: pointer;" aria-hidden="true"></i></td>
-			      </tr>
-			      <tr>
-			      	<td>3</td>
-			        <td>Aquatic Resources</td>
-			        <td>Inland Aquatic</td>
-			        <td>Feed Resources</td>
-			        <td>Aquafeeds</td>
-			        <td><i class="fa fa-lg fa-trash" data-toggle="modal" data-target="#delete" style="cursor: pointer;" aria-hidden="true"></i></td>
-			      </tr>
-			      <tr>
-			      	<td>4</td>
-			        <td>Natural Resources</td>
-			        <td>Forestry</td>
-			        <td>Cacao</td>
-			        <td>NULL</td>
-			        <td><i class="fa fa-lg fa-trash" data-toggle="modal" data-target="#delete" style="cursor: pointer;" aria-hidden="true"></i></td>
+			      <tr ng-repeat="groupClassification in groupClassifications.contents | orderBy: ['industry','sector', 'isp', 'specificCommodity'] | limitTo: paginate.pageLimit(paginate.currentPage, paginate.classificationsPerPage) track by $index">
+			      	<td>{{$index+1}}</td>
+			        <td>{{groupClassification.industry}}</td>
+			        <td>{{groupClassification.sector}}</td>
+			        <td>{{groupClassification.isp}}</td>
+			        <td>{{groupClassification.specificCommodity}} <span ng-if="!groupClassification.specificCommodity">-</span> </td>
+			        <td><i class="fa fa-lg fa-trash" data-toggle="modal" data-target="#{{'delete' + groupClassification._id}}" style="cursor: pointer;" aria-hidden="true"></i></td>
 			      </tr>
 			    </tbody>
 		  	</table>
 	  	</div>
-	  	<div ng-if="true" class="text-center" style="margin-bottom:10px;">
-			<hr />
-			<button ng-click="" style="width: 50%;" type="button" class="btn btn-primary" >See More Classifications</button>
+	  	<div ng-if="paginate.hasMoreItems(paginate.currentPage, paginate.classificationsPerPage, groupClassifications.contents.length)" class="text-center" style="margin-bottom:10px;">
+			<button ng-click="paginate.loadMoreItems(paginate)" style="width: 50%;" type="button" class="btn btn-primary" >See More Classifications</button>
 		</div>
 	</div>
 
-	<div class="modal fade" id="delete" tabindex="-1" role="dialog">
+	<div ng-repeat="groupClassification in groupClassifications.contents" class="modal fade" id="{{'delete' + groupClassification._id}}" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">

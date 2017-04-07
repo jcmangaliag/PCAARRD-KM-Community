@@ -8,18 +8,18 @@ import _ from 'lodash';
 		.module('posts')
 		.controller('PostController', PostController);
 
-	PostController.$inject = ['$scope', '$state', '$stateParams', 'PostService', 'CommentService', 'ViewPostsCategoriesService', '$filter'];
+	PostController.$inject = ['$scope', '$state', '$stateParams', 'PostService', 'CommentService', 'ViewPostsCategoriesService', 'SharedPaginationService', '$filter'];
 
-	function PostController ($scope, $state, $stateParams, PostService, CommentService, ViewPostsCategoriesService, $filter) {
+	function PostController ($scope, $state, $stateParams, PostService, CommentService, ViewPostsCategoriesService, SharedPaginationService, $filter) {
 
 		const {deleteOnePost} = PostService;
+		$scope.paginate = SharedPaginationService;
+		$scope.paginate.currentPage = 1;
+		$scope.paginate.postsPerPage = 5;
+
 		$scope.deleteOnePost = _.partial(deleteOnePost, $scope, $stateParams.postType);
 		$scope.userid = PostService.userid;	// temporary userid
-		$scope.pagination = {
-			postsPerPage: 5,
-			currentPage: 1
-		}
-		
+
 		$scope.commentOnOnePost = (postCategory, postID) => {
 			$state.go(`oneGroup.viewOne${postCategory.charAt(0).toUpperCase() + postCategory.slice(1)}Post`, {id: postID, '#': 'write-comment'});
 		}
@@ -69,13 +69,13 @@ import _ from 'lodash';
 			$state.go('oneGroup');
 		}
 
-		$scope.$watch('searchValue', function(value){ 
+		$scope.$watch('searchPostsValue', function(value){ 
 			if ($scope.posts){
 				const currentViewPostsCategory = ViewPostsCategoriesService.getCurrentViewPostsCategory().postCategory.category;
 				ViewPostsCategoriesService.retrievePostsByCategory(currentViewPostsCategory)
 					.then(() => {
 						$scope.posts.contents = $filter('filter')($scope.postsCopy.contents, value);
-						$scope.resetPagination();
+						$scope.resetCurrentPage();
 					}, (error) => {
 						// problem with loading posts
 					});
@@ -83,24 +83,12 @@ import _ from 'lodash';
     	});
 
     	$scope.resetSearchBar = () => {
-			$scope.searchValue = "";
+			$scope.searchPostsValue = "";
 		}
 
-    	$scope.pageLimit = () => {
-    		return $scope.pagination.postsPerPage *$scope.pagination.currentPage;
-    	}
-
-    	$scope.loadMorePosts = () => {
-    		$scope.pagination.currentPage++;
-    	}
-
-    	$scope.hasMorePosts = () => {
-    		return $scope.pagination.currentPage < ($scope.posts.contents.length / $scope.pagination.postsPerPage);
-    	}
-
-    	$scope.resetPagination = () => {
-    		$scope.pagination.currentPage = 1;
-    	}
+		$scope.resetCurrentPage = () => {
+			$scope.paginate.currentPage = 1;
+		}
 
 		$scope.getPostData();
 	}

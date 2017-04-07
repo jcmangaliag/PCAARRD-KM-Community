@@ -8,18 +8,17 @@ import _ from 'lodash';
 		.module('comments')
 		.controller('CommentController', CommentController);
 
-	CommentController.$inject = ['$scope', '$state', '$q', 'CommentService', 'PostService'];
+	CommentController.$inject = ['$scope', '$state', '$q', 'CommentService', 'PostService', 'SharedPaginationService'];
 
-	function CommentController ($scope, $state, $q, CommentService, PostService) {
+	function CommentController ($scope, $state, $q, CommentService, PostService, SharedPaginationService) {
 		$scope.addCommentFormData = {};
 		const {submitComment} = CommentService;
 		$scope.submitComment = _.partial(submitComment);
 		$scope.userid = CommentService.userid;	// temporary userid
 		$scope.comments = CommentService.getCommentList();
-		$scope.pagination = {
-			commentsPerPage: 5,
-			currentPage: 1
-		}
+		$scope.paginate = SharedPaginationService;
+		$scope.paginate.currentPage = 1;
+		$scope.paginate.commentsPerPage = 3;
 
 		$scope.clearCommentForm = () => {
 			$scope.addCommentFormData = null;
@@ -98,22 +97,6 @@ import _ from 'lodash';
 				});
 
 		}
-
-		$scope.pageLimit = () => {
-    		return $scope.pagination.commentsPerPage *$scope.pagination.currentPage;
-    	}
-
-    	$scope.loadMoreComments = () => {
-    		$scope.pagination.currentPage++;
-    	}
-
-    	$scope.hasMoreComments = () => {
-    		return $scope.pagination.currentPage < ($scope.comments.contents.length / $scope.pagination.commentsPerPage);
-    	}
-
-    	$scope.resetPagination = () => {
-    		$scope.pagination.currentPage = 1;
-    	}
 
 		CommentService.getComments($state.params.id);
 	}

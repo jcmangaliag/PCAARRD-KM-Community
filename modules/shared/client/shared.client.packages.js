@@ -17,5 +17,7 @@ import SharedFormLegendsDirective from './directives/shared-form-legends.client.
 
 import sharedParseURL from './filters/shared-parse-url.client.filter';
 
+import SharedPaginationService from './services/shared-pagination.client.service';
+
 import SharedAddHashtagsStyle from './styles/shared-add-hashtags.client.style.scss';
 import SharedAddFilesStyle from './styles/shared-add-files.client.style.scss';
