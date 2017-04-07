@@ -9,8 +9,7 @@
 
 		const directive = {
 			restrict: 'E',
-			templateUrl: '/layout/client/views/layout-sidebar.client.view.html',
-			controller: 'SidebarController'
+			templateUrl: '/layout/client/views/layout-sidebar.client.view.html'
 		}
 
 		return directive;

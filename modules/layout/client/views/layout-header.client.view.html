@@ -25,7 +25,7 @@
           <li><a href="#" style="color: black;">
             Technology</a>
           </li>
-          <li><a ui-sref="home" style="color: black; font-weight: bold;">
+          <li><a ui-sref="groups" style="color: black; font-weight: bold;">
             Community</a>
           </li>
 
@@ -55,7 +55,7 @@
     <div style="background-color: #3062B7; padding: 0.2% 1%; color: white;">
     <div class="row">
       <div class="col-xs-12 col-sm-6 col-md-6" style="margin-top:0.4%;">
-         <h4 style="display: inline-block;"><a href="#" style="color: white;">HOME</a> / <a ui-sref="home" style="color: white;">COMMUNITY</a> </h4>
+         <h4 style="display: inline-block;"><a href="#" style="color: white;">HOME</a> / <a ui-sref="groups" style="color: white;">COMMUNITY</a> </h4>
       </div>
 
       <div class="col-xs-12 col-sm-6 col-md-6 text-right">
@@ -72,13 +72,18 @@
           </h4>
           </a>
 
-          <a href="#" ><h4 style="display: inline;">
-          <span class="fa-stack fa-lg">
-          <i class="fa fa-circle fa-stack-2x" aria-hidden="true"></i>
-          <i class="fa fa-sign-out fa-stack-1x fa-inverse" aria-hidden="true"></i>
-          </span>
-          </h4>
-          </a>
+          <div class="btn-group">
+              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-radius: 100%; margin-bottom: 3px;">
+              <i class="fa fa-caret-down fa-2x" aria-hidden="true"></i>
+              </button>
+              <ul id="user-option-dropdown" class="dropdown-menu dropdown-menu-right">
+                <li> <a ui-sref="manageGroupClassification"><i class="fa fa-database" aria-hidden="true"></i> Manage Group Classification</a></li>
+                <li> <a ui-sref="createGroup"><i class="fa fa-plus" aria-hidden="true"></i> Create Group</a></li>
+                <li> <a href="#"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a></li>
+                <li role="separator" class="divider"></li>
+                <li> <a href="#"><i class="fa fa-sign-out" aria-hidden="true"></i> Log Out</a></li>
+              </ul>
+          </div>
 
       </div>
       </div>
@@ -86,3 +91,4 @@
   </div>
 </nav>
 </div>
+

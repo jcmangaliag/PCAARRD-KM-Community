@@ -11,21 +11,32 @@
 		$urlRouterProvider.otherwise('/');
 
 		$stateProvider
+			/* View All Groups */
 			.state('groups', {
 				url: '/',
 				templateUrl: 'groups/client/views/view-group-list.client.view.html',
-				controller: 'GroupListController'
+				controller: 'GroupController'
 			})
-
+			/* View One Group */
 			.state('oneGroup', {
 				url: '/groups/banana',	// should be /groups/:groupID
 				templateUrl: 'groups/client/views/view-one-group.client.view.html',
-				controller: 'OneGroupController'
+				controller: 'GroupController'
+			})
+			/* Manage Group Classification*/
+			.state('manageGroupClassification', {
+				url: '/manage-group-classification',	
+				templateUrl: 'groups/client/views/manage-group-classification.client.view.html',
+				controller: 'GroupClassificationController'
+			})
+			/* Create Group */
+			.state('createGroup', {
+				url: '/create-group',	
+				templateUrl: 'groups/client/views/create-group.client.view.html',
+				controller: 'GroupController'
 			})
 
 			/* View One Post */
-
-			
 			.state('oneGroup.viewOneAdvertisementPost', {
 				url: '/view-posts/advertisement/:id',
 				templateUrl: 'posts/client/views/view-posts/view-one-advertisement-post.client.view.html',

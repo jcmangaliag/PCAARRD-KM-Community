@@ -3,11 +3,11 @@
 	
 	angular
 		.module('groups')
-		.controller('OneGroupController', OneGroupController);
+		.controller('GroupController', GroupController);
 
-	OneGroupController.$inject = ['$scope', '$state'];
+	GroupController.$inject = ['$scope', '$state'];
 
-	function OneGroupController ($scope, $state) {
+	function GroupController ($scope, $state) {
 		$scope.autoScroll = { 
 			status: false
 		}

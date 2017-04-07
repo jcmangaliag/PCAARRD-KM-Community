@@ -54,3 +54,25 @@ layout-header {
   border-radius: 5px;
   font-family: 'Open Sans', sans-serif;
 }
+
+#user-option-dropdown::before {
+    border-bottom: 9px solid rgba(0, 0, 0, 0.2);
+    border-left: 9px solid rgba(0, 0, 0, 0);
+    border-right: 9px solid rgba(0, 0, 0, 0);
+    content: "";
+    display: inline-block;
+    right: 11px;
+    position: absolute;
+    top: -8px;
+}
+
+#user-option-dropdown::after {
+    border-bottom: 8px solid #FFFFFF;
+    border-left: 9px solid rgba(0, 0, 0, 0);
+    border-right: 9px solid rgba(0, 0, 0, 0);
+    content: "";
+    display: inline-block;
+    right: 11px;
+    position: absolute;
+    top: -7px;
+}

@@ -14,7 +14,7 @@
 
 			$http.post('/api/posts', addPostFormData)
 			.then(response => {
-				deferred.resolve(addPostFormData);
+				deferred.resolve(response);
 				ViewPostsCategoriesService.setCurrentViewPostsCategory(addPostFormData.category);
 
 				ngToast.create({
