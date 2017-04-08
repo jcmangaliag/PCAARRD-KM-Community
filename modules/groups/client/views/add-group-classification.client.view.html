@@ -6,29 +6,26 @@
 		<hr />
 		<form style="padding: 1% 2% 2% 2%; text-align: left;" ng-submit="onProcessGroupClassificationForm()">
 			<div class="form-group">
-				<label>Industry <span style="color:red;">*</span></label>
+				<label>Industry</label>
 		    	<input type="text" class="form-control" placeholder="Enter the group's industry" ng-model="addGroupClassificationFormData.industry" required />
 		    </div>
 
 		    <div class="form-group">
-		    	<label>Sector <span style="color:red;">*</span></label>
+		    	<label>Sector</label>
 		    	<input type="text" class="form-control" placeholder="Enter the group's sector" ng-model="addGroupClassificationFormData.sector" required />
 		    </div>
 
 		    <div class="form-group">
-		    	<label>ISP <span style="color:red;">*</span></label>
+		    	<label>ISP</label>
 		    	<input type="text" class="form-control" placeholder="Enter the group's ISP" ng-model="addGroupClassificationFormData.isp" required />
 		    </div>
 
 		    <div class="form-group">
-		    	<label>Specific Commodity</label>
+		    	<label>Specific Commodity <span style="font-style: italic;">(Optional)</span></label>
 		    	<input type="text" class="form-control" placeholder="Enter the group's specific commodity" ng-model="addGroupClassificationFormData.specificCommodity" />
 		    </div>
 
-		    <shared-form-legends></shared-form-legends>
-
 			<shared-reset-submit-buttons></shared-reset-submit-buttons>
-
 		</form>
 	</div>
 </section>

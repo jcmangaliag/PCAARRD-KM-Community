@@ -5,11 +5,19 @@
 		.module('groups')
 		.controller('GroupController', GroupController);
 
-	GroupController.$inject = ['$scope', '$state'];
+	GroupController.$inject = ['$scope', '$state', 'GroupClassificationService'];
 
-	function GroupController ($scope, $state) {
+	function GroupController ($scope, $state, GroupClassificationService) {
+
+		$scope.addGroupFormData = { classification: "" };
+
 		$scope.autoScroll = { 
 			status: false
+		}
+
+		$scope.generateGroupNameAndHandle = (classification) => {
+			$scope.addGroupFormData.name = (classification && (classification.specificCommodity || classification.isp)) || "";
+			$scope.addGroupFormData.handle = $scope.addGroupFormData.name.replace(/\s/g, "").toLowerCase();
 		}
 
 		$scope.$watch(() => {
@@ -21,6 +29,9 @@
 		$scope.autoScrollPost = (option) => {
 			$scope.autoScroll.status = option;
 		}
+
+		GroupClassificationService.getAllGroupClassifications();
+		$scope.groupClassifications = GroupClassificationService.getGroupClassificationList();
 	}
 
 })();

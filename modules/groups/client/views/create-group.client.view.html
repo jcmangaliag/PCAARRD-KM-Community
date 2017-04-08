@@ -4,31 +4,35 @@
 		</div>
 		<hr />
 		<form style="padding: 1% 2% 2% 2%; text-align: left;" ng-submit="">
-		  <!-- <div class="form-group">
-		    <label for="post-ads__name">Advertisement Title <span style="color:red;">*</span></label>
-		    <input type="text" class="form-control" id="post-ads__name" placeholder="Enter your advertisement" ng-model="addPostFormData.adTitle" required />
+
+		  <div class="form-group">
+		    <label>Choose Group Classification <span style="color:red;">*</span> <span style="font-style: italic;"> (Industry, Sector, ISP, Specific Commodity)</span></label>
+		    <select ng-options="groupClassification.industry + ' -> ' + groupClassification.sector +' -> '+ groupClassification.isp +  groupClassification.specificCommodity.replace(groupClassification.specificCommodity, ' -> ' + groupClassification.specificCommodity) for groupClassification in groupClassifications.contents | orderBy: ['industry','sector', 'isp', 'specificCommodity']" class="form-control" ng-model="addGroupFormData.classification" ng-change="generateGroupNameAndHandle(addGroupFormData.classification)" required>
+		    	<option value="">---Select Group Classification---</option>
+		    </select>
 		  </div>
 
 		  <div class="form-group">
-		      <label for="post-ads__name">Price (in Philippine Peso)</label>
-		      <input type="number" step="0.01" class="form-control" id="post-ads__name" placeholder="Enter the price" ng-model="price" />
-	    	</div>
-
-		  <div class="form-group">
-		    <label for="post-ads__desc">Features and Other Details <span style="color:red;">*</span></label>
-		    <textarea class="form-control" style="resize: vertical;" id="post-ads__desc" rows="3" placeholder="Enter the features and other details" ng-model="addPostFormData.details" required></textarea>
+		    <label>Group Name</label>
+		    <input type="text" class="form-control" placeholder="---Generated Group Name Here---" ng-model="addGroupFormData.name" required readonly />
 		  </div>
 
-		  <shared-add-files form-data="addPostFormData"></shared-add-files>
+		  <div class="form-group">
+		    <label>Group Handle</label>
+		    <div class="input-group">
+			    <span class="input-group-addon">@</span>
+			    <input type="text" class="form-control" placeholder="---Generated Group Handle Here---" ng-model="addGroupFormData.handle" required readonly />
+		    </div>
+		  </div>
 
-		  <shared-add-technology-handles></shared-add-technology-handles>
+		  <div class="form-group">
+		    <label>Description <span style="color:red;">*</span></label>
+		    <textarea class="form-control" style="resize: vertical;" rows="3" placeholder="Enter the group description" ng-model="addGroupFormData.description" required></textarea>
+		  </div>
 
-		  <shared-add-hashtags></shared-add-hashtags>
-
-		  <add-post-privacy></add-post-privacy>
 
 		  <shared-form-legends></shared-form-legends>
 
-		  <shared-reset-submit-buttons></shared-reset-submit-buttons> -->
+		  <shared-reset-submit-buttons></shared-reset-submit-buttons>
 		</form>
 </div>

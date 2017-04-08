@@ -51,12 +51,25 @@
 
 			return deferred.promise;
 		}
+
+		const deleteOneGroupClassification = (groupClassification) => {
+			$http.delete(`/api/groups/classifications/${groupClassification._id}`)
+			.then(response => {	
+				getAllGroupClassifications();
+
+				ngToast.create({
+		    		className: 'success',
+		    		content: `The group classification was successfully deleted.`
+		    	});
+			});
+		}
 	
 		return {
 			getGroupClassificationList,
 			getGroupClassificationListCopy,
 			getAllGroupClassifications,
-			submitGroupClassification
+			submitGroupClassification,
+			deleteOneGroupClassification
 		};
 	}
 

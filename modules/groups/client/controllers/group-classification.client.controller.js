@@ -7,11 +7,11 @@ import _ from 'lodash';
 		.module('groups')
 		.controller('GroupClassificationController', GroupClassificationController);
 
-	GroupClassificationController.$inject = ['$scope', 'GroupClassificationService', 'SharedPaginationService', '$filter'];
+	GroupClassificationController.$inject = ['$scope', 'GroupClassificationService', 'SharedPaginationService', '$filter', 'ngToast'];
 
-	function GroupClassificationController ($scope, GroupClassificationService, SharedPaginationService, $filter) {
-		const {submitGroupClassification} = GroupClassificationService;
-		$scope.submitGroupClassification = _.partial(submitGroupClassification);
+	function GroupClassificationController ($scope, GroupClassificationService, SharedPaginationService, $filter, ngToast) {
+		const {deleteOneGroupClassification} = GroupClassificationService;
+		$scope.deleteOneGroupClassification = _.partial(deleteOneGroupClassification);
 
 		$scope.addGroupClassificationFormData = {};
 		$scope.paginate = SharedPaginationService;
@@ -23,10 +23,21 @@ import _ from 'lodash';
 		}
 
 		$scope.onProcessGroupClassificationForm = () => {
-			GroupClassificationService.submitGroupClassification($scope.addGroupClassificationFormData)
-			.then(() => {
-				$scope.clearGroupClassificationForm();
-			});
+			GroupClassificationService.getAllGroupClassifications();
+			const existing = $scope.groupClassifications.contents.map((item) => (item.specificCommodity || item.isp).toLowerCase())
+							.indexOf(($scope.addGroupClassificationFormData.specificCommodity || $scope.addGroupClassificationFormData.isp).toLowerCase());
+
+			if (existing < 0){	// the specific commodity or isp does not exist
+				GroupClassificationService.submitGroupClassification($scope.addGroupClassificationFormData)
+				.then(() => {
+					$scope.clearGroupClassificationForm();
+				});
+			} else {
+				ngToast.create({
+		    		className: 'danger',
+		    		content: `Error: The Specific Commodity or ISP already exists!`
+		    	});
+			}
 		}
 
 		$scope.$watch('searchClassificationsValue', function(value){ 
@@ -36,7 +47,7 @@ import _ from 'lodash';
 						$scope.groupClassifications.contents = $filter('filter')($scope.groupClassificationsCopy.contents, value);
 						$scope.paginate.currentPage = 1;
 					}, (error) => {
-						// problem with loading posts
+						// problem with loading group classifications
 					});
 			}
     	});

@@ -8,9 +8,9 @@ import _ from 'lodash';
 		.module('comments')
 		.controller('CommentController', CommentController);
 
-	CommentController.$inject = ['$scope', '$state', '$q', 'CommentService', 'PostService', 'SharedPaginationService'];
+	CommentController.$inject = ['$scope', '$state', '$q', 'CommentService', 'PostService', 'SharedPaginationService', 'ngToast'];
 
-	function CommentController ($scope, $state, $q, CommentService, PostService, SharedPaginationService) {
+	function CommentController ($scope, $state, $q, CommentService, PostService, SharedPaginationService, ngToast) {
 		$scope.addCommentFormData = {};
 		const {submitComment} = CommentService;
 		$scope.submitComment = _.partial(submitComment);
@@ -88,12 +88,16 @@ import _ from 'lodash';
 					return CommentService.getCommentsByUser($state.params.id, "MarkEricCabanli");
 				}, (error) => {
 					return $q.reject(error);
-					// referred post not found
+					// referred post not found, but not possible since comments are removed after post deletion
 				})
 				.then((results) => {
 					PostService.decrementCommentsCount($scope.selectedPost, comment, results.length, "Mark's id");
 				}, (error) => {
 					// all comments of the author are not found
+					ngToast.create({
+			    		className: 'danger',
+			    		content: `Error: The comment was not found.`
+			    	});
 				});
 
 		}

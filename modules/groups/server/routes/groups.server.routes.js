@@ -6,9 +6,9 @@ const groupsRoutes = (app) => {
     .get(groupClassificationCtrl.list)
     .post(groupClassificationCtrl.post);
 
-  app.route('/api/groups/classification/:id')
+  app.route('/api/groups/classifications/:id')
     .get(groupClassificationCtrl.listOne)
-    .post(groupClassificationCtrl.removeOne);
+    .delete(groupClassificationCtrl.removeOne);
 
 
 
