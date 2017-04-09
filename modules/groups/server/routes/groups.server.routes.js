@@ -15,7 +15,7 @@ const groupsRoutes = (app) => {
     .get(groupCtrl.list)
     .post(groupCtrl.post);
 
-  app.route('/api/groups/:id')
+  app.route('/api/groups/:handle')
     .get(groupCtrl.listOne)
     .put(groupCtrl.updateOne)
     .delete(groupCtrl.removeOne);

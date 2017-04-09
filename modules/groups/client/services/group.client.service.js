@@ -34,6 +34,19 @@
 			return deferred.promise;
 		}
 
+		const getOneGroup = (groupHandle) => {
+			const deferred = $q.defer();
+			
+			$http.get(`/api/groups/${groupHandle}`)
+			.then((response) => {
+				deferred.resolve(response.data.group);
+			}, (response) => {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		}
+
 		const submitGroup = (addGroupFormData) => {
 			const deferred = $q.defer();
 
@@ -54,6 +67,7 @@
 			getGroupList,
 			getGroupListCopy,
 			getAllGroups,
+			getOneGroup,
 			submitGroup
 		};
 	}

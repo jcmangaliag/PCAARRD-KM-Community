@@ -119,14 +119,14 @@ import _ from 'lodash';
 			});
 		}
 
-		const deleteOnePost = ($scope, postType, post) => {
+		const deleteOnePost = ($scope, $stateParams, post) => {
 			//const groupBelonged = post.groupBelonged; // specify the group id
 			$http.delete(`/api/posts/${post._id}`)
 			.then(response => {	
 				CommentService.deleteCommentsByReferredPost(post._id);
 
-				if (postType === "view-one-post"){
-					$scope.returnToGroup(/* groupBelonged here */);	
+				if ($stateParams.postID){	// if viewing one post
+					$scope.returnToGroup($stateParams.handle);	
 				} else {
 					$scope.getPostData();	
 				}

@@ -85,7 +85,7 @@ import _ from 'lodash';
 				})
 				.then((result) => {
 					$scope.selectedPost = result;
-					return CommentService.getCommentsByUser($state.params.id, "MarkEricCabanli");
+					return CommentService.getCommentsByUser($state.params.postID, "MarkEricCabanli");
 				}, (error) => {
 					return $q.reject(error);
 					// referred post not found, but not possible since comments are removed after post deletion
@@ -102,7 +102,7 @@ import _ from 'lodash';
 
 		}
 
-		CommentService.getComments($state.params.id);
+		CommentService.getComments($state.params.postID);
 	}
 
 })();

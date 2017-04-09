@@ -17,11 +17,11 @@ import _ from 'lodash';
 		$scope.paginate.currentPage = 1;
 		$scope.paginate.postsPerPage = 5;
 
-		$scope.deleteOnePost = _.partial(deleteOnePost, $scope, $stateParams.postType);
+		$scope.deleteOnePost = _.partial(deleteOnePost, $scope, $stateParams);
 		$scope.userid = PostService.userid;	// temporary userid
 
 		$scope.commentOnOnePost = (postCategory, postID) => {
-			$state.go(`oneGroup.viewOne${postCategory.charAt(0).toUpperCase() + postCategory.slice(1)}Post`, {id: postID, '#': 'write-comment'});
+			$state.go(`oneGroup.viewOne${postCategory.charAt(0).toUpperCase() + postCategory.slice(1)}Post`, {postID: postID, '#': 'write-comment'});
 		}
 
 		$scope.clearForm = () => {
@@ -29,15 +29,13 @@ import _ from 'lodash';
 		}
 
 		$scope.goBackToViewAllPosts = () => {
-			if (window.history.length > 1)
-				window.history.back();
-			else
-				$scope.returnToGroup();	
+			window.history.back();
+			$scope.returnToGroup($stateParams.handle);	
 		}
 
 		$scope.getPostData = () => {
-			if ($stateParams.postType === "view-one-post"){
-				PostService.getOnePost($stateParams.id)
+			if ($stateParams.postID){	// if viewing one post
+				PostService.getOnePost($stateParams.postID)
 				.then((result) => {
 					$scope.selectedPost = result;
 				}, (error) => {
@@ -61,12 +59,8 @@ import _ from 'lodash';
 				});
 		}
 
-		$scope.editPost = (postCategory, postID) => {
-			$state.go(`oneGroup.viewOne${postCategory.charAt(0).toUpperCase() + postCategory.slice(1)}Post`, {id: postID});
-		}
-
-		$scope.returnToGroup = () => { // specify what group
-			$state.go('oneGroup');
+		$scope.returnToGroup = (groupHandle) => {
+			$state.go(`oneGroup`, {handle: groupHandle});
 		}
 
 		$scope.$watch('searchPostsValue', function(value){ 

@@ -8,9 +8,9 @@ import _ from 'lodash';
 		.module('groups')
 		.controller('GroupController', GroupController);
 
-	GroupController.$inject = ['$scope', '$state', 'GroupClassificationService', 'GroupService', 'SharedPaginationService', '$filter'];
+	GroupController.$inject = ['$scope', '$state', '$stateParams', 'GroupClassificationService', 'GroupService', 'SharedPaginationService', '$filter'];
 
-	function GroupController ($scope, $state, GroupClassificationService, GroupService, SharedPaginationService, $filter) {
+	function GroupController ($scope, $state, $stateParams, GroupClassificationService, GroupService, SharedPaginationService, $filter) {
 		/* for View One Group */
 		$scope.autoScroll = { 
 			status: false
@@ -26,15 +26,25 @@ import _ from 'lodash';
 			$scope.autoScroll.status = option;
 		}
 
-		/* for View All Groups */
-		GroupService.getAllGroups();
-		$scope.groups = GroupService.getGroupList();
-		$scope.groupsCopy = GroupService.getGroupListCopy();
-		
-		$scope.paginate = _.cloneDeep(SharedPaginationService);
-		$scope.paginate.currentPage = 1;
-		$scope.paginate.groupsPerPage = 4;
-
+		/* for View One and View All Groups */
+		$scope.getGroupData = () => {
+			if ($stateParams.handle){	// if viewing one group
+				GroupService.getOneGroup($stateParams.handle)
+				.then((result) => {
+					$scope.selectedGroup = result;
+				}, (error) => {
+					// show 404 not found page
+				});
+			} else {
+				GroupService.getAllGroups();
+				$scope.groups = GroupService.getGroupList();
+				$scope.groupsCopy = GroupService.getGroupListCopy();
+				
+				$scope.paginate = _.cloneDeep(SharedPaginationService);
+				$scope.paginate.currentPage = 1;
+				$scope.paginate.groupsPerPage = 4;
+			}
+		}
 
 /*		$scope.checkMyGroupStatus = () => {
 			console.log("my groups status");
@@ -50,7 +60,6 @@ import _ from 'lodash';
 			//console.log($scope.paginate);
 		}
 */
-
 		$scope.$watch('searchGroupsValue', function(value){ 
 			if ($scope.groups){
 				GroupService.getAllGroups()
@@ -63,6 +72,7 @@ import _ from 'lodash';
 			}
     	});
 
+		$scope.getGroupData();
 
 		/* for Create Group */
 		$scope.addGroupFormData = { classification: "" };
@@ -73,7 +83,6 @@ import _ from 'lodash';
 		}
 
 		$scope.onProcessGroupData = () => {
-
 			$scope.addGroupFormData.admin = ["Mark's id"];	// change this later
 			$scope.addGroupFormData.members = ["Mark's id", "Tomas's id"]; // change this later
 			$scope.addGroupFormData.membersCount = $scope.addGroupFormData.members.length;

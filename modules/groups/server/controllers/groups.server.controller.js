@@ -9,9 +9,9 @@ const groupControls = {
 	    });
 	},
 	listOne : (req, res) => {
-		const id = req.params.id;
+		const handle = req.params.handle;
 
-		Group.findById(id, (err, result) => {
+		Group.find({handle}, (err, result) => {
 			if (err) { 
 				return (err);  
 			} else if (result === null) {
@@ -30,18 +30,18 @@ const groupControls = {
 		});
 	},
 	updateOne : (req, res) => {
-		const id = req.params.id;
+		const handle = req.params.handle;
 
-		Group.findByIdAndUpdate(id, { $set: req.body.updatedFields }, (err) => {
+		Group.findOneAndUpdate({handle}, { $set: req.body.updatedFields }, (err) => {
 			if (err) { return (err); }
 
 			res.send("Group updated.");
 		});
 	},
 	removeOne : (req, res) => {
-		const id = req.params.id;
+		const handle = req.params.handle;
 
-		Group.findByIdAndRemove(id, (err, result) => {
+		Group.findOneAndRemove({handle}, (err, result) => {
 			if (err) { return (err); }
 
 			res.send("Group deleted.");

@@ -8,12 +8,12 @@
 	groupRoutes.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 
 	function groupRoutes ($stateProvider, $urlRouterProvider, $locationProvider) {
-		$urlRouterProvider.otherwise('/groups');
+		$urlRouterProvider.otherwise('/groups/');
 
 		$stateProvider
 			/* View All Groups */
 			.state('groups', {
-				url: '/groups',
+				url: '/groups/',
 				template: '<my-groups></my-groups><discover-groups></discover-groups>'
 			})
 			/* Manage Group Classification*/
@@ -32,10 +32,7 @@
 			.state('oneGroup', {
 				url: '/groups/:handle',	
 				templateUrl: 'groups/client/views/view-one-group.client.view.html',
-				controller: 'GroupController',
-				params: {
-					groupType: "view-one-group"
-				}
+				controller: 'GroupController'
 			})
 			/* Settings */
 			.state('oneGroup.settings', {
