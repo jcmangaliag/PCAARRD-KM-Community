@@ -33,7 +33,23 @@ import _ from 'lodash';
 
 		$scope.paginate = _.cloneDeep(SharedPaginationService);
 		$scope.paginate.currentPage = 1;
-		$scope.paginate.groupsPerPage = 2;
+		$scope.paginate.groupsPerPage = 4;
+
+
+/*		$scope.checkMyGroupStatus = () => {
+			console.log("my groups status");
+			//console.log($scope.paginate);
+			//console.log($scope.groups);
+			//$scope.groups.contents.pop();
+			$scope.paginate.currentPage++;
+		}
+
+		$scope.checkDiscoverGroupStatus = () => {
+			console.log("discover groups status");
+			//console.log($scope.groups);
+			//console.log($scope.paginate);
+		}
+*/
 
 		$scope.$watch('searchGroupsValue', function(value){ 
 			if ($scope.groups){
@@ -46,6 +62,7 @@ import _ from 'lodash';
 					});
 			}
     	});
+
 
 		/* for Create Group */
 		$scope.addGroupFormData = { classification: "" };
