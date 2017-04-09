@@ -8,25 +8,21 @@ const groupClassificationControls = {
 	        res.send({ groupClassifications: results });
 	    });
 	},
-	listOne : (req, res) => {
-		const id = req.params.id;
-
-		GroupClassification.findById(id, (err, result) => {
-			if (err) { 
-				return (err);  
-			} else if (result === null) {
-				return res.status(404).send('Group Classification not found!');
-			}
-			
-			res.send({ groupClassification: result });
-		});
-	},
 	post : (req, res) => {
 		const classification = new GroupClassification(req.body);
 		classification.save((err) => {
 			if (err) { return (err); }
 
 			res.send('Group Classification saved.');
+		});
+	},
+	updateOne : (req, res) => {
+		const id = req.params.id;
+
+		GroupClassification.findByIdAndUpdate(id, { $set: req.body }, (err) => {
+			if (err) { return (err); }
+
+			res.send("Group Classification updated.");
 		});
 	},
 	removeOne : (req, res) => {

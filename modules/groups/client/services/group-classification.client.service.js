@@ -52,6 +52,21 @@
 			return deferred.promise;
 		}
 
+
+		const updateGroupClassification = (groupClassificationID, updatedFields) => {
+			const deferred = $q.defer();
+
+			$http.put(`/api/groups/classifications/${groupClassificationID}`, updatedFields)
+			.then(response => {
+				deferred.resolve(response);
+
+				getAllGroupClassifications();
+
+			});
+
+			return deferred.promise;
+		}
+
 		const deleteOneGroupClassification = (groupClassification) => {
 			$http.delete(`/api/groups/classifications/${groupClassification._id}`)
 			.then(response => {	
@@ -69,6 +84,7 @@
 			getGroupClassificationListCopy,
 			getAllGroupClassifications,
 			submitGroupClassification,
+			updateGroupClassification,
 			deleteOneGroupClassification
 		};
 	}

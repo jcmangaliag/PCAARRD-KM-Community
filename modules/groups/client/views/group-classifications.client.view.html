@@ -13,23 +13,63 @@
 		</div>
 		<hr />
 		<div class="table-responsive">
-			<table class="table table-bordered table-hover">
+			<table class="table table-bordered table-striped table-hover">
 			    <thead>
 			      <tr>
 			        <th>Industry</th>
 			        <th>Sector</th>
 			        <th>ISP</th>
 			        <th>Specific Commodity</th>
-			        <th>Delete?</th>
+			        <th>Group Exists?</th>
+
+			        <th ng-if="!editedGroupClassificationFormData">Edit</th>
+			        <th ng-if="editedGroupClassificationFormData">Save</th>
+
+			        <th ng-if="!editedGroupClassificationFormData">Delete</th>
+			        <th ng-if="editedGroupClassificationFormData">Cancel</th>
+			       
 			      </tr>
 			    </thead>
 			    <tbody>
 			      <tr ng-repeat="groupClassification in groupClassifications.contents | orderBy: ['industry','sector', 'isp', 'specificCommodity'] | limitTo: paginate.pageLimit(paginate.currentPage, paginate.classificationsPerPage)">
-			        <td>{{groupClassification.industry}}</td>
-			        <td>{{groupClassification.sector}}</td>
-			        <td>{{groupClassification.isp}}</td>
-			        <td>{{groupClassification.specificCommodity}} <span ng-if="!groupClassification.specificCommodity">-</span> </td>
-			        <td><i class="fa fa-lg fa-trash" data-toggle="modal" data-target="#{{'delete' + groupClassification._id}}" style="cursor: pointer;" aria-hidden="true"></i></td>
+
+
+			        <td ng-if="!isEditingClassification(groupClassification._id)">{{groupClassification.industry}}</td>
+			        <td ng-if="isEditingClassification(groupClassification._id)"><input type="text" class="form-control" placeholder="Enter the industry" ng-model="editedGroupClassificationFormData.industry" ng-style="!editedGroupClassificationFormData.industry? { 'border-color': 'red'}:'' " /></td>
+
+
+			        <td ng-if="!isEditingClassification(groupClassification._id)">{{groupClassification.sector}}</td>
+			        <td ng-if="isEditingClassification(groupClassification._id)"><input type="text" class="form-control " placeholder="Enter the sector" ng-model="editedGroupClassificationFormData.sector" ng-style="!editedGroupClassificationFormData.sector? { 'border-color': 'red'}:'' " /></td>
+
+
+			        <td ng-if="!isEditingClassification(groupClassification._id)">{{groupClassification.isp}}</td>
+			        <td ng-if="isEditingClassification(groupClassification._id)"><input type="text" class="form-control" placeholder="Enter the ISP" ng-model="editedGroupClassificationFormData.isp" ng-style="!editedGroupClassificationFormData.isp? { 'border-color': 'red'}:'' " /></td>
+
+
+			        <td ng-if="!isEditingClassification(groupClassification._id)">{{groupClassification.specificCommodity}} <span ng-if="!groupClassification.specificCommodity">-</span> </td>
+			        <td ng-if="isEditingClassification(groupClassification._id)"><input type="text" class="form-control" placeholder="Enter the specific commodity" ng-model="editedGroupClassificationFormData.specificCommodity" /></td>
+
+
+			        <td>{{groupClassification.isUsed? 'Yes' : 'No'}}</td>
+
+
+			        <td ng-if="!editedGroupClassificationFormData._id">
+			        	<i ng-if="!groupClassification.isUsed && !isEditingClassification(groupClassification._id)" class="fa fa-lg fa-pencil" style="cursor: pointer;" ng-click="onEditGroupClassification(groupClassification)" aria-hidden="true"></i>
+			        	
+			        	<i ng-if="groupClassification.isUsed" class="fa fa-lg fa-ban" data-toggle="modal" data-target="#disabled-modification" style="cursor: pointer;" aria-hidden="true"></i>
+			        </td>
+			        <td ng-if="editedGroupClassificationFormData._id">
+			        	<i ng-if="isEditingClassification(groupClassification._id)" class="fa fa-lg fa-save" ng-click="(!editedGroupClassificationFormData.industry || !editedGroupClassificationFormData.sector || !editedGroupClassificationFormData.isp) || onProcessEditedGroupClassification()" aria-hidden="true" ng-style="(!editedGroupClassificationFormData.industry || !editedGroupClassificationFormData.sector || !editedGroupClassificationFormData.isp)? {'opacity': 0.5} : {'cursor': 'pointer'}"></i>
+			        </td>
+
+
+			        <td ng-if="!editedGroupClassificationFormData._id">
+			        	<i ng-if="!groupClassification.isUsed" class="fa fa-lg fa-trash" data-toggle="modal" data-target="#{{'delete' + groupClassification._id}}" style="cursor: pointer;" aria-hidden="true"></i>
+			        	<i ng-if="groupClassification.isUsed" class="fa fa-lg fa-ban" data-toggle="modal" data-target="#disabled-modification" style="cursor: pointer;" aria-hidden="true"></i>
+			        </td>
+			        <td ng-if="editedGroupClassificationFormData._id">
+			        	<i ng-if="isEditingClassification(groupClassification._id)" class="fa fa-lg fa-times" style="cursor: pointer;" ng-click="cancelEditGroupClassification()" aria-hidden="true"></i>
+			        </td>
 			      </tr>
 			    </tbody>
 		  	</table>
@@ -52,6 +92,23 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
             <button type="button" class="btn btn-danger" ng-click="deleteOneGroupClassification(groupClassification)" data-dismiss="modal">Delete Group Classification</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="disabled-modification" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Unable to Edit or Delete Group Classification</h4>
+          </div>
+          <div class="modal-body">
+            <p>The associated group needs to be removed first.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
           </div>
         </div>
       </div>

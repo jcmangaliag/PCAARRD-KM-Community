@@ -1,0 +1,46 @@
+<section id="discover-groups">
+	<div style="padding: 1.5%; background-color: white; margin: 2% 1% 2%; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+		<div class="row">
+			<div class="col-xs-6 col-sm-6" style="margin-bottom: 1%;">
+				<h3 style="margin: 0;">Discover Groups <span class="label label-default" style="font-size: 14px;">{{groups.contents.length}}</span></h3>
+			</div>
+			<div class="col-xs-6 col-sm-6">
+				<div class="input-group pull-right" style="width: 70%;">
+					<span class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></span>
+					<input type="text" ng-model="searchGroupsValue" style="display: inline-block;" class="form-control" placeholder="Search from Discover Groups">
+				</div>
+			</div>
+		</div>
+		<hr />
+		<div class="container">
+			<div class="row">
+				<div ng-repeat="group in groups.contents | orderBy: 'name' | limitTo: paginate.pageLimit(paginate.currentPage, paginate.groupsPerPage)" class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="border: 1px solid #ddd; padding: 1%;">
+					<div class="row">
+						<div class="col-xs-3">
+							<img alt="Group Picture" src="groups/client/assets/images/Fruit_02.png" style="width: 100%;" />
+						</div>
+						<div class="col-xs-9">
+							<div class="row">
+								<div class="col-xs-6">
+									<a href="#" style="color: #333333;"><h4 style="font-weight: bolder; display: inline;">{{group.name}}</h4></a>
+									<p style="color: gray; display: inline;">@{{group.handle}}</span></p>
+								</div>
+								<div class="col-xs-6 text-right">
+									<button type="button" class="btn btn-primary"><i class="fa fa-sign-in fa-lg" aria-hidden="true"></i></button>
+								</div>
+							</div>
+							<p style="color: gray; white-space: pre-wrap; min-height: 60px; max-height: 60px;" data-ng-bind="group.description | parseURL | emoji" data-ellipsis></p>
+							<h4 style="display: inline;"><span class="label label-success">{{group.membersCount}} Members</span></h4>
+							<h4 style="display: inline;"><span class="label label-primary">{{group.postsCount.total}} Posts</span></h4>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div ng-if="paginate.hasMoreItems(paginate.currentPage, paginate.groupsPerPage, groups.contents.length)" class="text-center" style="margin-bottom:10px;">
+			<hr />
+			<button ng-click="paginate.loadMoreItems(paginate)" style="width: 50%;" type="button" class="btn btn-primary" >See More Groups</button>
+		</div>
+	</div>
+</section>

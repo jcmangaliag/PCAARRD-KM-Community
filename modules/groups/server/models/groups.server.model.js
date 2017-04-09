@@ -1,56 +1,54 @@
 import mongoose from 'mongoose';
 
-const PostSchema = mongoose.Schema({
-	category: {
+const GroupSchema = mongoose.Schema({
+	classification: {
+		type: Object,
+		required: true
+	},
+	name: {
 		type: String,
 		required: true
 	},
-	groupBelonged: {
+	handle: {
 		type: String,
 		required: true
 	},
-	postedBy: {
+	description: {
 		type: String,
 		required: true
 	},
-	datePosted: {
+	admin: {
+		type: Array,
+		required: true
+	},
+	membership: {
+		type: String,
+		required: true
+	},
+	photo: {
+		type: String,
+		required: true
+	},
+	coverPhoto: {
+		type: String,
+		required: true
+	},
+	dateCreated: {
 	   type: String,
        required: true
     },
-    hashtags: {
-		type: Array,
-		required: true
-	},
-	reactions: {
-		type: Array,
-		required: true
-	},
-	showPublic: {
-		type: Boolean,
-		required: true
-	},
-	files: Array,
-	technologyHandles: Array,
-	question: String,
-	description: String,
-	adTitle: String,
-	details: String,
-	post: String,
-	newsTitle: String,
-	authors: Array,
-	newsBody: String,
-	price: String,
-	mediaTitle: String,
-	mediaType: String,
-	urls: Array,
-	reportTitle: String,
-	dateTime: String,
-	location: String,
-	details: String,
-	eventName: String,
-	startDateTime: String,
-	endDateTime: String,
-	audience: String
+    membersCount: {
+	   type: Number,
+       required: true
+    },
+    members: {
+	   type: Array,
+       required: true
+    },
+    postsCount: {
+    	type: Object,
+    	required: true
+    }
 });
 
-export default mongoose.model('Post', PostSchema);
+export default mongoose.model('Group', GroupSchema);

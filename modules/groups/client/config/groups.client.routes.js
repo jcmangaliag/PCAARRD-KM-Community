@@ -14,8 +14,7 @@
 			/* View All Groups */
 			.state('groups', {
 				url: '/',
-				templateUrl: 'groups/client/views/view-group-list.client.view.html',
-				controller: 'GroupController'
+				template: '<my-groups></my-groups><discover-groups></discover-groups>'
 			})
 			/* View One Group */
 			.state('oneGroup', {
@@ -26,7 +25,7 @@
 			/* Manage Group Classification*/
 			.state('manageGroupClassification', {
 				url: '/manage-group-classification',	
-				templateUrl: 'groups/client/views/manage-group-classification.client.view.html',
+				template: '<add-group-classification></add-group-classification><group-classifications></group-classifications>',
 				controller: 'GroupClassificationController'
 			})
 			/* Create Group */

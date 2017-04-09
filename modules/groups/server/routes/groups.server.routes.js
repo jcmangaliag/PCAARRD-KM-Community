@@ -1,4 +1,5 @@
 import groupClassificationCtrl from '../controllers/groups-classification.server.controller';
+import groupCtrl from '../controllers/groups.server.controller';
 
 const groupsRoutes = (app) => {
 
@@ -7,21 +8,18 @@ const groupsRoutes = (app) => {
     .post(groupClassificationCtrl.post);
 
   app.route('/api/groups/classifications/:id')
-    .get(groupClassificationCtrl.listOne)
+    .put(groupClassificationCtrl.updateOne)
     .delete(groupClassificationCtrl.removeOne);
 
+  app.route('/api/groups')
+    .get(groupCtrl.list)
+    .post(groupCtrl.post);
 
+  app.route('/api/groups/:id')
+    .get(groupCtrl.listOne)
+    .put(groupCtrl.updateOne)
+    .delete(groupCtrl.removeOne);
 
-
-/*  app.route('/api/posts/category/:category')
-  	.get(postCtrl.listByCategory);
-
-  app.route('/api/posts/:id')
-  	.get(postCtrl.listOne)
-  	.delete(postCtrl.removeOne);
-
-  app.route('/api/posts/reactions/:id')
-  	.put(postCtrl.updateReactions);*/
 };
 
 export default groupsRoutes;

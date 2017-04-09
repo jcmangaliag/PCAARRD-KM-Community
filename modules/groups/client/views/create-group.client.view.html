@@ -3,12 +3,12 @@
 			<h3 style="margin: 0;"><i class="fa fa-plus" aria-hidden="true"></i> Create a Group</h3>
 		</div>
 		<hr />
-		<form style="padding: 1% 2% 2% 2%; text-align: left;" ng-submit="">
+		<form style="padding: 1% 2% 2% 2%; text-align: left;" ng-submit="onProcessGroupData()">
 
 		  <div class="form-group">
-		    <label>Choose Group Classification <span style="color:red;">*</span> <span style="font-style: italic;"> (Industry, Sector, ISP, Specific Commodity)</span></label>
-		    <select ng-options="groupClassification.industry + ' -> ' + groupClassification.sector +' -> '+ groupClassification.isp +  groupClassification.specificCommodity.replace(groupClassification.specificCommodity, ' -> ' + groupClassification.specificCommodity) for groupClassification in groupClassifications.contents | orderBy: ['industry','sector', 'isp', 'specificCommodity']" class="form-control" ng-model="addGroupFormData.classification" ng-change="generateGroupNameAndHandle(addGroupFormData.classification)" required>
-		    	<option value="">---Select Group Classification---</option>
+		    <label>Group Classification <span style="color:red;">*</span> <span style="font-style: italic;"> (Industry -> Sector -> ISP -> Specific Commodity)</span></label>
+		    <select ng-options="groupClassification.industry + ' -> ' + groupClassification.sector +' -> '+ groupClassification.isp +  groupClassification.specificCommodity.replace(groupClassification.specificCommodity, ' -> ' + groupClassification.specificCommodity) for groupClassification in groupClassifications.contents | filter: {isUsed: false} | orderBy: ['industry','sector', 'isp', 'specificCommodity']" class="form-control" ng-model="addGroupFormData.classification" ng-change="generateGroupNameAndHandle(addGroupFormData.classification)" required>
+		    	<option value="">---Select from Available Group Classifications---</option>
 		    </select>
 		  </div>
 
@@ -26,10 +26,30 @@
 		  </div>
 
 		  <div class="form-group">
-		    <label>Description <span style="color:red;">*</span></label>
-		    <textarea class="form-control" style="resize: vertical;" rows="3" placeholder="Enter the group description" ng-model="addGroupFormData.description" required></textarea>
+		    <label>Group Description <span style="color:red;">*</span></label>
+		    <textarea class="form-control" style="resize: vertical;" rows="3" placeholder="Enter the group's description" ng-model="addGroupFormData.description" required></textarea>
 		  </div>
 
+		  <div class="form-group">
+		    <label>Group Administrator <span style="color:red;">*</span></label>
+		  </div>
+
+		  <div class="form-group">
+		    <label>Group Membership <span style="color:red;">*</span> <span style="font-style: italic;"> (How to become member of the group)</label>
+		    <select class="form-control" ng-model="addGroupFormData.membership" style="width: 87%;" required>
+		    	<option value="" selected>---Select Group Membership---</option>
+		        <option value="Group Admin Approval" selected>Group Admin Approval</option>
+		        <option value="No Approval">No Approval</option>
+		    </select>
+		  </div>
+
+		  <div class="form-group">
+		    <label>Group Photo <span style="color:red;">*</span></label>
+		  </div>
+
+		  <div class="form-group">
+		    <label>Group Cover Photo <span style="color:red;">*</span></label>
+		  </div>
 
 		  <shared-form-legends></shared-form-legends>
 

@@ -13,8 +13,8 @@ const GroupClassificationSchema = mongoose.Schema({
 		type: String,
 		required: true
 	},
-	specificCommodity: String
-
+	specificCommodity: String,
+	isUsed: Boolean
 });
 
 export default mongoose.model('GroupClassification', GroupClassificationSchema);
