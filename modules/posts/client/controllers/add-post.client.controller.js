@@ -8,9 +8,9 @@ import _ from 'lodash';
 		.module('posts')
 		.controller('AddPostController', AddPostController);
 
-	AddPostController.$inject = ['$scope', 'AddPostService', 'AddPostCategoriesService'];
+	AddPostController.$inject = ['$scope', '$stateParams', 'AddPostService', 'AddPostCategoriesService'];
 
-	function AddPostController ($scope, AddPostService, AddPostCategoriesService) {
+	function AddPostController ($scope, $stateParams, AddPostService, AddPostCategoriesService) {
 
 		const {submitPost} = AddPostService;
 		$scope.submitPost = _.partial(submitPost);
@@ -157,7 +157,7 @@ import _ from 'lodash';
 
 			// hardcoded as of now, should be Object IDs
 			$scope.addPostFormData.postedBy = "Tomas Angelo Poe";
-			$scope.addPostFormData.groupBelonged = "Banana";
+			$scope.addPostFormData.groupBelonged = $stateParams.handle;
 
 			$scope.submitPost($scope.addPostFormData)
 			.then(() => {

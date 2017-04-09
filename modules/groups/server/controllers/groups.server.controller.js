@@ -11,7 +11,7 @@ const groupControls = {
 	listOne : (req, res) => {
 		const handle = req.params.handle;
 
-		Group.find({handle}, (err, result) => {
+		Group.findOne({handle}, (err, result) => {
 			if (err) { 
 				return (err);  
 			} else if (result === null) {
