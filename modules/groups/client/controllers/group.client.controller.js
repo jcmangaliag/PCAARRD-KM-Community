@@ -30,7 +30,7 @@ import _ from 'lodash';
 		GroupService.getAllGroups();
 		$scope.groups = GroupService.getGroupList();
 		$scope.groupsCopy = GroupService.getGroupListCopy();
-
+		
 		$scope.paginate = _.cloneDeep(SharedPaginationService);
 		$scope.paginate.currentPage = 1;
 		$scope.paginate.groupsPerPage = 4;

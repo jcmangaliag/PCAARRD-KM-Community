@@ -7,7 +7,7 @@
 			<div class="col-xs-6 col-sm-6">
 				<div class="input-group pull-right" style="width: 70%;">
 					<span class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></span>
-					<input type="text" ng-model="searchGroupsValue" style="display: inline-block;" class="form-control" placeholder="Search from My Groups">
+					<input type="text" ng-model="searchMyGroupsValue" style="display: inline-block;" class="form-control" placeholder="Search from My Groups">
 				</div>
 			</div>
 		</div>
@@ -21,10 +21,10 @@
 						</div>
 						<div class="col-xs-9">
 							<div class="row">
-								<div class="col-xs-6">
-									<a href="#" style="color: #333333;"><h4 style="font-weight: bolder; display: inline;">{{group.name}}</h4></a> <p style="color: gray; display: inline;">@{{group.handle}}</span></p>
+								<div class="col-xs-8">
+									<a ui-sref="oneGroup({handle: group.handle})" style="color: #333333;"><h4 style="font-weight: bolder; display: inline;"><span ng-bind="group.name | limitTo: 17"></span><span ng-if="group.name.length > 17" >...</span></h4></a> <p style="color: gray;">@<span ng-bind="group.handle | limitTo: 25"></span><span ng-if="group.handle.length > 25" >...</span></p>
 								</div>
-								<div class="col-xs-6 text-right">
+								<div class="col-xs-4 text-right">
 									<button type="button" class="btn btn-danger"><i class="fa fa-sign-out fa-lg" aria-hidden="true"></i></button>
 								</div>
 							</div>

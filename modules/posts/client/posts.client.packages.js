@@ -1,4 +1,5 @@
 import postModule from './config/posts.client.init-module';
+import postRoutes from './config/posts.client.routes';
 
 import AddPostController from './controllers/add-post.client.controller';
 import AddPostCategoriesController from './controllers/add-post-categories.client.controller';
