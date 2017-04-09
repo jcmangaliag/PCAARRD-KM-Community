@@ -2,7 +2,7 @@
 	<div style="padding: 1.5%; background-color: white; margin: 2% 1% 2%; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 		<div class="row">
 			<div class="col-xs-6 col-sm-6" style="margin-bottom: 1%;">
-				<h3 style="margin: 0;">Discover Groups <span class="label label-default" style="font-size: 14px;">{{groupsCopy.contents.length}}</span></h3>
+				<h3 style="margin: 0;">Discover Groups <span title="Number of groups" class="label label-default" style="font-size: 14px;">{{groupsCopy.contents.length}}</span></h3>
 			</div>
 			<div class="col-xs-6 col-sm-6">
 				<div class="input-group pull-right" style="width: 70%;">
@@ -25,7 +25,7 @@
 									<a ui-sref="oneGroup({handle: group.handle})" style="color: #333333;"><h4 style="font-weight: bolder; display: inline;"><span ng-bind="group.name | limitTo: 17"></span><span ng-if="group.name.length > 17" >...</span></h4></a> <p style="color: gray;">@<span ng-bind="group.handle | limitTo: 25"></span><span ng-if="group.handle.length > 25" >...</span></p>
 								</div>
 								<div class="col-xs-4 text-right">
-									<button type="button" class="btn btn-primary"><i class="fa fa-sign-in fa-lg" aria-hidden="true"></i></button>
+									<button title="Join Group" type="button" class="btn btn-primary"><i class="fa fa-sign-in fa-lg" aria-hidden="true"></i></button>
 								</div>
 							</div>
 							<p style="color: gray; white-space: pre-wrap; min-height: 60px; max-height: 60px;" data-ng-bind="group.description | parseURL | emoji" data-ellipsis></p>

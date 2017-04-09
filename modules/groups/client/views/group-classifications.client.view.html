@@ -2,7 +2,7 @@
 	<div style="padding: 1.5%; background-color: white; margin: 2% 1% 2%; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 		<div class="row">
 			<div class="col-xs-6 col-sm-6" style="margin-bottom: 1%;">
-				<h3 style="margin: 0;"><i class="fa fa-list-alt" aria-hidden="true"></i> Group Classifications <span class="label label-default" style="font-size: 14px;">{{groupClassifications.contents.length}}</span></h3>
+				<h3 style="margin: 0;"><i class="fa fa-list-alt" aria-hidden="true"></i> Group Classifications <span title="Number of group classifications" class="label label-default" style="font-size: 14px;">{{groupClassifications.contents.length}}</span></h3>
 			</div>
 			<div class="col-xs-6 col-sm-6">
 				<div class="input-group pull-right" style="width: 70%;">
@@ -54,21 +54,21 @@
 
 
 			        <td ng-if="!editedGroupClassificationFormData._id">
-			        	<i ng-if="!groupClassification.isUsed && !isEditingClassification(groupClassification._id)" class="fa fa-lg fa-pencil" style="cursor: pointer;" ng-click="onEditGroupClassification(groupClassification)" aria-hidden="true"></i>
+			        	<i title="Edit" ng-if="!groupClassification.isUsed && !isEditingClassification(groupClassification._id)" class="fa fa-lg fa-pencil" style="cursor: pointer;" ng-click="onEditGroupClassification(groupClassification)" aria-hidden="true"></i>
 			        	
-			        	<i ng-if="groupClassification.isUsed" class="fa fa-lg fa-ban" data-toggle="modal" data-target="#disabled-modification" style="cursor: pointer;" aria-hidden="true"></i>
+			        	<i title="Edit Disabled" ng-if="groupClassification.isUsed" class="fa fa-lg fa-ban" data-toggle="modal" data-target="#disabled-modification" style="cursor: pointer;" aria-hidden="true"></i>
 			        </td>
 			        <td ng-if="editedGroupClassificationFormData._id">
-			        	<i ng-if="isEditingClassification(groupClassification._id)" class="fa fa-lg fa-save" ng-click="(!editedGroupClassificationFormData.industry || !editedGroupClassificationFormData.sector || !editedGroupClassificationFormData.isp) || onProcessEditedGroupClassification()" aria-hidden="true" ng-style="(!editedGroupClassificationFormData.industry || !editedGroupClassificationFormData.sector || !editedGroupClassificationFormData.isp)? {'opacity': 0.5} : {'cursor': 'pointer'}"></i>
+			        	<i title="Save" ng-if="isEditingClassification(groupClassification._id)" class="fa fa-lg fa-save" ng-click="(!editedGroupClassificationFormData.industry || !editedGroupClassificationFormData.sector || !editedGroupClassificationFormData.isp) || onProcessEditedGroupClassification()" aria-hidden="true" ng-style="(!editedGroupClassificationFormData.industry || !editedGroupClassificationFormData.sector || !editedGroupClassificationFormData.isp)? {'opacity': 0.5} : {'cursor': 'pointer'}"></i>
 			        </td>
 
 
 			        <td ng-if="!editedGroupClassificationFormData._id">
-			        	<i ng-if="!groupClassification.isUsed" class="fa fa-lg fa-trash" data-toggle="modal" data-target="#{{'delete' + groupClassification._id}}" style="cursor: pointer;" aria-hidden="true"></i>
-			        	<i ng-if="groupClassification.isUsed" class="fa fa-lg fa-ban" data-toggle="modal" data-target="#disabled-modification" style="cursor: pointer;" aria-hidden="true"></i>
+			        	<i title="Delete" ng-if="!groupClassification.isUsed" class="fa fa-lg fa-trash" data-toggle="modal" data-target="#{{'delete' + groupClassification._id}}" style="cursor: pointer;" aria-hidden="true"></i>
+			        	<i title="Delete Disabled" ng-if="groupClassification.isUsed" class="fa fa-lg fa-ban" data-toggle="modal" data-target="#disabled-modification" style="cursor: pointer;" aria-hidden="true"></i>
 			        </td>
 			        <td ng-if="editedGroupClassificationFormData._id">
-			        	<i ng-if="isEditingClassification(groupClassification._id)" class="fa fa-lg fa-times" style="cursor: pointer;" ng-click="cancelEditGroupClassification()" aria-hidden="true"></i>
+			        	<i title="Cancel" ng-if="isEditingClassification(groupClassification._id)" class="fa fa-lg fa-times" style="cursor: pointer;" ng-click="cancelEditGroupClassification()" aria-hidden="true"></i>
 			        </td>
 			      </tr>
 			    </tbody>
