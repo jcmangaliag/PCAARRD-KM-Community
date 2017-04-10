@@ -32,7 +32,7 @@ const groupControls = {
 	updateOne : (req, res) => {
 		const handle = req.params.handle;
 
-		Group.findOneAndUpdate({handle}, { $set: req.body.updatedFields }, (err) => {
+		Group.findOneAndUpdate({handle}, { $set: req.body }, (err) => {
 			if (err) { return (err); }
 
 			res.send("Group updated.");

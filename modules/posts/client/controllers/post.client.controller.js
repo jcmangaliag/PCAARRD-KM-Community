@@ -13,6 +13,8 @@ import _ from 'lodash';
 	function PostController ($scope, $state, $stateParams, PostService, CommentService, ViewPostsCategoriesService, SharedPaginationService, $filter) {
 
 		const {deleteOnePost} = PostService;
+		PostService.setGroupBelonged($stateParams.handle);
+
 		$scope.paginate = SharedPaginationService;
 		$scope.paginate.currentPage = 1;
 		$scope.paginate.postsPerPage = 5;

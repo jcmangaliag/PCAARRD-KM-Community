@@ -1,15 +1,29 @@
 import Post from '../models/posts.server.model';
 
 const postControls = { 
-	list : (req, res) => {
+	list : (req, res) => {	// not in front end
 		Post.find((err, results) => {
 	        if (err) { return (err); }
 
 	        res.send({ posts: results });
 	    });
 	},
-	listByCategory : (req, res) => {
+	listByCategory : (req, res) => {	// not in front end
 		Post.find({category: req.params.category}, (err, results) => {
+	        if (err) { return (err); }
+
+	        res.send({ posts: results });
+	    });
+	},
+	listByGroupBelonged : (req, res) => {
+		Post.find({groupBelonged: req.params.handle}, (err, results) => {
+	        if (err) { return (err); }
+
+	        res.send({ posts: results });
+	    });
+	},
+	listByGroupBelongedAndCategory : (req, res) => {
+		Post.find({groupBelonged: req.params.handle, category: req.params.category}, (err, results) => {
 	        if (err) { return (err); }
 
 	        res.send({ posts: results });

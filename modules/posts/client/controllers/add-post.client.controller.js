@@ -8,9 +8,9 @@ import _ from 'lodash';
 		.module('posts')
 		.controller('AddPostController', AddPostController);
 
-	AddPostController.$inject = ['$scope', '$stateParams', 'AddPostService', 'AddPostCategoriesService'];
+	AddPostController.$inject = ['$scope', '$stateParams', 'AddPostService', 'AddPostCategoriesService', 'GroupService'];
 
-	function AddPostController ($scope, $stateParams, AddPostService, AddPostCategoriesService) {
+	function AddPostController ($scope, $stateParams, AddPostService, AddPostCategoriesService, GroupService) {
 
 		const {submitPost} = AddPostService;
 		$scope.submitPost = _.partial(submitPost);
@@ -161,8 +161,21 @@ import _ from 'lodash';
 
 			$scope.submitPost($scope.addPostFormData)
 			.then(() => {
+				$scope.onSetGroupPosts(postCategory);
 				$scope.clearForm();
 			});
+		}
+
+		$scope.onSetGroupPosts = (postCategory) => {
+			GroupService.getOneGroup($scope.selectedGroup.handle)
+				.then((refreshedGroup) => {
+					refreshedGroup.postsCount.total++;
+					refreshedGroup.postsCount[postCategory]++;
+					GroupService.updateGroup(refreshedGroup.handle, {postsCount: refreshedGroup.postsCount});
+					$scope.selectedGroup.postsCount = refreshedGroup.postsCount;
+				}, (error) => {
+					// show 404 not found page
+				});
 		}
 
 		$scope.loadAdditionalFormFields();

@@ -11,7 +11,7 @@ import _ from 'lodash';
 
 	function PostService ($http, ngToast, $q, CommentService) { // to do: check if there's err in http requests
 
-		let postList = { contents: [] }, postListCopy = { contents: [] };
+		let postList = { contents: [] }, postListCopy = { contents: [] }, groupBelonged;
 
 		/* temporary user */
 		const username = "Mark Eric Cabanli";
@@ -25,10 +25,14 @@ import _ from 'lodash';
 			return postListCopy;
 		}
 
+		const setGroupBelonged = (groupHandle) => {
+			groupBelonged = groupHandle;
+		}
+
 		const getPostsByCategory = (category) => {
 			const deferred = $q.defer();
 
-			$http.get(`/api/posts/category/${category}`)
+			$http.get(`/api/posts/groupBelonged/${groupBelonged}/category/${category}`)
 			.then((response) => {
 				postList.contents = response.data.posts;
 				postListCopy.contents = _.toArray(response.data.posts);
@@ -44,7 +48,7 @@ import _ from 'lodash';
 		const getAllPosts = () => {
 			const deferred = $q.defer();
 
-			$http.get('/api/posts')
+			$http.get(`/api/posts/groupBelonged/${groupBelonged}`)
 			.then((response) => {
 				postList.contents = response.data.posts;
 				postListCopy.contents = _.toArray(response.data.posts);
@@ -141,6 +145,7 @@ import _ from 'lodash';
 		return {
 			getPostList,
 			getPostListCopy,
+			setGroupBelonged,
 			getPostsByCategory,
 			getAllPosts,
 			getOnePost,

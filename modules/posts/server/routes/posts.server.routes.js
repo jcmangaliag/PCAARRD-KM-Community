@@ -7,7 +7,13 @@ const postsRoutes = (app) => {
     .post(postCtrl.post);
 
   app.route('/api/posts/category/:category')
-  	.get(postCtrl.listByCategory);
+    .get(postCtrl.listByCategory);
+
+  app.route('/api/posts/groupBelonged/:handle')
+    .get(postCtrl.listByGroupBelonged);
+
+  app.route('/api/posts/groupBelonged/:handle/category/:category')
+    .get(postCtrl.listByGroupBelongedAndCategory);
 
   app.route('/api/posts/:id')
   	.get(postCtrl.listOne)

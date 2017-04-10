@@ -47,6 +47,17 @@
 			return deferred.promise;
 		}
 
+		const updateGroup = (groupHandle, updatedFields) => {
+			const deferred = $q.defer();
+			$http.put(`/api/groups/${groupHandle}`, updatedFields)
+			.then(response => {
+				deferred.resolve(response);
+				// should refresh the one group
+			});
+
+			return deferred.promise;
+		}
+
 		const submitGroup = (addGroupFormData) => {
 			const deferred = $q.defer();
 
@@ -68,6 +79,7 @@
 			getGroupListCopy,
 			getAllGroups,
 			getOneGroup,
+			updateGroup,
 			submitGroup
 		};
 	}
