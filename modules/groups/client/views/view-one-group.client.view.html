@@ -24,11 +24,19 @@
 
   <div>
     <div class="col-xs-12 col-sm-9">
-      <div ui-view ng-if="viewOnePost" id="read-post"></div>
-
       <div ng-if="!viewOnePost">
         <add-post></add-post>
+
+        <div class="row" style="margin: 3% 0px;">
+          <view-posts-categories></view-posts-categories>
+          <search-posts></search-posts>
+        </div>
+
         <view-posts></view-posts>
+      </div>
+
+      <div ng-if="viewOnePost" id="read-post">
+        <view-post></view-post>
       </div>
     </div>
     

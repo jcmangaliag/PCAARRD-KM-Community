@@ -1,22 +1,20 @@
-<div style="margin: 2%; border-radius: 8px;"> 
-  <div class="row">
-    <div class="col-xs-6 col-sm-6">
-      <span class="label label-info">Advertisement</span>
-    </div>
-    <div class="col-xs-6 col-sm-6" style="text-align: right;">
-      <delete-post></delete-post>
-    </div>
+<div class="row">
+  <div class="col-xs-6 col-sm-6">
+    <span class="label label-info">Advertisement</span>
   </div>
-  <a style="color: #333333; display: inline-block;"  ui-sref="oneGroup.viewOneAdvertisementPost({postID: post._id, '#': 'read-post'})">
-  <h4 style="font-weight: bolder; white-space: pre-wrap;"><span ng-bind="post.adTitle | limitTo: 200"></span><span ng-if="post.adTitle.length > 200" >...</span></h4></a>
-  <p style="color: gray; margin-bottom: 2px;">submitted by <a href="#" style="color: gray; font-weight: bold;">{{post.postedBy}}</a> on {{post.datePosted}}</p>
-
-  <p ng-if="post.price" style="margin-bottom: 2px;"><img src="posts/client/assets/images/philippine-peso.png" alt="Php" style="height: 30px; margin-right: 10px;" />{{post.price}}</p>
-	
-  <p style="padding: 4px 0; white-space: pre-wrap; max-height: 80px;" data-ng-bind="post.details | parseURL | emoji" data-ellipsis></p>
-  <div style="margin: -1% 0 1% 0;">
-  	<a ui-sref="oneGroup.viewOneAdvertisementPost({postID: post._id, '#': 'read-post'})" >See More</a>
+  <div class="col-xs-6 col-sm-6" style="text-align: right;">
+    <delete-post></delete-post>
   </div>
-  <all-posts-reactions></all-posts-reactions>
 </div>
+<a style="color: #333333; display: inline-block;"  ui-sref="oneGroup.viewOneAdvertisementPost({postID: post._id, '#': 'read-post'})">
+<h4 style="font-weight: bolder; white-space: pre-wrap;"><span ng-bind="post.adTitle | limitTo: 200"></span><span ng-if="post.adTitle.length > 200" >...</span></h4></a>
+<p style="color: gray; margin-bottom: 2px;">submitted by <a href="#" style="color: gray; font-weight: bold;">{{post.postedBy}}</a> on {{post.datePosted}}</p>
+
+<p ng-if="post.price" style="margin-bottom: 2px;"><img src="posts/client/assets/images/philippine-peso.png" alt="Php" style="height: 30px; margin-right: 10px;" />{{post.price}}</p>
+
+<p style="padding: 4px 0; white-space: pre-wrap; max-height: 80px;" data-ng-bind="post.details | parseURL | emoji" data-ellipsis></p>
+<div style="margin: -1% 0 1% 0;">
+	<a ui-sref="oneGroup.viewOneAdvertisementPost({postID: post._id, '#': 'read-post'})" >See More</a>
+</div>
+
 

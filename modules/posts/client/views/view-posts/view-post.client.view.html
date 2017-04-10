@@ -1,0 +1,27 @@
+<button ng-click="returnToGroup(selectedGroup.handle)" type="button" class="btn btn-danger"><span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span> Go Back</button>
+	
+<div style="padding: 2%; background-color: white; margin: 2% 0 2% 0; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+
+	<div ui-view></div>
+
+    <shared-view-files ng-if="selectedPost.files" selected-files="selectedPost.files"></shared-view-files>
+
+    <shared-view-technology-handles ng-if="selectedPost.technologyHandles" selected-technology-handles="selectedPost.technologyHandles"></shared-view-technology-handles>
+
+	<shared-view-hashtags selected-hashtags="selectedPost.hashtags"></shared-view-hashtags>
+
+</div>
+    		
+<one-post-reactions></one-post-reactions>
+
+
+<section id="write-comment">
+	<add-comment></add-comment>
+</section>
+
+	
+<div class="col-xs-12 col-sm-12">
+	<h4 style="padding: 0 10px;">{{selectedPost.reactions[0].count}} Comment<span ng-show="selectedPost.reactions[0].count > 1">s</span></h4>
+</div>
+	
+<view-comments></view-comments>

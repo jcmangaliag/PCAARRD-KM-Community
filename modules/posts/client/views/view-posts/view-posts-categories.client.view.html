@@ -1,14 +1,9 @@
-<div class="row" style="margin: 3% 0px;">
-	
-	<div class="col-xs-6 col-sm-6" style="padding: 0;">
-		<div class="btn-group" style="padding-right: 10px;">
-		  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> View {{currentViewPostsCategory.postCategory.title}} <span class="caret"></span> </button>
+<div class="col-xs-6 col-sm-6" style="padding: 0;">
+	<div class="btn-group" style="padding-right: 10px;">
+	  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> View {{currentViewPostsCategory.postCategory.title}} <span class="caret"></span> </button>
 
-		  <ul class="dropdown-menu">
-		    <li ng-repeat="viewPostsCategory in viewPostsCategories" ng-click="setCurrentViewPostsCategory(viewPostsCategory.category); resetSearchBar(); resetCurrentPage();"><a href="#">View {{viewPostsCategory.title}}</a></li>
-		  </ul>
-		</div>
+	  <ul class="dropdown-menu">
+	    <li ng-repeat="viewPostsCategory in viewPostsCategories" ng-click="setCurrentViewPostsCategory(viewPostsCategory.category); resetSearchBar(); resetCurrentPage();"><a href="#">View {{viewPostsCategory.title}}</a></li>
+	  </ul>
 	</div>
-
-	<search-posts></search-posts>
 </div>

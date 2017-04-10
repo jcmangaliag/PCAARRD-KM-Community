@@ -1,17 +1,15 @@
-<div style="margin: 2%; border-radius: 8px;">
-  <div class="row">
-    <div class="col-xs-6 col-sm-6">
-      <span class="label label-info">Others</span>
-    </div>
-    <div class="col-xs-6 col-sm-6" style="text-align: right;">
-      <delete-post></delete-post>
-    </div>
+<div class="row">
+  <div class="col-xs-6 col-sm-6">
+    <span class="label label-info">Others</span>
   </div>
-   <a style="color: #333333; display: inline-block;" ui-sref="oneGroup.viewOneOthersPost({postID: post._id, '#': 'read-post'})">
-  <h4 style="font-weight: bolder;"><span ng-bind="post.post | limitTo: 300"></span><span ng-if="post.post.length > 300">...</span></h4> </a>
-  <p style="color: gray; margin-bottom: 2px;">submitted by <a href="#" style="color: gray; font-weight: bold;">{{post.postedBy}}</a> on {{post.datePosted}}</p>
-  <div style="margin: 1% 0 1% 0;">
-  	<a ui-sref="oneGroup.viewOneOthersPost({postID: post._id, '#': 'read-post'})">See More</a>
+  <div class="col-xs-6 col-sm-6" style="text-align: right;">
+    <delete-post></delete-post>
   </div>
-   <all-posts-reactions></all-posts-reactions>
 </div>
+ <a style="color: #333333; display: inline-block;" ui-sref="oneGroup.viewOneOthersPost({postID: post._id, '#': 'read-post'})">
+<h4 style="font-weight: bolder;"><span ng-bind="post.post | limitTo: 300"></span><span ng-if="post.post.length > 300">...</span></h4> </a>
+<p style="color: gray; margin-bottom: 2px;">submitted by <a href="#" style="color: gray; font-weight: bold;">{{post.postedBy}}</a> on {{post.datePosted}}</p>
+<div style="margin: 1% 0 1% 0;">
+	<a ui-sref="oneGroup.viewOneOthersPost({postID: post._id, '#': 'read-post'})">See More</a>
+</div>
+

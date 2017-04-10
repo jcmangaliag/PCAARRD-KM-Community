@@ -1,52 +1,25 @@
-<div>
-	<button ng-click="returnToGroup(selectedGroup.handle)" type="button" class="btn btn-danger"><span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span> Go Back</button>
-		
-	<div style="padding: 2%; background-color: white; margin: 2% 0 2% 0; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-		
-		<div class="row">
-		    <div class="col-xs-6 col-sm-6">
-		      <span class="label label-info">Advertisement</span>
-		    </div>
-		    <div class="col-xs-6 col-sm-6" style="text-align: right;">
-		      <delete-post></delete-post>
-		    </div>
-	  	</div>
-
-		<h3 style="margin: 10px 0 0 0;">{{selectedPost.adTitle}}</h3>
-
-		<div style="padding: 1% 0 2% 0">
-			<p style="color: gray;">submitted by <a href="#" style="font-weight: bold; color: gray;">{{selectedPost.postedBy}}</a> on {{selectedPost.datePosted}}</p>
-		</div>
-		
-		<div ng-if="selectedPost.price" style="margin-bottom: 3%;">
-			<p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Price</p>
-			<h4><img src="posts/client/assets/images/philippine-peso.png" alt="Php" style="height: 40px; margin-right: 10px;" />{{selectedPost.price}}</h4>
-		</div>
-
-		<div style="margin-bottom: 3%;">
-			<p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Features and Other Details</p>
-	      	<h4 ng-bind-html="selectedPost.details | parseURL | emoji" style="white-space: pre-wrap;"></h4>
-	    </div>
-
-	    <shared-view-files ng-if="selectedPost.files" selected-files="selectedPost.files"></shared-view-files>
-
-	    <shared-view-technology-handles ng-if="selectedPost.technologyHandles" selected-technology-handles="selectedPost.technologyHandles"></shared-view-technology-handles>
-
-    	<shared-view-hashtags selected-hashtags="selectedPost.hashtags"></shared-view-hashtags>
-
-	</div>
-	    		
-	    <one-post-reactions></one-post-reactions>
-
-
-      	<section id="write-comment">
-      		<add-comment></add-comment>
-      	</section>
-
-      	
-      	<div class="col-xs-12 col-sm-12">
-      	<h4 style="padding: 0 10px;">{{selectedPost.reactions[0].count}} Comment<span ng-show="selectedPost.reactions[0].count > 1">s</span></h4>
-      	</div>
-      	
-	    <view-comments></view-comments>
+<div class="row">
+    <div class="col-xs-6 col-sm-6">
+      <span class="label label-info">Advertisement</span>
+    </div>
+    <div class="col-xs-6 col-sm-6" style="text-align: right;">
+      <delete-post></delete-post>
+    </div>
 </div>
+
+<h3 style="margin: 10px 0 0 0;">{{selectedPost.adTitle}}</h3>
+
+<div style="padding: 1% 0 2% 0">
+	<p style="color: gray;">submitted by <a href="#" style="font-weight: bold; color: gray;">{{selectedPost.postedBy}}</a> on {{selectedPost.datePosted}}</p>
+</div>
+
+<div ng-if="selectedPost.price" style="margin-bottom: 3%;">
+	<p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Price</p>
+	<h4><img src="posts/client/assets/images/philippine-peso.png" alt="Php" style="height: 40px; margin-right: 10px;" />{{selectedPost.price}}</h4>
+</div>
+
+<div style="margin-bottom: 3%;">
+	<p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Features and Other Details</p>
+  	<h4 ng-bind-html="selectedPost.details | parseURL | emoji" style="white-space: pre-wrap;"></h4>
+</div>
+

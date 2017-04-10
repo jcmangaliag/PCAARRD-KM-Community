@@ -21,6 +21,7 @@ import DeletePostDirective from './directives/delete-post.client.directive';
 import SearchPostsDirective from './directives/search-posts.client.directive';
 
 import ViewPostsCategoriesDirective from './directives/view-posts/view-posts-categories.client.directive';
+import ViewPostDirective from './directives/view-posts/view-post.client.directive';
 import ViewPostsDirective from './directives/view-posts/view-posts.client.directive';
 import AllPostsReactionsDirective from './directives/view-posts/all-posts-reactions.client.directive';
 import OnePostReactionsDirective from './directives/view-posts/one-post-reactions.client.directive';
