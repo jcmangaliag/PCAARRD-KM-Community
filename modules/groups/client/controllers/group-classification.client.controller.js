@@ -7,9 +7,9 @@ import _ from 'lodash';
 		.module('groups')
 		.controller('GroupClassificationController', GroupClassificationController);
 
-	GroupClassificationController.$inject = ['$scope', 'GroupClassificationService', 'SharedPaginationService', '$filter', 'ngToast'];
+	GroupClassificationController.$inject = ['$scope', '$state', 'GroupClassificationService', 'GroupService', 'SharedPaginationService', '$filter', 'ngToast'];
 
-	function GroupClassificationController ($scope, GroupClassificationService, SharedPaginationService, $filter, ngToast) {
+	function GroupClassificationController ($scope, $state, GroupClassificationService, GroupService, SharedPaginationService, $filter, ngToast) {
 		const {deleteOneGroupClassification} = GroupClassificationService;
 		$scope.deleteOneGroupClassification = _.partial(deleteOneGroupClassification);
 
@@ -103,6 +103,11 @@ import _ from 'lodash';
 			$scope.editedGroupClassificationFormData = null;
 		}
 
+		$scope.goToGroup = (groupClassificationID) =>{
+			const groupIndex = $scope.groups.contents.map((group) => group.classification._id).indexOf(groupClassificationID);
+			$state.go('oneGroup', {handle:  $scope.groups.contents[groupIndex].handle});
+		}
+
 		$scope.$watch('searchClassificationsValue', function(value){ 
 			if ($scope.groupClassifications){
 				GroupClassificationService.getAllGroupClassifications()
@@ -118,6 +123,8 @@ import _ from 'lodash';
 		GroupClassificationService.getAllGroupClassifications();
 		$scope.groupClassifications = GroupClassificationService.getGroupClassificationList();
 		$scope.groupClassificationsCopy = GroupClassificationService.getGroupClassificationListCopy();
+		GroupService.getAllGroups();
+		$scope.groups = GroupService.getGroupList();
 	}
 
 })();

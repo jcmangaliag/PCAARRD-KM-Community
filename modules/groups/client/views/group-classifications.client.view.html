@@ -20,7 +20,7 @@
 			        <th>Sector</th>
 			        <th>ISP</th>
 			        <th>Specific Commodity</th>
-			        <th>Group Exists?</th>
+			        <th>Existing Group</th>
 
 			        <th ng-if="!editedGroupClassificationFormData">Edit</th>
 			        <th ng-if="editedGroupClassificationFormData">Save</th>
@@ -49,9 +49,8 @@
 			        <td ng-if="!isEditingClassification(groupClassification._id)">{{groupClassification.specificCommodity}} <span ng-if="!groupClassification.specificCommodity">-</span> </td>
 			        <td ng-if="isEditingClassification(groupClassification._id)"><input type="text" class="form-control" placeholder="Enter the specific commodity" ng-model="editedGroupClassificationFormData.specificCommodity" /></td>
 
-
-			        <td>{{groupClassification.isUsed? 'Yes' : 'No'}}</td>
-
+			        <td ng-if="!groupClassification.isUsed">-</td>
+			        <td ng-if="groupClassification.isUsed"><a style="cursor: pointer;" ng-click="goToGroup(groupClassification._id)">{{groupClassification.specificCommodity || groupClassification.isp}}</a></td>
 
 			        <td ng-if="!editedGroupClassificationFormData._id">
 			        	<i title="Edit" ng-if="!groupClassification.isUsed && !isEditingClassification(groupClassification._id)" class="fa fa-lg fa-pencil" style="cursor: pointer;" ng-click="onEditGroupClassification(groupClassification)" aria-hidden="true"></i>
