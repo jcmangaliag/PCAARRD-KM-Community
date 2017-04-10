@@ -5,9 +5,17 @@
 		.module('groups')
 		.config(groupRoutes);
 
-	groupRoutes.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
+	groupRoutes.$inject = ['$provide', '$stateProvider', '$urlRouterProvider', '$locationProvider'];
 
-	function groupRoutes ($stateProvider, $urlRouterProvider, $locationProvider) {
+	function groupRoutes ($provide, $stateProvider, $urlRouterProvider, $locationProvider) {
+		$provide.decorator('$uiViewScroll', function ($delegate) {
+		    return function (uiViewElement) {
+		       // var top = uiViewElement.getBoundingClientRect().top;
+		        window.scrollTo(0, 0);
+		       // Or some other custom behaviour...
+		    }; 
+		  });
+
 		$urlRouterProvider.otherwise('/groups/');
 
 		$stateProvider

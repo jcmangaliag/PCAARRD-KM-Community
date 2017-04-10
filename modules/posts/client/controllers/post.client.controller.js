@@ -28,11 +28,6 @@ import _ from 'lodash';
 			$scope.clearHashtags();
 		}
 
-		$scope.goBackToViewAllPosts = () => {
-			window.history.back();
-			$scope.returnToGroup($stateParams.handle);	
-		}
-
 		$scope.getPostData = () => {
 			if ($stateParams.postID){	// if viewing one post
 				PostService.getOnePost($stateParams.postID)

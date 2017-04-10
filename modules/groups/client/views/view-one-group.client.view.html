@@ -24,9 +24,7 @@
 
   <div>
     <div class="col-xs-12 col-sm-9">
-      <div ng-if="viewOnePost">
-        <div ui-view autoscroll="autoScroll.status"></div>
-      </div>
+      <div ui-view ng-if="viewOnePost" id="read-post"></div>
 
       <div ng-if="!viewOnePost">
         <add-post></add-post>

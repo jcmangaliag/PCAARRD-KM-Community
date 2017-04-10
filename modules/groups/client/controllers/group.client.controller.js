@@ -12,19 +12,11 @@ import _ from 'lodash';
 
 	function GroupController ($scope, $state, $stateParams, GroupClassificationService, GroupService, SharedPaginationService, $filter) {
 		/* for View One Group */
-		$scope.autoScroll = { 
-			status: false
-		}
-
 		$scope.$watch(() => {
 		    return $state.$current.name;
 		}, (newCurrentStateName) => {
 		    $scope.viewOnePost = $state.current.name.indexOf('oneGroup.viewOne') >= 0? true: false;
 		});
-
-		$scope.autoScrollPost = (option) => {
-			$scope.autoScroll.status = option;
-		}
 
 		/* for View One and View All Groups */
 		$scope.getGroupData = () => {
