@@ -27,7 +27,6 @@ import _ from 'lodash';
 			{ emoji: "innocent", alias: "O:)" },
 			{ emoji: "imp", alias: ">:)" },
 			{ emoji: "sunglasses", alias: "|-O" },
-			{ emoji: "confused", alias: "%)" },
 			{ emoji: "heart", alias: "<3" },
 			{ emoji: "broken_heart", alias: "</3" },
 			{ emoji: "thumbsup", alias: "(y)" },
