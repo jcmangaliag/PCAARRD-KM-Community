@@ -1,17 +1,34 @@
 # PCAARRD KM Community
-An application that allows members to post a question, news, report, event, advertisement, media or others in their virtual spaces or groups. In addition, members can also comment and choose reactions on the existing posts.
+A web application that allows members to post a question, news, report, event, advertisement, media or others in their virtual spaces or groups. In addition, members can also comment and choose reactions on the existing posts.
 
-# Installation instructions
+## Prerequisites
+1. Node.js v7. Follow the installation steps for your operating system: https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions
+2. MongoDB. Download link: https://www.mongodb.com/download-center#community. Installation instructions for Ubuntu users: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/
+
+## Installation instructions
 1. Fork and clone the repository.
-2. Acquire MongoDB if you don't have yet. You can download here: https://www.mongodb.com/download-center#community
-Installation instructions for Ubuntu users: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/
-3. Open a terminal and go to the PCAARRD-KM-Community directory.
-4. Type these commands (in order):
-    1. "git fetch origin"
-    2. "git checkout development"
-    3. "npm install"
+2. Open a terminal and go to the PCAARRD-KM-Community directory.
+3. Type these commands (in order):
 
-# Running instructions
-1. Open another terminal tab and run MongoDB by typing "sudo service mongod start". Leave it there open.
-2. In the previous terminal tab (in PCAARRD-KM-Community directory), run the web application using "npm run dev".
-3. Open a web browser and go to "localhost:8080".
+```bash
+git fetch origin
+git checkout development
+npm install
+```
+
+## Running instructions
+1. Open another terminal and run MongoDB using:
+
+```bash
+sudo service mongod start
+```
+2. In another terminal (in PCAARRD-KM-Community directory), run the web application using:
+
+```bash
+npm run dev
+```
+3. Open a web browser and go to:
+
+```bash
+localhost:8080
+```
