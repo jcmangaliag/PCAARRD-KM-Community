@@ -7,9 +7,9 @@ An application that allows members to post a question, news, report, event, adve
 Installation instructions for Ubuntu users: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/
 3. Open a terminal and go to the PCAARRD-KM-Community directory.
 4. Type these commands (in order):
-  1. "git fetch origin"
-  2. "git checkout development"
-  3. "npm install"
+    1. "git fetch origin"
+    2. "git checkout development"
+    3. "npm install"
 
 # Running instructions
 1. Open another terminal tab and run MongoDB by typing "sudo service mongod start". Leave it there open.
