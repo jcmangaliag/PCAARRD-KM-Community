@@ -7,9 +7,9 @@ import _ from 'lodash';
 		.module('posts')
 		.factory('PostService', PostService);
 
-	PostService.$inject = ['$http', 'ngToast', '$q', 'CommentService'];
+	PostService.$inject = ['$http', 'ngToast', '$q', 'CommentService', 'GroupService'];
 
-	function PostService ($http, ngToast, $q, CommentService) { // to do: check if there's err in http requests
+	function PostService ($http, ngToast, $q, CommentService, GroupService) { // to do: check if there's err in http requests
 
 		let postList = { contents: [] }, postListCopy = { contents: [] }, groupBelonged;
 
@@ -29,10 +29,14 @@ import _ from 'lodash';
 			groupBelonged = groupHandle;
 		}
 
-		const getPostsByCategory = (category) => {
+		const getGroupBelonged = () => {
+			return groupBelonged;
+		}
+
+		const getPostsByGroupAndCategory = (category) => {
 			const deferred = $q.defer();
 
-			$http.get(`/api/posts/groupBelonged/${groupBelonged}/category/${category}`)
+			$http.get(`/api/posts/group-belonged/${groupBelonged}/category/${category}`)
 			.then((response) => {
 				postList.contents = response.data.posts;
 				postListCopy.contents = _.toArray(response.data.posts);
@@ -45,10 +49,40 @@ import _ from 'lodash';
 			return deferred.promise;
 		}
 
-		const getAllPosts = () => {
+		const getAllPostsByGroup = () => {
 			const deferred = $q.defer();
 
-			$http.get(`/api/posts/groupBelonged/${groupBelonged}`)
+			$http.get(`/api/posts/group-belonged/${groupBelonged}`)
+			.then((response) => {
+				postList.contents = response.data.posts;
+				postListCopy.contents = _.toArray(response.data.posts);
+				deferred.resolve(response.data.posts);
+			}, (response) => {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		}
+
+		const getPostsByMyGroupsAndCategory = (category, /* user id?*/) => {
+			const deferred = $q.defer();
+			const sampleGroups = 'banana,coconut,biodiversity';	// replace with querying all groups where user is a member of, should return group handles
+			$http.get(`/api/posts/my-groups/${sampleGroups}/category/${category}`)
+			.then((response) => {
+				postList.contents = response.data.posts;
+				postListCopy.contents = _.toArray(response.data.posts);
+				deferred.resolve(response.data.posts);
+			}, (response) => {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		}
+
+		const getAllPostsByMyGroups = (/* user id?*/) => {
+			const deferred = $q.defer();
+			const sampleGroups = 'banana,coconut,biodiversity';	// replace with querying all groups where user is a member of, should return group handles
+			$http.get(`/api/posts/my-groups/${sampleGroups}`)
 			.then((response) => {
 				postList.contents = response.data.posts;
 				postListCopy.contents = _.toArray(response.data.posts);
@@ -124,10 +158,21 @@ import _ from 'lodash';
 		}
 
 		const deleteOnePost = ($scope, $stateParams, post) => {
-			//const groupBelonged = post.groupBelonged; // specify the group id
 			$http.delete(`/api/posts/${post._id}`)
 			.then(response => {	
 				CommentService.deleteCommentsByReferredPost(post._id);
+
+				GroupService.getOneGroup(post.groupBelonged)
+				.then((refreshedGroup) => {
+					refreshedGroup.postsCount.total--;
+					refreshedGroup.postsCount[post.category]--;
+					GroupService.updateGroup(refreshedGroup.handle, {postsCount: refreshedGroup.postsCount});
+					if ($scope.selectedGroup){
+						$scope.selectedGroup.postsCount = refreshedGroup.postsCount;
+					}
+				}, (error) => {
+					// show 404 not found page
+				});
 
 				if ($stateParams.postID){	// if viewing one post
 					$scope.returnToGroup($stateParams.handle);	
@@ -146,8 +191,11 @@ import _ from 'lodash';
 			getPostList,
 			getPostListCopy,
 			setGroupBelonged,
-			getPostsByCategory,
-			getAllPosts,
+			getGroupBelonged,
+			getPostsByGroupAndCategory,
+			getAllPostsByGroup,
+			getPostsByMyGroupsAndCategory,
+			getAllPostsByMyGroups,
 			getOnePost,
 			setPostReaction,
 			deleteOnePost,

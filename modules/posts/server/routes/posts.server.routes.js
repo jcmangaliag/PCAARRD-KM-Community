@@ -9,11 +9,17 @@ const postsRoutes = (app) => {
   app.route('/api/posts/category/:category')
     .get(postCtrl.listByCategory);
 
-  app.route('/api/posts/groupBelonged/:handle')
+  app.route('/api/posts/group-belonged/:handle')
     .get(postCtrl.listByGroupBelonged);
 
-  app.route('/api/posts/groupBelonged/:handle/category/:category')
+  app.route('/api/posts/group-belonged/:handle/category/:category')
     .get(postCtrl.listByGroupBelongedAndCategory);
+
+  app.route('/api/posts/my-groups/:myGroups')
+    .get(postCtrl.listByMyGroups);
+
+  app.route('/api/posts/my-groups/:myGroups/category/:category')
+    .get(postCtrl.listByMyGroupsAndCategory);
 
   app.route('/api/posts/:id')
   	.get(postCtrl.listOne)

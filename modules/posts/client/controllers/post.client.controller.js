@@ -8,12 +8,14 @@ import _ from 'lodash';
 		.module('posts')
 		.controller('PostController', PostController);
 
-	PostController.$inject = ['$scope', '$state', '$stateParams', 'PostService', 'CommentService', 'ViewPostsCategoriesService', 'SharedPaginationService', '$filter'];
+	PostController.$inject = ['$scope', '$state', '$stateParams', 'PostService', 'CommentService', 'GroupService', 'ViewPostsCategoriesService', 'SharedPaginationService', '$filter'];
 
-	function PostController ($scope, $state, $stateParams, PostService, CommentService, ViewPostsCategoriesService, SharedPaginationService, $filter) {
+	function PostController ($scope, $state, $stateParams, PostService, CommentService, GroupService, ViewPostsCategoriesService, SharedPaginationService, $filter) {
 
 		const {deleteOnePost} = PostService;
+
 		PostService.setGroupBelonged($stateParams.handle);
+		$scope.groupBelonged = $stateParams.handle;
 
 		$scope.paginate = SharedPaginationService;
 		$scope.paginate.currentPage = 1;
@@ -22,8 +24,8 @@ import _ from 'lodash';
 		$scope.deleteOnePost = _.partial(deleteOnePost, $scope, $stateParams);
 		$scope.userid = PostService.userid;	// temporary userid
 
-		$scope.commentOnOnePost = (postCategory, postID) => {
-			$state.go(`oneGroup.viewOne${postCategory.charAt(0).toUpperCase() + postCategory.slice(1)}Post`, {postID: postID, '#': 'write-comment'});
+		$scope.commentOnOnePost = (groupHandle, postCategory, postID) => {
+			$state.go(`oneGroup.viewOne${postCategory.charAt(0).toUpperCase() + postCategory.slice(1)}Post`, {handle: groupHandle, postID: postID, '#': 'write-comment'});
 		}
 
 		$scope.clearForm = () => {
@@ -82,6 +84,17 @@ import _ from 'lodash';
 		}
 
 		$scope.getPostData();
+
+		if ($stateParams.handle === '--my-groups--'){
+			GroupService.getAllGroups();
+			$scope.groups = GroupService.getGroupList();
+		}
+
+		$scope.getGroupName = (groupHandle) => {
+			const groupIndex = $scope.groups.contents.map((group) => group.handle).indexOf(groupHandle);
+			return groupIndex > -1? $scope.groups.contents[groupIndex].name : '';
+		}
+
 	}
 
 })();

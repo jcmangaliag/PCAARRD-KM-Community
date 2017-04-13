@@ -29,6 +29,23 @@ const postControls = {
 	        res.send({ posts: results });
 	    });
 	},
+	listByMyGroups : (req, res) => {
+		const myGroups = req.params.myGroups.split(',');
+		Post.find({groupBelonged: { $in: myGroups}}, (err, results) => {
+	        if (err) { return (err); }
+
+	        res.send({ posts: results });
+	    });
+	},
+	listByMyGroupsAndCategory : (req, res) => {
+		const myGroups = req.params.myGroups.split(',');
+
+		Post.find({groupBelonged: {$in: myGroups}, category: req.params.category}, (err, results) => {
+	        if (err) { return (err); }
+
+	        res.send({ posts: results });
+	    });
+	},
 	listOne : (req, res) => {
 		const id = req.params.id;
 

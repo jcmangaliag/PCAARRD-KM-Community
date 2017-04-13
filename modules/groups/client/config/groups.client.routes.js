@@ -8,12 +8,13 @@
 	groupRoutes.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 
 	function groupRoutes ($stateProvider, $urlRouterProvider, $locationProvider) {
-		$urlRouterProvider.otherwise('/groups/');
+		$urlRouterProvider.otherwise('/');
 
 		$stateProvider
 			.state('groups', {
 				url: '/groups/',
-				template: '<my-groups></my-groups><discover-groups></discover-groups>'
+				templateUrl: 'groups/client/views/view-groups.client.view.html',
+				controller: 'GroupController'
 			})
 			.state('manageGroupClassification', {
 				url: '/manage-group-classification',	

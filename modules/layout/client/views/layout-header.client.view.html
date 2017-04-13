@@ -50,25 +50,17 @@
 
 
 <div style="min-height:70px;">
-<nav class="navbar" bs-affix data-offset-top= "103" style="background-color:white;">
+<nav class="navbar navbar-default" bs-affix data-offset-top= "103" style="background-color:white;">
   <div class="container-fluid" style="padding: 0;">
     <div style="background-color: #3062B7; padding: 0.2% 1%; color: white;">
-    <div class="row">
-      <div class="col-xs-4 col-sm-6 col-md-6" style="margin-top:0.4%;">
-         <h4 style="display: inline-block;"><a href="#" style="color: white;">HOME</a> / <a ui-sref="groups" style="color: white;">COMMUNITY</a> </h4>
-      </div>
+      <div class="row">
+        <div class="col-xs-4 col-sm-6 col-md-6" style="margin-top:0.4%;">
+           <h4 style="display: inline-block;"><a href="#" style="color: white;">HOME</a> / <a ui-sref="communityFeed" style="color: white;">COMMUNITY</a> </h4>
+        </div>
 
-      <div class="col-xs-8 col-sm-6 col-md-6 text-right">
+        <div class="col-xs-8 col-sm-6 col-md-6 text-right">
            <a href="#" style="color: white; margin-right: 2%;">
            <img src="/layout/client/assets/images/11208269_1389692501358752_1755951646_n.jpg" class="user-profile__pic" alt="Pic" style="width: 38px; border-radius: 8%;" /><h4 style="display: inline;">Mark Eric</h4></a>
-
-<!--           <a href="#"><h4 style="display: inline;">
-          <span title="Notifications" class="fa-stack fa-lg" data-count="7">
-          <i class="fa fa-circle fa-stack-2x" aria-hidden="true"></i>
-          <i class="fa fa-bell fa-stack-1x fa-inverse" aria-hidden="true"></i>
-          </span>
-          </h4>
-          </a> -->
 
           <div class="btn-group">
               <button title="Options" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-radius: 100%; margin-bottom: 3px;">
@@ -76,14 +68,14 @@
               </button>
               <ul id="user-option-dropdown" class="dropdown-menu dropdown-menu-right">
                 <li> <a ui-sref="manageGroupClassification"><i class="fa fa-database" aria-hidden="true"></i> Manage Group Classification</a></li>
+                <li> <a ui-sref="groups"><i class="fa fa-list" aria-hidden="true"></i> See Groups</a></li>
                 <li> <a ui-sref="createGroup"><i class="fa fa-plus" aria-hidden="true"></i> Create Group</a></li>
                 <li> <a href="#"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a></li>
                 <li role="separator" class="divider"></li>
                 <li> <a href="#"><i class="fa fa-sign-out" aria-hidden="true"></i> Log Out</a></li>
               </ul>
           </div>
-
-      </div>
+        </div>
       </div>
     </div>
   </div>

@@ -8,9 +8,17 @@
 	postRoutes.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 
 	function postRoutes ($stateProvider, $urlRouterProvider, $locationProvider) {
-		$urlRouterProvider.otherwise('/groups/');
+		$urlRouterProvider.otherwise('/');
 
 		$stateProvider
+			/* View Posts from */
+			.state('communityFeed', {
+				url: '/',
+				templateUrl: 'posts/client/views/view-posts/community-feed.client.view.html',
+				params: {
+					handle: "--my-groups--"
+				}
+			})
 			/* View One Post */
 			.state('oneGroup.viewOneAdvertisementPost', {
 				url: '/view-posts/advertisement/:postID',

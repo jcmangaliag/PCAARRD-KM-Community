@@ -66,21 +66,42 @@
 			const deferred = $q.defer();
 
 			if (category == "all"){
-				PostService.getAllPosts()
-				.then((results) => {
-					deferred.resolve();
-				}, (error) => {
-					// posts not found
-					deferred.reject(error);
-				});
+				if (PostService.getGroupBelonged() === '--my-groups--'){
+					PostService.getAllPostsByMyGroups(/* user id?*/)
+					.then((results) => {
+						deferred.resolve();
+					}, (error) => {
+						// posts not found
+						deferred.reject(error);
+					});
+				} else {
+					PostService.getAllPostsByGroup()
+					.then((results) => {
+						deferred.resolve();
+					}, (error) => {
+						// posts not found
+						deferred.reject(error);
+					});
+				}
+				
 			} else {
-				PostService.getPostsByCategory(currentViewPostsCategory.postCategory.category)
-				.then((results) => {
-					deferred.resolve();
-				}, (error) => {
-					// posts not found
-					deferred.reject(error);
-				});
+				if (PostService.getGroupBelonged() === '--my-groups--'){
+					PostService.getPostsByMyGroupsAndCategory(currentViewPostsCategory.postCategory.category/*,  user id?*/)
+					.then((results) => {
+						deferred.resolve();
+					}, (error) => {
+						// posts not found
+						deferred.reject(error);
+					});
+				} else {
+					PostService.getPostsByGroupAndCategory(currentViewPostsCategory.postCategory.category)
+					.then((results) => {
+						deferred.resolve();
+					}, (error) => {
+						// posts not found
+						deferred.reject(error);
+					});
+				}
 			}
 
 			return deferred.promise;

@@ -1,17 +1,18 @@
 <div class="row">
   <div class="col-xs-6 col-sm-6">
-    <span class="label label-info">Incident Report</span>
+    <h4 style="display: inline;"><span style="font-weight: normal;" class="label label-info">Incident Report</span></h4>
+    <span ng-if="groupBelonged ==='--my-groups--'"><i class="fa fa-caret-right" aria-hidden="true"></i> <h4 style="display: inline;"><span class="label label-success"><a style="color: white; font-weight: bold;" ui-sref="oneGroup({handle: post.groupBelonged})">{{ getGroupName(post.groupBelonged) }}</a></span></h4></span>
   </div>
   <div class="col-xs-6 col-sm-6" style="text-align: right;">
     <delete-post></delete-post>
   </div>
 </div>
-<a style="color: #333333; display: inline-block;" ui-sref="oneGroup.viewOneReportPost({postID: post._id, '#': 'read-post'})">
+<a style="color: #333333; display: inline-block;" ui-sref="oneGroup.viewOneReportPost({handle: post.groupBelonged, postID: post._id, '#': 'read-post'})">
 <h4 style="font-weight: bolder; white-space: pre-wrap;"><span ng-bind="post.reportTitle | limitTo: 200"></span><span ng-if="post.reportTitle.length > 200" >...</span></h4> </a>
 <p style="color: gray; margin-bottom: 2px;">posted by <a href="#" style="color: gray; font-weight: bold;">{{post.postedBy}}</a> on {{post.datePosted}},</p>
 <p style="color: gray; margin-bottom: 2px;"> occured on {{post.dateTime}} at {{post.location}}</p>
 <p style="padding: 4px 0; white-space: pre-wrap; max-height: 80px;" data-ng-bind="post.details | parseURL | emoji" data-ellipsis></p>
 <div style="margin: -1% 0 1% 0;">
-	<a ui-sref="oneGroup.viewOneReportPost({postID: post._id, '#': 'read-post'})">See More</a>
+	<a ui-sref="oneGroup.viewOneReportPost({handle: post.groupBelonged, postID: post._id, '#': 'read-post'})">See More</a>
 </div>
 
