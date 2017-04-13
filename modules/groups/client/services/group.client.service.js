@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 (() => {
 	'use strict';
 	
@@ -26,6 +28,40 @@
 			.then((response) => {
 				groupList.contents = response.data.groups;
 				groupListCopy.contents = _.toArray(response.data.groups);
+				deferred.resolve(response.data.groups);
+			}, (response) => {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		}
+
+		const getMyGroups = () => {
+			const deferred = $q.defer();
+			const userID = "Mark's id";	// change this
+
+			$http.get(`/api/groups/my-groups/${userID}`)
+			.then((response) => {
+				groupList.contents = response.data.groups;
+				groupListCopy.contents = _.toArray(response.data.groups);
+
+				deferred.resolve(response.data.groups);
+			}, (response) => {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		}
+
+		const getDiscoverGroups = () => {
+			const deferred = $q.defer();
+			const userID = "Mark's id";	// change this
+
+			$http.get(`/api/groups/discover-groups/${userID}`)
+			.then((response) => {
+				groupList.contents = response.data.groups;
+				groupListCopy.contents = _.toArray(response.data.groups);
+				
 				deferred.resolve(response.data.groups);
 			}, (response) => {
 				deferred.reject(response);
@@ -78,6 +114,8 @@
 			getGroupList,
 			getGroupListCopy,
 			getAllGroups,
+			getMyGroups,
+			getDiscoverGroups,
 			getOneGroup,
 			updateGroup,
 			submitGroup

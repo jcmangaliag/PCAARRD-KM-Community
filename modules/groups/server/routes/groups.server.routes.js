@@ -15,6 +15,12 @@ const groupsRoutes = (app) => {
     .get(groupCtrl.list)
     .post(groupCtrl.post);
 
+  app.route('/api/groups/my-groups/:userID')
+    .get(groupCtrl.listByMyGroups);
+
+  app.route('/api/groups/discover-groups/:userID')
+    .get(groupCtrl.listByDiscoverGroups);
+
   app.route('/api/groups/:handle')
     .get(groupCtrl.listOne)
     .put(groupCtrl.updateOne)

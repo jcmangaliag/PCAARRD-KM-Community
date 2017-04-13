@@ -8,6 +8,20 @@ const groupControls = {
 	        res.send({ groups: results });
 	    });
 	},
+	listByMyGroups : (req, res) => {
+		Group.find({members: req.params.userID}, (err, results) => {
+	        if (err) { return (err); }
+
+	        res.send({ groups: results });
+	    });
+	},
+	listByDiscoverGroups : (req, res) => {
+		Group.find({members: { "$ne": req.params.userID}}, (err, results) => {
+	        if (err) { return (err); }
+
+	        res.send({ groups: results });
+	    });
+	},
 	listOne : (req, res) => {
 		const handle = req.params.handle;
 

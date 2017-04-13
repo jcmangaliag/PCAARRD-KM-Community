@@ -1,0 +1,7 @@
+<div class="btn-group" style="padding-right: 10px;">
+  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{currentViewGroupsCategory.category}} <span class="caret"></span></button>
+
+  <ul class="dropdown-menu">
+    <li ng-repeat="groupCategory in viewGroupsCategories" ng-click="setCurrentViewGroupsCategory(groupCategory); resetSearchGroup(); resetGroupsCurrentPage();"><a href="#/">{{groupCategory}}</a></li>
+  </ul>
+</div>

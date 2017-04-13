@@ -8,9 +8,9 @@ import _ from 'lodash';
 		.module('groups')
 		.controller('GroupController', GroupController);
 
-	GroupController.$inject = ['$scope', '$state', '$stateParams', 'GroupClassificationService', 'GroupService', 'SharedPaginationService', '$filter'];
+	GroupController.$inject = ['$scope', '$state', '$stateParams', 'GroupClassificationService', 'ViewGroupsCategoriesService', 'GroupService', 'SharedPaginationService', '$filter'];
 
-	function GroupController ($scope, $state, $stateParams, GroupClassificationService, GroupService, SharedPaginationService, $filter) {
+	function GroupController ($scope, $state, $stateParams, GroupClassificationService, ViewGroupsCategoriesService, GroupService, SharedPaginationService, $filter) {
 		/* for View One Group */
 		$scope.$watch(() => {
 		    return $state.$current.name;
@@ -28,33 +28,25 @@ import _ from 'lodash';
 					// show 404 not found page
 				});
 			} else {
-				GroupService.getAllGroups();
+				const currentViewGroupsCategory = ViewGroupsCategoriesService.getCurrentViewGroupsCategory().category;
+				ViewGroupsCategoriesService.retrieveGroupsByCategory(currentViewGroupsCategory);
 				$scope.groups = GroupService.getGroupList();
 				$scope.groupsCopy = GroupService.getGroupListCopy();
-				
+
 				$scope.paginate = _.cloneDeep(SharedPaginationService);
 				$scope.paginate.currentPage = 1;
 				$scope.paginate.groupsPerPage = 4;
 			}
 		}
 
-/*		$scope.checkMyGroupStatus = () => {
-			console.log("my groups status");
-			//console.log($scope.paginate);
-			//console.log($scope.groups);
-			//$scope.groups.contents.pop();
-			$scope.paginate.currentPage++;
+		$scope.checkGroupMembership = (groupMembers) => {
+			return groupMembers.indexOf("Mark's id") > -1? true: false;	// make this dynamic
 		}
 
-		$scope.checkDiscoverGroupStatus = () => {
-			console.log("discover groups status");
-			//console.log($scope.groups);
-			//console.log($scope.paginate);
-		}
-*/
 		$scope.$watch('searchGroupsValue', function(value){ 
 			if ($scope.groups){
-				GroupService.getAllGroups()
+				const currentViewGroupsCategory = ViewGroupsCategoriesService.getCurrentViewGroupsCategory().category;
+				ViewGroupsCategoriesService.retrieveGroupsByCategory(currentViewGroupsCategory)
 					.then(() => {
 						$scope.groups.contents = $filter('filter')($scope.groupsCopy.contents, value);
 						$scope.paginate.currentPage = 1;
@@ -63,6 +55,14 @@ import _ from 'lodash';
 					});
 			}
     	});
+
+    	$scope.resetSearchGroup = () => {
+    		$scope.searchGroupsValue = "";
+    	}
+
+    	$scope.resetGroupsCurrentPage = () => {
+			$scope.paginate.currentPage = 1;
+		}
 
 		$scope.getGroupData();
 
