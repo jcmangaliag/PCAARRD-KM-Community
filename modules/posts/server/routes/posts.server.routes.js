@@ -27,6 +27,7 @@ const postsRoutes = (app) => {
 
   app.route('/api/posts/reactions/:id')
   	.put(postCtrl.updateReactions);
+
 };
 
 export default postsRoutes;

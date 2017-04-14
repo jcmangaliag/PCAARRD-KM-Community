@@ -26,6 +26,9 @@ const groupsRoutes = (app) => {
     .put(groupCtrl.updateOne)
     .delete(groupCtrl.removeOne);
 
+  app.route('/api/groups/search/all') 
+    .get(groupCtrl.listByGroupSearch);
+
 };
 
 export default groupsRoutes;

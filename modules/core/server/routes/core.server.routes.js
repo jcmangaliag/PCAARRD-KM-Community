@@ -3,9 +3,9 @@ import commentRoutes from '../../../comments/server/routes/comments.server.route
 import groupRoutes from '../../../groups/server/routes/groups.server.routes';
 
 const moduleRoutes = (app) => {
+	groupRoutes(app),
 	postRoutes(app),
-	commentRoutes(app),
-	groupRoutes(app)
+	commentRoutes(app)
 };
 
 export default moduleRoutes;
