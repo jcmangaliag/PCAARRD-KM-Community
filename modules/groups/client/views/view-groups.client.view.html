@@ -30,7 +30,7 @@
 							</div>
 						</div>
 						<p style="color: gray; white-space: pre-wrap; min-height: 60px; max-height: 60px;" data-ng-bind="group.description | parseURL | emoji" data-ellipsis></p>
-						<h4 style="display: inline;"><span class="label label-success">{{group.membersCount}} Members</span></h4>
+						<h4 style="display: inline;"><span class="label label-success">{{group.members.length}} Members</span></h4>
 						<h4 style="display: inline;"><span class="label label-primary">{{group.postsCount.total}} Post<span ng-if="group.postsCount.total > 1">s</span></span></h4>
 					</div>
 				</div>

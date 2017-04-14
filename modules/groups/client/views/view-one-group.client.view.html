@@ -1,48 +1,32 @@
-<div>
-  <img src="/groups/client/assets/images/744849-banana-wallpaper.jpg" class="group-photo" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);" />
-  <hr />
-  <div class="row group-header">
-    <div class="col-xs-12 col-sm-4 " style="padding-top: 1%;" >
-      <img src="/groups/client/assets/images/Fruit_02.png" class="group-header__icon" />
-      <h3 style="padding-left: 4%; display: inline-block;">{{selectedGroup.name}}</h3>
-      <div style="padding-top:3%">
-      <a href="#" title="Edit Group Details" style="color: #333333;"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></a>
-       <a href="#" title="Group Settings" style="color: #333333;"><i style="padding-left: 4%" class="fa fa-cog fa-2x" aria-hidden="true"></i></a>
-       </div>
+<img src="/groups/client/assets/images/744849-banana-wallpaper.jpg" class="group-photo" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);" />
+<hr />
+
+<div class="row">
+  <div class="col-xs-12 col-sm-12 col-md-3">
+    <view-group-info-panel></view-group-info-panel>
+  </div>
+
+  <div class="col-xs-12 col-sm-12 col-md-6">
+    <div ng-if="!viewOnePost">
+      <add-post></add-post>
+
+      <div class="row" style="margin: 3% 0px;">
+        <view-posts-categories></view-posts-categories>
+        <search-posts></search-posts>
+      </div>
+
+      <view-posts></view-posts>
     </div>
 
-    <div class="col-xs-12 col-sm-5 group-header--align__name" style="text-align: justify;">
-     <p style="white-space: pre-wrap;" ng-bind-html="selectedGroup.description | parseURL | emoji"></p>
-    </div> 
-
-    <div class="col-xs-12 col-sm-3 group-header__actions">
-      <button type="button" class="btn btn-danger" ng-click="showToast()"> Leave Group </button>
+    <div ng-if="viewOnePost" id="read-post">
+      <view-post></view-post>
     </div>
   </div>
-  <hr />
 
-
-  <div>
-    <div class="col-xs-12 col-sm-8">
-      <div ng-if="!viewOnePost">
-        <add-post></add-post>
-
-        <div class="row" style="margin: 3% 0px;">
-          <view-posts-categories></view-posts-categories>
-          <search-posts></search-posts>
-        </div>
-
-        <view-posts></view-posts>
-      </div>
-
-      <div ng-if="viewOnePost" id="read-post">
-        <view-post></view-post>
-      </div>
-    </div>
-    
-    <div class="col-xs-12 col-sm-4">
-      <group-members></group-members>
-      <group-statistics></group-statistics>
-    </div>
+  <div class="col-xs-12 col-sm-12 col-md-3">
+    <view-manage-group-panel></view-manage-group-panel>
+    <view-group-members-panel></view-group-members-panel>
+    <view-group-posts-statistics-panel></view-group-posts-statistics-panel>>
   </div>
 </div>
+
