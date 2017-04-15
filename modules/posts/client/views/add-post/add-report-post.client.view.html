@@ -1,36 +1,38 @@
 <form class="post-question__form" ng-submit="onProcessPostData('report')">
-        <div class="form-group">
-          <label for="post-question__name">Incident Report Title <span style="color:red;">*</span></label>
-          <input type="text" class="form-control" id="post-question__name" placeholder="Enter the incident report title" ng-model="addPostFormData.reportTitle" required />
-        </div>
+  <div class="form-group">
+    <label for="post-question__name">Incident Report Title <span style="color:red;">*</span></label>
+    <input type="text" class="form-control" id="post-question__name" placeholder="Enter the incident report title" ng-model="addPostFormData.reportTitle" required />
+  </div>
 
-        <div class="form-group">
-          <label>Date and Time Occured <span style="color:red;">*</span></label>
-          <div class="input-group">
-             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-            <input type="text" class="form-control" placeholder="Enter the date and time" ng-model="addPostFormData.dateTime" end-date="{{defaultDatetime}}" ng-value="defaultDatetime" datetime-picker date-format="MMMM d yyyy, h:mm a" style="background-color: white;" readonly />
-          </div>
-        </div>
+  <div class="form-group">
+    <label>Date and Time Occured <span style="color:red;">*</span></label>
+    <div class="input-group">
+       <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+      <input type="text" class="form-control" placeholder="Enter the date and time" ng-model="addPostFormData.dateTime" end-date="{{defaultDatetime}}" ng-value="defaultDatetime" datetime-picker date-format="MMMM d yyyy, h:mm a" style="background-color: white;" readonly />
+    </div>
+  </div>
 
-        <div class="form-group">
-          <label for="post-question__name">Incident Report Location <span style="color:red;">*</span></label>
-          <input type="text" class="form-control" id="post-question__name" placeholder="Enter the location" ng-model="addPostFormData.location" required />
-        </div>
+  <div class="form-group">
+    <label for="post-question__name">Incident Report Location <span style="color:red;">*</span></label>
+    <input type="text" class="form-control" id="post-question__name" placeholder="Enter the location" ng-model="addPostFormData.location" required />
+  </div>
 
-        <div class="form-group">
-          <label for="post-question__desc">Incident Report Details <span style="color:red;">*</span></label>
-          <textarea class="form-control" style="resize: vertical;" id="post-question__desc" rows="3" placeholder="Enter the details" ng-model="addPostFormData.details" required></textarea>
-        </div>
+  <div class="form-group">
+    <label for="post-question__desc">Incident Report Details <span style="color:red;">*</span></label>
+    <textarea class="form-control" style="resize: vertical;" id="post-question__desc" rows="3" placeholder="Enter the details" ng-model="addPostFormData.details" required></textarea>
+  </div>
 
-        <shared-add-files></shared-add-files>
+  <shared-add-files></shared-add-files>
 
-        <shared-add-technology-handles></shared-add-technology-handles>
+  <shared-add-technology-handles></shared-add-technology-handles>
 
-        <shared-add-hashtags></shared-add-hashtags>
+  <shared-add-hashtags></shared-add-hashtags>
 
-        <add-post-privacy></add-post-privacy>
+  <add-post-privacy></add-post-privacy>
 
-        <shared-form-legends></shared-form-legends>
+  <shared-form-legends></shared-form-legends>
 
-        <shared-reset-submit-buttons></shared-reset-submit-buttons>
-      </form>
+  <shared-progress-bar></shared-progress-bar>
+
+  <shared-reset-submit-buttons></shared-reset-submit-buttons>
+</form>

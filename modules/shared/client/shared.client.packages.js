@@ -16,7 +16,8 @@ import SharedAddTechnologyHandlesDirective from './directives/shared-add-technol
 import SharedViewTechnologyHandlesDirective from './directives/shared-view-technology-handles.client.directive';
 import SharedResetSubmitButtonsDirective from './directives/shared-reset-submit-buttons.client.directive';
 import SharedFormLegendsDirective from './directives/shared-form-legends.client.directive';
-import './directives/shared-file-model.client.directive';
+import SharedFileModelDirective from './directives/shared-file-model.client.directive';
+import SharedProgressBarDirective from  './directives/shared-progress-bar.client.directive';
 
 import sharedParseURL from './filters/shared-parse-url.client.filter';
 
