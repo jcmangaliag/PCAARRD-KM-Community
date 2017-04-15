@@ -5,6 +5,7 @@ import sharedProvide from './config/shared.client.provide';
 
 import SharedAddHashtagsController from './controllers/shared-add-hashtags.client.controller';
 import SharedAddTechnologyHandlesController from './controllers/shared-add-technology-handles.client.controller';
+import SharedAddFilesController from './controllers/shared-add-files.client.controller';
 
 import SharedAddHashtagsDirective from './directives/shared-add-hashtags.client.directive';
 import SharedViewHashtagsDirective from './directives/shared-view-hashtags.client.directive';

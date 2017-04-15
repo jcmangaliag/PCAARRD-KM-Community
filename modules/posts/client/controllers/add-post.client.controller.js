@@ -79,6 +79,7 @@ import _ from 'lodash';
 		$scope.clearForm = () => {
 			const category = $scope.addPostFormData.category;
 			$scope.addPostFormData = null;
+			$scope.clearUploadFiles();
 			$scope.clearHashtags();
 			$scope.clearTechnologyHandles();
 			$scope.technologyHandle.enable = false;
@@ -104,7 +105,6 @@ import _ from 'lodash';
 		}
 
 		$scope.onProcessPostData = (postCategory) => {
-
 			if (postCategory === 'advertisement' && $scope.price){
 				$scope.addPostFormData.price = $scope.price.toFixed(2);
 			}
@@ -131,6 +131,9 @@ import _ from 'lodash';
 				$scope.addPostFormData.technologyHandles = $scope.selectedTechnologies;
 			}
 			$scope.addPostFormData.hashtags = $scope.hashtags;
+			if ($scope.selectedUploadFiles && $scope.selectedUploadFiles.length > 0){
+				$scope.addPostFormData.files = $scope.selectedUploadFiles;
+			}
 			$scope.addPostFormData.datePosted = moment().format('MMMM Do YYYY, h:mm:ss a');
 			$scope.addPostFormData.reactions = [
 				{ 

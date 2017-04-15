@@ -24,6 +24,7 @@ import _ from 'lodash';
 			$scope.addCommentFormData = null;
 			$scope.clearTechnologyHandles();
 			$scope.technologyHandle.enable = false;
+			$scope.clearUploadFiles();
 			$scope.clearHashtags();
 		}
 		
@@ -33,6 +34,9 @@ import _ from 'lodash';
 				$scope.addCommentFormData.technologyHandles = $scope.selectedTechnologies;
 			}
 			$scope.addCommentFormData.hashtags = $scope.hashtags;
+			if ($scope.selectedUploadFiles && $scope.selectedUploadFiles.length > 0){
+				$scope.addCommentFormData.files = $scope.selectedUploadFiles;
+			}
 			$scope.addCommentFormData.dateCommented = moment().format('MMMM Do YYYY, h:mm:ss a');
 			$scope.addCommentFormData.reactions = [
 				{ 
