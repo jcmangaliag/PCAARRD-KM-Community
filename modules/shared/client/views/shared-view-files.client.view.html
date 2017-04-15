@@ -6,7 +6,7 @@
 				<div ng-switch-when="image/gif|image/jpg|image/jpeg|image/jpe|image/tiff|image/png|image/bmp" ng-switch-when-separator="|">
 					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" style="padding: 10px;">
 						<h5>{{file.originalname.split('.').slice(0,-1).join('.')}}</h5>
-						<a title="{{file.originalname}}" href="{{file.path}}" target="_blank"><img style="width: 100%;" src="{{file.path}}" /></a>
+						<a title="{{file.originalname}}" href="{{file.path}}" target="_blank"><img style="width: 100%;" src="{{file.path}}" alt="Image not found" /></a>
 					</div>
 				</div>
 				<div ng-switch-when="video/mp4|video/webm|video/ogg" ng-switch-when-separator="|">
@@ -29,7 +29,7 @@
 				</div>
 				<div ng-switch-default>
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<h5 title="{{file.originalname}}"><a href="{{file.path}}" target="_blank">{{file.filename}}</a></h5>
+						<h5 title="{{file.originalname}}"><a href="{{file.path}}" target="_blank">{{file.originalname}}</a></h5>
 					</div>
 				</div>
 			</div>

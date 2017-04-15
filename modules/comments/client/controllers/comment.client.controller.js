@@ -8,9 +8,9 @@ import _ from 'lodash';
 		.module('comments')
 		.controller('CommentController', CommentController);
 
-	CommentController.$inject = ['$scope', '$state', '$q', 'CommentService', 'PostService', 'SharedPaginationService', 'ngToast'];
+	CommentController.$inject = ['$scope', '$state', '$q', 'CommentService', 'PostService', 'SharedPaginationService', 'ngToast', 'SharedUploadFilesService'];
 
-	function CommentController ($scope, $state, $q, CommentService, PostService, SharedPaginationService, ngToast) {
+	function CommentController ($scope, $state, $q, CommentService, PostService, SharedPaginationService, ngToast, SharedUploadFilesService) {
 		$scope.addCommentFormData = {};
 		const {submitComment} = CommentService;
 		$scope.submitComment = _.partial(submitComment);
@@ -22,6 +22,7 @@ import _ from 'lodash';
 
 		$scope.clearCommentForm = () => {
 			$scope.addCommentFormData = null;
+			$scope.clearUploadFiles();
 			$scope.clearTechnologyHandles();
 			$scope.technologyHandle.enable = false;
 			$scope.clearUploadFiles();
@@ -34,9 +35,7 @@ import _ from 'lodash';
 				$scope.addCommentFormData.technologyHandles = $scope.selectedTechnologies;
 			}
 			$scope.addCommentFormData.hashtags = $scope.hashtags;
-			if ($scope.selectedUploadFiles && $scope.selectedUploadFiles.length > 0){
-				$scope.addCommentFormData.files = $scope.selectedUploadFiles;
-			}
+
 			$scope.addCommentFormData.dateCommented = moment().format('MMMM Do YYYY, h:mm:ss a');
 			$scope.addCommentFormData.reactions = [
 				{ 
@@ -58,15 +57,43 @@ import _ from 'lodash';
 
 			// hardcoded as of now, should be Object ID
 			$scope.addCommentFormData.commentedBy = "Mark Eric Cabanli";
-			$scope.submitComment(_.cloneDeep($scope.addCommentFormData));
-			PostService.getOnePost($scope.selectedPost._id)	// check post for update
-				.then((result) => {
-					PostService.setPostReaction($scope, result, 0);	// increment post's comment count
-				}, (error) => {
-					// show 404 not found page
-				});
-			
-			$scope.clearCommentForm();
+
+			if ($scope.selectedUploadFiles.length > 0){
+				let uploadedFiles = [];
+				$scope.progressBarON = true;
+				SharedUploadFilesService.uploadFiles($scope.selectedUploadFiles, uploadedFiles)
+					.then((result) => {
+						$scope.progressBarON = false;
+						$scope.addCommentFormData.files = uploadedFiles;
+						
+						$scope.submitComment(_.cloneDeep($scope.addCommentFormData));
+						PostService.getOnePost($scope.selectedPost._id)	// check post for update
+							.then((result) => {
+								PostService.setPostReaction($scope, result, 0);	// increment post's comment count
+							}, (error) => {
+								// show 404 not found page
+							});
+						
+						$scope.clearCommentForm();
+
+					}, (error) => {
+						$scope.progressBarON = false;
+						ngToast.create({
+				    		className: 'danger',
+				    		content: `Error: ${error.data.message}`
+				    	});
+					})
+			} else {
+				$scope.submitComment(_.cloneDeep($scope.addCommentFormData));
+				PostService.getOnePost($scope.selectedPost._id)	// check post for update
+					.then((result) => {
+						PostService.setPostReaction($scope, result, 0);	// increment post's comment count
+					}, (error) => {
+						// show 404 not found page
+					});
+				
+				$scope.clearCommentForm();
+			}
 		}
 
 		$scope.onSetCommentReaction = (comment, reactionIndex) => {

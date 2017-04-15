@@ -22,7 +22,6 @@ import _ from 'lodash';
 					transformRequest: angular.identity,
 	            	headers: { 'Content-Type': undefined }
 				}).then((result) => {
-					console.log(result);
 					if (result.data.success){
 						uploadedFiles.push(result.data.file);
 						if (uploadedFiles.length === selectedUploadFiles.length)
