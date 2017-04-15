@@ -1,28 +1,38 @@
 <div ng-if="selectedFiles.length > 0" style="padding-bottom: 2%;">
 	<p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Uploaded Files</p>
-	<div ng-repeat="file in selectedFiles track by $index">
-		<div ng-switch on ="file">
-			<div ng-switch-when="(/\.(gif|jpg|jpeg|tiff|png|bmp)$/i).test(file)">
-				<img style="width: 300px;" src="{{file}}" />
-			</div>
-			<div ng-switch-when="(/\.(mp4|webm|ogg)$/i).test(file)">
-				<video width="320" height="240" controls>
-				  <source src="{{file}}" type="video/{{file.split('.').pop()}}">
-				</video> 
-			</div>
-			<div ng-switch-default>
-				<h5><a href="{{file}}">{{file.name}}</a></h5>
+	<div class="row">
+		<div ng-repeat="file in selectedFiles track by $index">
+			<div ng-switch on ="file.mimetype">
+				<div ng-switch-when="image/gif|image/jpg|image/jpeg|image/jpe|image/tiff|image/png|image/bmp" ng-switch-when-separator="|">
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" style="padding: 10px;">
+						<h5>{{file.originalname.split('.').slice(0,-1).join('.')}}</h5>
+						<a title="{{file.originalname}}" href="{{file.path}}" target="_blank"><img style="width: 100%;" src="{{file.path}}" /></a>
+					</div>
+				</div>
+				<div ng-switch-when="video/mp4|video/webm|video/ogg" ng-switch-when-separator="|">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 15px;">
+						<h5>{{file.originalname.split('.').slice(0,-1).join('.')}}</h5>
+						<video title="{{file.originalname}}" width="100%" controls>
+						  <source src="{{file.path}}" type="{{file.mimetype}}">
+						  Your browser does not support the video tag.
+						</video>
+					</div> 
+				</div>
+				<div ng-switch-when="audio/mp3|audio/mpeg|audio/wav|audio/ogg" ng-switch-when-separator="|">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 15px;">
+						<h5>{{file.originalname.split('.').slice(0,-1).join('.')}}</h5>
+						<audio title="{{file.originalname}}" width="100%" controls>
+						  <source src="{{file.path}}" type="{{file.mimetype}}">
+						  Your browser does not support the audio element.
+						</audio>
+					</div> 
+				</div>
+				<div ng-switch-default>
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<h5 title="{{file.originalname}}"><a href="{{file.path}}" target="_blank">{{file.filename}}</a></h5>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 </div>	
-
-<!-- <div style="padding: 2% 0 4% 0">
-	<p style="color: gray; margin-bottom: 2%;  border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Uploaded Files</p>
-
-			<div>
-				<img style="width: 300px;" src="groups/client/assets/images/Fruit_02.png" />
-				<img style="width: 300px;" src="groups/client/assets/images/Fruit_02.png" />
-			</div>
-
-</div>	 -->

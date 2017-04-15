@@ -18,7 +18,7 @@
 		}
 
 		$scope.clearUploadFiles = () => {
-			$scope.selectedUploadFiles.length = 0;
+			$scope.selectedUploadFiles = [];
 		}
 	}
 

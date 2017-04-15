@@ -16,10 +16,12 @@ import SharedAddTechnologyHandlesDirective from './directives/shared-add-technol
 import SharedViewTechnologyHandlesDirective from './directives/shared-view-technology-handles.client.directive';
 import SharedResetSubmitButtonsDirective from './directives/shared-reset-submit-buttons.client.directive';
 import SharedFormLegendsDirective from './directives/shared-form-legends.client.directive';
+import './directives/shared-file-model.client.directive';
 
 import sharedParseURL from './filters/shared-parse-url.client.filter';
 
 import SharedPaginationService from './services/shared-pagination.client.service';
+import SharedUploadFilesService from './services/shared-upload-files.client.service';
 
 import SharedAddHashtagsStyle from './styles/shared-add-hashtags.client.style.scss';
 import SharedAddFilesStyle from './styles/shared-add-files.client.style.scss';

@@ -8,9 +8,9 @@ import _ from 'lodash';
 		.module('posts')
 		.controller('AddPostController', AddPostController);
 
-	AddPostController.$inject = ['$scope', '$stateParams', 'AddPostService', 'AddPostCategoriesService', 'GroupService'];
+	AddPostController.$inject = ['$scope', 'ngToast', '$q', '$stateParams', 'AddPostService', 'AddPostCategoriesService', 'GroupService', 'SharedUploadFilesService'];
 
-	function AddPostController ($scope, $stateParams, AddPostService, AddPostCategoriesService, GroupService) {
+	function AddPostController ($scope, ngToast, $q, $stateParams, AddPostService, AddPostCategoriesService, GroupService, SharedUploadFilesService) {
 
 		const {submitPost} = AddPostService;
 		$scope.submitPost = _.partial(submitPost);
@@ -105,6 +105,7 @@ import _ from 'lodash';
 		}
 
 		$scope.onProcessPostData = (postCategory) => {
+
 			if (postCategory === 'advertisement' && $scope.price){
 				$scope.addPostFormData.price = $scope.price.toFixed(2);
 			}
@@ -117,23 +118,19 @@ import _ from 'lodash';
 				$scope.addPostFormData.authors = $scope.multipleFields.authors;
 			}
 
-			if (postCategory === 'media' && $scope.addPostFormData.mediaType === 'url'){
-				$scope.addPostFormData.urls = $scope.multipleFields.urls;
-			}
-
-			if (postCategory === 'media' && $scope.addPostFormData.mediaType === 'files' && !$scope.addPostFormData.files){
-				alert("No file selected. Please select files.");
+			if (postCategory === 'media' && $scope.addPostFormData.mediaType === 'files' && $scope.selectedUploadFiles.length < 1){
+				ngToast.create({
+		    		className: 'danger',
+		    		content: `No file selected. Please select files.`
+		    	});
 				return;
-			}
+			} 
 
 			$scope.addPostFormData.category = postCategory;
 			if ($scope.technologyHandle.enable){
 				$scope.addPostFormData.technologyHandles = $scope.selectedTechnologies;
 			}
 			$scope.addPostFormData.hashtags = $scope.hashtags;
-			if ($scope.selectedUploadFiles && $scope.selectedUploadFiles.length > 0){
-				$scope.addPostFormData.files = $scope.selectedUploadFiles;
-			}
 			$scope.addPostFormData.datePosted = moment().format('MMMM Do YYYY, h:mm:ss a');
 			$scope.addPostFormData.reactions = [
 				{ 
@@ -162,11 +159,37 @@ import _ from 'lodash';
 			$scope.addPostFormData.postedBy = "Tomas Angelo Poe";
 			$scope.addPostFormData.groupBelonged = $stateParams.handle;
 
-			$scope.submitPost($scope.addPostFormData)
-			.then(() => {
-				$scope.onSetGroupPosts(postCategory);
-				$scope.clearForm();
-			});
+			if (postCategory === 'media' && $scope.addPostFormData.mediaType === 'url'){
+				$scope.addPostFormData.urls = $scope.multipleFields.urls;
+
+			} else if ($scope.selectedUploadFiles.length > 0){
+				let uploadedFiles = [];
+				$scope.progressBarON = true;
+				SharedUploadFilesService.uploadFiles($scope.selectedUploadFiles, uploadedFiles)
+					.then((result) => {
+						$scope.progressBarON = false;
+						$scope.addPostFormData.files = uploadedFiles;
+						return $scope.submitPost($scope.addPostFormData);
+					}, (error) => {
+						$scope.progressBarON = false;
+						ngToast.create({
+				    		className: 'danger',
+				    		content: `Error: ${error.data.message}`
+				    	});
+
+				    	return $q.reject(error);
+					})
+					.then(() => {
+						$scope.onSetGroupPosts(postCategory);
+						$scope.clearForm();
+					});
+			} else {
+				$scope.submitPost($scope.addPostFormData)
+					.then(() => {
+						$scope.onSetGroupPosts(postCategory);
+						$scope.clearForm();
+					});
+			}
 		}
 
 		$scope.onSetGroupPosts = (postCategory) => {
