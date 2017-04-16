@@ -4,6 +4,7 @@ import groupRoutes from './config/groups.client.routes';
 import GroupController from './controllers/group.client.controller';
 import GroupClassificationController from './controllers/group-classification.client.controller';
 import ViewGroupsCategoriesController from './controllers/view-groups-categories.client.controller.js';
+import DashboardController from './controllers/dashboard.client.controller';
 
 import groupClassificationsDirective from './directives/group-classifications.client.directive';
 import addGroupClassificationDirective from './directives/add-group-classification.client.directive';

@@ -34,6 +34,11 @@
 			.state('oneGroup.settings', {
 				url: '/settings',
 				templateUrl: 'groups/client/views/view-group-settings.client.view.html'
+			})
+			.state('dashboard', {
+				url: '/dashboard',
+				templateUrl: 'groups/client/views/dashboard.client.view.html',
+				controller: 'DashboardController'
 			});
 
 		$locationProvider.html5Mode(true);
