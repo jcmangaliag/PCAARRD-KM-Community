@@ -17,6 +17,7 @@ import _ from 'lodash';
 		$scope.DESCRIPTION_LIMIT = 1000;
 		$scope.descriptionSize = $scope.DESCRIPTION_LIMIT;
 
+
 		$scope.$watch(() => {
 		    return $state.$current.name;
 		}, (newCurrentStateName) => {
@@ -29,12 +30,67 @@ import _ from 'lodash';
 			$scope.descriptionSize = $scope.descriptionSize === $scope.DESCRIPTION_LIMIT? undefined : $scope.DESCRIPTION_LIMIT;
 		}
 
+		$scope.loadPostsAnalysis = () => {
+			$scope.postsAnalysisChart = Highcharts.chart('group-posts-distribution-container', {
+			    chart: {
+			        polar: true,
+			        type: 'line'
+			    },
+			    title: {
+			        text: `No Group`
+			    },
+			    pane: {
+			        size: '80%'
+			    },
+			    xAxis: {
+			        categories: ['Media or URL', 'Others', 'News',
+			                'Advertisement', 'Incident Report', 'Event', 'Question'],
+			        tickmarkPlacement: 'on',
+			        lineWidth: 0
+			    },
+
+			    yAxis: {
+			        gridLineInterpolation: 'polygon',
+			        lineWidth: 0,
+			        min: 0
+			    },
+
+
+			    tooltip: {
+			        shared: true,
+			        pointFormat: '<span style="color:{series.color}">{series.name}: <b>{point.y:,.0f}</b><br/>'
+			    },
+
+			    series: [{
+			        name: 'Number of Posts',
+			        data: [0, 0, 0, 0, 0, 0, 0],
+			        pointPlacement: 'on'
+			    }]
+			})
+			$scope.postsAnalysisChart.setSize(330);
+		}
+
+		$scope.updatePostsAnalysis = () => {
+			$scope.postsAnalysisChart.setTitle({text: `${$scope.selectedGroup.name} Posts`}, {text: 'Source: PCAARRD KM Community'});
+			$scope.postsAnalysisChart.series[0].setData([
+				$scope.selectedGroup.postsCount.media, 
+				$scope.selectedGroup.postsCount.others,
+				$scope.selectedGroup.postsCount.news,
+				$scope.selectedGroup.postsCount.advertisement,  
+				$scope.selectedGroup.postsCount.report, 			
+				$scope.selectedGroup.postsCount.event, 
+				$scope.selectedGroup.postsCount.question
+			], true);
+		}
+
 		/* for View One and View All Groups */
 		$scope.getGroupData = () => {
 			if ($stateParams.handle){	// if viewing one group
 				GroupService.getOneGroup($stateParams.handle)
 				.then((result) => {
 					$scope.selectedGroup = result;
+					$scope.loadPostsAnalysis();
+					$scope.updatePostsAnalysis();
 				}, (error) => {
 					// show 404 not found page
 				});

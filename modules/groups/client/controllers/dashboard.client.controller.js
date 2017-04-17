@@ -7,9 +7,9 @@ import _ from 'lodash';
 		.module('groups')
 		.controller('DashboardController', DashboardController);
 
-	DashboardController.$inject = ['$scope', '$q', 'GroupService', 'PostService'];
+	DashboardController.$inject = ['$scope', '$stateParams', '$q', 'GroupService', 'PostService'];
 
-	function DashboardController ($scope, $q, GroupService, PostService) {
+	function DashboardController ($scope, $stateParams, $q, GroupService, PostService) {
 
 		const TOP_COUNT = 5;
 
@@ -27,11 +27,11 @@ import _ from 'lodash';
 				// top5ActiveGroups should scan posts and get the total for that month
 			top5ActiveGroupsSeries*/
 		});
-		
 
-	    Highcharts.chart('monthly-posts-container', {
+
+		Highcharts.chart('monthly-posts-container', {
 		    title: {
-		    	text: `Monthly Posts of the Top 5 Active Groups, ${moment().year()}`
+		    	text: `Posts of the Monthly Top 5 Active Groups, ${moment().year()}`
 		    },
 		    subtitle: {
 		    	text: 'Source: PCAARRD KM Community'
@@ -70,6 +70,57 @@ import _ from 'lodash';
 		    }]
 	    });
 
+	    Highcharts.chart('posts-distribution-container', {
+		    chart: {
+		        polar: true,
+		        type: 'line'
+		    },
+
+		    title: {
+		        text: 'Budget vs spending',
+		    },
+
+		    pane: {
+		        size: '80%'
+		    },
+
+		    xAxis: {
+		        categories: ['Sales', 'Marketing', 'Development', 'Customer Support',
+		                'Information Technology', 'Administration'],
+		        tickmarkPlacement: 'on',
+		        lineWidth: 0
+		    },
+
+		    yAxis: {
+		        gridLineInterpolation: 'polygon',
+		        lineWidth: 0,
+		        min: 0
+		    },
+
+		    tooltip: {
+		        shared: true,
+		        pointFormat: '<span style="color:{series.color}">{series.name}: <b>${point.y:,.0f}</b><br/>'
+		    },
+
+		    legend: {
+		        align: 'right',
+		        verticalAlign: 'top',
+		        y: 70,
+		        layout: 'vertical'
+		    },
+
+		    series: [{
+		        name: 'Allocated Budget',
+		        data: [43000, 19000, 60000, 35000, 17000, 10000],
+		        pointPlacement: 'on'
+		    }, {
+		        name: 'Actual Spending',
+		        data: [50000, 39000, 42000, 31000, 26000, 14000],
+		        pointPlacement: 'on'
+		    }]
+
+		});
+
 
 	    Highcharts.chart('popular-groups-container', {
 		    chart: {
@@ -79,7 +130,7 @@ import _ from 'lodash';
 		        text: 'Members of the Top 5 Popular Groups by Age Group'
 		    },
 		    subtitle: {
-		        text: 'PCAARRD KM Community'
+		        text: 'Source: PCAARRD KM Community'
 		    },
 		    xAxis: {
 		        categories: ['Banana', 'Biodiversity', 'Milkfish', 'Coconut', 'Peanut'],
@@ -143,10 +194,10 @@ import _ from 'lodash';
 		        type: 'pie'
 		    },
 		    title: {
-		        text: 'Browser market shares. January, 2015 to May, 2015'
+		        text: 'Groups Distribution by Classification'
 		    },
 		    subtitle: {
-		        text: 'Click the slices to view versions. Source: netmarketshare.com.'
+		        text: 'Source: PCAARRD KM Community'
 		    },
 		    plotOptions: {
 		        series: {
@@ -162,103 +213,69 @@ import _ from 'lodash';
 		        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
 		    },
 		    series: [{
-		        name: 'Brands',
+		        name: 'Industry',
 		        colorByPoint: true,
 		        data: [{
-		            name: 'Microsoft Internet Explorer',
-		            y: 56.33,
-		            drilldown: 'Microsoft Internet Explorer'
+		            name: 'Agriculture',
+		            y: 62,
+		            drilldown: 'Agriculture'
 		        }, {
-		            name: 'Chrome',
-		            y: 24.03,
-		            drilldown: 'Chrome'
+		            name: 'Aquatic Resources',
+		            y: 25,
+		            drilldown: 'Aquatic Resources'
 		        }, {
-		            name: 'Firefox',
-		            y: 10.38,
-		            drilldown: 'Firefox'
-		        }, {
-		            name: 'Safari',
-		            y: 4.77,
-		            drilldown: 'Safari'
-		        }, {
-		            name: 'Opera',
-		            y: 0.91,
-		            drilldown: 'Opera'
-		        }, {
-		            name: 'Proprietary or Undetectable',
-		            y: 0.2,
-		            drilldown: null
+		            name: 'Natural Resources',
+		            y: 13,
+		            drilldown: 'Natural Resources'
 		        }]
 		    }],
 		    drilldown: {
 		        series: [{
-		            name: 'Microsoft Internet Explorer',
-		            id: 'Microsoft Internet Explorer',
+		            name: 'Sector',
+		            id: 'Agriculture',
 		            data: [
-		                ['v11.0', 24.13],
-		                ['v8.0', 17.2],
-		                ['v9.0', 8.11],
-		                ['v10.0', 5.33],
-		                ['v6.0', 1.06],
-		                ['v7.0', 0.5]
+	                    {name: 'Crops', y: 48, drilldown: 'Crops'},
+	                    {name: 'Livestock', y: 14}
 		            ]
 		        }, {
-		            name: 'Chrome',
-		            id: 'Chrome',
+		            name: 'ISP',
+		            id: 'Crops',
 		            data: [
-		                ['v40.0', 5],
-		                ['v41.0', 4.32],
-		                ['v42.0', 3.68],
-		                ['v39.0', 2.96],
-		                ['v36.0', 2.53],
-		                ['v43.0', 1.45],
-		                ['v31.0', 1.24],
-		                ['v35.0', 0.85],
-		                ['v38.0', 0.6],
-		                ['v32.0', 0.55],
-		                ['v37.0', 0.38],
-		                ['v33.0', 0.19],
-		                ['v34.0', 0.14],
-		                ['v30.0', 0.14]
+	                    {name: 'Abaca', y: 6},
+	                    {name: 'Coconut', y: 9},
+	                    {name: 'Coffee', y: 5},
+	                    {name: 'Legume', y: 18, drilldown: 'Legume'},
+	                    {name: 'Mango', y: 10}
 		            ]
 		        }, {
-		            name: 'Firefox',
-		            id: 'Firefox',
+		            name: 'Specific Commodity',
+		            id: 'Legume',
 		            data: [
-		                ['v35', 2.76],
-		                ['v36', 2.32],
-		                ['v37', 2.31],
-		                ['v34', 1.27],
-		                ['v38', 1.02],
-		                ['v31', 0.33],
-		                ['v33', 0.22],
-		                ['v32', 0.15]
+	                    {name: 'Mungbean', y: 12},
+	                    {name: 'Peanut', y: 6}
+		            ]
+		        },
+
+
+
+		           {
+		            name: 'Sector',
+		            id: 'Aquatic Resources',
+		            data: [
+		                ['Inland Aquatic', 11],
+		                ['Marine Resources', 5],
+		                ['Ocean Environment Services (OES)',9]
 		            ]
 		        }, {
-		            name: 'Safari',
-		            id: 'Safari',
+		            name: 'Sector',
+		            id: 'Natural Resources',
 		            data: [
-		                ['v8.0', 2.56],
-		                ['v7.1', 0.77],
-		                ['v5.1', 0.42],
-		                ['v5.0', 0.3],
-		                ['v6.1', 0.29],
-		                ['v7.0', 0.26],
-		                ['v6.2', 0.17]
-		            ]
-		        }, {
-		            name: 'Opera',
-		            id: 'Opera',
-		            data: [
-		                ['v12.x', 0.34],
-		                ['v28', 0.24],
-		                ['v27', 0.17],
-		                ['v29', 0.16]
+		                ['Forestry', 10],
+		                ['Inland Environment Services (IES)', 3]
 		            ]
 		        }]
 		    }
 		});
-
 	}
 
 })();

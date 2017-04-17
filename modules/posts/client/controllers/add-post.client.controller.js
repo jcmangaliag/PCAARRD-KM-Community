@@ -183,13 +183,15 @@ import _ from 'lodash';
 						$scope.onSetGroupPosts(postCategory);
 						$scope.clearForm();
 					});
-			} else {
-				$scope.submitPost($scope.addPostFormData)
-					.then(() => {
-						$scope.onSetGroupPosts(postCategory);
-						$scope.clearForm();
-					});
+
+				return;
 			}
+
+			$scope.submitPost($scope.addPostFormData)
+				.then(() => {
+					$scope.onSetGroupPosts(postCategory);
+					$scope.clearForm();
+				});
 		}
 
 		$scope.onSetGroupPosts = (postCategory) => {
@@ -199,6 +201,7 @@ import _ from 'lodash';
 					refreshedGroup.postsCount[postCategory]++;
 					GroupService.updateGroup(refreshedGroup.handle, {postsCount: refreshedGroup.postsCount});
 					$scope.selectedGroup.postsCount = refreshedGroup.postsCount;
+					$scope.updatePostsAnalysis();
 				}, (error) => {
 					// show 404 not found page
 				});

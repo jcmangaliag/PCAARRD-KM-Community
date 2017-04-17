@@ -169,6 +169,7 @@ import _ from 'lodash';
 					GroupService.updateGroup(refreshedGroup.handle, {postsCount: refreshedGroup.postsCount});
 					if ($scope.selectedGroup){
 						$scope.selectedGroup.postsCount = refreshedGroup.postsCount;
+						$scope.updatePostsAnalysis();
 					}
 				}, (error) => {
 					// show 404 not found page
