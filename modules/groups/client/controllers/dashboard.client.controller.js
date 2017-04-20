@@ -87,44 +87,44 @@ import _ from 'lodash';
 			            }
 			        }],
 			        data: [{
-			            name: '#Alan',
-						color: 'red',
-			            value: 4563
+			            name: '#bananapestseminar',
+						color: '#fa7272',
+			            value: 57342
 			        },{
-			            name: '#Anne',
-						color: 'orange',
-			            value: 1292
+			            name: '#coconutjuicePromo',
+						color: '#f7a35c',
+			            value: 22563
 			        }, {
-			            name: '#Joseph',
-			            color: 'yellow',
+			            name: '#bananaDisease',
+			            color: '#FFFF67',
 			            value: 3512
 			        }, {
-			            name: '#Peter',
-						color: 'blue',
+			            name: '#bananakeychain',
+						color: '#30b772',
 			            value: 1003
 			        }, {
-			            name: '#Anne',
-						color: 'indigo',
+			            name: '#biodiversitySessions',
+						color: '#307fb7',
 			            value: 3952
 			        }, {
-			            name: '#Rick',
+			            name: '#abacainflation',
 						color: 'violet',
-			            value: 99342
+			            value: 4563
 			        }, {
-			            name: '#Peter',
+			            name: '#mango',
 						color: 'gray',
 			            value: 3342
 			        }, {
-			            name: '#Anne',
-						color: 'black',
-			            value: 22563
+			            name: '#bananacommunity',
+						color: '#A3DAF5',
+			            value: 1032
 			        }, {
-			            name: '#Rick',
+			            name: '#textCoconut',
 						color: 'pink',
 			            value: 1933
 			        }, {
-			            name: '#Su',
-						color: 'purple',
+			            name: '#freeBiodiversityFreebies',
+						color: '#B24DA1',
 			            value: 1001
 			        }]
 			    }],
@@ -133,8 +133,203 @@ import _ from 'lodash';
 			    }
 			});
 
+			Highcharts.chart('popular-groups-container', {
+			    chart: {
+			        type: 'column'
+			    },
+			    title: {
+			        text: 'Top 5 Popular Groups by Age Group'
+			    },
+			    subtitle: {
+			        text: 'Source: PCAARRD KM Community'
+			    },
+			    xAxis: {
+			        type: 'category',
+			        title: {
+			        	text: 'Groups'
+			        }
+			    },
+			    yAxis: {
+			        title: {
+			            text: 'Number of Members'
+			        }
 
-		    Highcharts.chart('popular-groups-container', {
+			    },
+			    legend: {
+			        enabled: false
+			    },
+			    plotOptions: {
+			        series: {
+			            borderWidth: 0,
+			            dataLabels: {
+			                enabled: true,
+			                format: '{point.y:.1f}%'
+			            }
+			        }
+			    },
+
+			    tooltip: {
+			        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+			        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+			    },
+
+			    series: [{
+			        name: 'Groups',
+			        colorByPoint: true,
+			        data: [{
+			            name: 'Banana',
+			            y: 56.33,
+			            drilldown: 'Banana'
+			        }, {
+			            name: 'Biodiversity',
+			            y: 24.03,
+			            drilldown: 'Biodiversity'
+			        }, {
+			            name: 'Milkfish',
+			            y: 10.38,
+			            drilldown: 'Milkfish'
+			        }, {
+			            name: 'Coconut',
+			            y: 4.77,
+			            drilldown: 'Coconut'
+			        }, {
+			            name: 'Peanut',
+			            y: 0.91,
+			            drilldown: 'Peanut'
+			        }]
+			    }],
+			    drilldown: {
+			        series: [{
+			            name: 'Banana',
+			            id: 'Banana',
+			            data: [
+			                [
+			                    'Ages 0 - 17',
+			                    17.2
+			                ],
+			                [
+			                    'Ages 18 - 29',
+			                    24.13
+			                ],
+			                [
+			                    'Ages 30 - 49',
+			                    8.61
+			                ],
+			                [
+			                    'Ages 50 - 64',
+			                    5.33
+			                ],
+			                [
+			                    'Ages 65+',
+			                    1.06
+			                ]
+			            ]
+			        }, {
+			            name: 'Biodiversity',
+			            id: 'Biodiversity',
+			            data: [
+			                [
+			                    'Ages 0 - 17',
+			                    17.2
+			                ],
+			                [
+			                    'Ages 18 - 29',
+			                    24.13
+			                ],
+			                [
+			                    'Ages 30 - 49',
+			                    8.61
+			                ],
+			                [
+			                    'Ages 50 - 64',
+			                    5.33
+			                ],
+			                [
+			                    'Ages 65+',
+			                    1.06
+			                ]
+			            ]
+			        }, {
+			            name: 'Milkfish',
+			            id: 'Milkfish',
+			            data: [
+			                [
+			                    'Ages 0 - 17',
+			                    17.2
+			                ],
+			                [
+			                    'Ages 18 - 29',
+			                    24.13
+			                ],
+			                [
+			                    'Ages 30 - 49',
+			                    8.61
+			                ],
+			                [
+			                    'Ages 50 - 64',
+			                    5.33
+			                ],
+			                [
+			                    'Ages 65+',
+			                    1.06
+			                ]
+			            ]
+			        }, {
+			            name: 'Coconut',
+			            id: 'Coconut',
+			            data: [
+			                [
+			                    'Ages 0 - 17',
+			                    17.2
+			                ],
+			                [
+			                    'Ages 18 - 29',
+			                    24.13
+			                ],
+			                [
+			                    'Ages 30 - 49',
+			                    8.61
+			                ],
+			                [
+			                    'Ages 50 - 64',
+			                    5.33
+			                ],
+			                [
+			                    'Ages 65+',
+			                    1.06
+			                ]
+			            ]
+			        }, {
+			            name: 'Peanut',
+			            id: 'Peanut',
+			            data: [
+			                [
+			                    'Ages 0 - 17',
+			                    17.2
+			                ],
+			                [
+			                    'Ages 18 - 29',
+			                    24.13
+			                ],
+			                [
+			                    'Ages 30 - 49',
+			                    8.61
+			                ],
+			                [
+			                    'Ages 50 - 64',
+			                    5.33
+			                ],
+			                [
+			                    'Ages 65+',
+			                    1.06
+			                ]
+			            ]
+			        }]
+			    }
+			});
+
+
+		    /*Highcharts.chart('popular-groups-container', {
 			    chart: {
 			        type: 'bar'
 			    },
@@ -200,7 +395,7 @@ import _ from 'lodash';
 			        name: 'Ages 65+',
 			        data: [201, 127, 43, 72, 11]
 			    }]
-			});
+			});*/
 
 
 
