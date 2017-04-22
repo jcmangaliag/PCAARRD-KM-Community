@@ -5,9 +5,9 @@
 		.module('users')
 		.factory('UserAuthenticationService', UserAuthenticationService);
 
-	UserAuthenticationService.$inject = ['$http', '$window', '$q', 'ngToast', '$state'];
+	UserAuthenticationService.$inject = ['$http', '$window', '$q', '$state'];
 
-	function UserAuthenticationService ($http, $window, $q, ngToast, $state) {
+	function UserAuthenticationService ($http, $window, $q, $state) {
 
 		const saveToken = (token) => {
 		  $window.localStorage['pcaarrdcommunity-token'] = token;
@@ -36,7 +36,7 @@
 		  }
 		}
 
-		const getCurrentUser = () => {	// MOVE THIS TO USER SERVICE
+		const getCurrentUser = () => {
 		  if(isLoggedIn()){
 		    const token = getToken();
 		    let payload = token.split('.')[1];
@@ -46,23 +46,26 @@
 		    return {
 		      email : payload.email,
 		      name : payload.name,
+		      photo: payload.photo,
 		      isAdmin: payload.isAdmin
 		    };
 		  }
 		}
 
-		const register = (userFormData, password) => {
+		const register = (userFormData, password, enteredAccessKey) => {
 			const deferred = $q.defer();
+			const requestBody = {userFormData, password};
 
-			$http.post('/api/users/register/', {userFormData, password})
+			if (userFormData.isAdmin && !enteredAccessKey){
+				deferred.reject({data: {message: 'Invalid Access Key!!'}});
+				return deferred.promise;
+			}
+			else if (userFormData.isAdmin)
+				requestBody.enteredKey = enteredAccessKey;
+
+			$http.post('/api/users/register/', requestBody)
 			.then(response => {
 				saveToken(response.data.token);
-
-				ngToast.create({
-		    		className: 'success',
-		    		content: `User was successfully registered.`
-		    	});
-
 		    	deferred.resolve(response.data.token);
 			}, (response) => {
 				deferred.reject(response);
@@ -85,6 +88,19 @@
 			return deferred.promise;
 		}
 
+		const allowAdminRegistration = (enteredKey) => {
+			const deferred = $q.defer();
+
+			$http.post('api/users/allow-admin-registration', {enteredKey})
+			.then((response) => {
+				deferred.resolve(response.data.allow);
+			}, (response) => {
+				deferred.reject(response.data.allow);
+			});
+
+			return deferred.promise;
+		}
+
 
 		return {
 		  saveToken,
@@ -93,7 +109,8 @@
 		  isLoggedIn,
 		  getCurrentUser,
 		  register,
-		  login
+		  login,
+		  allowAdminRegistration
 		};
 	}
 

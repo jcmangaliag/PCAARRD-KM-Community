@@ -19,8 +19,6 @@ import _ from 'lodash';
 		}
 
 		$scope.user = {
-			isLoggedIn: UserAuthenticationService.isLoggedIn(),
-			currentUser: UserAuthenticationService.getCurrentUser(),
 			logout: UserAuthenticationService.logout
 		}
 
@@ -28,6 +26,8 @@ import _ from 'lodash';
 		    return UserAuthenticationService.isLoggedIn();
 		}, (isLoggedIn) => {
 		    $scope.user.isLoggedIn = isLoggedIn;
+		    if (isLoggedIn)
+		    	$scope.user.currentUser = UserAuthenticationService.getCurrentUser();
 		});
 	}
 

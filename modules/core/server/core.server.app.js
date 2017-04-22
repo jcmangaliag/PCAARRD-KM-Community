@@ -13,7 +13,7 @@ app.use(passport.initialize());
 moduleRoutes(app);
 
 app.use(express.static(`${__dirname} /../../`));
-app.use(express.static(`${__dirname} /../../../`));
+app.use(express.static(`${__dirname} /../../../uploads`));
 
 app.all('/*', (req, res) => {
 	res.sendFile(path.join(`${__dirname}/../client/base-view/core-content.client.view.html`));

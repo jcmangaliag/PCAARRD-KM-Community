@@ -8,23 +8,27 @@ import _ from 'lodash';
 		.module('users')
 		.controller('UserAuthenticationController', UserAuthenticationController);
 
-	UserAuthenticationController.$inject = ['$scope', '$state', 'UserAuthenticationService', 'ngToast'];
+	UserAuthenticationController.$inject = ['$scope', '$state', 'UserAuthenticationService', 'UserService', 'ngToast'];
 
-	function UserAuthenticationController ($scope, $state, UserAuthenticationService, ngToast) {
+	function UserAuthenticationController ($scope, $state, UserAuthenticationService, UserService, ngToast) {
 		$scope.addUserFormData = {};
-		$scope.adminRegistration = { accessKey: "a3f69f54", allow: false};
+		$scope.adminRegistration = {allow: false};
+		UserService.getAllUsers();
+		$scope.users = UserService.getUserList();
+
 
 		$scope.validateAdminRegistration = () => {
-			if ($scope.adminRegistration.enteredAccessKey === $scope.adminRegistration.accessKey){
-				$scope.adminRegistration.allow = true;
-			} else {
-				$scope.adminRegistration.enteredAccessKey = "";
+			UserAuthenticationService.allowAdminRegistration($scope.adminRegistration.enteredAccessKey)
+				.then((response) =>{
+					$scope.adminRegistration.allow = response;
+				}, (response) => {
+					ngToast.create({
+			    		className: 'danger',
+			    		content: `Error: Invalid Access Key!`
+			    	});
 
-				ngToast.create({
-		    		className: 'danger',
-		    		content: `Error: Invalid Access Key!`
-		    	});
-			}
+			    	$scope.adminRegistration.enteredAccessKey = "";
+				});
 		}
 
 		$scope.getAllMonths = () => {
@@ -53,23 +57,45 @@ import _ from 'lodash';
 			$scope.selectedMonth = $scope.selectedDay = $scope.selectedYear = $scope.enteredPassword = $scope.reenteredPassword = "";
 		}
 
+		$scope.usedEmail = () => {
+			return $scope.users.contents.map((user) => user.email).indexOf($scope.addUserFormData.email) > -1? true: false;
+		} 
+
 		$scope.onProcessUserData = () => {
 			if($scope.enteredPassword !== $scope.reenteredPassword){
 				ngToast.create({
 		    		className: 'danger',
-		    		content: `Error: Passwords do not match`
+		    		content: `Error: Passwords do not match.`
 		    	});
+		    	return;
+			}
 
+			if ($scope.usedEmail()){
+				ngToast.create({
+		    		className: 'danger',
+		    		content: `Error: Email is already used.`
+		    	});
 		    	return;
 			}
 
 			$scope.addUserFormData.isAdmin = ($scope.adminRegistration.allow)? true : false;
 			$scope.addUserFormData.dateJoined = moment().format('MMMM Do YYYY, h:mm:ss a');
 			$scope.addUserFormData.birthdate = `${$scope.selectedMonth} ${$scope.selectedDay} ${$scope.selectedYear}`;
+			$scope.addUserFormData.photo = null;
 
-			UserAuthenticationService.register($scope.addUserFormData, $scope.reenteredPassword)
+			UserAuthenticationService.register($scope.addUserFormData, $scope.reenteredPassword, $scope.adminRegistration.enteredAccessKey)
 				.then(() => {
+					ngToast.create({
+			    		className: 'success',
+			    		content: `User was successfully registered.`
+			    	});
+
 					$state.go("communityFeed");
+				}, (response) => {
+					ngToast.create({
+			    		className: 'danger',
+			    		content: `Error: ${response.data.message}`
+			    	});
 				});
 		}
 
@@ -77,6 +103,11 @@ import _ from 'lodash';
 			UserAuthenticationService.login($scope.loginData)
 				.then(() => {
 					$state.go("communityFeed");
+				}, (response) => {
+					ngToast.create({
+			    		className: 'danger',
+			    		content: `Error: Incorrect username or password.`
+			    	});
 				});
 		}
 	}
