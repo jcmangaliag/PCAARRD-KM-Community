@@ -7,7 +7,7 @@
   </div>
 
   <div class="col-xs-12 col-sm-12 col-md-6">
-    <div ng-if="!viewOnePost">
+    <div ng-if="'oneGroup' | isState">
       <add-post></add-post>
 
       <div class="row" style="margin: 3% 0px;">
@@ -18,7 +18,7 @@
       <view-posts></view-posts>
     </div>
 
-    <div ng-if="viewOnePost" id="read-post">
+    <div ng-if="!('oneGroup' | isState)" id="read-post">
       <view-post></view-post>
     </div>
   </div>

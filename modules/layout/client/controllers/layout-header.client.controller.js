@@ -7,9 +7,9 @@ import _ from 'lodash';
 		.module('layout')
 		.controller('HeaderController', HeaderController);
 
-	HeaderController.$inject = ['$scope'];
+	HeaderController.$inject = ['$scope', 'UserAuthenticationService'];
 
-	function HeaderController ($scope, $state) {
+	function HeaderController ($scope, UserAuthenticationService) {
 		$scope.options = {
 			showOptions: false
 		}
@@ -17,6 +17,18 @@ import _ from 'lodash';
 		$scope.toggleOptions = () =>{
 			$scope.options.showOptions = !$scope.options.showOptions;
 		}
+
+		$scope.user = {
+			isLoggedIn: UserAuthenticationService.isLoggedIn(),
+			currentUser: UserAuthenticationService.getCurrentUser(),
+			logout: UserAuthenticationService.logout
+		}
+
+		$scope.$watch(() => {
+		    return UserAuthenticationService.isLoggedIn();
+		}, (isLoggedIn) => {
+		    $scope.user.isLoggedIn = isLoggedIn;
+		});
 	}
 
 })();

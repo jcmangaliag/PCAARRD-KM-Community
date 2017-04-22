@@ -1,9 +1,15 @@
 import uiRouter from 'angular-ui-router';
-let highCharts = require('highcharts/highstock');
-require ('highcharts/modules/exporting')(highCharts);
-require ('highcharts/modules/drilldown')(highCharts);
-require ('highcharts/modules/treemap')(highCharts);
-require('highcharts/highcharts-more')(highCharts);
+import highCharts from 'highcharts/highstock';
+import highChartsExporting from 'highcharts/modules/exporting';
+import highChartsDrilldown from 'highcharts/modules/drilldown';
+import highChartsTreeMap from 'highcharts/modules/treemap';
+import highChartsMore from 'highcharts/highcharts-more';
+
+highChartsExporting(highCharts);
+highChartsDrilldown(highCharts);
+highChartsTreeMap(highCharts);
+highChartsMore(highCharts);
+
 window.Highcharts = highCharts; 
 
 (function () {

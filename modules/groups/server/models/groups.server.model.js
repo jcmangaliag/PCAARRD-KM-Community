@@ -37,10 +37,6 @@ const GroupSchema = mongoose.Schema({
 	   type: String,
        required: true
     },
-    members: {
-	   type: Array,
-       required: true
-    },
     postsCount: {
     	type: Object,
     	required: true

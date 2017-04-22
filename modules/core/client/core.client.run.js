@@ -7,7 +7,8 @@ import coreModule from './core.client.packages';
 	angular.module('core', [
 		'groups', 
 		'layout', 
-		'shared'
+		'shared',
+		'users'
 	]);
 	
 	angular.bootstrap(document, ['core']);

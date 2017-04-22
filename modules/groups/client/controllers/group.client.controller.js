@@ -8,21 +8,14 @@ import _ from 'lodash';
 		.module('groups')
 		.controller('GroupController', GroupController);
 
-	GroupController.$inject = ['$scope', '$state', '$stateParams', 'GroupClassificationService', 'ViewGroupsCategoriesService', 'GroupService', 'SharedPaginationService', '$filter'];
+	GroupController.$inject = ['$scope', '$stateParams', 'GroupClassificationService', 'ViewGroupsCategoriesService', 'GroupService', 'SharedPaginationService', '$filter'];
 
-	function GroupController ($scope, $state, $stateParams, GroupClassificationService, ViewGroupsCategoriesService, GroupService, SharedPaginationService, $filter) {
+	function GroupController ($scope, $stateParams, GroupClassificationService, ViewGroupsCategoriesService, GroupService, SharedPaginationService, $filter) {
 		/* for View One Group */
 		$scope.fullGroupDescription = false;
 		$scope.readGroupDescription = "Read More";
 		$scope.DESCRIPTION_LIMIT = 1000;
 		$scope.descriptionSize = $scope.DESCRIPTION_LIMIT;
-
-
-		$scope.$watch(() => {
-		    return $state.$current.name;
-		}, (newCurrentStateName) => {
-		    $scope.viewOnePost = $state.current.name.indexOf('oneGroup.viewOne') >= 0? true: false;
-		});
 
 		$scope.toggleGroupDescription = () => {
 			$scope.fullGroupDescription = !$scope.fullGroupDescription;
@@ -143,7 +136,6 @@ import _ from 'lodash';
 
 		$scope.onProcessGroupData = () => {
 			$scope.addGroupFormData.admin = ["Mark's id"];	// change this later
-			$scope.addGroupFormData.members = ["Mark's id", "Tomas's id"]; // change this later
 			$scope.addGroupFormData.postsCount = {
 				advertisement: 0,
 				question: 0,

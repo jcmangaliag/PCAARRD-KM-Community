@@ -1,4 +1,3 @@
-import uiRouter from 'angular-ui-router';
 import font_awesome from "font-awesome-sass-loader";
 import angularToast from 'ng-toast';
 import angularSanitize from 'angular-sanitize';
@@ -9,6 +8,6 @@ import angularEmojiFilterHDJS from 'angular-emoji-filter-hd/lib/emoji.js';
 (function () {
 	'use strict';
 
-	angular.module('shared', [uiRouter, 'ngToast', 'ngAnimate', 'ngSanitize', 'dbaq.emoji']);
+	angular.module('shared', ['ngToast', 'ngAnimate', 'ngSanitize', 'dbaq.emoji']);
 
 })();
