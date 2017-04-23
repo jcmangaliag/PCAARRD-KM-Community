@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 		<div style="padding: 20px; margin-bottom: 25px; background-color: white; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-			<img src="/users/client/assets/images/default-user-photo.png" style="width: 100%; padding: 15px;">
+			<img src="{{selectedUser.photo? selectedUser.photo.path.split('/')[1] : '/users/client/assets/images/default-user-photo.png'}}" style="width: 100%; padding: 15px;">
 			<h3 style="margin-bottom: 3px;">{{selectedUser.name.first + " " + selectedUser.name.last}}</h3>
 			<p style="color: gray;">{{selectedUser.email}}</p>
 			<h4 style="margin-top:20px;"><span style="font-weight: normal;" class="label label-primary">{{selectedUser.isAdmin? 'Site Administrator' : 'Regular User'}}</span></h4>
@@ -32,8 +32,17 @@
 			</div>
 
 			<div style="margin-bottom: 20px;">
+				<p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Contact Number</p>
+			  	<h5>{{selectedUser.contactNumber? selectedUser.contactNumber : 'N/A'}}</h5>
+			</div>
+
+			<div style="margin-bottom: 20px;">
 				<p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">About</p>
-			  	<h5>{{selectedUser.about? selectedUser.about : 'N/A'}}</h5>
+			  	<span ng-if="selectedUser.about">
+				  	<p style="white-space: pre-wrap;" ng-style="selectedUser.about.length > DESCRIPTION_LIMIT? {'margin-bottom': '0px'} : {'margin-bottom': '25px'}"><span ng-bind-html="selectedUser.about | parseURL | emoji | limitTo: descriptionSize"></span><span ng-if="selectedUser.about.length > descriptionSize">...</span></p>
+	  				<span ng-if="selectedUser.about.length > DESCRIPTION_LIMIT" style="margin-bottom: 25px; display: block;"><a href="#/" ng-click="toggleUserDescription()">{{readUserDescription}}</a></span>
+	  			</span>
+	  			<span ng-if="!selectedUser.about">N/A</span>
 			</div>
 		</div>
 	</div>
@@ -53,7 +62,7 @@
 		<div class="post-ads" style="margin-bottom: 25px; background-color: white; border-radius: 5px; padding: 5%; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 		  <h4>Manage Profile</h4><hr />
 		  <div>
-		    <button title="Edit User Info" type="button" class="btn btn-primary"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i> Edit</button>
+		    <button ui-sref="edit-user({userID: selectedUser._id})" title="Edit User Info" type="button" class="btn btn-primary"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i> Edit</button>
 		    <button title="Change User Settings" type="button" class="btn btn-primary"><i class="fa fa-cog fa-lg" aria-hidden="true"></i> Settings</button>
 		  </div>
 		</div>
@@ -64,7 +73,7 @@
 		    <ul class="list-group">
 
 		      <li ng-repeat="groupHandle in selectedUser.groupsJoined" class="list-group-item">
-	      		<a href="#"><img src="{{getGroupInfo(groupHandle).photo? getGroupInfo(groupHandle).photo.path.split('/')[1] : '/groups/client/assets/images/default-group-photo.png'}}" alt="Pic" style="width: 18%; border-radius: 8%; margin-right: 0.5em;" />{{getGroupInfo(groupHandle).name}}</a>
+	      		<a ui-sref="oneGroup({handle: groupHandle})"><img src="{{getGroupInfo(groupHandle).photo? getGroupInfo(groupHandle).photo.path.split('/')[1] : '/groups/client/assets/images/default-group-photo.png'}}" alt="Pic" style="width: 18%; border-radius: 8%; margin-right: 0.5em;" />{{getGroupInfo(groupHandle).name}}</a>
 		      </li>
 
 		    </ul>

@@ -33,6 +33,11 @@
 				params: {
 					handle: "--user--"
 				}
+			})
+			.state('edit-user', {
+				url: '/users/profile/:userID/edit',
+				templateUrl: 'users/client/views/edit-user.client.view.html',
+				controller: 'EditUserController'
 			});
 
 		$locationProvider.html5Mode(true);

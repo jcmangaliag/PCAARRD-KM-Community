@@ -11,9 +11,6 @@ import _ from 'lodash';
 
 	function EditGroupController ($scope, $stateParams, $q, GroupService, SharedUploadService, EditGroupService, ngToast) {
 
-		$scope.selectedPhoto = null;
-		$scope.selectedGroupPhoto = null;
-
 		GroupService.getOneGroup($stateParams.handle)
 			.then((result) => {
 				$scope.selectedGroup = result;
@@ -22,10 +19,11 @@ import _ from 'lodash';
 			});
 
 		$scope.uploadPhotoAndSubmitForm = (photo, photoIdentifier) => {
+			$scope.progressBarON = true;
 			SharedUploadService.uploadPhoto(photo)
 				.then((result) => {	
+					$scope.progressBarON = false;
 					$scope.selectedGroup[photoIdentifier] = result.data.image;
-
 					return EditGroupService.submitEditedGroup($scope.selectedGroup);
 				}, (error) => {
 					$scope.progressBarON = false;
@@ -58,6 +56,7 @@ import _ from 'lodash';
 			}
 
 			if (uploadPhoto && uploadCoverPhoto){
+				$scope.progressBarON = true;
 				SharedUploadService.uploadPhoto($scope.selectedPhoto[0])
 					.then((result) => {	// after uploading group photo
 						$scope.selectedGroup.photo = result.data.image;

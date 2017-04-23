@@ -32,10 +32,12 @@ const userControls = {
 	updateOne : (req, res) => {
 		const userID = req.params.userID;
 
-		Group.findOneAndUpdate({_id: userID}, { $set: req.body }, (err) => {
+		User.findOneAndUpdate({_id: userID}, { $set: req.body }, (err) => {
 			if (err) { return (err); }
 
-			res.send("User updated.");
+			let user = new User(req.body);
+			let token = user.generateJwt();
+			res.status(200).json({"message": "User updated.", "token": token});
 		});
 	}
 }
