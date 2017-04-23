@@ -8,9 +8,9 @@ import _ from 'lodash';
 		.module('comments')
 		.controller('CommentController', CommentController);
 
-	CommentController.$inject = ['$scope', '$state', '$q', 'CommentService', 'PostService', 'SharedPaginationService', 'ngToast', 'SharedUploadFilesService'];
+	CommentController.$inject = ['$scope', '$state', '$q', 'CommentService', 'PostService', 'SharedPaginationService', 'ngToast', 'SharedUploadService'];
 
-	function CommentController ($scope, $state, $q, CommentService, PostService, SharedPaginationService, ngToast, SharedUploadFilesService) {
+	function CommentController ($scope, $state, $q, CommentService, PostService, SharedPaginationService, ngToast, SharedUploadService) {
 		$scope.addCommentFormData = {};
 		const {submitComment} = CommentService;
 		$scope.submitComment = _.partial(submitComment);
@@ -61,7 +61,7 @@ import _ from 'lodash';
 			if ($scope.selectedUploadFiles.length > 0){
 				let uploadedFiles = [];
 				$scope.progressBarON = true;
-				SharedUploadFilesService.uploadFiles($scope.selectedUploadFiles, uploadedFiles)
+				SharedUploadService.uploadFiles($scope.selectedUploadFiles, uploadedFiles)
 					.then((result) => {
 						$scope.progressBarON = false;
 						$scope.addCommentFormData.files = uploadedFiles;

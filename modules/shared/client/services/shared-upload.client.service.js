@@ -5,11 +5,11 @@ import _ from 'lodash';
 	
 	angular
 		.module('shared')
-		.factory('SharedUploadFilesService', SharedUploadFilesService);
+		.factory('SharedUploadService', SharedUploadService);
 
-	SharedUploadFilesService.$inject = ['$http', 'ngToast', '$q'];
+	SharedUploadService.$inject = ['$http', 'ngToast', '$q'];
 
-	function SharedUploadFilesService ($http, ngToast, $q) {
+	function SharedUploadService ($http, ngToast, $q) {
 
 		const uploadFiles = (selectedUploadFiles, uploadedFiles) => {
 			const deferred = $q.defer();
@@ -35,8 +35,30 @@ import _ from 'lodash';
 			return deferred.promise;
 		}
 
+
+		const uploadPhoto = (selectedUploadPhoto) => {
+			const deferred = $q.defer();
+
+			const formData = new FormData();
+			formData.append('sharedUploadPhoto', selectedUploadPhoto);
+
+			$http.post('/api/uploads/image', formData, {
+				transformRequest: angular.identity,
+            	headers: { 'Content-Type': undefined }
+			}).then((result) => {
+				if (result.data.success){
+					deferred.resolve(result);
+				} else {
+					deferred.reject(result);
+				}
+			});
+
+			return deferred.promise;
+		}
+
 		return {
-			uploadFiles
+			uploadFiles,
+			uploadPhoto
 		};
 	}
 

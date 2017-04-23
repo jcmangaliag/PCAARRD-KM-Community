@@ -64,6 +64,7 @@ UserSchema.methods.generateJwt = function() {
     name: this.name,
     isAdmin: this.isAdmin,
     photo: this.photo,
+    groupsJoined: this.groupsJoined,
     exp: parseInt(expiry.getTime() / 1000)
   }, "MY_SECRET"); 
 }

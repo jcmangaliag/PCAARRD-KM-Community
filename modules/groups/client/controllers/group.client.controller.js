@@ -8,9 +8,9 @@ import _ from 'lodash';
 		.module('groups')
 		.controller('GroupController', GroupController);
 
-	GroupController.$inject = ['$scope', '$state', 'ngToast', '$stateParams', 'GroupClassificationService', 'ViewGroupsCategoriesService', 'GroupService', 'SharedPaginationService', 'UserAuthenticationService', 'UserService', '$filter'];
+	GroupController.$inject = ['$scope', '$state', '$timeout', 'ngToast', '$stateParams', 'GroupClassificationService', 'ViewGroupsCategoriesService', 'GroupService', 'SharedPaginationService', 'UserAuthenticationService', 'UserService', '$filter'];
 
-	function GroupController ($scope, $state, ngToast, $stateParams, GroupClassificationService, ViewGroupsCategoriesService, GroupService, SharedPaginationService, UserAuthenticationService, UserService, $filter) {
+	function GroupController ($scope, $state, $timeout, ngToast, $stateParams, GroupClassificationService, ViewGroupsCategoriesService, GroupService, SharedPaginationService, UserAuthenticationService, UserService, $filter) {
 		
 		/* for View One Group */
 
@@ -86,12 +86,22 @@ import _ from 'lodash';
 				GroupService.getOneGroup($stateParams.handle)
 				.then((result) => {
 					$scope.selectedGroup = result;
-					$scope.loadPostsAnalysis();
-					$scope.updatePostsAnalysis();
+
+					$timeout(() => {
+						$scope.loadPostsAnalysis();
+						$scope.updatePostsAnalysis();
+					}, 1000);
+					
 				}, (error) => {
 					// show 404 not found page
 				});
-			} else {
+			} else if ($state.$current.name === "groups") {
+				$scope.user = {};
+				$scope.user.isLoggedIn = UserAuthenticationService.isLoggedIn();
+		    	if ($scope.user.isLoggedIn){
+		    		$scope.user.currentUser = UserAuthenticationService.getCurrentUser();
+		    	}
+
 				const currentViewGroupsCategory = ViewGroupsCategoriesService.getCurrentViewGroupsCategory().category;
 				ViewGroupsCategoriesService.retrieveGroupsByCategory(currentViewGroupsCategory);
 				$scope.groups = GroupService.getGroupList();
@@ -103,8 +113,8 @@ import _ from 'lodash';
 			}
 		}
 
-		$scope.checkGroupMembership = (groupMembers) => {
-			return groupMembers.indexOf("Mark's id") > -1? true: false;	// make this dynamic
+		$scope.checkGroupMembership = (groupHandle) => {
+			return $scope.user.currentUser.groupsJoined.indexOf(groupHandle) > -1? true: false;
 		}
 
 		$scope.$watch('searchGroupsValue', function(value){ 
@@ -209,6 +219,7 @@ import _ from 'lodash';
 				media: 0,
 				total: 0
 			};
+			$scope.addGroupFormData.membersCount = $scope.addGroupFormData.admin.length;
 			$scope.addGroupFormData.dateCreated = moment().format('MMMM Do YYYY, h:mm:ss a');
 			$scope.addGroupFormData.photo = null;
 			$scope.addGroupFormData.coverPhoto = null;
@@ -219,6 +230,8 @@ import _ from 'lodash';
 			GroupService.submitGroup($scope.addGroupFormData)
 			.then(() => {
 				GroupClassificationService.updateGroupClassification(classificationID, {isUsed: true});
+				//UserService.updateUsersGroups($scope.addGroupFormData.admin, $scope.addGroupFormData.handle);
+
 				$scope.clearGroupForm();
 			});
 		}

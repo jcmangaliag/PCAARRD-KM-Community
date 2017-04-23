@@ -31,6 +31,11 @@
 				templateUrl: 'groups/client/views/view-one-group.client.view.html',
 				controller: 'GroupController'
 			})
+			.state('oneGroupEdit', {
+				url: '/groups/:handle/edit',	
+				templateUrl: 'groups/client/views/edit-one-group.client.view.html',
+				controller: 'EditGroupController'
+			})
 			.state('oneGroup.settings', {
 				url: '/settings',
 				templateUrl: 'groups/client/views/view-group-settings.client.view.html'

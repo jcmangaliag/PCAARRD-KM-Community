@@ -5,6 +5,7 @@ import GroupController from './controllers/group.client.controller';
 import GroupClassificationController from './controllers/group-classification.client.controller';
 import ViewGroupsCategoriesController from './controllers/view-groups-categories.client.controller.js';
 import DashboardController from './controllers/dashboard.client.controller';
+import EditGroupController from './controllers/edit-group.client.controller';
 
 import groupClassificationsDirective from './directives/group-classifications.client.directive';
 import addGroupClassificationDirective from './directives/add-group-classification.client.directive';
@@ -17,6 +18,7 @@ import viewGroupPostsStatisticsPanelDirective from './directives/view-group-post
 import GroupService from './services/group.client.service';
 import GroupClassificationService from './services/group-classification.client.service';
 import ViewGroupsCategoriesService from './services/view-groups-categories.client.service';
+import EditGroupService from './services/edit-group.client.service';
 
 import viewOneGroupStyle from './styles/view-one-group.client.style.scss';
 

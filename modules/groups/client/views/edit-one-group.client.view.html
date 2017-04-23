@@ -1,0 +1,35 @@
+<button style="margin-left:12px;" ui-sref="oneGroup({handle: selectedGroup.handle})" type="button" class="btn btn-danger">Go Back</button>
+
+<div style="padding: 1.5%; background-color: white; margin: 1% 1% 2%; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+		<div style="margin-bottom: 1%;">
+			<h3 style="margin: 0;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit Group Information</h3>
+		</div>
+		<hr />
+		<form style="padding: 1% 2% 2% 2%; text-align: left;" ng-submit="onProcessEditedGroupData()">
+
+		  <div class="form-group">
+		    <label>Group Description <span style="color:red;">*</span></label>
+		    <textarea class="form-control" style="resize: vertical;" rows="3" placeholder="Enter the group's description" ng-model="selectedGroup.description" required></textarea>
+		  </div>
+
+		  <div class="form-group">
+		    <label>New Group Photo Upload</label>
+		    <shared-add-photo selected-upload-photo="selectedPhoto"></shared-add-photo>
+		  </div>
+
+		  <div class="form-group">
+		    <label>New Group Cover Photo Upload </label>
+		    <shared-add-photo selected-upload-photo="selectedCoverPhoto"></shared-add-photo>
+		  </div>
+
+		  <shared-form-legends></shared-form-legends>
+
+		  <shared-progress-bar></shared-progress-bar>
+
+		  <div style="display: inline-block">
+		  	<shared-reset-submit-buttons></shared-reset-submit-buttons>
+		  </div>
+
+		  <button ng-if="enableViewChanges" ui-sref="oneGroup({handle: selectedGroup.handle})" type="button" class="btn btn-primary">View Changes</button>
+		</form>
+</div>

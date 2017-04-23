@@ -48,7 +48,8 @@
 		      email : payload.email,
 		      name : payload.name,
 		      photo: payload.photo,
-		      isAdmin: payload.isAdmin
+		      isAdmin: payload.isAdmin,
+		      groupsJoined: payload.groupsJoined
 		    };
 		  }
 		}

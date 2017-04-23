@@ -18,11 +18,12 @@ import SharedResetSubmitButtonsDirective from './directives/shared-reset-submit-
 import SharedFormLegendsDirective from './directives/shared-form-legends.client.directive';
 import SharedFileModelDirective from './directives/shared-file-model.client.directive';
 import SharedProgressBarDirective from  './directives/shared-progress-bar.client.directive';
+import SharedAddPhotoDirective from './directives/shared-add-photo.client.directive';
 
 import sharedParseURL from './filters/shared-parse-url.client.filter';
 
 import SharedPaginationService from './services/shared-pagination.client.service';
-import SharedUploadFilesService from './services/shared-upload-files.client.service';
+import SharedUploadService from './services/shared-upload.client.service';
 
 import SharedAddHashtagsStyle from './styles/shared-add-hashtags.client.style.scss';
 import SharedAddFilesStyle from './styles/shared-add-files.client.style.scss';

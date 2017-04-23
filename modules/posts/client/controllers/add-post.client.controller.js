@@ -8,9 +8,9 @@ import _ from 'lodash';
 		.module('posts')
 		.controller('AddPostController', AddPostController);
 
-	AddPostController.$inject = ['$scope', 'ngToast', '$q', '$stateParams', 'AddPostService', 'AddPostCategoriesService', 'GroupService', 'SharedUploadFilesService'];
+	AddPostController.$inject = ['$scope', 'ngToast', '$q', '$stateParams', 'AddPostService', 'AddPostCategoriesService', 'GroupService', 'SharedUploadService'];
 
-	function AddPostController ($scope, ngToast, $q, $stateParams, AddPostService, AddPostCategoriesService, GroupService, SharedUploadFilesService) {
+	function AddPostController ($scope, ngToast, $q, $stateParams, AddPostService, AddPostCategoriesService, GroupService, SharedUploadService) {
 
 		const {submitPost} = AddPostService;
 		$scope.submitPost = _.partial(submitPost);
@@ -165,7 +165,7 @@ import _ from 'lodash';
 			} else if ($scope.selectedUploadFiles.length > 0){
 				let uploadedFiles = [];
 				$scope.progressBarON = true;
-				SharedUploadFilesService.uploadFiles($scope.selectedUploadFiles, uploadedFiles)
+				SharedUploadService.uploadFiles($scope.selectedUploadFiles, uploadedFiles)
 					.then((result) => {
 						$scope.progressBarON = false;
 						$scope.addPostFormData.files = uploadedFiles;

@@ -35,6 +35,10 @@ const GroupSchema = mongoose.Schema({
     	type: Object,
     	required: true
     },
+    membersCount: {
+    	type: Number,
+    	required: true
+    },
     createdBy: {
     	type: String,
     	required: true
