@@ -25,20 +25,18 @@ const GroupSchema = mongoose.Schema({
 		type: String,
 		required: true
 	},
-	photo: {
-		type: String,
-		required: true
-	},
-	coverPhoto: {
-		type: String,
-		required: true
-	},
+	photo: Object,
+	coverPhoto: Object,
 	dateCreated: {
 	   type: String,
        required: true
     },
     postsCount: {
     	type: Object,
+    	required: true
+    },
+    createdBy: {
+    	type: String,
     	required: true
     }
 });

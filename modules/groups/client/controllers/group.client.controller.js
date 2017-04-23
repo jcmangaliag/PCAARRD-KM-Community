@@ -8,10 +8,12 @@ import _ from 'lodash';
 		.module('groups')
 		.controller('GroupController', GroupController);
 
-	GroupController.$inject = ['$scope', '$stateParams', 'GroupClassificationService', 'ViewGroupsCategoriesService', 'GroupService', 'SharedPaginationService', '$filter'];
+	GroupController.$inject = ['$scope', '$state', 'ngToast', '$stateParams', 'GroupClassificationService', 'ViewGroupsCategoriesService', 'GroupService', 'SharedPaginationService', 'UserAuthenticationService', 'UserService', '$filter'];
 
-	function GroupController ($scope, $stateParams, GroupClassificationService, ViewGroupsCategoriesService, GroupService, SharedPaginationService, $filter) {
+	function GroupController ($scope, $state, ngToast, $stateParams, GroupClassificationService, ViewGroupsCategoriesService, GroupService, SharedPaginationService, UserAuthenticationService, UserService, $filter) {
+		
 		/* for View One Group */
+
 		$scope.fullGroupDescription = false;
 		$scope.readGroupDescription = "Read More";
 		$scope.DESCRIPTION_LIMIT = 1000;
@@ -76,7 +78,9 @@ import _ from 'lodash';
 			], true);
 		}
 
+
 		/* for View One and View All Groups */
+
 		$scope.getGroupData = () => {
 			if ($stateParams.handle){	// if viewing one group
 				GroupService.getOneGroup($stateParams.handle)
@@ -126,16 +130,75 @@ import _ from 'lodash';
 
 		$scope.getGroupData();
 
+
 		/* for Create Group */
+
+		if ($state.$current.name === "createGroup"){
+			UserService.getAllUsers();
+			$scope.users = UserService.getUserList();
+		}
+
 		$scope.addGroupFormData = { classification: "" };
+
+		$scope.multipleFields = {
+			admins: [''],
+		};
+
+		$scope.MIN_ADMIN = 1;
+
+		$scope.addField = (fieldArray) => {
+			fieldArray.push('');
+		}
+
+		$scope.removeField = (fieldArray, minField) => {
+			if (fieldArray.length > minField){
+				fieldArray.pop();
+			}
+		}
+
+		$scope.clearMultipleFields = () => {
+			_.forOwn($scope.multipleFields, (fieldArray) => { 
+				fieldArray.length = 0;
+				fieldArray.push('');
+			});
+		}
 
 		$scope.generateGroupNameAndHandle = (classification) => {
 			$scope.addGroupFormData.name = (classification && (classification.specificCommodity || classification.isp)) || "";
 			$scope.addGroupFormData.handle = $scope.addGroupFormData.name.replace(/\s/g, "").toLowerCase();
 		}
 
+		$scope.validateAdminEmailAddress = (adminEmails) => {
+			for (let adminEmail of adminEmails){
+				if ($scope.users.contents.map((user) => user.email).indexOf(adminEmail) < 0){
+					return adminEmail;
+				}
+			}
+			
+			return true;
+		}
+
+		$scope.convertEmailToUserID = (adminEmails) => {
+			const userList = $scope.users.contents;
+			return adminEmails.map((adminEmail) => {
+					return userList[userList.map((user) => user.email).indexOf(adminEmail)]._id; 
+				}
+			);
+		}
+
 		$scope.onProcessGroupData = () => {
-			$scope.addGroupFormData.admin = ["Mark's id"];	// change this later
+			$scope.addGroupFormData.createdBy = UserAuthenticationService.getCurrentUser()._id;
+			const result = $scope.validateAdminEmailAddress($scope.multipleFields.admins);
+			if (result !== true){
+				ngToast.create({
+		    		className: 'danger',
+		    		content: `Error: ${result} does not exist!`
+		    	});
+
+		    	return;
+			}
+
+			$scope.addGroupFormData.admin = $scope.convertEmailToUserID($scope.multipleFields.admins);
 			$scope.addGroupFormData.postsCount = {
 				advertisement: 0,
 				question: 0,
@@ -147,8 +210,8 @@ import _ from 'lodash';
 				total: 0
 			};
 			$scope.addGroupFormData.dateCreated = moment().format('MMMM Do YYYY, h:mm:ss a');
-			$scope.addGroupFormData.photo = "/cfs/files/images/vST2rHem64Lhn5YLd";	// change this later
-			$scope.addGroupFormData.coverPhoto = "/cfs/files/images/yST2rHsx64Lhn5YLf";	// change this later
+			$scope.addGroupFormData.photo = null;
+			$scope.addGroupFormData.coverPhoto = null;
 			delete $scope.addGroupFormData.classification.isUsed;
 			delete $scope.addGroupFormData.classification.__v;
 			const classificationID = $scope.addGroupFormData.classification._id;
@@ -162,6 +225,7 @@ import _ from 'lodash';
 
 		$scope.clearGroupForm = () => {
 			$scope.addGroupFormData = null;
+			$scope.clearMultipleFields();
 		}
 
 		GroupClassificationService.getAllGroupClassifications();
