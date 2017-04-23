@@ -8,9 +8,9 @@ import _ from 'lodash';
 		.module('posts')
 		.controller('PostController', PostController);
 
-	PostController.$inject = ['$scope', '$state', '$stateParams', 'PostService', 'CommentService', 'GroupService', 'ViewPostsCategoriesService', 'SharedPaginationService', '$filter'];
+	PostController.$inject = ['$scope', '$state', '$stateParams', 'PostService', 'CommentService', 'GroupService', 'ViewPostsCategoriesService', 'SharedPaginationService', 'UserAuthenticationService', '$filter'];
 
-	function PostController ($scope, $state, $stateParams, PostService, CommentService, GroupService, ViewPostsCategoriesService, SharedPaginationService, $filter) {
+	function PostController ($scope, $state, $stateParams, PostService, CommentService, GroupService, ViewPostsCategoriesService, SharedPaginationService, UserAuthenticationService, $filter) {
 
 		const {deleteOnePost} = PostService;
 
@@ -41,6 +41,11 @@ import _ from 'lodash';
 					// show 404 not found page
 				});
 			} else {
+				if ($stateParams.handle === '--user--'){
+					ViewPostsCategoriesService.setUserID($stateParams.userID);
+				} else if ($stateParams.handle === '--my-groups--'){
+					ViewPostsCategoriesService.setUserID(UserAuthenticationService.getCurrentUser()._id);
+				}
 				const currentViewPostsCategory = ViewPostsCategoriesService.getCurrentViewPostsCategory().postCategory.category;
 				ViewPostsCategoriesService.retrievePostsByCategory(currentViewPostsCategory);
 				$scope.posts = PostService.getPostList();
@@ -64,6 +69,11 @@ import _ from 'lodash';
 
 		$scope.$watch('searchPostsValue', function(value){ 
 			if ($scope.posts){
+				if ($stateParams.handle === '--user--'){
+					ViewPostsCategoriesService.setUserID($stateParams.userID);
+				} else if ($stateParams.handle === '--my-groups--'){
+					ViewPostsCategoriesService.setUserID(UserAuthenticationService.getCurrentUser()._id);
+				}
 				const currentViewPostsCategory = ViewPostsCategoriesService.getCurrentViewPostsCategory().postCategory.category;
 				ViewPostsCategoriesService.retrievePostsByCategory(currentViewPostsCategory)
 					.then(() => {
@@ -85,7 +95,7 @@ import _ from 'lodash';
 
 		$scope.getPostData();
 
-		if ($stateParams.handle === '--my-groups--'){
+		if ($stateParams.handle === '--my-groups--' || $stateParams.handle === '--user--'){
 			GroupService.getAllGroups();
 			$scope.groups = GroupService.getGroupList();
 		}

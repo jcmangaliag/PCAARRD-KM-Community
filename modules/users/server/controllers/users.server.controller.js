@@ -3,9 +3,9 @@ const User = mongoose.model('User');
 
 const userControls = { 
 	listOne : (req, res) => {
-		const email = req.params.email;
+		const userID = req.params.userID;
 
-		User.findOne({email}, (err, result) => {
+		User.findOne({_id: userID}, (err, result) => {
 			if (err) { 
 				return (err);  
 			} else if (result === null) {
@@ -30,9 +30,9 @@ const userControls = {
 	    });
 	},
 	updateOne : (req, res) => {
-		const email = req.params.email;
+		const userID = req.params.userID;
 
-		Group.findOneAndUpdate({email}, { $set: req.body }, (err) => {
+		Group.findOneAndUpdate({_id: userID}, { $set: req.body }, (err) => {
 			if (err) { return (err); }
 
 			res.send("User updated.");

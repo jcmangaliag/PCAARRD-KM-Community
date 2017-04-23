@@ -48,6 +48,8 @@
 			postCategory: viewPostsCategories[0]
 		}
 
+		let userID = null;
+
 		const getViewPostsCategories = () => {
 			return viewPostsCategories;
 		}
@@ -62,12 +64,24 @@
 			retrievePostsByCategory(currentViewPostsCategory.postCategory.category);
 		}
 
+		const setUserID = (userid) => {
+			userID = userid;
+		}
+
 		const retrievePostsByCategory = (category) => {
 			const deferred = $q.defer();
 
-			if (category == "all"){
+			if (category === "all"){
 				if (PostService.getGroupBelonged() === '--my-groups--'){
-					PostService.getAllPostsByMyGroups(/* user id?*/)
+					PostService.getAllPostsByMyGroups(userID)
+					.then((results) => {
+						deferred.resolve();
+					}, (error) => {
+						// posts not found
+						deferred.reject(error);
+					});
+				} else if (PostService.getGroupBelonged() === '--user--') {
+					PostService.getAllPostsByUser(userID)
 					.then((results) => {
 						deferred.resolve();
 					}, (error) => {
@@ -86,7 +100,15 @@
 				
 			} else {
 				if (PostService.getGroupBelonged() === '--my-groups--'){
-					PostService.getPostsByMyGroupsAndCategory(currentViewPostsCategory.postCategory.category/*,  user id?*/)
+					PostService.getPostsByMyGroupsAndCategory(currentViewPostsCategory.postCategory.category, userID)
+					.then((results) => {
+						deferred.resolve();
+					}, (error) => {
+						// posts not found
+						deferred.reject(error);
+					});
+				} else if (PostService.getGroupBelonged() === '--user--') {
+					PostService.getPostsByUserAndCategory(currentViewPostsCategory.postCategory.category, userID)
 					.then((results) => {
 						deferred.resolve();
 					}, (error) => {
@@ -111,6 +133,7 @@
 			getViewPostsCategories,
 			getCurrentViewPostsCategory,
 			setCurrentViewPostsCategory,
+			setUserID,
 			retrievePostsByCategory
 		};
 	}

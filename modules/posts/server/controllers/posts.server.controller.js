@@ -46,6 +46,20 @@ const postControls = {
 	        res.send({ posts: results });
 	    });
 	},
+	listByUser : (req, res) => {
+		Post.find({postedBy: req.params.userID}, (err, results) => {
+	        if (err) { return (err); }
+
+	        res.send({ posts: results });
+	    });
+	},
+	listByUserAndCategory : (req, res) => {
+		Post.find({postedBy: req.params.userID, category: req.params.category}, (err, results) => {
+	        if (err) { return (err); }
+
+	        res.send({ posts: results });
+	    });
+	},
 	listOne : (req, res) => {
 		const id = req.params.id;
 

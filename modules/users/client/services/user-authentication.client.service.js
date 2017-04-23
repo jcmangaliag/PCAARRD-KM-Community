@@ -19,7 +19,7 @@
 
 		const logout = () => {
 		  $window.localStorage.removeItem('pcaarrdcommunity-token');
-		  $state.go("communityFeed");
+		  $state.go("login");
 		}
 
 		const isLoggedIn = () => {
@@ -44,6 +44,7 @@
 		    payload = JSON.parse(payload);
 
 		    return {
+		    	_id: payload._id,
 		      email : payload.email,
 		      name : payload.name,
 		      photo: payload.photo,

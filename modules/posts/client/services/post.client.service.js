@@ -7,9 +7,9 @@ import _ from 'lodash';
 		.module('posts')
 		.factory('PostService', PostService);
 
-	PostService.$inject = ['$http', 'ngToast', '$q', 'CommentService', 'GroupService'];
+	PostService.$inject = ['$http', 'ngToast', '$q', 'CommentService', 'GroupService', 'UserService'];
 
-	function PostService ($http, ngToast, $q, CommentService, GroupService) { // to do: check if there's err in http requests
+	function PostService ($http, ngToast, $q, CommentService, GroupService, UserService) { // to do: check if there's err in http requests
 
 		let postList = { contents: [] }, postListCopy = { contents: [] }, groupBelonged;
 
@@ -64,10 +64,53 @@ import _ from 'lodash';
 			return deferred.promise;
 		}
 
-		const getPostsByMyGroupsAndCategory = (category, /* user id?*/) => {
+		const getPostsByMyGroupsAndCategory = (category, userID) => {
 			const deferred = $q.defer();
-			const sampleGroups = 'banana,coconut,biodiversity';	// replace with querying all groups where user is a member of, should return group handles
-			$http.get(`/api/posts/my-groups/${sampleGroups}/category/${category}`)
+
+			UserService.getOneUser(userID)
+				.then((response) => {
+					const groupsJoined = response.groupsJoined.toString() || "none";
+					return $http.get(`/api/posts/my-groups/${groupsJoined}/category/${category}`);
+				}, (response) => {
+					// error in getting one user
+				})
+				.then((response) => {	// after getting all posts by my groups and category
+					postList.contents = response.data.posts;
+					postListCopy.contents = _.toArray(response.data.posts);
+					deferred.resolve(response.data.posts);
+				}, (response) => {
+					// error in getting one user or in getting all posts by my groups and category
+					deferred.reject(response);
+				});
+
+			return deferred.promise;
+		}
+
+		const getAllPostsByMyGroups = (userID) => {
+			const deferred = $q.defer();
+			
+			UserService.getOneUser(userID)
+				.then((response) => {
+					const groupsJoined = response.groupsJoined.toString() || "none";
+					return $http.get(`/api/posts/my-groups/${groupsJoined}`);
+				}, (response) => {
+					// error in getting one user
+				})
+				.then((response) => {	// after getting all posts by my groups and category
+					postList.contents = response.data.posts;
+					postListCopy.contents = _.toArray(response.data.posts);
+					deferred.resolve(response.data.posts);
+				}, (response) => {
+					// error in getting one user or in getting all posts by my groups and category
+					deferred.reject(response);
+				});
+
+			return deferred.promise;
+		}
+
+		const getPostsByUserAndCategory = (category, userID) => {
+			const deferred = $q.defer();
+			$http.get(`/api/posts/user/${userID}/category/${category}`)
 			.then((response) => {
 				postList.contents = response.data.posts;
 				postListCopy.contents = _.toArray(response.data.posts);
@@ -79,10 +122,9 @@ import _ from 'lodash';
 			return deferred.promise;
 		}
 
-		const getAllPostsByMyGroups = (/* user id?*/) => {
+		const getAllPostsByUser = (userID) => {
 			const deferred = $q.defer();
-			const sampleGroups = 'banana,coconut,biodiversity';	// replace with querying all groups where user is a member of, should return group handles
-			$http.get(`/api/posts/my-groups/${sampleGroups}`)
+			$http.get(`/api/posts/user/${userID}`)
 			.then((response) => {
 				postList.contents = response.data.posts;
 				postListCopy.contents = _.toArray(response.data.posts);
@@ -197,6 +239,8 @@ import _ from 'lodash';
 			getAllPostsByGroup,
 			getPostsByMyGroupsAndCategory,
 			getAllPostsByMyGroups,
+			getPostsByUserAndCategory,
+			getAllPostsByUser,
 			getOnePost,
 			setPostReaction,
 			deleteOnePost,

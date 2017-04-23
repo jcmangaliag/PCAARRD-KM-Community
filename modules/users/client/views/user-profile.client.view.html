@@ -1,0 +1,74 @@
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+		<div style="padding: 20px; margin-bottom: 25px; background-color: white; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+			<img src="/users/client/assets/images/userDefaultImage.png" style="width: 100%; padding: 15px;">
+			<h3 style="margin-bottom: 3px;">{{selectedUser.name.first + " " + selectedUser.name.last}}</h3>
+			<p style="color: gray;">{{selectedUser.email}}</p>
+			<h4 style="margin-top:20px;"><span style="font-weight: normal;" class="label label-primary">{{selectedUser.isAdmin? 'Site Administrator' : 'Regular User'}}</span></h4>
+		</div>
+
+		<div style="padding: 20px; margin-bottom: 25px; background-color: white; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+
+			<h4>Personal Information</h4><hr />
+
+			<div style="margin-bottom: 20px;">
+				<p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Country</p>
+			  	<h5>{{selectedUser.country}}</h5>
+			</div>
+
+			<div style="margin-bottom: 20px;">
+				<p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Location</p>
+			  	<h5>{{selectedUser.location}}</h5>
+			</div>
+
+			<div style="margin-bottom: 20px;">
+				<p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Sex</p>
+			  	<h5>{{selectedUser.sex}}</h5>
+			</div>
+
+			<div style="margin-bottom: 20px;">
+				<p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Birthdate</p>
+			  	<h5>{{selectedUser.birthdate}}</h5>
+			</div>
+
+			<div style="margin-bottom: 20px;">
+				<p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">About</p>
+			  	<h5>{{selectedUser.about? selectedUser.about : 'N/A'}}</h5>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+		<div id="view-posts" class="post-ads" style="margin-bottom: 25px; background-color: white; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); padding: 0.5%;"><h3 style="margin-top: 20px; padding-left: 10px;">{{selectedUser.name.first}}'s Posts</h3><hr />
+			<div class="row" style="margin: 1% 0px; padding: 0 10px;">
+			  <view-posts-categories></view-posts-categories>
+			  <search-posts></search-posts>
+			</div>
+		</div>
+		<view-posts></view-posts>
+	</div>
+
+
+	<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+		<div class="post-ads" style="margin-bottom: 25px; background-color: white; border-radius: 5px; padding: 5%; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+		  <h4>Manage Profile</h4><hr />
+		  <div>
+		    <button title="Edit User Info" type="button" class="btn btn-primary"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i> Edit</button>
+		    <button title="Change User Settings" type="button" class="btn btn-primary"><i class="fa fa-cog fa-lg" aria-hidden="true"></i> Settings</button>
+		  </div>
+		</div>
+
+		<div class="post-ads" style="margin-bottom: 25px; background-color: white; border-radius: 5px; padding: 5%; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+		  <h4>{{selectedUser.name.first}}'s Groups ({{selectedUser.groupsJoined.length}})</h4><hr />
+		  <div style="margin: auto; max-height: 400px; overflow-y: auto;">
+		    <ul class="list-group">
+
+		      <li ng-repeat="groupHandle in selectedUser.groupsJoined" class="list-group-item">
+	      		<a href="#"><img src="{{getGroupInfo(groupHandle).photo? getGroupInfo(groupHandle).photo.path.split('/')[1] : '/groups/client/assets/images/group-default-portrait-large.png'}}" alt="Pic" style="width: 18%; border-radius: 8%; margin-right: 0.5em;" />{{getGroupInfo(groupHandle).name}}</a>
+		      </li>
+
+		    </ul>
+			</div>
+		</div>
+	</div>
+</div>

@@ -27,7 +27,7 @@ const usersRoutes = (app) => {
   app.route('/api/users')
     .get(userCtrl.list);
 
-  app.route('/api/users/:email')
+  app.route('/api/users/:userID')
     .get(userCtrl.listOne)
     .put(userCtrl.updateOne);
 

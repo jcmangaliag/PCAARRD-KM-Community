@@ -21,6 +21,12 @@ const postsRoutes = (app) => {
   app.route('/api/posts/my-groups/:myGroups/category/:category')
     .get(postCtrl.listByMyGroupsAndCategory);
 
+  app.route('/api/posts/user/:userID')
+    .get(postCtrl.listByUser);
+
+  app.route('/api/posts/user/:userID/category/:category')
+    .get(postCtrl.listByUserAndCategory);
+
   app.route('/api/posts/:id')
   	.get(postCtrl.listOne)
   	.delete(postCtrl.removeOne);

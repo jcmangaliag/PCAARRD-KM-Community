@@ -43,10 +43,10 @@
 			return deferred.promise;
 		}
 
-		const getOneUser = (email) => {
+		const getOneUser = (userID) => {
 			const deferred = $q.defer();
 			
-			$http.get(`/api/users/${email}`)
+			$http.get(`/api/users/${userID}`)
 			.then((response) => {
 				deferred.resolve(response.data.user);
 			}, (response) => {

@@ -25,6 +25,14 @@
 				url: '/login',
 				templateUrl: 'users/client/views/user-login.client.view.html',
 				controller: 'UserAuthenticationController'
+			})
+			.state('user-profile', {
+				url: '/users/profile/:userID',
+				templateUrl: 'users/client/views/user-profile.client.view.html',
+				controller: 'UserController',
+				params: {
+					handle: "--user--"
+				}
 			});
 
 		$locationProvider.html5Mode(true);

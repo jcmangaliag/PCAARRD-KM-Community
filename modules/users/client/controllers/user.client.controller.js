@@ -8,10 +8,23 @@ import _ from 'lodash';
 		.module('users')
 		.controller('UserController', UserController);
 
-	UserController.$inject = ['$scope'];
+	UserController.$inject = ['$scope', '$stateParams', 'UserService', 'GroupService'];
 
-	function UserController ($scope) {
+	function UserController ($scope, $stateParams, UserService, GroupService) {
+		UserService.getOneUser($stateParams.userID)
+			.then((result) => {
+				$scope.selectedUser = result;
+			}, (error) => {
+				// show 404 not found page
+			});
 
+		GroupService.getAllGroups();
+		$scope.groups = GroupService.getGroupList();
+
+		$scope.getGroupInfo= (groupHandle) => {
+			const groupIndex = $scope.groups.contents.map((group) => group.handle).indexOf(groupHandle);
+			return groupIndex > -1? $scope.groups.contents[groupIndex] : '';
+		}
 	}
 
 })();
