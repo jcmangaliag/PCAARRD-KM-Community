@@ -133,12 +133,12 @@ import _ from 'lodash';
 							$scope.loadPostsAnalysis();
 							$scope.updatePostsAnalysis();
 						}, 1000);
+
+						return UserAuthenticationService.getCurrentUser();
 					}, (error) => {
 						// show 404 not found page
-					});
-
-				UserAuthenticationService.getCurrentUser()	// load the current user
-					.then((currentUser)=> {
+					})
+					.then((currentUser)=> {	// load the current user
 			    		$scope.user.currentUser = currentUser;
 			    	});
 
