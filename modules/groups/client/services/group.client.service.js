@@ -36,9 +36,8 @@ import _ from 'lodash';
 			return deferred.promise;
 		}
 
-		const getMyGroups = () => {
+		const getMyGroups = (userID) => {
 			const deferred = $q.defer();
-			const userID = "Mark's id";	// change this
 
 			$http.get(`/api/groups/my-groups/${userID}`)
 			.then((response) => {
@@ -53,9 +52,8 @@ import _ from 'lodash';
 			return deferred.promise;
 		}
 
-		const getDiscoverGroups = () => {
+		const getDiscoverGroups = (userID) => {
 			const deferred = $q.defer();
-			const userID = "Mark's id";	// change this
 
 			$http.get(`/api/groups/discover-groups/${userID}`)
 			.then((response) => {

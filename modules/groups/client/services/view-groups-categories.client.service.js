@@ -19,17 +19,31 @@
 			category: viewGroupsCategories[0]
 		}
 
+		let userID = null;
+
 		const getViewGroupsCategories = () => {
-			return viewGroupsCategories;
+			if (userID === "none") {
+				return ["All Groups"];
+			} else {
+				return viewGroupsCategories;
+			}
 		}
 
 		const getCurrentViewGroupsCategory = () => {
-			return currentViewGroupsCategory;
+			if (userID === "none") {
+				return {category: viewGroupsCategories[0]};
+			} else {
+				return currentViewGroupsCategory;
+			}
 		}
 
 		const setCurrentViewGroupsCategory = (category) => {
 			currentViewGroupsCategory.category = category;
 			retrieveGroupsByCategory(currentViewGroupsCategory.category);
+		}
+
+		const setUserID = (userid) => {
+			userID = userid;
 		}
 
 		const retrieveGroupsByCategory = (category) => {
@@ -46,7 +60,7 @@
 					});
 					break;
 				case "My Groups":
-					GroupService.getMyGroups()
+					GroupService.getMyGroups(userID)
 					.then((results) => {
 						deferred.resolve();
 					}, (error) => {
@@ -55,7 +69,7 @@
 					});
 					break;
 				case "Discover Groups":
-					GroupService.getDiscoverGroups()
+					GroupService.getDiscoverGroups(userID)
 					.then((results) => {
 						deferred.resolve();
 					}, (error) => {
@@ -75,6 +89,7 @@
 			getViewGroupsCategories,
 			getCurrentViewGroupsCategory,
 			setCurrentViewGroupsCategory,
+			setUserID,
 			retrieveGroupsByCategory
 		};
 	}

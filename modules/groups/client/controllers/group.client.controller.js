@@ -81,6 +81,17 @@ import _ from 'lodash';
 
 		/* for View One and View All Groups */
 
+		$scope.setGroupsData = () => {
+			const currentViewGroupsCategory = ViewGroupsCategoriesService.getCurrentViewGroupsCategory().category;
+			ViewGroupsCategoriesService.retrieveGroupsByCategory(currentViewGroupsCategory);
+			$scope.groups = GroupService.getGroupList();
+			$scope.groupsCopy = GroupService.getGroupListCopy();
+
+			$scope.paginate = _.cloneDeep(SharedPaginationService);
+			$scope.paginate.currentPage = 1;
+			$scope.paginate.groupsPerPage = 4;
+		}
+
 		$scope.getGroupData = () => {
 			if ($stateParams.handle){	// if viewing one group
 				GroupService.getOneGroup($stateParams.handle)
@@ -98,27 +109,18 @@ import _ from 'lodash';
 			} else if ($state.$current.name === "groups") {
 				$scope.user = {};
 				$scope.user.isLoggedIn = UserAuthenticationService.isLoggedIn();
+				ViewGroupsCategoriesService.setUserID(null);
+				
 		    	if ($scope.user.isLoggedIn){
 		    		UserAuthenticationService.getCurrentUser()
 				    	.then((result)=> {
-				    		$scope.user.currentUser = result;	
+				    		ViewGroupsCategoriesService.setUserID(result._id);
+				    		$scope.setGroupsData();
 				    	});
+		    	} else {	// for those not logged in
+		    		ViewGroupsCategoriesService.setUserID("none");
+		    		$scope.setGroupsData();
 		    	}
-
-				const currentViewGroupsCategory = ViewGroupsCategoriesService.getCurrentViewGroupsCategory().category;
-				ViewGroupsCategoriesService.retrieveGroupsByCategory(currentViewGroupsCategory);
-				$scope.groups = GroupService.getGroupList();
-				$scope.groupsCopy = GroupService.getGroupListCopy();
-
-				$scope.paginate = _.cloneDeep(SharedPaginationService);
-				$scope.paginate.currentPage = 1;
-				$scope.paginate.groupsPerPage = 4;
-			}
-		}
-
-		$scope.checkGroupMembership = (groupHandle) => {
-			if ($scope.user.currentUser){
-				return $scope.user.currentUser.groupsJoined.indexOf(groupHandle) > -1? true: false;
 			}
 		}
 

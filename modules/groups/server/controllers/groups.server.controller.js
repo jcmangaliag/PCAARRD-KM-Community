@@ -1,5 +1,6 @@
 import Group from '../models/groups.server.model';
 import Post from '../../../posts/server/models/posts.server.model';
+import User from '../../../users/server/models/users.server.model';
 
 const groupControls = { 
 	list : (req, res) => {
@@ -10,18 +11,38 @@ const groupControls = {
 	    });
 	},
 	listByMyGroups : (req, res) => {
-		Group.find({members: req.params.userID}, (err, results) => {
-	        if (err) { return (err); }
+	    const userID = req.params.userID;
 
-	        res.send({ groups: results });
-	    });
+		User.findOne({_id: userID}, (err, result) => {
+			if (err) { 
+				return (err);  
+			} else if (result === null) {
+				return res.status(404).send('User not found!');
+			}
+
+			Group.find({handle: {$in: result.groupsJoined}}, (err, results) => {
+		        if (err) { return (err); }
+
+		        res.send({ groups: results });
+		    });
+		});
 	},
 	listByDiscoverGroups : (req, res) => {
-		Group.find({members: { "$ne": req.params.userID}}, (err, results) => {
-	        if (err) { return (err); }
+		const userID = req.params.userID;
 
-	        res.send({ groups: results });
-	    });
+		User.findOne({_id: userID}, (err, result) => {
+			if (err) { 
+				return (err);  
+			} else if (result === null) {
+				return res.status(404).send('User not found!');
+			}
+
+			Group.find({handle: {$nin: result.groupsJoined}}, (err, results) => {
+		        if (err) { return (err); }
+
+		        res.send({ groups: results });
+		    });
+		});
 	},
 	listByGroupSearch: (req, res) => {
 		let query = {};
