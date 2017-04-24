@@ -24,7 +24,7 @@
   </div>
 
   <div class="col-xs-12 col-sm-12 col-md-3">
-    <view-manage-group-panel></view-manage-group-panel>
+    <view-manage-group-panel ng-if="user.currentUser && selectedGroup.admin.indexOf(user.currentUser._id) > -1"></view-manage-group-panel>
     <view-group-members-panel></view-group-members-panel>
     <view-group-posts-statistics-panel></view-group-posts-statistics-panel>
   </div>

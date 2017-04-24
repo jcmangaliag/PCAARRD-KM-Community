@@ -19,25 +19,14 @@
 </div>
 
 <div class="post-ads" style="margin-bottom: 25px; background-color: white; border-radius: 5px; padding: 5%; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-  <h4>Member<span ng-if="selectedGroup.members.length > 1">s</span> ({{selectedGroup.membersCount}})</h4><hr />
+  <h4>Member<span ng-if="selectedGroup.membersCount > 1">s</span> ({{selectedGroup.membersCount}})</h4><hr />
   <div style="margin: auto; max-height: 400px; overflow-y: auto;">
     <ul class="list-group">
 
-      <li class="list-group-item">
+      <li ng-repeat="member in groupMembers" class="list-group-item">
       	<div class="row">
 	      	<div class="col-xs-10 col-sm-10">
-	      		<a href="#"><img src="/layout/client/assets/images/11208269_1389692501358752_1755951646_n.jpg" alt="Pic" style="width: 18%; border-radius: 8%; margin-right: 0.5em;" />Mark Eric Cabanli</a>
-	      	</div>
-	      	<div class="col-xs-2 col-sm-2">
-	      		<button title="Remove Member" type="button" class="btn btn-danger btn-sm pull-right"><i class="fa fa-sign-out fa-lg" aria-hidden="true"></i></button>
-	      	</div>
-      	</div>
-      </li>
-
-      <li class="list-group-item">
-      	<div class="row">
-	      	<div class="col-xs-10 col-sm-10">
-	      		<a href="#"><img src="/layout/client/assets/images/john-cena-562300-1-402.jpg" alt="Pic" style="width: 18%; border-radius: 8%; margin-right: 0.5em;" />Tomas Angelo Poe</a>
+	      		<a ui-sref="user-profile({userID: member._id})"><img src="{{member.photo? member.photo.path.split('/')[1] : '/users/client/assets/images/default-user-photo.png'}}" alt="Pic" style="width: 18%; border-radius: 8%; margin-right: 0.5em;" />{{member.name.first + ' ' + member.name.last}}</a>
 	      	</div>
 	      	<div class="col-xs-2 col-sm-2">
 	      		<button title="Remove Member" type="button" class="btn btn-danger btn-sm pull-right"><i class="fa fa-sign-out fa-lg" aria-hidden="true"></i></button>

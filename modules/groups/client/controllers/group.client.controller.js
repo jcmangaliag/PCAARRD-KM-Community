@@ -96,6 +96,13 @@ import _ from 'lodash';
 				});
 		}
 
+		$scope.loadGroupMembers = (groupHandle) => {	// load all info of group members
+			UserService.getAllUsersByGroup(groupHandle)
+				.then((members) => {
+					$scope.groupMembers = members;
+				});
+		}
+
 
 		/* for View One and View All Groups */
 
@@ -120,6 +127,7 @@ import _ from 'lodash';
 					.then((result) => {
 						$scope.selectedGroup = result;
 						$scope.loadGroupAdmins($scope.selectedGroup.admin);
+						$scope.loadGroupMembers($scope.selectedGroup.handle);
 
 						$timeout(() => {
 							$scope.loadPostsAnalysis();

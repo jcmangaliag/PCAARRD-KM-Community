@@ -23,7 +23,7 @@ const userControls = {
 	    });
 	},
 	listByGroup : (req, res) => {
-		User.find({groupJoined: req.params.groupHandle}, (err, results) => {
+		User.find({groupsJoined: req.params.groupHandle}, (err, results) => {
 	        if (err) { return (err); }
 
 	        res.send({ users: results });
