@@ -8,7 +8,7 @@
 
   <div class="col-xs-12 col-sm-12 col-md-6">
     <div ng-if="'oneGroup' | isState">
-      <add-post></add-post>
+      <add-post ng-if="user.isLoggedIn" add-post></add-post>
 
       <div class="row" style="margin: 3% 0px;">
         <view-posts-categories></view-posts-categories>

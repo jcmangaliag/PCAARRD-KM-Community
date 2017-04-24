@@ -43,6 +43,19 @@
 			return deferred.promise;
 		}
 
+		const getAllGroupAdminstrators = (groupAdminsID) => {
+			const deferred = $q.defer();
+			const groupAdmins = groupAdminsID.toString();
+			$http.get(`/api/users/group-adminstrators/${groupAdmins}`)
+			.then((response) => {
+				deferred.resolve(response.data.users);
+			}, (response) => {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		}
+
 		const getOneUser = (userID) => {
 			const deferred = $q.defer();
 			
@@ -82,6 +95,7 @@
 			getUserList,
 			getAllUsersByGroup,
 			getAllUsers,
+			getAllGroupAdminstrators,
 			getOneUser,
 			joinGroup,
 			leaveGroup

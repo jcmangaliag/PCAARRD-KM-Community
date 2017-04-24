@@ -29,6 +29,15 @@ const userControls = {
 	        res.send({ users: results });
 	    });
 	},
+	listByGroupAdminstrators : (req, res) => {
+		const groupAdminsList = req.params.groupAdminsID.split(',');
+
+		User.find({_id: {$in: groupAdminsList}}, (err, results) => {
+	        if (err) { return (err); }
+
+	        res.send({ users: results });
+	    });
+	},
 	updateOne : (req, res) => {
 		const userID = req.params.userID;
 

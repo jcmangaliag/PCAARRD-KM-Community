@@ -78,6 +78,24 @@ import _ from 'lodash';
 			], true);
 		}
 
+		$scope.loadGroupAdmins = (userID) => {
+			UserService.getOneUser(userID)
+				.then((user) => {
+					if (user.photo) {
+						return user.photo.path.split('/')[1];
+					} else {
+						return '/layout/client/assets/images/11208269_1389692501358752_1755951646_n.jpg';
+					}
+				});
+		}
+
+		$scope.loadGroupAdmins = (groupAdminsID) => {	// load all info of group admins
+			UserService.getAllGroupAdminstrators(groupAdminsID)
+				.then((admins) => {
+					$scope.groupAdmins = admins;
+				});
+		}
+
 
 		/* for View One and View All Groups */
 
@@ -93,24 +111,32 @@ import _ from 'lodash';
 		}
 
 		$scope.getGroupData = () => {
-			if ($stateParams.handle){	// if viewing one group
-				GroupService.getOneGroup($stateParams.handle)
-				.then((result) => {
-					$scope.selectedGroup = result;
+			$scope.user = {};
+			$scope.user.isLoggedIn = UserAuthenticationService.isLoggedIn();
 
-					$timeout(() => {
-						$scope.loadPostsAnalysis();
-						$scope.updatePostsAnalysis();
-					}, 1000);
-					
-				}, (error) => {
-					// show 404 not found page
-				});
+			if ($stateParams.handle){	// if viewing one group
+
+				GroupService.getOneGroup($stateParams.handle)	// load the group
+					.then((result) => {
+						$scope.selectedGroup = result;
+						$scope.loadGroupAdmins($scope.selectedGroup.admin);
+
+						$timeout(() => {
+							$scope.loadPostsAnalysis();
+							$scope.updatePostsAnalysis();
+						}, 1000);
+					}, (error) => {
+						// show 404 not found page
+					});
+
+				UserAuthenticationService.getCurrentUser()	// load the current user
+					.then((currentUser)=> {
+			    		$scope.user.currentUser = currentUser;
+			    	});
+
+
 			} else if ($state.$current.name === "groups") {
-				$scope.user = {};
-				$scope.user.isLoggedIn = UserAuthenticationService.isLoggedIn();
 				ViewGroupsCategoriesService.setUserID(null);
-				
 		    	if ($scope.user.isLoggedIn){
 		    		UserAuthenticationService.getCurrentUser()
 				    	.then((result)=> {

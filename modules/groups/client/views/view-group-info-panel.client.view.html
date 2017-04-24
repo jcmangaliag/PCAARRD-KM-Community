@@ -5,10 +5,10 @@
       <h3 style="margin-bottom: 3px;">{{selectedGroup.name}}</h3>
       <p style="color: gray;">@{{selectedGroup.handle}}</p>
     </div>
-    <div class="col-xs-4 col-sm-2 col-md-4" style="padding-left: 0;">
+    <div ng-if="user.currentUser" class="col-xs-4 col-sm-2 col-md-4" style="padding-left: 0;">
       <div style="margin-top: 20px;">
-        <!-- <button title="Join the Group" type="button" class="btn btn-primary pull-right"><i class="fa fa-sign-in fa-lg" aria-hidden="true"></i> Join</button> -->
-        <button title="Leave the Group" type="button" class="btn btn-danger pull-right"><i class="fa fa-sign-out fa-lg" aria-hidden="true"></i> Leave</button>
+        <button ng-if="user.currentUser.groupsJoined.indexOf(selectedGroup.handle) < 0" title="Join the Group" type="button" class="btn btn-primary pull-right"><i class="fa fa-sign-in fa-lg" aria-hidden="true"></i> Join</button>
+        <button ng-if="user.currentUser.groupsJoined.indexOf(selectedGroup.handle) > -1" title="Leave the Group" type="button" class="btn btn-danger pull-right"><i class="fa fa-sign-out fa-lg" aria-hidden="true"></i> Leave</button>
       </div>
     </div>
   </div>

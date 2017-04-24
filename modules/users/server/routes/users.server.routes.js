@@ -34,6 +34,9 @@ const usersRoutes = (app) => {
   app.route('/api/users/group/:groupHandle')
     .get(userCtrl.listByGroup);
 
+  app.route('/api/users/group-adminstrators/:groupAdminsID')
+    .get(userCtrl.listByGroupAdminstrators);
+
   app.route('/api/users/:userID/join-group/:groupHandle')
     .put(userCtrl.joinGroup);
 
