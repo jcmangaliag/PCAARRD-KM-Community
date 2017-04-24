@@ -35,11 +35,29 @@ const userControls = {
 		User.findOneAndUpdate({_id: userID}, { $set: req.body }, (err) => {
 			if (err) { return (err); }
 
-			let user = new User(req.body);
-			let token = user.generateJwt();
-			res.status(200).json({"message": "User updated.", "token": token});
+			res.send("User updated.");
 		});
-	}
+	},
+	joinGroup : (req, res) => {
+		const userID = req.params.userID;
+		const groupHandle = req.params.groupHandle;
+
+		User.findOneAndUpdate({_id: userID}, { $addToSet: {groupsJoined: groupHandle}}, (err) => {
+			if (err) { return (err); }
+
+			res.send("User joined a group.");
+		});
+	},
+	leaveGroup : (req, res) => {
+		const userID = req.params.userID;
+		const groupHandle = req.params.groupHandle;
+
+		User.findOneAndUpdate({_id: userID}, { $pull: {groupsJoined: groupHandle}}, (err) => {
+			if (err) { return (err); }
+
+			res.send("User left a group.");
+		});
+	}  
 }
 
 export default userControls;

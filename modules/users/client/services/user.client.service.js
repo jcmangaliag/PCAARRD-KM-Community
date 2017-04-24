@@ -56,13 +56,23 @@
 			return deferred.promise;
 		}
 
-		const updateUser = (email, updatedFields) => {
+		const joinGroup = (userID, groupHandle) => {
 			const deferred = $q.defer();
 
-			$http.put(`/api/users/${email}`, updatedFields)
+			$http.put(`/api/users/${userID}/join-group/${groupHandle}`)
 			.then(response => {
 				deferred.resolve(response);
-				// should refresh the user or go somewhere else
+			});
+
+			return deferred.promise;
+		}
+
+		const leaveGroup = (userID, groupHandle) => {
+			const deferred = $q.defer();
+
+			$http.put(`/api/users/${userID}/leave-group/${groupHandle}`)
+			.then(response => {
+				deferred.resolve(response);
 			});
 
 			return deferred.promise;
@@ -73,7 +83,8 @@
 			getAllUsersByGroup,
 			getAllUsers,
 			getOneUser,
-			updateUser
+			joinGroup,
+			leaveGroup
 		};
 	}
 

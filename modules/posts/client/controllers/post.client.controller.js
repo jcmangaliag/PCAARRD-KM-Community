@@ -32,6 +32,13 @@ import _ from 'lodash';
 			$scope.clearHashtags();
 		}
 
+		$scope.setPostsData = () => {
+			const currentViewPostsCategory = ViewPostsCategoriesService.getCurrentViewPostsCategory().postCategory.category;
+			ViewPostsCategoriesService.retrievePostsByCategory(currentViewPostsCategory);
+			$scope.posts = PostService.getPostList();
+			$scope.postsCopy = PostService.getPostListCopy();
+		}
+
 		$scope.getPostData = () => {
 			if ($stateParams.postID){	// if viewing one post
 				PostService.getOnePost($stateParams.postID)
@@ -41,15 +48,18 @@ import _ from 'lodash';
 					// show 404 not found page
 				});
 			} else {
-				if ($stateParams.handle === '--user--'){
+				if ($stateParams.handle === '--user--'){	// in user profile
 					ViewPostsCategoriesService.setUserID($stateParams.userID);
-				} else if ($stateParams.handle === '--my-groups--'){
-					ViewPostsCategoriesService.setUserID(UserAuthenticationService.getCurrentUser()._id);
+					$scope.setPostsData();
+				} else if ($stateParams.handle === '--my-groups--'){	// in community feed
+					UserAuthenticationService.getCurrentUser()
+				    	.then((result)=> {
+				    		ViewPostsCategoriesService.setUserID(result._id);
+				    		$scope.setPostsData();
+				    	});
+				} else {	// in specific group
+					$scope.setPostsData();
 				}
-				const currentViewPostsCategory = ViewPostsCategoriesService.getCurrentViewPostsCategory().postCategory.category;
-				ViewPostsCategoriesService.retrievePostsByCategory(currentViewPostsCategory);
-				$scope.posts = PostService.getPostList();
-				$scope.postsCopy = PostService.getPostListCopy();
 			}
 		}
 
@@ -67,21 +77,31 @@ import _ from 'lodash';
 			$state.go(`oneGroup`, {handle: groupHandle});
 		}
 
+		$scope.setSearchPostsData = (value) => {
+			const currentViewPostsCategory = ViewPostsCategoriesService.getCurrentViewPostsCategory().postCategory.category;
+			ViewPostsCategoriesService.retrievePostsByCategory(currentViewPostsCategory)
+				.then(() => {
+					$scope.posts.contents = $filter('filter')($scope.postsCopy.contents, value);
+					$scope.resetCurrentPage();
+				}, (error) => {
+					// problem with loading posts
+				});
+		}
+
 		$scope.$watch('searchPostsValue', function(value){ 
 			if ($scope.posts){
 				if ($stateParams.handle === '--user--'){
 					ViewPostsCategoriesService.setUserID($stateParams.userID);
+					$scope.setSearchPostsData(value);
 				} else if ($stateParams.handle === '--my-groups--'){
-					ViewPostsCategoriesService.setUserID(UserAuthenticationService.getCurrentUser()._id);
+					UserAuthenticationService.getCurrentUser()
+				    	.then((result)=> {
+				    		ViewPostsCategoriesService.setUserID(result._id);
+				    		$scope.setSearchPostsData(value);
+				    	});
+				} else {
+					$scope.setSearchPostsData(value);
 				}
-				const currentViewPostsCategory = ViewPostsCategoriesService.getCurrentViewPostsCategory().postCategory.category;
-				ViewPostsCategoriesService.retrievePostsByCategory(currentViewPostsCategory)
-					.then(() => {
-						$scope.posts.contents = $filter('filter')($scope.postsCopy.contents, value);
-						$scope.resetCurrentPage();
-					}, (error) => {
-						// problem with loading posts
-					});
 			}
     	});
 

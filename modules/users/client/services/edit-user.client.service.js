@@ -16,7 +16,6 @@ import _ from 'lodash';
 
 			$http.put(`/api/users/${updatedFields._id}`, updatedFields)
 			.then(response => {
-				UserAuthenticationService.saveToken(response.data.token);
 				deferred.resolve(response);
 			});
 

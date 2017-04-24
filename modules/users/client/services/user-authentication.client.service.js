@@ -5,9 +5,9 @@
 		.module('users')
 		.factory('UserAuthenticationService', UserAuthenticationService);
 
-	UserAuthenticationService.$inject = ['$http', '$window', '$q', '$state'];
+	UserAuthenticationService.$inject = ['$http', '$window', '$q', '$state', 'UserService'];
 
-	function UserAuthenticationService ($http, $window, $q, $state) {
+	function UserAuthenticationService ($http, $window, $q, $state, UserService) {
 
 		const saveToken = (token) => {
 		  $window.localStorage['pcaarrdcommunity-token'] = token;
@@ -37,21 +37,24 @@
 		}
 
 		const getCurrentUser = () => {
-		  if(isLoggedIn()){
-		    const token = getToken();
-		    let payload = token.split('.')[1];
-		    payload = $window.atob(payload);
-		    payload = JSON.parse(payload);
+			if (isLoggedIn()) {
+				const deferred = $q.defer();
 
-		    return {
-		    	_id: payload._id,
-		      email : payload.email,
-		      name : payload.name,
-		      photo: payload.photo,
-		      isAdmin: payload.isAdmin,
-		      groupsJoined: payload.groupsJoined
-		    };
-		  }
+				const token = getToken();
+				let payload = token.split('.')[1];
+				payload = $window.atob(payload);
+				payload = JSON.parse(payload);
+
+				UserService.getOneUser(payload._id)
+				    .then((result) => {
+						deferred.resolve(result);
+					}, (error) => {
+						// show 404 not found page
+						deferred.reject(result);
+					});
+
+				return deferred.promise;
+			}
 		}
 
 		const register = (userFormData, password, enteredAccessKey) => {

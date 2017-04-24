@@ -8,9 +8,9 @@ import _ from 'lodash';
 		.module('groups')
 		.controller('GroupController', GroupController);
 
-	GroupController.$inject = ['$scope', '$state', '$timeout', 'ngToast', '$stateParams', 'GroupClassificationService', 'ViewGroupsCategoriesService', 'GroupService', 'SharedPaginationService', 'UserAuthenticationService', 'UserService', '$filter'];
+	GroupController.$inject = ['$scope', '$state', '$q', '$timeout', 'ngToast', '$stateParams', 'GroupClassificationService', 'ViewGroupsCategoriesService', 'GroupService', 'SharedPaginationService', 'UserAuthenticationService', 'UserService', '$filter'];
 
-	function GroupController ($scope, $state, $timeout, ngToast, $stateParams, GroupClassificationService, ViewGroupsCategoriesService, GroupService, SharedPaginationService, UserAuthenticationService, UserService, $filter) {
+	function GroupController ($scope, $state, $q, $timeout, ngToast, $stateParams, GroupClassificationService, ViewGroupsCategoriesService, GroupService, SharedPaginationService, UserAuthenticationService, UserService, $filter) {
 		
 		/* for View One Group */
 
@@ -99,7 +99,10 @@ import _ from 'lodash';
 				$scope.user = {};
 				$scope.user.isLoggedIn = UserAuthenticationService.isLoggedIn();
 		    	if ($scope.user.isLoggedIn){
-		    		$scope.user.currentUser = UserAuthenticationService.getCurrentUser();
+		    		UserAuthenticationService.getCurrentUser()
+				    	.then((result)=> {
+				    		$scope.user.currentUser = result;	
+				    	});
 		    	}
 
 				const currentViewGroupsCategory = ViewGroupsCategoriesService.getCurrentViewGroupsCategory().category;
@@ -114,7 +117,9 @@ import _ from 'lodash';
 		}
 
 		$scope.checkGroupMembership = (groupHandle) => {
-			return $scope.user.currentUser.groupsJoined.indexOf(groupHandle) > -1? true: false;
+			if ($scope.user.currentUser){
+				return $scope.user.currentUser.groupsJoined.indexOf(groupHandle) > -1? true: false;
+			}
 		}
 
 		$scope.$watch('searchGroupsValue', function(value){ 
@@ -197,43 +202,53 @@ import _ from 'lodash';
 		}
 
 		$scope.onProcessGroupData = () => {
-			$scope.addGroupFormData.createdBy = UserAuthenticationService.getCurrentUser()._id;
-			const result = $scope.validateAdminEmailAddress($scope.multipleFields.admins);
-			if (result !== true){
-				ngToast.create({
-		    		className: 'danger',
-		    		content: `Error: ${result} does not exist!`
-		    	});
-
-		    	return;
-			}
-
-			$scope.addGroupFormData.admin = $scope.convertEmailToUserID($scope.multipleFields.admins);
-			$scope.addGroupFormData.postsCount = {
-				advertisement: 0,
-				question: 0,
-				others: 0,
-				news: 0,
-				report: 0,
-				event: 0,
-				media: 0,
-				total: 0
-			};
-			$scope.addGroupFormData.membersCount = $scope.addGroupFormData.admin.length;
-			$scope.addGroupFormData.dateCreated = moment().format('MMMM Do YYYY, h:mm:ss a');
-			$scope.addGroupFormData.photo = null;
-			$scope.addGroupFormData.coverPhoto = null;
-			delete $scope.addGroupFormData.classification.isUsed;
-			delete $scope.addGroupFormData.classification.__v;
 			const classificationID = $scope.addGroupFormData.classification._id;
+			const groupHandle = $scope.addGroupFormData.handle;
 
-			GroupService.submitGroup($scope.addGroupFormData)
-			.then(() => {
-				GroupClassificationService.updateGroupClassification(classificationID, {isUsed: true});
-				//UserService.updateUsersGroups($scope.addGroupFormData.admin, $scope.addGroupFormData.handle);
+			UserAuthenticationService.getCurrentUser()
+				.then((result)=> {
+		    		$scope.addGroupFormData.createdBy = result._id;	
 
-				$scope.clearGroupForm();
-			});
+		    		const validatedEmails = $scope.validateAdminEmailAddress($scope.multipleFields.admins);
+					if (validatedEmails !== true){
+						ngToast.create({
+				    		className: 'danger',
+				    		content: `Error: ${validatedEmails} does not exist!`
+				    	});
+
+				    	return $q.reject(`Error: ${validatedEmails} does not exist!`);
+					}
+
+					$scope.addGroupFormData.admin = $scope.convertEmailToUserID($scope.multipleFields.admins);
+					$scope.addGroupFormData.postsCount = {
+						advertisement: 0,
+						question: 0,
+						others: 0,
+						news: 0,
+						report: 0,
+						event: 0,
+						media: 0,
+						total: 0
+					};
+
+					$scope.addGroupFormData.membersCount = $scope.addGroupFormData.admin.length;
+					$scope.addGroupFormData.dateCreated = moment().format('MMMM Do YYYY, h:mm:ss a');
+					$scope.addGroupFormData.photo = null;
+					$scope.addGroupFormData.coverPhoto = null;
+					delete $scope.addGroupFormData.classification.isUsed;
+					delete $scope.addGroupFormData.classification.__v;
+
+					return GroupService.submitGroup($scope.addGroupFormData);
+		    	})
+		    	.then(()=> {
+		    		GroupClassificationService.updateGroupClassification(classificationID, {isUsed: true});
+
+					_.forEach($scope.addGroupFormData.admin, (admin) => {
+						UserService.joinGroup(admin, groupHandle);
+					});
+					
+					$scope.clearGroupForm();
+		    	});
 		}
 
 		$scope.clearGroupForm = () => {

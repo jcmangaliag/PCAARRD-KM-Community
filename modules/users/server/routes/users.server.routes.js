@@ -32,8 +32,13 @@ const usersRoutes = (app) => {
     .put(userCtrl.updateOne);
 
   app.route('/api/users/group/:groupHandle')
-    .get(userCtrl.listByGroup)
+    .get(userCtrl.listByGroup);
 
+  app.route('/api/users/:userID/join-group/:groupHandle')
+    .put(userCtrl.joinGroup);
+
+  app.route('/api/users/:userID/leave-group/:groupHandle')
+    .put(userCtrl.leaveGroup);
 
 /*  // Catch unauthorised errors
   app.use((err, req, res, next) => {
