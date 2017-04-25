@@ -7,8 +7,46 @@
     </div>
     <div ng-if="user.currentUser" class="col-xs-4 col-sm-2 col-md-4" style="padding-left: 0;">
       <div style="margin-top: 20px;">
-        <button ng-if="user.currentUser.groupsJoined.indexOf(selectedGroup.handle) < 0" title="Join the Group" type="button" class="btn btn-primary pull-right"><i class="fa fa-sign-in fa-lg" aria-hidden="true"></i> Join</button>
-        <button ng-if="user.currentUser.groupsJoined.indexOf(selectedGroup.handle) > -1" title="Leave the Group" type="button" class="btn btn-danger pull-right"><i class="fa fa-sign-out fa-lg" aria-hidden="true"></i> Leave</button>
+        <button ng-if="user.currentUser.groupsJoined.indexOf(selectedGroup.handle) < 0" title="Join the Group" type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#{{'join' + selectedGroup.handle}}"><i class="fa fa-sign-in fa-lg" aria-hidden="true"></i> Join</button>
+
+        <div class="modal fade" id="{{'join' + selectedGroup.handle}}" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Join Group</h4>
+              </div>
+              <div class="modal-body">
+                <p>Are you sure you want to join this group?</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" ng-click="joinThisGroup(user.currentUser._id, selectedGroup.handle)" data-dismiss="modal">Join Group</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button ng-if="user.currentUser.groupsJoined.indexOf(selectedGroup.handle) > -1" title="Leave the Group" type="button" class="btn btn-danger pull-right" data-toggle="modal" data-target="#{{'leave' + selectedGroup.handle}}"><i class="fa fa-sign-out fa-lg" aria-hidden="true"></i> Leave</button>
+
+        <div class="modal fade" id="{{'leave' + selectedGroup.handle}}" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Leave Group</h4>
+              </div>
+              <div class="modal-body">
+                <p>Are you sure you want to leave this group?</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" ng-click="leaveThisGroup(user.currentUser._id, selectedGroup.handle)" data-dismiss="modal">Leave Group</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -24,10 +62,10 @@
   <p style="white-space: pre-wrap; margin-top: 25px; margin-bottom: 0px;" ng-style="selectedGroup.description.length > DESCRIPTION_LIMIT? {'margin-bottom': '0px'} : {'margin-bottom': '25px'}"><span ng-bind-html="selectedGroup.description | parseURL | emoji | limitTo: descriptionSize"></span><span ng-if="selectedGroup.description.length > descriptionSize">...</span></p>
   <span ng-if="selectedGroup.description.length > DESCRIPTION_LIMIT" style="margin-bottom: 25px; display: block;"><a href="#/" ng-click="toggleGroupDescription()">{{readGroupDescription}}</a></span>
 
-  <div style="margin-bottom: 30px;">
+<!--   <div style="margin-bottom: 30px;">
     <p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Membership</p>
     <h5>{{selectedGroup.membership}}</h5>
-  </div>
+  </div> -->
 
   <div>
     <p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Created on</p>

@@ -75,6 +75,8 @@
 			$http.put(`/api/users/${userID}/join-group/${groupHandle}`)
 			.then(response => {
 				deferred.resolve(response);
+			}, (error) => {
+				deferred.reject(error);
 			});
 
 			return deferred.promise;
@@ -86,6 +88,8 @@
 			$http.put(`/api/users/${userID}/leave-group/${groupHandle}`)
 			.then(response => {
 				deferred.resolve(response);
+			}, (error) => {
+				deferred.reject(error);
 			});
 
 			return deferred.promise;

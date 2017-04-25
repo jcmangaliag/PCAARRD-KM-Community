@@ -11,10 +11,15 @@
       <add-post ng-if="user.isLoggedIn" add-post></add-post>
 
       <div class="row" style="margin: 3% 0px;">
+        <div ng-if="!user.currentUser || (user.currentUser.groupsJoined.indexOf(selectedGroup.handle) < 0)" class="alert alert-info alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <strong>Reminder!</strong> You are only seeing public posts. Be sure to join the group to also see private posts.
+        </div>
+
         <view-posts-categories></view-posts-categories>
         <search-posts></search-posts>
       </div>
-
+    
       <view-posts></view-posts>
     </div>
 

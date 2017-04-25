@@ -103,6 +103,43 @@ import _ from 'lodash';
 				});
 		}
 
+		$scope.joinThisGroup = (userID, groupHandle) => {
+			UserService.joinGroup(userID, groupHandle)
+				.then(() => {
+					ngToast.create({
+			    		className: 'success',
+			    		content: `Group was successfully joined.`
+			    	});
+
+					$scope.user.currentUser.groupsJoined.push($scope.selectedGroup.handle);
+				}, () => {
+					ngToast.create({
+			    		className: 'danger',
+			    		content: `Failed to join the group.`
+			    	});
+				});
+		}
+
+		$scope.leaveThisGroup = (userID, groupHandle) => {
+			UserService.leaveGroup(userID, groupHandle)
+				.then(() => {
+					ngToast.create({
+			    		className: 'success',
+			    		content: `Group was successfully left.`
+			    	});
+			    	
+			    	const groupIndex = $scope.user.currentUser.groupsJoined.indexOf($scope.selectedGroup.handle);
+					if (groupIndex > -1){
+						$scope.user.currentUser.groupsJoined.splice(groupIndex, 1);
+					}
+				}, () => {
+					ngToast.create({
+			    		className: 'danger',
+			    		content: `Failed to leave the group.`
+			    	});
+				});
+		}
+
 
 		/* for View One and View All Groups */
 
