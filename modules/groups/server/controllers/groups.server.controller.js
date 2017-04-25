@@ -113,6 +113,26 @@ const groupControls = {
 
 			res.send("Group deleted.");
 		});
+	},
+	addAdmin : (req, res) => {
+		const userID = req.params.userID;
+		const handle = req.params.handle;
+
+		Group.findOneAndUpdate({handle}, { $addToSet: {admin: userID}}, (err) => {
+			if (err) { return (err); }
+
+			res.send("Group added an admin.");
+		});
+	},
+	removeAdmin : (req, res) => {
+		const userID = req.params.userID;
+		const handle = req.params.handle;
+
+		Group.findOneAndUpdate({handle}, { $pull: {admin: userID}}, (err) => {
+			if (err) { return (err); }
+
+			res.send("Group removed an admin.");
+		});
 	}
 }
 

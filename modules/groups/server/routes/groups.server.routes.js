@@ -29,6 +29,12 @@ const groupsRoutes = (app) => {
   app.route('/api/groups/search/all') 
     .get(groupCtrl.listByGroupSearch);
 
+  app.route('/api/groups/:handle/add-admin/:userID')
+    .put(groupCtrl.addAdmin);
+
+  app.route('/api/groups/:handle/remove-admin/:userID')
+    .put(groupCtrl.removeAdmin);
+
 };
 
 export default groupsRoutes;

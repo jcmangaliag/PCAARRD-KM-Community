@@ -52,11 +52,16 @@ import _ from 'lodash';
 					ViewPostsCategoriesService.setUserID($stateParams.userID);
 					$scope.setPostsData();
 				} else if ($stateParams.handle === '--my-groups--'){	// in community feed
-					UserAuthenticationService.getCurrentUser()
-				    	.then((result)=> {
-				    		ViewPostsCategoriesService.setUserID(result._id);
-				    		$scope.setPostsData();
-				    	});
+					$scope.user = {};
+					$scope.user.isLoggedIn = UserAuthenticationService.isLoggedIn();
+					
+					if ($scope.user.isLoggedIn){
+						UserAuthenticationService.getCurrentUser()
+					    	.then((result)=> {
+					    		ViewPostsCategoriesService.setUserID(result._id);
+					    		$scope.setPostsData();
+					    	});
+				    }
 				} else {	// in specific group
 					$scope.setPostsData();
 				}
@@ -94,11 +99,13 @@ import _ from 'lodash';
 					ViewPostsCategoriesService.setUserID($stateParams.userID);
 					$scope.setSearchPostsData(value);
 				} else if ($stateParams.handle === '--my-groups--'){
-					UserAuthenticationService.getCurrentUser()
-				    	.then((result)=> {
-				    		ViewPostsCategoriesService.setUserID(result._id);
-				    		$scope.setSearchPostsData(value);
-				    	});
+					if ($scope.user.isLoggedIn){
+						UserAuthenticationService.getCurrentUser()
+					    	.then((result)=> {
+					    		ViewPostsCategoriesService.setUserID(result._id);
+					    		$scope.setSearchPostsData(value);
+					    	});
+				    }
 				} else {
 					$scope.setSearchPostsData(value);
 				}

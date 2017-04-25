@@ -106,36 +106,71 @@ import _ from 'lodash';
 		$scope.joinThisGroup = (userID, groupHandle) => {
 			UserService.joinGroup(userID, groupHandle)
 				.then(() => {
+					return GroupService.updateGroup($scope.selectedGroup.handle, {membersCount: ++$scope.selectedGroup.membersCount});
+				}, () => {
+					ngToast.create({
+			    		className: 'danger',
+			    		content: `Failed to join the group.`
+			    	});
+				})
+				.then(()=> {
 					ngToast.create({
 			    		className: 'success',
 			    		content: `Group was successfully joined.`
 			    	});
 
 					$scope.user.currentUser.groupsJoined.push($scope.selectedGroup.handle);
-				}, () => {
-					ngToast.create({
-			    		className: 'danger',
-			    		content: `Failed to join the group.`
-			    	});
+					$scope.groupMembers.push($scope.user.currentUser);
 				});
 		}
 
 		$scope.leaveThisGroup = (userID, groupHandle) => {
 			UserService.leaveGroup(userID, groupHandle)
-				.then(() => {
-					ngToast.create({
-			    		className: 'success',
-			    		content: `Group was successfully left.`
-			    	});
-			    	
-			    	const groupIndex = $scope.user.currentUser.groupsJoined.indexOf($scope.selectedGroup.handle);
-					if (groupIndex > -1){
-						$scope.user.currentUser.groupsJoined.splice(groupIndex, 1);
-					}
+				.then(() => {	    	
+					return GroupService.updateGroup($scope.selectedGroup.handle, {membersCount: --$scope.selectedGroup.membersCount});
 				}, () => {
 					ngToast.create({
 			    		className: 'danger',
 			    		content: `Failed to leave the group.`
+			    	});
+				})
+				.then(()=> {
+					ngToast.create({
+			    		className: 'success',
+			    		content: `Group was successfully left.`
+			    	});
+
+					const groupIndexInUser = $scope.user.currentUser.groupsJoined.indexOf($scope.selectedGroup.handle);
+			    	const groupIndexInGroup = $scope.groupMembers.map((user) => user._id).indexOf(userID);
+					if (groupIndexInUser > -1){
+						$scope.user.currentUser.groupsJoined.splice(groupIndexInUser, 1);
+					}
+					if (groupIndexInGroup > -1){
+						$scope.groupMembers.splice(groupIndexInGroup, 1);
+					}
+				});
+
+			if ($scope.selectedGroup.admin.indexOf(userID) > -1){
+				$scope.removeGroupAdmin(userID, groupHandle);
+			}
+		}
+
+		$scope.removeGroupAdmin = (userID, groupHandle) => {
+			GroupService.removeAdmin(userID, groupHandle)
+				.then(() => {	    	
+					ngToast.create({
+			    		className: 'success',
+			    		content: `Group Admin was successfully removed.`
+			    	});
+
+			    	const groupIndexInGroup = $scope.groupAdmins.map((user) => user._id).indexOf(userID);
+					if (groupIndexInGroup > -1){
+						$scope.groupAdmins.splice(groupIndexInGroup, 1);
+					}
+				}, () => {
+					ngToast.create({
+			    		className: 'danger',
+			    		content: `Failed to remove Group Admin.`
 			    	});
 				});
 		}

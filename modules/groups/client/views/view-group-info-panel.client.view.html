@@ -37,6 +37,7 @@
                 <h4 class="modal-title">Leave Group</h4>
               </div>
               <div class="modal-body">
+                <p ng-if="user.currentUser && selectedGroup.admin.indexOf(user.currentUser._id) > -1">Warning: This will also remove you as group administrator.</p>
                 <p>Are you sure you want to leave this group?</p>
               </div>
               <div class="modal-footer">
@@ -62,10 +63,10 @@
   <p style="white-space: pre-wrap; margin-top: 25px; margin-bottom: 0px;" ng-style="selectedGroup.description.length > DESCRIPTION_LIMIT? {'margin-bottom': '0px'} : {'margin-bottom': '25px'}"><span ng-bind-html="selectedGroup.description | parseURL | emoji | limitTo: descriptionSize"></span><span ng-if="selectedGroup.description.length > descriptionSize">...</span></p>
   <span ng-if="selectedGroup.description.length > DESCRIPTION_LIMIT" style="margin-bottom: 25px; display: block;"><a href="#/" ng-click="toggleGroupDescription()">{{readGroupDescription}}</a></span>
 
-<!--   <div style="margin-bottom: 30px;">
+  <div style="margin-bottom: 30px;">
     <p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Membership</p>
     <h5>{{selectedGroup.membership}}</h5>
-  </div> -->
+  </div>
 
   <div>
     <p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Created on</p>
