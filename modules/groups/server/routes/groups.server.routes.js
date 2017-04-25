@@ -26,6 +26,12 @@ const groupsRoutes = (app) => {
     .put(groupCtrl.updateOne)
     .delete(groupCtrl.removeOne);
 
+  app.route('/api/groups/some/:handles')
+    .get(groupCtrl.listSome);
+
+  app.route('/api/groups/administered/:userID')
+    .get(groupCtrl.listAdministeredGroups);
+
   app.route('/api/groups/search/all') 
     .get(groupCtrl.listByGroupSearch);
 

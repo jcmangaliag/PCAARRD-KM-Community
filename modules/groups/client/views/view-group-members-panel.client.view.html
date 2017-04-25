@@ -3,7 +3,7 @@
   <div style="margin: auto; max-height: 200px; overflow-y: auto;">
     <ul class="list-group">
 
-      <li ng-repeat="admin in groupAdmins" class="list-group-item">
+      <li ng-repeat="admin in groupAdmins | orderBy: ['name.first', 'name.last']" class="list-group-item">
       	<div class="row">
 	      	<div class="col-xs-10 col-sm-10">
 	      		<a ui-sref="user-profile({userID: admin._id})"><img src="{{admin.photo? admin.photo.path.split('/')[1] : '/users/client/assets/images/default-user-photo.png'}}" alt="Pic" style="width: 18%; border-radius: 8%; margin-right: 0.5em;" />{{admin.name.first + ' ' + admin.name.last}}</a>
@@ -23,7 +23,7 @@
   <div style="margin: auto; max-height: 400px; overflow-y: auto;">
     <ul class="list-group">
 
-      <li ng-repeat="member in groupMembers" class="list-group-item">
+      <li ng-repeat="member in groupMembers | orderBy: ['name.first', 'name.last']" class="list-group-item">
       	<div class="row">
 	      	<div class="col-xs-10 col-sm-10">
 	      		<a ui-sref="user-profile({userID: member._id})"><img src="{{member.photo? member.photo.path.split('/')[1] : '/users/client/assets/images/default-user-photo.png'}}" alt="Pic" style="width: 18%; border-radius: 8%; margin-right: 0.5em;" />{{member.name.first + ' ' + member.name.last}}</a>

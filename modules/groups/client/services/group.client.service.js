@@ -68,6 +68,33 @@ import _ from 'lodash';
 			return deferred.promise;
 		}
 
+		const getSomeGroups = (groupHandlesList) => {
+			const deferred = $q.defer();
+
+			const groupsList = groupHandlesList.toString();
+			$http.get(`/api/groups/some/${groupsList}`)
+			.then((response) => {
+				deferred.resolve(response.data.groups);
+			}, (response) => {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		}
+
+		const getUserAdministeredGroups = (userID) => {
+			const deferred = $q.defer();
+			
+			$http.get(`/api/groups/administered/${userID}`)
+			.then((response) => {
+				deferred.resolve(response.data.groups);
+			}, (response) => {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		}
+
 		const getOneGroup = (groupHandle) => {
 			const deferred = $q.defer();
 			
@@ -142,6 +169,8 @@ import _ from 'lodash';
 			getAllGroups,
 			getMyGroups,
 			getDiscoverGroups,
+			getSomeGroups,
+			getUserAdministeredGroups,
 			getOneGroup,
 			updateGroup,
 			submitGroup,

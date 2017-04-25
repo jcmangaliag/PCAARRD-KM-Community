@@ -14,12 +14,11 @@ import _ from 'lodash';
 		UserService.getOneUser($stateParams.userID)
 			.then((result) => {
 				$scope.selectedUser = result;
+				$scope.loadUserGroups($scope.selectedUser);
+				$scope.loadUserAdministeredGroups($scope.selectedUser);
 			}, (error) => {
 				// show 404 not found page
 			});
-
-		GroupService.getAllGroups();
-		$scope.groups = GroupService.getGroupList();
 
 		$scope.fullUserDescription = false;
 		$scope.readUserDescription = "Read More";
@@ -32,9 +31,18 @@ import _ from 'lodash';
 			$scope.descriptionSize = $scope.descriptionSize === $scope.DESCRIPTION_LIMIT? undefined : $scope.DESCRIPTION_LIMIT;
 		}
 
-		$scope.getGroupInfo= (groupHandle) => {
-			const groupIndex = $scope.groups.contents.map((group) => group.handle).indexOf(groupHandle);
-			return groupIndex > -1? $scope.groups.contents[groupIndex] : '';
+		$scope.loadUserGroups = (selectedUser) => {	
+			GroupService.getSomeGroups(selectedUser.groupsJoined)
+				.then((groups) => {
+					$scope.userGroups = groups;
+				});
+		}
+
+		$scope.loadUserAdministeredGroups = (selectedUser) => {	
+			GroupService.getUserAdministeredGroups(selectedUser._id)
+				.then((groups) => {
+					$scope.userAdminGroups = groups;
+				});
 		}
 	}
 

@@ -44,6 +44,22 @@ const groupControls = {
 		    });
 		});
 	},
+	listSome : (req, res) => {
+		const handles = req.params.handles.split(',');
+
+		Group.find({handle: {$in: handles}}, (err, results) => {
+			if (err) { return (err); }
+
+		    res.send({groups: results });
+		});
+	},
+	listAdministeredGroups  : (req, res) => {
+		Group.find({admin: req.params.userID}, (err, results) => {
+			if (err) { return (err); }
+
+		    res.send({groups: results });
+		});
+	},
 	listByGroupSearch: (req, res) => {
 		let query = {};
 
