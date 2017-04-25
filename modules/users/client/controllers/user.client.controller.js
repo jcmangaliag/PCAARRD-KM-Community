@@ -8,9 +8,24 @@ import _ from 'lodash';
 		.module('users')
 		.controller('UserController', UserController);
 
-	UserController.$inject = ['$scope', '$stateParams', 'UserService', 'GroupService'];
+	UserController.$inject = ['$scope', '$stateParams', 'UserService', 'UserAuthenticationService', 'GroupService'];
 
-	function UserController ($scope, $stateParams, UserService, GroupService) {
+	function UserController ($scope, $stateParams, UserService, UserAuthenticationService, GroupService) {
+
+		$scope.fullUserDescription = false;
+		$scope.readUserDescription = "Read More";
+		$scope.DESCRIPTION_LIMIT = 1000;
+		$scope.descriptionSize = $scope.DESCRIPTION_LIMIT;
+		$scope.user = {};
+		$scope.user.isLoggedIn = UserAuthenticationService.isLoggedIn();
+
+		if ($scope.user.isLoggedIn){
+    		UserAuthenticationService.getCurrentUser()
+		    	.then((result)=> {
+		    		$scope.user.currentUser = result;
+		    	});
+    	}
+
 		UserService.getOneUser($stateParams.userID)
 			.then((result) => {
 				$scope.selectedUser = result;
@@ -19,11 +34,6 @@ import _ from 'lodash';
 			}, (error) => {
 				// show 404 not found page
 			});
-
-		$scope.fullUserDescription = false;
-		$scope.readUserDescription = "Read More";
-		$scope.DESCRIPTION_LIMIT = 1000;
-		$scope.descriptionSize = $scope.DESCRIPTION_LIMIT;
 
 		$scope.toggleUserDescription = () => {
 			$scope.fullUserDescription = !$scope.fullUserDescription;
