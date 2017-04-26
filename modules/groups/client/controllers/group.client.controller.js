@@ -233,8 +233,17 @@ import _ from 'lodash';
 				});
 		}
 
-		$scope.removeAdmin = (adminID, groupHandle) => {
-			
+		$scope.onRemoveAdmin = (adminID, groupHandle) => {
+			if ($scope.selectedGroup.admin.length > 1){
+				$scope.removeGroupAdmin(adminID, groupHandle);
+			} else {
+				ngToast.create({
+		    		className: 'danger',
+		    		content: `Error: The group should have at least one Group Admin.`
+		    	});
+
+				return;
+			}
 		}
 
 
