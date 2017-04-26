@@ -125,6 +125,19 @@ import _ from 'lodash';
 		}
 
 		$scope.leaveThisGroup = (userID, groupHandle) => {
+			if ($scope.selectedGroup.admin.indexOf(userID) > -1){
+				if ($scope.selectedGroup.admin.length > 1){
+					$scope.removeGroupAdmin(userID, groupHandle);
+				} else {
+					ngToast.create({
+			    		className: 'danger',
+			    		content: `Error: The group should have at least one Group Admin.`
+			    	});
+
+					return;
+				}
+			}
+
 			UserService.leaveGroup(userID, groupHandle)
 				.then(() => {	    	
 					return GroupService.updateGroup($scope.selectedGroup.handle, {membersCount: --$scope.selectedGroup.membersCount});
@@ -150,9 +163,6 @@ import _ from 'lodash';
 					}
 				});
 
-			if ($scope.selectedGroup.admin.indexOf(userID) > -1){
-				$scope.removeGroupAdmin(userID, groupHandle);
-			}
 		}
 
 		$scope.removeGroupAdmin = (userID, groupHandle) => {
@@ -163,6 +173,10 @@ import _ from 'lodash';
 			    		content: `Group Admin was successfully removed.`
 			    	});
 
+					const groupIndexInSelectedGroup = $scope.selectedGroup.admin.indexOf(userID);
+					if (groupIndexInSelectedGroup > -1){
+						$scope.selectedGroup.admin.splice(groupIndexInSelectedGroup, 1);
+					}
 			    	const groupIndexInGroup = $scope.groupAdmins.map((user) => user._id).indexOf(userID);
 					if (groupIndexInGroup > -1){
 						$scope.groupAdmins.splice(groupIndexInGroup, 1);
@@ -173,6 +187,54 @@ import _ from 'lodash';
 			    		content: `Failed to remove Group Admin.`
 			    	});
 				});
+		}
+
+		$scope.removeMember = (memberID, groupHandle) => {
+			if ($scope.selectedGroup.admin.indexOf(memberID) > -1){
+				if ($scope.selectedGroup.admin.length > 1){
+					$scope.removeGroupAdmin(memberID, groupHandle);
+				} else {
+					ngToast.create({
+			    		className: 'danger',
+			    		content: `Error: The group should have at least one Group Admin.`
+			    	});
+
+					return;
+				}
+			}
+
+			UserService.leaveGroup(memberID, groupHandle)
+				.then(() => {	    	
+					return GroupService.updateGroup($scope.selectedGroup.handle, {membersCount: --$scope.selectedGroup.membersCount});
+				}, () => {
+					ngToast.create({
+			    		className: 'danger',
+			    		content: `Failed to remove group member.`
+			    	});
+				})
+				.then(()=> {
+					ngToast.create({
+			    		className: 'success',
+			    		content: `Group member was successfully removed.`
+			    	});
+
+					if (memberID === $scope.user.currentUser._id){
+						const groupIndexInUser = $scope.user.currentUser.groupsJoined.indexOf($scope.selectedGroup.handle);
+				    	if (groupIndexInUser > -1){
+							$scope.user.currentUser.groupsJoined.splice(groupIndexInUser, 1);
+						}
+					}
+
+			    	const groupIndexInGroup = $scope.groupMembers.map((user) => user._id).indexOf(memberID);
+					
+					if (groupIndexInGroup > -1){
+						$scope.groupMembers.splice(groupIndexInGroup, 1);
+					}
+				});
+		}
+
+		$scope.removeAdmin = (adminID, groupHandle) => {
+			
 		}
 
 
