@@ -5,13 +5,13 @@ import _ from 'lodash';
 	
 	angular
 		.module('groups')
-		.factory('EditGroupService', EditGroupService);
+		.factory('EditSettingsGroupService', EditSettingsGroupService);
 
-	EditGroupService.$inject = ['$http', '$q'];
+	EditSettingsGroupService.$inject = ['$http', '$q'];
 
-	function EditGroupService ($http, $q) {
+	function EditSettingsGroupService ($http, $q) {
 
-		const submitEditedGroup = (updatedFields) => {
+		const submitModifiedGroup = (updatedFields) => {
 			const deferred = $q.defer();
 
 			$http.put(`/api/groups/${updatedFields.handle}`, updatedFields)
@@ -23,7 +23,7 @@ import _ from 'lodash';
 		}
 	
 		return {
-			submitEditedGroup
+			submitModifiedGroup
 		};
 	}
 

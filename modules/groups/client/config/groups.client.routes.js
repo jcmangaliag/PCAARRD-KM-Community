@@ -34,11 +34,12 @@
 			.state('oneGroupEdit', {
 				url: '/groups/:handle/edit',	
 				templateUrl: 'groups/client/views/edit-one-group.client.view.html',
-				controller: 'EditGroupController'
+				controller: 'EditSettingsGroupController'
 			})
-			.state('oneGroup.settings', {
-				url: '/settings',
-				templateUrl: 'groups/client/views/view-group-settings.client.view.html'
+			.state('oneGroupSettings', {
+				url: '/groups/:handle/settings',
+				templateUrl: 'groups/client/views/settings-one-group.client.view.html',
+				controller: 'EditSettingsGroupController'
 			})
 			.state('dashboard', {
 				url: '/dashboard',
