@@ -1,6 +1,6 @@
  <div class="row">
   <div class="col-xs-6 col-sm-6">
-    <h4 style="display: inline;"><span style="font-weight: normal;" class="label label-info">Media</span> <span style="font-weight: normal;" class="label label-warning">{{post.mediaType}}</span>
+    <h4 style="display: inline;"><span style="font-weight: normal;" class="label label-info">Media</span> <span style="font-weight: normal;" class="label label-warning">{{post.mediaType}}</span> <span ng-if="!post.showPublic" title="Private Post" class="label label-default" style="font-weight: normal;"><i class="fa fa-lock" aria-hidden="true"></i></span>
     <span ng-if="groupBelonged ==='--my-groups--' || groupBelonged ==='--user--'"><i class="fa fa-caret-right" aria-hidden="true"></i> <h4 style="display: inline;"><span class="label label-success"><a style="color: white; font-weight: bold;" ui-sref="oneGroup({handle: post.groupBelonged})">{{ getGroupName(post.groupBelonged) }}</a></span></h4></span>
   </div>
   <div class="col-xs-6 col-sm-6" style="text-align: right;">
