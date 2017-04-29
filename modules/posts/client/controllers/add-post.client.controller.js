@@ -8,9 +8,9 @@ import _ from 'lodash';
 		.module('posts')
 		.controller('AddPostController', AddPostController);
 
-	AddPostController.$inject = ['$scope', 'ngToast', '$q', '$stateParams', 'AddPostService', 'AddPostCategoriesService', 'GroupService', 'SharedUploadService'];
+	AddPostController.$inject = ['$scope', 'ngToast', '$q', '$stateParams', 'AddPostService', 'AddPostCategoriesService', 'GroupService', 'SharedUploadService', 'UserAuthenticationService', 'UserService'];
 
-	function AddPostController ($scope, ngToast, $q, $stateParams, AddPostService, AddPostCategoriesService, GroupService, SharedUploadService) {
+	function AddPostController ($scope, ngToast, $q, $stateParams, AddPostService, AddPostCategoriesService, GroupService, SharedUploadService, UserAuthenticationService, UserService) {
 
 		const {submitPost} = AddPostService;
 		$scope.submitPost = _.partial(submitPost);
@@ -39,6 +39,16 @@ import _ from 'lodash';
 			if ($scope.addPostFormData.category === "report"){
 				$scope.addPostFormData.dateTime = $scope.defaultDatetime;
 			}
+
+			$scope.user = {};
+			$scope.user.isLoggedIn = UserAuthenticationService.isLoggedIn();
+
+			if ($scope.user.isLoggedIn){
+				UserAuthenticationService.getCurrentUser()
+			    	.then((result)=> {
+			    		$scope.user.currentUser = result;
+			    	});
+		    }
 		}
 
 		$scope.toggleEndDateTime = () => {
@@ -106,6 +116,10 @@ import _ from 'lodash';
 
 		$scope.onProcessPostData = (postCategory) => {
 
+			if (!UserAuthenticationService.isLoggedIn()){
+				return;
+			}
+
 			if (postCategory === 'advertisement' && $scope.price){
 				$scope.addPostFormData.price = $scope.price.toFixed(2);
 			}
@@ -155,8 +169,12 @@ import _ from 'lodash';
 				}
 			];
 
-			// hardcoded as of now, should be Object IDs
-			$scope.addPostFormData.postedBy = "Tomas Angelo Poe";
+			if ($scope.user.isLoggedIn){
+				$scope.addPostFormData.postedBy = {
+					_id: $scope.user.currentUser._id,
+					name: `${$scope.user.currentUser.name.first} ${$scope.user.currentUser.name.last}`
+				}
+			}
 			$scope.addPostFormData.groupBelonged = $stateParams.handle;
 
 			if (postCategory === 'media' && $scope.addPostFormData.mediaType === 'url'){

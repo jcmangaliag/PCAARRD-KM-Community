@@ -10,7 +10,7 @@ const PostSchema = mongoose.Schema({
 		required: true
 	},
 	postedBy: {
-		type: String,
+		type: Object,
 		required: true
 	},
 	datePosted: {

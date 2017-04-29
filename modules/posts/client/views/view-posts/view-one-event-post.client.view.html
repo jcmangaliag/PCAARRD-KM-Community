@@ -10,7 +10,7 @@
 <h3 style="margin: 10px 0 0 0;">{{selectedPost.eventName}}</h3>
 
 <div style="padding: 1% 0 2% 0">
-	<p style="color: gray;">posted by <a href="#" style="font-weight: bold; color: gray;">{{selectedPost.postedBy}}</a> on {{selectedPost.datePosted}}</p>
+	<p style="color: gray;">posted by <a ui-sref="user-profile({userID: selectedPost.postedBy._id})" style="font-weight: bold; color: gray;">{{selectedPost.postedBy.name}}</a> on {{selectedPost.datePosted}}</p>
 </div>
 
 <div style="margin-bottom: 3%;">

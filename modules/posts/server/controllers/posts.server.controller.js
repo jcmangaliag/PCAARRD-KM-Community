@@ -59,14 +59,14 @@ const postControls = {
 	    });
 	},
 	listByUser : (req, res) => {
-		Post.find({postedBy: req.params.userID, showPublic: true}, (err, results) => {
+		Post.find({'postedBy._id': req.params.userID, showPublic: true}, (err, results) => {
 	        if (err) { return (err); }
 
 	        res.send({ posts: results });
 	    });
 	},
 	listByUserAndCategory : (req, res) => {
-		Post.find({postedBy: req.params.userID, category: req.params.category, showPublic: true}, (err, results) => {
+		Post.find({'postedBy._id': req.params.userID, category: req.params.category, showPublic: true}, (err, results) => {
 	        if (err) { return (err); }
 
 	        res.send({ posts: results });

@@ -10,7 +10,7 @@
 <h3 style="margin: 10px 0 0 0;">{{selectedPost.newsTitle}}</h3>
 
 <div style="padding: 1% 0 1% 0">
-	<p style="color: gray; margin-bottom: 2px;">posted by <a href="#" style="font-weight: bold; color: gray;">{{selectedPost.postedBy}}</a> on {{selectedPost.datePosted}}, </p>
+	<p style="color: gray; margin-bottom: 2px;">posted by <a ui-sref="user-profile({userID: selectedPost.postedBy._id})" style="font-weight: bold; color: gray;">{{selectedPost.postedBy.name}}</a> on {{selectedPost.datePosted}}, </p>
 	<p style="color: gray; margin-bottom: 2px;">authored by <span ng-repeat="author in selectedPost.authors track by $index"><span ng-if="$last && selectedPost.authors.length > 1"> and </span>{{author}}<span ng-if="!$last">, </span></span></p>
 </div>
 
