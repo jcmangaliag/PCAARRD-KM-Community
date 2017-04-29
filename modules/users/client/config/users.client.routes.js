@@ -14,17 +14,26 @@
 			.state('register', {
 				url: '/register',
 				template: '<user-registration></user-registration>',
-				controller: 'UserAuthenticationController'
+				controller: 'UserAuthenticationController',
+				resolve: {
+					$title: () => 'Register'
+				}
 			})
 			.state('registerAsAdmin', {
 				url: '/register-as-admin',
 				templateUrl: 'users/client/views/user-admin-registration.client.view.html',
-				controller: 'UserAuthenticationController'
+				controller: 'UserAuthenticationController',
+				resolve: {
+					$title: () => 'Register as Site Administrator'
+				}
 			})
 			.state('login', {
 				url: '/login',
 				templateUrl: 'users/client/views/user-login.client.view.html',
-				controller: 'UserAuthenticationController'
+				controller: 'UserAuthenticationController',
+				resolve: {
+					$title: () => 'Log In'
+				}
 			})
 			.state('user-profile', {
 				url: '/users/profile/:userID',
@@ -32,12 +41,24 @@
 				controller: 'UserController',
 				params: {
 					handle: "--user--"
+				},
+				resolve: {
+					selectedUser: ['UserService', '$stateParams', (UserService, $stateParams) => {
+						return UserService.getOneUser($stateParams.userID);				
+					}],
+					$title: ['selectedUser', (selectedUser) => `${selectedUser.name.first} ${selectedUser.name.last}`]
 				}
 			})
 			.state('edit-user', {
 				url: '/users/profile/:userID/edit',
 				templateUrl: 'users/client/views/edit-user.client.view.html',
-				controller: 'EditUserController'
+				controller: 'EditUserController',
+				resolve: {
+					selectedUser: ['UserService', '$stateParams', (UserService, $stateParams) => {
+						return UserService.getOneUser($stateParams.userID);				
+					}],
+					$title: ['selectedUser', (selectedUser) => `${selectedUser.name.first} ${selectedUser.name.last} - Edit`]
+				}
 			});
 
 		$locationProvider.html5Mode(true);

@@ -29,6 +29,7 @@
     "angular-ellipsis": "^1.0.1",
     "angular-emoji-filter-hd": "0.0.9",
     "angular-ui-router": "^0.4.2",
+    "angular-ui-router-title": "^0.1.1",
     "angularjs-datetime-picker-v2": "^0.2.2",
     "babel-polyfill": "^6.23.0",
     "body-parser": "^1.16.1",

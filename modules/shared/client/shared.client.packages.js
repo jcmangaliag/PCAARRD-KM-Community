@@ -2,6 +2,7 @@ import sharedModule from './config/shared.client.init-module';
 import sharedToastConfig from './config/shared.client.toast-config';
 import sharedEmojiConfig from './config/shared.client.emoji-config';
 import sharedProvide from './config/shared.client.provide';
+import sharedTitleConfig from './config/shared.client.title-config';
 
 import SharedAddHashtagsController from './controllers/shared-add-hashtags.client.controller';
 import SharedAddTechnologyHandlesController from './controllers/shared-add-technology-handles.client.controller';
