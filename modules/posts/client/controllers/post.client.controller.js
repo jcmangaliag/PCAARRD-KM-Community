@@ -79,7 +79,7 @@ import _ from 'lodash';
 		});
 
 		$scope.onSetPostReaction = (post, reactionIndex) => {
-			if ($scope.user.currentUser && $scope.user.currentUser.groupsJoined.indexOf(post.groupBelonged) > -1){
+			if (UserAuthenticationService.isLoggedIn() && $scope.user.currentUser && $scope.user.currentUser.groupsJoined.indexOf(post.groupBelonged) > -1){
 				PostService.getOnePost(post._id)
 					.then((result) => {
 						const user = {

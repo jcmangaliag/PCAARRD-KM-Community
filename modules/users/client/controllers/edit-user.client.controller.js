@@ -8,9 +8,9 @@ import moment from 'moment';
 		.module('users')
 		.controller('EditUserController', EditUserController);
 
-	EditUserController.$inject = ['$scope', '$window', '$stateParams', '$q', 'UserService', 'SharedUploadService', 'EditUserService', 'ngToast'];
+	EditUserController.$inject = ['$scope', '$window', '$stateParams', '$q', 'UserAuthenticationService', 'UserService', 'SharedUploadService', 'EditUserService', 'ngToast'];
 
-	function EditUserController ($scope, $window, $stateParams, $q, UserService, SharedUploadService, EditUserService, ngToast) {
+	function EditUserController ($scope, $window, $stateParams, $q, UserAuthenticationService, UserService, SharedUploadService, EditUserService, ngToast) {
 
 		UserService.getOneUser($stateParams.userID)
 			.then((result) => {
@@ -43,6 +43,10 @@ import moment from 'moment';
 		}
 
 		$scope.onProcessEditedUserData = () => {
+			if (!UserAuthenticationService.isLoggedIn()){
+				UserAuthenticationService.loginFirst();
+				return;
+			}
 
 			$scope.selectedUser.birthdate = `${$scope.selectedMonth} ${$scope.selectedDay} ${$scope.selectedYear}`;
 

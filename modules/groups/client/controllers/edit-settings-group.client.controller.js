@@ -7,9 +7,9 @@ import _ from 'lodash';
 		.module('groups')
 		.controller('EditSettingsGroupController', EditSettingsGroupController);
 
-	EditSettingsGroupController.$inject = ['$scope', '$state', '$stateParams', '$q', 'GroupService', 'UserService', 'SharedUploadService', 'EditSettingsGroupService', 'ngToast'];
+	EditSettingsGroupController.$inject = ['$scope', '$state', '$stateParams', '$q', 'GroupService', 'UserAuthenticationService', 'UserService', 'SharedUploadService', 'EditSettingsGroupService', 'ngToast'];
 
-	function EditSettingsGroupController ($scope, $state, $stateParams, $q, GroupService, UserService, SharedUploadService, EditSettingsGroupService, ngToast) {
+	function EditSettingsGroupController ($scope, $state, $stateParams, $q, GroupService, UserAuthenticationService, UserService, SharedUploadService, EditSettingsGroupService, ngToast) {
 
 		GroupService.getOneGroup($stateParams.handle)
 			.then((result) => {
@@ -47,6 +47,11 @@ import _ from 'lodash';
 		}
 
 		$scope.onProcessEditedGroupData = () => {
+
+			if (!UserAuthenticationService.isLoggedIn()){
+				UserAuthenticationService.loginFirst();
+				return;
+			}
 
 			let uploadPhoto = false, uploadCoverPhoto = false;
 
@@ -169,6 +174,12 @@ import _ from 'lodash';
 		}
 
 		$scope.onProcessSettingsGroupData = () => {
+
+			if (!UserAuthenticationService.isLoggedIn()){
+				UserAuthenticationService.loginFirst();
+				return;
+			}
+			
 			if ($scope.newGroupAdmins.enable){
 				const validatedEmails = $scope.validateAdminEmailAddress($scope.multipleFields.admins);
 				if (validatedEmails !== true){

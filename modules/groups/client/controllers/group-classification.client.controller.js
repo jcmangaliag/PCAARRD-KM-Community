@@ -7,11 +7,9 @@ import _ from 'lodash';
 		.module('groups')
 		.controller('GroupClassificationController', GroupClassificationController);
 
-	GroupClassificationController.$inject = ['$scope', '$state', 'GroupClassificationService', 'GroupService', 'SharedPaginationService', '$filter', 'ngToast'];
+	GroupClassificationController.$inject = ['$scope', '$state', 'GroupClassificationService', 'GroupService', 'SharedPaginationService', '$filter', 'ngToast', 'UserAuthenticationService'];
 
-	function GroupClassificationController ($scope, $state, GroupClassificationService, GroupService, SharedPaginationService, $filter, ngToast) {
-		const {deleteOneGroupClassification} = GroupClassificationService;
-		$scope.deleteOneGroupClassification = _.partial(deleteOneGroupClassification);
+	function GroupClassificationController ($scope, $state, GroupClassificationService, GroupService, SharedPaginationService, $filter, ngToast, UserAuthenticationService) {
 
 		$scope.addGroupClassificationFormData = {};
 
@@ -41,6 +39,11 @@ import _ from 'lodash';
 		$scope.onProcessGroupClassificationForm = () => {
 			const existingGroupClassification = $scope.validateExistingGroupClassification($scope.addGroupClassificationFormData);
 
+			if (!UserAuthenticationService.isLoggedIn()){
+				UserAuthenticationService.loginFirst();
+				return;
+			}
+
 			if (existingGroupClassification < 0){	// the specific commodity or isp does not exist
 				$scope.addGroupClassificationFormData.isUsed = false;
 
@@ -69,6 +72,11 @@ import _ from 'lodash';
 
 		$scope.onProcessEditedGroupClassification = () => {
 			const existingGroupClassification = $scope.validateExistingGroupClassification($scope.editedGroupClassificationFormData);
+
+			if (!UserAuthenticationService.isLoggedIn()){
+				UserAuthenticationService.loginFirst();
+				return;
+			}
 
 			if (existingGroupClassification < 0 || $scope.getExistingGroupClassification(existingGroupClassification)._id === $scope.editedGroupClassificationFormData._id){	
 				const updatedFields = {
@@ -101,6 +109,15 @@ import _ from 'lodash';
 
 		$scope.cancelEditGroupClassification = () => {
 			$scope.editedGroupClassificationFormData = null;
+		}
+
+		$scope.onDeleteOneGroupClassification = (groupClassification) => {
+			if (!UserAuthenticationService.isLoggedIn()){
+				UserAuthenticationService.loginFirst();
+				return;
+			}
+
+			GroupClassificationService.deleteOneGroupClassification(groupClassification);
 		}
 
 		$scope.goToGroup = (groupClassificationID) =>{

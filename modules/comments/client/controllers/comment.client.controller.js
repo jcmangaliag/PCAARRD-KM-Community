@@ -118,7 +118,7 @@ import _ from 'lodash';
 		}
 
 		$scope.onSetCommentReaction = (comment, selectedGroupHandle, reactionIndex) => {
-			if ($scope.user.currentUser && $scope.user.currentUser.groupsJoined.indexOf(selectedGroupHandle) > -1){
+			if (UserAuthenticationService.isLoggedIn() && $scope.user.currentUser && $scope.user.currentUser.groupsJoined.indexOf(selectedGroupHandle) > -1){
 				CommentService.getOneComment(comment._id)
 					.then((result) => {
 						const user = {

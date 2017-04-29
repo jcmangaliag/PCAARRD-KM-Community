@@ -104,6 +104,11 @@ import _ from 'lodash';
 		}
 
 		$scope.joinThisGroup = (userID, groupHandle) => {
+			if (!UserAuthenticationService.isLoggedIn()){
+				UserAuthenticationService.loginFirst();
+				return;
+			}
+
 			UserService.joinGroup(userID, groupHandle)
 				.then(() => {
 					return GroupService.updateGroup($scope.selectedGroup.handle, {membersCount: ++$scope.selectedGroup.membersCount});
@@ -126,6 +131,11 @@ import _ from 'lodash';
 		}
 
 		$scope.leaveThisGroup = (userID, groupHandle) => {
+			if (!UserAuthenticationService.isLoggedIn()){
+				UserAuthenticationService.loginFirst();
+				return;
+			}
+
 			if ($scope.selectedGroup.admin.indexOf(userID) > -1){
 				if ($scope.selectedGroup.admin.length > 1){
 					$scope.removeGroupAdmin(userID, groupHandle);
@@ -193,6 +203,11 @@ import _ from 'lodash';
 		}
 
 		$scope.removeMember = (memberID, groupHandle) => {
+			if (!UserAuthenticationService.isLoggedIn()){
+				UserAuthenticationService.loginFirst();
+				return;
+			}
+
 			if ($scope.selectedGroup.admin.indexOf(memberID) > -1){
 				if ($scope.selectedGroup.admin.length > 1){
 					$scope.removeGroupAdmin(memberID, groupHandle);
@@ -238,6 +253,11 @@ import _ from 'lodash';
 		}
 
 		$scope.onRemoveAdmin = (adminID, groupHandle) => {
+			if (!UserAuthenticationService.isLoggedIn()){
+				UserAuthenticationService.loginFirst();
+				return;
+			}
+
 			if ($scope.selectedGroup.admin.length > 1){
 				$scope.removeGroupAdmin(adminID, groupHandle);
 			} else {
@@ -385,6 +405,11 @@ import _ from 'lodash';
 			const classificationID = $scope.addGroupFormData.classification._id;
 			const groupHandle = $scope.addGroupFormData.handle;
 
+			if (!UserAuthenticationService.isLoggedIn()){
+				UserAuthenticationService.loginFirst();
+				return;
+			}
+			
 			UserAuthenticationService.getCurrentUser()
 				.then((result)=> {
 		    		$scope.addGroupFormData.createdBy = result._id;	
