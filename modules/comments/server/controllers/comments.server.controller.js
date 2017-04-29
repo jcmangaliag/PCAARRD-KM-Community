@@ -1,6 +1,13 @@
 import Comment from '../models/comments.server.model';
 
 const commentControls = { 
+	list : (req, res) => {
+		Comment.find((err, results) => {
+	        if (err) { console.log(err); }
+
+	        res.send({ comments: results });
+	    });
+	}, 
 	listByReferredPost : (req, res) => {
 		const referredPost = req.params.referredPost;
 

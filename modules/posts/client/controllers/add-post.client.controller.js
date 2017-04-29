@@ -117,6 +117,7 @@ import _ from 'lodash';
 		$scope.onProcessPostData = (postCategory) => {
 
 			if (!UserAuthenticationService.isLoggedIn()){
+				UserAuthenticationService.loginFirst();
 				return;
 			}
 

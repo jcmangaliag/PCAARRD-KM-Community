@@ -5,9 +5,9 @@
 		.module('users')
 		.factory('UserAuthenticationService', UserAuthenticationService);
 
-	UserAuthenticationService.$inject = ['$http', '$window', '$q', '$state', 'UserService'];
+	UserAuthenticationService.$inject = ['$http', '$window', '$q', '$state', 'UserService', 'ngToast'];
 
-	function UserAuthenticationService ($http, $window, $q, $state, UserService) {
+	function UserAuthenticationService ($http, $window, $q, $state, UserService, ngToast) {
 
 		const saveToken = (token) => {
 		  $window.localStorage['pcaarrdcommunity-token'] = token;
@@ -106,6 +106,14 @@
 			return deferred.promise;
 		}
 
+		const loginFirst = () => {
+			ngToast.create({
+	    		className: 'danger',
+	    		content: `You are currently not logged in. Please log in first!`
+	    	});
+
+		    $state.go('login');
+		}
 
 		return {
 		  saveToken,
@@ -115,7 +123,8 @@
 		  getCurrentUser,
 		  register,
 		  login,
-		  allowAdminRegistration
+		  allowAdminRegistration,
+		  loginFirst
 		};
 	}
 

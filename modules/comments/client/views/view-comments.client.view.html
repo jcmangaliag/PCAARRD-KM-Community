@@ -3,7 +3,7 @@
 	<div ng-repeat="comment in comments.contents | orderBy:'':true | limitTo: paginate.pageLimit(paginate.currentPage, paginate.commentsPerPage)">
 		<div class="row">
 		    <div class="col-xs-10 col-sm-10">
-		      	<p style="display: inline-block; color:gray; margin-bottom: 0;"><a href="#" style="font-weight: bold; color: #333333;">{{comment.commentedBy}}</a> wrote on {{comment.dateCommented}}</p>
+		      	<p style="display: inline-block; color:gray; margin-bottom: 0;"><a ui-sref="user-profile({userID: comment.commentedBy._id})" style="font-weight: bold; color: #333333;">{{comment.commentedBy.name}}</a> wrote on {{comment.dateCommented}}</p>
 		    </div>
 		    <div class="col-xs-2 col-sm-2" style="text-align: right;">
 		      <delete-comment></delete-comment>

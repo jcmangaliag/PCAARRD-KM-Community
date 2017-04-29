@@ -18,7 +18,7 @@
 
 
 <section id="write-comment">
-	<add-comment></add-comment>
+	<add-comment ng-if="user.currentUser && (user.currentUser.groupsJoined.indexOf(selectedGroup.handle) > -1)"></add-comment>
 </section>
 
 	

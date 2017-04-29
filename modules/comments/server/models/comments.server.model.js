@@ -10,7 +10,7 @@ const CommentSchema = mongoose.Schema({
 		required: true
 	},
 	commentedBy: {
-		type: String, // mongoose.Schema.Types.ObjectId,
+		type: Object, 
 		required: true
 	},
 	dateCommented: {

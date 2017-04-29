@@ -15,10 +15,6 @@ import _ from 'lodash';
 			contents: []
 		};
 
-		/* temporary user */
-		const username = "Mark Eric Cabanli";
-		const userid = "Mark's id";
-
 		const getCommentList = () => {
 			return commentList;
 		}
@@ -134,9 +130,8 @@ import _ from 'lodash';
 			submitComment,
 			setCommentReaction,
 			deleteCommentsByReferredPost,
-			deleteOneComment,
-			userid 
-		};	/* temporary userid */
+			deleteOneComment
+		};	
 	}
 
 })();

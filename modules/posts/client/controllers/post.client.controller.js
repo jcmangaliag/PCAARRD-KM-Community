@@ -22,7 +22,6 @@ import _ from 'lodash';
 		$scope.paginate.postsPerPage = 5;
 
 		$scope.deleteOnePost = _.partial(deleteOnePost, $scope, $stateParams);
-		$scope.userid = PostService.userid;	// temporary userid
 
 		$scope.commentOnOnePost = (groupHandle, postCategory, postID) => {
 			$state.go(`oneGroup.viewOne${postCategory.charAt(0).toUpperCase() + postCategory.slice(1)}Post`, {handle: groupHandle, postID: postID, '#': 'write-comment'});
@@ -94,33 +93,8 @@ import _ from 'lodash';
 			$state.go(`oneGroup`, {handle: groupHandle});
 		}
 
-/*		$scope.setSearchPostsData = (value) => {
-			const currentViewPostsCategory = ViewPostsCategoriesService.getCurrentViewPostsCategory().postCategory.category;
-			ViewPostsCategoriesService.retrievePostsByCategory(currentViewPostsCategory)
-				.then(() => {
-					$scope.posts.contents = $filter('filter')($scope.postsCopy.contents, value);
-					$scope.resetCurrentPage();
-				}, (error) => {
-					// problem with loading posts
-				});
-		}*/
-
 		$scope.$watch('searchPostsValue', function(value){ 
 			if ($scope.posts){
-				/*if ($stateParams.handle === '--user--'){
-					ViewPostsCategoriesService.setUser($stateParams.userID);
-					$scope.setSearchPostsData(value);
-				} else if ($stateParams.handle === '--my-groups--'){
-					if ($scope.user.isLoggedIn){
-						UserAuthenticationService.getCurrentUser()
-					    	.then((result)=> {
-					    		ViewPostsCategoriesService.setUser(result._id);
-					    		$scope.setSearchPostsData(value);
-					    	});
-				    }
-				} else {
-					$scope.setSearchPostsData(value);
-				}*/
 				$scope.posts.contents = $filter('filter')($scope.postsCopy.contents, value);
 				$scope.resetCurrentPage();
 			}

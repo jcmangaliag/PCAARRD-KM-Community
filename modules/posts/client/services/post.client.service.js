@@ -13,10 +13,6 @@ import _ from 'lodash';
 
 		let postList = { contents: [] }, postListCopy = { contents: [] }, groupBelonged;
 
-		/* temporary user */
-		const username = "Mark Eric Cabanli";
-		const userid = "Mark's id";
-
 		const getPostList = () => {
 			return postList;
 		}
@@ -246,9 +242,8 @@ import _ from 'lodash';
 			getOnePost,
 			setPostReaction,
 			deleteOnePost,
-			decrementCommentsCount,
-			userid 
-		};	/* temporary userid */
+			decrementCommentsCount
+		};	
 	}
 
 })();

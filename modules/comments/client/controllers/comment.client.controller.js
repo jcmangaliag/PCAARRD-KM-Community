@@ -8,17 +8,26 @@ import _ from 'lodash';
 		.module('comments')
 		.controller('CommentController', CommentController);
 
-	CommentController.$inject = ['$scope', '$state', '$q', 'CommentService', 'PostService', 'SharedPaginationService', 'ngToast', 'SharedUploadService'];
+	CommentController.$inject = ['$scope', '$state', '$q', 'CommentService', 'PostService', 'SharedPaginationService', 'ngToast', 'SharedUploadService', 'UserAuthenticationService', 'UserService'];
 
-	function CommentController ($scope, $state, $q, CommentService, PostService, SharedPaginationService, ngToast, SharedUploadService) {
+	function CommentController ($scope, $state, $q, CommentService, PostService, SharedPaginationService, ngToast, SharedUploadService, UserAuthenticationService, UserService) {
 		$scope.addCommentFormData = {};
 		const {submitComment} = CommentService;
 		$scope.submitComment = _.partial(submitComment);
-		$scope.userid = CommentService.userid;	// temporary userid
 		$scope.comments = CommentService.getCommentList();
 		$scope.paginate = SharedPaginationService;
 		$scope.paginate.currentPage = 1;
 		$scope.paginate.commentsPerPage = 3;
+
+		$scope.user = {};
+		$scope.user.isLoggedIn = UserAuthenticationService.isLoggedIn();
+
+		if ($scope.user.isLoggedIn){
+			UserAuthenticationService.getCurrentUser()
+		    	.then((result)=> {
+		    		$scope.user.currentUser = result;
+		    	});
+	    }
 
 		$scope.clearCommentForm = () => {
 			$scope.addCommentFormData = null;
@@ -30,6 +39,11 @@ import _ from 'lodash';
 		}
 		
 		$scope.onProcessCommentData = (postID) => {
+			if (!UserAuthenticationService.isLoggedIn()){
+				UserAuthenticationService.loginFirst();
+				return;
+			}
+
 			$scope.addCommentFormData.referredPost = postID;
 			if ($scope.technologyHandle.enable){
 				$scope.addCommentFormData.technologyHandles = $scope.selectedTechnologies;
@@ -55,8 +69,12 @@ import _ from 'lodash';
 				}
 			];
 
-			// hardcoded as of now, should be Object ID
-			$scope.addCommentFormData.commentedBy = "Mark Eric Cabanli";
+			if ($scope.user.isLoggedIn){
+				$scope.addCommentFormData.commentedBy = {
+					_id: $scope.user.currentUser._id,
+					name: `${$scope.user.currentUser.name.first} ${$scope.user.currentUser.name.last}`
+				}
+			}
 
 			if ($scope.selectedUploadFiles.length > 0){
 				let uploadedFiles = [];
