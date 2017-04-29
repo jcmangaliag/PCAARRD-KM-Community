@@ -8,9 +8,9 @@ import _ from 'lodash';
 		.module('posts')
 		.controller('PostController', PostController);
 
-	PostController.$inject = ['$scope', '$state', '$stateParams', 'PostService', 'CommentService', 'GroupService', 'ViewPostsCategoriesService', 'SharedPaginationService', 'UserAuthenticationService', '$filter'];
+	PostController.$inject = ['$scope', '$state', '$stateParams', 'PostService', 'CommentService', 'GroupService', 'ViewPostsCategoriesService', 'SharedPaginationService', 'UserAuthenticationService', '$filter', 'ngToast'];
 
-	function PostController ($scope, $state, $stateParams, PostService, CommentService, GroupService, ViewPostsCategoriesService, SharedPaginationService, UserAuthenticationService, $filter) {
+	function PostController ($scope, $state, $stateParams, PostService, CommentService, GroupService, ViewPostsCategoriesService, SharedPaginationService, UserAuthenticationService, $filter, ngToast) {
 
 		const {deleteOnePost} = PostService;
 
@@ -60,6 +60,9 @@ import _ from 'lodash';
 					if ($scope.user.isLoggedIn){
 						UserAuthenticationService.getCurrentUser()
 					    	.then((result)=> {
+					    		if ($stateParams.handle === '--my-groups--'){
+					    			$scope.user.currentUser = result;
+					    		}
 					    		const memberOfGroup = ($stateParams.handle === '--my-groups--' || result.groupsJoined.indexOf($stateParams.handle) > -1)? true : false;
 					    		ViewPostsCategoriesService.setUser(result._id, memberOfGroup);
 					    		$scope.setPostsData();
@@ -80,13 +83,25 @@ import _ from 'lodash';
 		});
 
 		$scope.onSetPostReaction = (post, reactionIndex) => {
-			PostService.getOnePost(post._id)
-				.then((result) => {
-					PostService.setPostReaction($scope, result, reactionIndex);
-					post.reactions = result.reactions;
-				}, (error) => {
-					// show 404 not found page
-				});
+			if ($scope.user.currentUser && $scope.user.currentUser.groupsJoined.indexOf(post.groupBelonged) > -1){
+				PostService.getOnePost(post._id)
+					.then((result) => {
+						const user = {
+							_id: $scope.user.currentUser._id, 
+							name: `${$scope.user.currentUser.name.first} ${$scope.user.currentUser.name.last}`
+						};
+
+						PostService.setPostReaction($scope, result, reactionIndex, user);
+						post.reactions = result.reactions;
+					}, (error) => {
+						// show 404 not found page
+					});
+			} else {
+				ngToast.create({
+		    		className: 'danger',
+		    		content: `The user must join the group first before reacting.`
+		    	});
+			}
 		}
 
 		$scope.returnToGroup = (groupHandle) => {
@@ -120,6 +135,9 @@ import _ from 'lodash';
 			return groupIndex > -1? $scope.groups.contents[groupIndex].name : '';
 		}
 
+		$scope.highlightReaction = (selectedReaction) => {
+			return $scope.user.currentUser && selectedReaction.users.map((user)=> user._id).indexOf($scope.user.currentUser._id) >=0; 
+		}
 	}
 
 })();

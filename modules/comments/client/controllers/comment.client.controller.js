@@ -74,7 +74,10 @@ import _ from 'lodash';
 					_id: $scope.user.currentUser._id,
 					name: `${$scope.user.currentUser.name.first} ${$scope.user.currentUser.name.last}`
 				}
+
 			}
+
+			const commentedBy = $scope.addCommentFormData.commentedBy;
 
 			if ($scope.selectedUploadFiles.length > 0){
 				let uploadedFiles = [];
@@ -87,7 +90,7 @@ import _ from 'lodash';
 						$scope.submitComment(_.cloneDeep($scope.addCommentFormData));
 						PostService.getOnePost($scope.selectedPost._id)	// check post for update
 							.then((result) => {
-								PostService.setPostReaction($scope, result, 0);	// increment post's comment count
+								PostService.setPostReaction($scope, result, 0, commentedBy);	// increment post's comment count
 							}, (error) => {
 								// show 404 not found page
 							});
@@ -105,7 +108,7 @@ import _ from 'lodash';
 				$scope.submitComment(_.cloneDeep($scope.addCommentFormData));
 				PostService.getOnePost($scope.selectedPost._id)	// check post for update
 					.then((result) => {
-						PostService.setPostReaction($scope, result, 0);	// increment post's comment count
+						PostService.setPostReaction($scope, result, 0, commentedBy);	// increment post's comment count
 					}, (error) => {
 						// show 404 not found page
 					});
@@ -114,14 +117,26 @@ import _ from 'lodash';
 			}
 		}
 
-		$scope.onSetCommentReaction = (comment, reactionIndex) => {
-			CommentService.getOneComment(comment._id)
-				.then((result) => {
-					CommentService.setCommentReaction(result, reactionIndex);
-					comment.reactions = result.reactions;
-				}, (error) => {
-					// show 404 not found page
-				});
+		$scope.onSetCommentReaction = (comment, selectedGroupHandle, reactionIndex) => {
+			if ($scope.user.currentUser && $scope.user.currentUser.groupsJoined.indexOf(selectedGroupHandle) > -1){
+				CommentService.getOneComment(comment._id)
+					.then((result) => {
+						const user = {
+							_id: $scope.user.currentUser._id, 
+							name: `${$scope.user.currentUser.name.first} ${$scope.user.currentUser.name.last}`
+						};
+
+						CommentService.setCommentReaction(result, reactionIndex, user);
+						comment.reactions = result.reactions;
+					}, (error) => {
+						// show 404 not found page
+					});
+			} else {
+				ngToast.create({
+		    		className: 'danger',
+		    		content: `The user must join the group first before reacting.`
+		    	});
+			}
 		}
 
 		$scope.onDeleteComment = (comment) => {
@@ -152,6 +167,10 @@ import _ from 'lodash';
 		}
 
 		CommentService.getComments($state.params.postID);
+
+		$scope.highlightReaction = (selectedReaction) => {
+			return $scope.user.currentUser && selectedReaction.users.map((user)=> user._id).indexOf($scope.user.currentUser._id) >=0; 
+		}
 	}
 
 })();

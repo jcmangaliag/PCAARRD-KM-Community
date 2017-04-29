@@ -64,19 +64,21 @@ import _ from 'lodash';
 			});
 		}
 
-		const setCommentReaction = (comment, reactionIndex) => {
+		const setCommentReaction = (comment, reactionIndex, currentUser) => {
 			let reactions = comment.reactions;
 			const reactionsLength = reactions.length;
 			let duplicateReactionIndex = -1;
 
 			// remove user and count duplicates in reactions
 			for (let i = 0; i < reactionsLength; i++){
-				if (reactions[i].users.indexOf(userid) >= 0){ // remove duplicate user and count
-					duplicateReactionIndex = i;
-					const removeUserIndex = reactions[i].users.indexOf(userid);
-					reactions[i].users.splice(removeUserIndex, 1);
-					reactions[i].count--;
-					break;
+				if (reactions[i].users.length > 0){
+					const removeUserIndex = reactions[i].users.map((user) => user._id).indexOf(currentUser._id);
+					if (removeUserIndex >= 0){ // remove duplicate user and count
+						duplicateReactionIndex = i;
+						reactions[i].users.splice(removeUserIndex, 1);
+						reactions[i].count--;
+						break;
+					}
 				}
 			}
 
@@ -84,7 +86,7 @@ import _ from 'lodash';
 			if (reactionIndex != duplicateReactionIndex){
 				// increments the reaction count and adds the user in reaction userlist
 				reactions[reactionIndex].count++;
-				reactions[reactionIndex].users.push(userid);
+				reactions[reactionIndex].users.push(currentUser);
 			}
 
 			$http.put(`/api/comments/reactions/${comment._id}`, {
