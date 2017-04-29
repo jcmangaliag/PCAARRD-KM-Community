@@ -135,6 +135,24 @@ import _ from 'lodash';
 			return groupIndex > -1? $scope.groups.contents[groupIndex].name : '';
 		}
 
+		$scope.checkIfGroupAdmin = (groupHandle, currentUser) => {
+			const groupIndex = $scope.groups.contents.map((group) => group.handle).indexOf(groupHandle);
+			return (groupIndex > -1 && $scope.groups.contents[groupIndex].admin.indexOf(currentUser) > -1)? true: false;
+		}
+
+		$scope.showDeletePostButton = (post) => {
+			let isGroupAdmin = false;
+			const isCurrentUser = $scope.user.currentUser && ((post && post.postedBy._id) === $scope.user.currentUser._id);
+
+			if ($state.current.name.indexOf('oneGroup') >= 0){
+				isGroupAdmin = $scope.user.currentUser && $scope.selectedGroup.admin.indexOf($scope.user.currentUser._id) > -1;
+			} else {
+				isGroupAdmin = $scope.user.currentUser && $scope.checkIfGroupAdmin(post.groupBelonged, $scope.user.currentUser._id);
+			}
+
+			return isGroupAdmin || isCurrentUser;
+		}
+
 		$scope.highlightReaction = (selectedReaction) => {
 			return $scope.user.currentUser && selectedReaction.users.map((user)=> user._id).indexOf($scope.user.currentUser._id) >=0; 
 		}
