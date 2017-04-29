@@ -134,28 +134,32 @@ import _ from 'lodash';
 			} else {
 				ngToast.create({
 		    		className: 'danger',
-		    		content: `The user must join the group first before reacting.`
+		    		content: `You must join the group first before reacting.`
 		    	});
 			}
 		}
 
 		$scope.onDeleteComment = (comment) => {
-			CommentService.deleteOneComment(comment)
+			if (!UserAuthenticationService.isLoggedIn()){
+				UserAuthenticationService.loginFirst();
+			} else {
+				CommentService.deleteOneComment(comment)
 				.then((result) => {
-					return PostService.getOnePost($scope.selectedPost._id);
+					return PostService.getOnePost($scope.selectedPost._id);	// update selected post
 				}, (error) => {
 					return $q.reject(error);
 					// comment to be deleted not found
 				})
 				.then((result) => {
 					$scope.selectedPost = result;
-					return CommentService.getCommentsByUser($state.params.postID, "MarkEricCabanli");
+					// find all comments of the same author of the current post
+					return CommentService.getCommentsByUser($state.params.postID, comment.commentedBy._id);
 				}, (error) => {
 					return $q.reject(error);
 					// referred post not found, but not possible since comments are removed after post deletion
 				})
-				.then((results) => {
-					PostService.decrementCommentsCount($scope.selectedPost, comment, results.length, "Mark's id");
+				.then((results) => {	
+					PostService.decrementCommentsCount($scope.selectedPost, comment, results.length, comment.commentedBy._id);
 				}, (error) => {
 					// all comments of the author are not found
 					ngToast.create({
@@ -163,13 +167,20 @@ import _ from 'lodash';
 			    		content: `Error: The comment was not found.`
 			    	});
 				});
-
+			}	
 		}
 
 		CommentService.getComments($state.params.postID);
 
 		$scope.highlightReaction = (selectedReaction) => {
 			return $scope.user.currentUser && selectedReaction.users.map((user)=> user._id).indexOf($scope.user.currentUser._id) >=0; 
+		}
+
+		$scope.showDeleteCommentButton = (comment) => {
+			const isGroupAdmin = $scope.user.currentUser && $scope.selectedGroup.admin.indexOf($scope.user.currentUser._id) > -1;
+			const isCurrentUser = $scope.user.currentUser && ((comment && comment.commentedBy._id) === $scope.user.currentUser._id);		
+			
+			return isGroupAdmin || isCurrentUser;
 		}
 	}
 

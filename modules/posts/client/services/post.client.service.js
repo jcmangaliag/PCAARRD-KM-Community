@@ -171,7 +171,7 @@ import _ from 'lodash';
 			// prevent reposting the same reaction
 			if (reactionIndex != duplicateReactionIndex){
 				reactions[reactionIndex].count++;
-				
+
 				// avoid duplication of user in comments userlist
 				if (reactionIndex > 0 || reactions[0].users.length === 0 || (reactions[0].users.map((user) => user._id).indexOf(currentUser._id) < 0)){
 					reactions[reactionIndex].users.push(currentUser);
@@ -188,8 +188,12 @@ import _ from 'lodash';
 		const decrementCommentsCount = (post, comment, userCommentsCount, userID) => {
 			post.reactions[0].count--;
 			
-			if (userCommentsCount < 1)
-				post.reactions[0].users.splice(post.reactions[0].users.indexOf(userID), 1);
+			if (userCommentsCount < 1){
+				const userIndex = post.reactions[0].users.map((user) => user._id).indexOf(userID);
+				if (userIndex > -1){
+					post.reactions[0].users.splice(userIndex, 1);
+				}
+			}
 
 			$http.put(`/api/posts/reactions/${post._id}`, {
 				reactions: post.reactions

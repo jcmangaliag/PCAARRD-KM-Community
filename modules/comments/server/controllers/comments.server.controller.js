@@ -19,10 +19,9 @@ const commentControls = {
 	},
 	listByUserComments : (req, res) => {
 		const referredPost = req.params.referredPost;
-		//const commentedBy = req.params.commentedBy;
-		const commentedBy = "Mark Eric Cabanli";	// temporary
+		const commentedBy = req.params.commentedBy;
 
-		Comment.find({referredPost, commentedBy}, (err, results) => {
+		Comment.find({referredPost, 'commentedBy._id': commentedBy}, (err, results) => {
 	        if (err) { 
 	        	return (err); 
 	        } else if (results === null) { 

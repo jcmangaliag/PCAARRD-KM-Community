@@ -1,4 +1,4 @@
-<div class="btn-group" style="padding-right: 10px; text-align: left;">
+<div ng-show="showDeleteCommentButton(comment)" class="btn-group" style="padding-right: 10px; text-align: left;">
 	<div>
   		<button title="Delete" style="padding:2px 6px;" type="button" class="btn btn-default" data-toggle="modal" data-target="#{{'delete' + comment._id}}"><i class="fa fa-lg fa-trash" aria-hidden="true"></i></button>
   	</div>
