@@ -33,10 +33,11 @@ import _ from 'lodash';
 			return groupBelonged;
 		}
 
-		const getPostsByGroupAndCategory = (category) => {
+		const getPostsByGroupAndCategory = (category, memberOfGroup) => {
 			const deferred = $q.defer();
+			const config = memberOfGroup? {} : {params: {showPublic : true}};	
 
-			$http.get(`/api/posts/group-belonged/${groupBelonged}/category/${category}`)
+			$http.get(`/api/posts/group-belonged/${groupBelonged}/category/${category}`, config)
 			.then((response) => {
 				postList.contents = response.data.posts;
 				postListCopy.contents = _.toArray(response.data.posts);
@@ -49,10 +50,11 @@ import _ from 'lodash';
 			return deferred.promise;
 		}
 
-		const getAllPostsByGroup = () => {
+		const getAllPostsByGroup = (memberOfGroup) => {
 			const deferred = $q.defer();
+			const config = memberOfGroup? {} : {params: {showPublic : true}};
 
-			$http.get(`/api/posts/group-belonged/${groupBelonged}`)
+			$http.get(`/api/posts/group-belonged/${groupBelonged}`, config)
 			.then((response) => {
 				postList.contents = response.data.posts;
 				postListCopy.contents = _.toArray(response.data.posts);

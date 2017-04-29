@@ -9,10 +9,10 @@ const storage = multer.diskStorage({
     }
 });
 
-const upload = multer({
+const fileUpload = multer({
     	storage,
     	limits: { fileSize: 20000000 }
 	}).single('sharedUploadFiles');
 
 
-export default upload;
+export default fileUpload;

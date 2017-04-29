@@ -121,6 +121,7 @@ import _ from 'lodash';
 
 					$scope.user.currentUser.groupsJoined.push($scope.selectedGroup.handle);
 					$scope.groupMembers.push($scope.user.currentUser);
+					$scope.userMembership = true;
 				});
 		}
 
@@ -161,6 +162,8 @@ import _ from 'lodash';
 					if (groupIndexInGroup > -1){
 						$scope.groupMembers.splice(groupIndexInGroup, 1);
 					}
+
+					$scope.userMembership = false;
 				});
 
 		}
@@ -222,6 +225,7 @@ import _ from 'lodash';
 						const groupIndexInUser = $scope.user.currentUser.groupsJoined.indexOf($scope.selectedGroup.handle);
 				    	if (groupIndexInUser > -1){
 							$scope.user.currentUser.groupsJoined.splice(groupIndexInUser, 1);
+							$scope.userMembership = false;
 						}
 					}
 
@@ -264,7 +268,7 @@ import _ from 'lodash';
 			$scope.user = {};
 			$scope.user.isLoggedIn = UserAuthenticationService.isLoggedIn();
 
-			if ($stateParams.handle){	// if viewing one group
+			if ($stateParams.handle) {	// if viewing one group
 
 				GroupService.getOneGroup($stateParams.handle)	// load the group
 					.then((result) => {
@@ -283,6 +287,9 @@ import _ from 'lodash';
 					})
 					.then((currentUser)=> {	// load the current user
 			    		$scope.user.currentUser = currentUser;
+			    		if ($scope.user.currentUser){
+			    			$scope.userMembership = $scope.user.currentUser.groupsJoined.indexOf($scope.selectedGroup.handle) > -1? true: false; 
+			    		}
 			    	});
 
 
@@ -303,14 +310,8 @@ import _ from 'lodash';
 
 		$scope.$watch('searchGroupsValue', function(value){ 
 			if ($scope.groups){
-				const currentViewGroupsCategory = ViewGroupsCategoriesService.getCurrentViewGroupsCategory().category;
-				ViewGroupsCategoriesService.retrieveGroupsByCategory(currentViewGroupsCategory)
-					.then(() => {
-						$scope.groups.contents = $filter('filter')($scope.groupsCopy.contents, value);
-						$scope.paginate.currentPage = 1;
-					}, (error) => {
-						// problem with loading group
-					});
+				$scope.groups.contents = $filter('filter')($scope.groupsCopy.contents, value);
+				$scope.paginate.currentPage = 1;
 			}
     	});
 

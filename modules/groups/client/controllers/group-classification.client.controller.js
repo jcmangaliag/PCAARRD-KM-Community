@@ -110,13 +110,8 @@ import _ from 'lodash';
 
 		$scope.$watch('searchClassificationsValue', function(value){ 
 			if ($scope.groupClassifications){
-				GroupClassificationService.getAllGroupClassifications()
-					.then(() => {
-						$scope.groupClassifications.contents = $filter('filter')($scope.groupClassificationsCopy.contents, value);
-						$scope.paginate.currentPage = 1;
-					}, (error) => {
-						// problem with loading group classifications
-					});
+				$scope.groupClassifications.contents = $filter('filter')($scope.groupClassificationsCopy.contents, value);
+				$scope.paginate.currentPage = 1;
 			}
     	});
 

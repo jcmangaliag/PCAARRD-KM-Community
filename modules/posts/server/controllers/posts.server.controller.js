@@ -16,14 +16,26 @@ const postControls = {
 	    });
 	},
 	listByGroupBelonged : (req, res) => {
-		Post.find({groupBelonged: req.params.handle}, (err, results) => {
+		let query = {groupBelonged: req.params.handle};
+
+		if (req.query && req.query.showPublic){
+			query.showPublic = req.query.showPublic;
+		}
+
+		Post.find(query, (err, results) => {
 	        if (err) { return (err); }
 
 	        res.send({ posts: results });
 	    });
 	},
 	listByGroupBelongedAndCategory : (req, res) => {
-		Post.find({groupBelonged: req.params.handle, category: req.params.category}, (err, results) => {
+		let query = {groupBelonged: req.params.handle, category: req.params.category};
+
+		if (req.query && req.query.showPublic){
+			query.showPublic = req.query.showPublic;
+		}
+
+		Post.find(query, (err, results) => {
 	        if (err) { return (err); }
 
 	        res.send({ posts: results });
@@ -47,14 +59,14 @@ const postControls = {
 	    });
 	},
 	listByUser : (req, res) => {
-		Post.find({postedBy: req.params.userID}, (err, results) => {
+		Post.find({postedBy: req.params.userID, showPublic: true}, (err, results) => {
 	        if (err) { return (err); }
 
 	        res.send({ posts: results });
 	    });
 	},
 	listByUserAndCategory : (req, res) => {
-		Post.find({postedBy: req.params.userID, category: req.params.category}, (err, results) => {
+		Post.find({postedBy: req.params.userID, category: req.params.category, showPublic: true}, (err, results) => {
 	        if (err) { return (err); }
 
 	        res.send({ posts: results });

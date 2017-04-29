@@ -48,7 +48,7 @@
 			postCategory: viewPostsCategories[0]
 		}
 
-		let userID = null;
+		let userID = null, memberOfGroup = false;
 
 		const getViewPostsCategories = () => {
 			return viewPostsCategories;
@@ -64,15 +64,16 @@
 			retrievePostsByCategory(currentViewPostsCategory.postCategory.category);
 		}
 
-		const setUserID = (userid) => {
+		const setUser = (userid, memberOfCurrentGroup) => {
 			userID = userid;
+			memberOfGroup = memberOfCurrentGroup;
 		}
 
 		const retrievePostsByCategory = (category) => {
 			const deferred = $q.defer();
 
 			if (category === "all"){
-				if (PostService.getGroupBelonged() === '--my-groups--'){
+				if (PostService.getGroupBelonged() === '--my-groups--'){	// no need to check memberOfGroup
 					PostService.getAllPostsByMyGroups(userID)
 					.then((results) => {
 						deferred.resolve();
@@ -89,7 +90,7 @@
 						deferred.reject(error);
 					});
 				} else {
-					PostService.getAllPostsByGroup()
+					PostService.getAllPostsByGroup(memberOfGroup)
 					.then((results) => {
 						deferred.resolve();
 					}, (error) => {
@@ -116,7 +117,7 @@
 						deferred.reject(error);
 					});
 				} else {
-					PostService.getPostsByGroupAndCategory(currentViewPostsCategory.postCategory.category)
+					PostService.getPostsByGroupAndCategory(currentViewPostsCategory.postCategory.category, memberOfGroup)
 					.then((results) => {
 						deferred.resolve();
 					}, (error) => {
@@ -133,7 +134,7 @@
 			getViewPostsCategories,
 			getCurrentViewPostsCategory,
 			setCurrentViewPostsCategory,
-			setUserID,
+			setUser,
 			retrievePostsByCategory
 		};
 	}
