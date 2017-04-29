@@ -12,16 +12,12 @@ import _ from 'lodash';
 
 	function PostController ($scope, $state, $stateParams, PostService, CommentService, GroupService, ViewPostsCategoriesService, SharedPaginationService, UserAuthenticationService, $filter, ngToast) {
 
-		const {deleteOnePost} = PostService;
-
 		PostService.setGroupBelonged($stateParams.handle);
 		$scope.groupBelonged = $stateParams.handle;
 
 		$scope.paginate = SharedPaginationService;
 		$scope.paginate.currentPage = 1;
 		$scope.paginate.postsPerPage = 5;
-
-		$scope.deleteOnePost = _.partial(deleteOnePost, $scope, $stateParams);
 
 		$scope.commentOnOnePost = (groupHandle, postCategory, postID) => {
 			$state.go(`oneGroup.viewOne${postCategory.charAt(0).toUpperCase() + postCategory.slice(1)}Post`, {handle: groupHandle, postID: postID, '#': 'write-comment'});
@@ -155,6 +151,14 @@ import _ from 'lodash';
 
 		$scope.highlightReaction = (selectedReaction) => {
 			return $scope.user.currentUser && selectedReaction.users.map((user)=> user._id).indexOf($scope.user.currentUser._id) >=0; 
+		}
+
+		$scope.onDeleteOnePost = (post) => {
+			if (!UserAuthenticationService.isLoggedIn()){
+				UserAuthenticationService.loginFirst();
+			} else {
+				PostService.deleteOnePost($scope, $stateParams, post);
+			}	
 		}
 	}
 
