@@ -8,7 +8,7 @@
 	userRoutes.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 
 	function userRoutes ($stateProvider, $urlRouterProvider, $locationProvider) {
-		$urlRouterProvider.otherwise('/');
+		$urlRouterProvider.otherwise('/page-not-found');
 
 		$stateProvider
 			.state('register', {

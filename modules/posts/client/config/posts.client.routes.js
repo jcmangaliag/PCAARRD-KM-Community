@@ -8,7 +8,7 @@
 	postRoutes.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 
 	function postRoutes ($stateProvider, $urlRouterProvider, $locationProvider) {
-		$urlRouterProvider.otherwise('/');
+		$urlRouterProvider.otherwise('/page-not-found');
 
 		$stateProvider
 			/* View Posts from */

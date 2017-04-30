@@ -8,7 +8,7 @@
 	groupRoutes.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 
 	function groupRoutes ($stateProvider, $urlRouterProvider, $locationProvider) {
-		$urlRouterProvider.otherwise('/');
+		$urlRouterProvider.otherwise('/page-not-found');
 
 		$stateProvider
 			.state('groups', {

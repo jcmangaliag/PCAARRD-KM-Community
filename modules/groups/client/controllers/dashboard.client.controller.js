@@ -214,9 +214,7 @@ import _ from 'lodash';
 
 		$scope.computeGroupsDistribution = () => {
 			const totalGroups = $scope.groups.length;
-			let groupIndustriesSeries = [];
 			let groupIndustriesData = [];
-			
 			let groupsDistributionSeries = [];
 			
 			const industries = [...new Set($scope.groups.map((group) => group.classification.industry))];	// array of distinct industries
@@ -315,6 +313,12 @@ import _ from 'lodash';
 
 		$scope.loadTrendingTopics = (trendingTopics) => {	
 		    Highcharts.chart('trending-topics-container', {
+		    	title: {
+			        text: `Trending Topics in ${moment().format("MMMM, YYYY")}`
+			    }, 
+			    subtitle: {
+			    	text: 'Source: PCAARRD KM Community'
+			    },
 			    series: [{
 			        type: "treemap",
 			        layoutAlgorithm: 'stripes',
@@ -333,10 +337,7 @@ import _ from 'lodash';
 			            }
 			        }],
 			        data: trendingTopics
-			    }],
-			    title: {
-			        text: `Trending Topics in ${moment().format("MMMM, YYYY")}`
-			    }
+			    }]
 			});
 		}
 
