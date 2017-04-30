@@ -11,8 +11,6 @@ import _ from 'lodash';
 
 	function DashboardController ($scope, $stateParams, $q, GroupService, PostService, UserService, ngToast) {
 
-		const TOP_COUNT = 5;
-
 		$scope.loadAllData = () => {
 			$q.all([
 				GroupService.getAllGroups(),
@@ -41,14 +39,23 @@ import _ from 'lodash';
 			$scope.computeGroupsDistribution();
 		}
 
+		$scope.retrieveGroupName = (groupHandle) => {
+			const groupIndex = $scope.groups.map((group) => group.handle).indexOf(groupHandle);
+			return $scope.groups[groupIndex].name;
+		}
+
+		$scope.retrieveCurrentMonthPosts = () => {
+			return $scope.posts.filter((post) =>
+				(moment(post.datePosted, 'MMMM Do YYYY, h:mm:ss a').format('M') == moment().month()+1) && 
+				(moment(post.datePosted, 'MMMM Do YYYY, h:mm:ss a').format('YYYY') == moment().year())
+			);
+		}
+
 		$scope.computeTopActiveGroups = () => {
 			/** Getting the top active groups of current month **/
 
 			// retrieve all posts of the current month and year
-			let currentMonthPosts = $scope.posts.filter((post) =>
-				(moment(post.datePosted, 'MMMM Do YYYY, h:mm:ss a').format('M') == moment().month()+1) && 
-				(moment(post.datePosted, 'MMMM Do YYYY, h:mm:ss a').format('YYYY') == moment().year())
-			);
+			let currentMonthPosts = $scope.retrieveCurrentMonthPosts();
 			
 			// create object containing group handles as key and the value is the count of posts from the currentMonthPosts
 			let postsGroupsWithCount = {};
@@ -77,27 +84,62 @@ import _ from 'lodash';
 			let topActiveGroups = [];
 
 			_.forEach(sortedGroupsArray, (group) => {
-				let groupPostsCountList = [];
+				let groupPostsCountList = [];	// storage of post counts in different months
 
 				_.forEach(consideredMonths, (month) => {
-
 					const postsCount = $scope.posts.filter((post) => 
 						(moment(post.datePosted, 'MMMM Do YYYY, h:mm:ss a').format('MMMM') == month) && 
 						(moment(post.datePosted, 'MMMM Do YYYY, h:mm:ss a').format('YYYY') == moment().year()) &&
 						(post.groupBelonged === group)
-					).length;
+					).length;	
 
 					groupPostsCountList.push(postsCount);
 				});
 
-				topActiveGroups.push({name: group, data: groupPostsCountList});
+				topActiveGroups.push({name: $scope.retrieveGroupName(group), data: groupPostsCountList});
 			});
 
+
+			/** Render the data to Top Active Groups Highchart **/
 			$scope.loadTopActiveGroups(topActiveGroups);
 		}
 
 		$scope.computeTrendingTopics = () => {
-			$scope.loadTrendingTopics();
+			// retrieve all posts of the current month and year
+			let currentMonthPosts = $scope.retrieveCurrentMonthPosts();
+
+			// create object containing hashtags as key and the value is its count
+			let hashtagsWithCount = {};
+			_.forEach(currentMonthPosts, (post) => {
+				_.forEach(post.hashtags, (hashtag) => {
+					const formattedHashtag = hashtag.toLowerCase();
+					if (hashtagsWithCount.hasOwnProperty(formattedHashtag)){
+						hashtagsWithCount[formattedHashtag]++;
+					} else {
+						hashtagsWithCount[formattedHashtag] = 1;
+					}
+				})
+			});
+
+			// create an array containing the hashtags, color, value sorted by hashtags count in reverse
+			const trendingTopicsSize = Object.keys(hashtagsWithCount).length < 10? Object.keys(hashtagsWithCount).length : 10; 
+			let colorList = ['#fa7272', '#f7a35c', '#FFFF67', '#30b772', '#307fb7', 'violet', 'gray', '#A3DAF5', 'pink', '#B24DA1'];
+			
+			let trendingTopics =  _(hashtagsWithCount).keys().sort((key1, key2) => hashtagsWithCount[key2] - hashtagsWithCount[key1]).map((key) => {
+				let hashtagObject = {};
+				let randomIndex = Math.floor(Math.random() * colorList.length);	// randomize the color
+
+				hashtagObject.name = `#${key}`;
+				hashtagObject.color = colorList[randomIndex];
+				hashtagObject.value = hashtagsWithCount[key];
+
+				colorList.splice(randomIndex, 1);
+				return hashtagObject;
+			}).value().splice(0, trendingTopicsSize);
+
+
+			/** Render the data to Trending Topics Highchart **/
+			$scope.loadTrendingTopics(trendingTopics);
 		}
 
 		$scope.computeTopPopularGroups = () => {
@@ -108,13 +150,6 @@ import _ from 'lodash';
 			$scope.loadGroupsDistribution();
 		}
 
-
-			/*$scope.groups = GroupService.getGroupList();
-			const top5ActiveGroups = $scope.groups.contents.sort(function(group1, group2) { 
-						return group2.postsCount.total - group1.postsCount.total; })
-					.slice(0, TOP_COUNT);	// temporary
-				// top5ActiveGroups should scan posts and get the total for that month
-			top5ActiveGroupsSeries*/
 		$scope.loadTopActiveGroups = (topActiveGroups) => {
 			Highcharts.chart('top-active-groups-container', {
 			    title: {
@@ -143,7 +178,7 @@ import _ from 'lodash';
 		    });
 		}
 
-		$scope.loadTrendingTopics = () => {	
+		$scope.loadTrendingTopics = (trendingTopics) => {	
 		    Highcharts.chart('trending-topics-container', {
 			    series: [{
 			        type: "treemap",
@@ -162,50 +197,10 @@ import _ from 'lodash';
 			                }
 			            }
 			        }],
-			        data: [{
-			            name: '#bananapestseminar',
-						color: '#fa7272',
-			            value: 57342
-			        },{
-			            name: '#coconutjuicePromo',
-						color: '#f7a35c',
-			            value: 22563
-			        }, {
-			            name: '#bananaDisease',
-			            color: '#FFFF67',
-			            value: 3512
-			        }, {
-			            name: '#bananakeychain',
-						color: '#30b772',
-			            value: 1003
-			        }, {
-			            name: '#biodiversitySessions',
-						color: '#307fb7',
-			            value: 3952
-			        }, {
-			            name: '#abacainflation',
-						color: 'violet',
-			            value: 4563
-			        }, {
-			            name: '#mango',
-						color: 'gray',
-			            value: 3342
-			        }, {
-			            name: '#bananacommunity',
-						color: '#A3DAF5',
-			            value: 1032
-			        }, {
-			            name: '#textCoconut',
-						color: 'pink',
-			            value: 1933
-			        }, {
-			            name: '#freeBiodiversityFreebies',
-						color: '#B24DA1',
-			            value: 1001
-			        }]
+			        data: trendingTopics
 			    }],
 			    title: {
-			        text: 'Trending Topics'
+			        text: `Trending Topics in ${moment().format("MMMM, YYYY")}`
 			    }
 			});
 		}
