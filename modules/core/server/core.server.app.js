@@ -1,4 +1,5 @@
 import express from 'express';
+import favicon from 'serve-favicon';
 import path from 'path';
 import bodyParser from 'body-parser';
 import passport from 'passport';
@@ -7,6 +8,7 @@ import mongoDB from './config/core.server.db';
 import moduleRoutes from './routes/core.server.routes';
 
 const app = express();
+app.use(favicon(path.join(`${__dirname} /../client/assets`, 'images', 'favicon.ico')));
 app.use(bodyParser.json());
 app.use(passport.initialize());
 
