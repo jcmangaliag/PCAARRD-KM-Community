@@ -29,6 +29,21 @@ import _ from 'lodash';
 			return groupBelonged;
 		}
 
+		const getAllPosts = () => {
+			const deferred = $q.defer();
+
+			$http.get(`/api/posts`)
+			.then((response) => {
+				postList.contents = response.data.posts;
+				postListCopy.contents = _.toArray(response.data.posts);
+				deferred.resolve(response.data.posts);
+			}, (response) => {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		}
+
 		const getPostsByGroupAndCategory = (category, memberOfGroup) => {
 			const deferred = $q.defer();
 			const config = memberOfGroup? {} : {params: {showPublic : true}};	
@@ -238,6 +253,7 @@ import _ from 'lodash';
 			getPostListCopy,
 			setGroupBelonged,
 			getGroupBelonged,
+			getAllPosts,
 			getPostsByGroupAndCategory,
 			getAllPostsByGroup,
 			getPostsByMyGroupsAndCategory,

@@ -7,27 +7,65 @@ import _ from 'lodash';
 		.module('groups')
 		.controller('DashboardController', DashboardController);
 
-	DashboardController.$inject = ['$scope', '$stateParams', '$q', 'GroupService', 'PostService'];
+	DashboardController.$inject = ['$scope', '$stateParams', '$q', 'GroupService', 'PostService', 'UserService', 'ngToast'];
 
-	function DashboardController ($scope, $stateParams, $q, GroupService, PostService) {
+	function DashboardController ($scope, $stateParams, $q, GroupService, PostService, UserService, ngToast) {
 
 		const TOP_COUNT = 5;
 
-		GroupService.getAllGroups()
-		.then((results) => {
-			return 1 //PostService.get
-		}, (error) => {
-			return $q.reject(error);
-		})
-		.then((results) => {
+		$scope.loadAllData = () => {
+			$q.all([
+				GroupService.getAllGroups(),
+				PostService.getAllPosts(),
+				UserService.getAllUsers()
+			]).then((results) => {
+				$scope.groups = results[0];
+				$scope.posts = results[1];
+				$scope.users = results[2];
+				
+				$scope.computeAnalytics();
+			}, (error) => {	// can't load all data
+				ngToast.create({
+		    		className: 'danger',
+		    		content: `Error: There is a problem with loading data!`
+		    	});
+			})
+		}
+
+		$scope.loadAllData();
+
+		$scope.computeAnalytics = () => {
+			$scope.computeTopActiveGroups();
+			$scope.computeTrendingTopics();
+			$scope.computeTopPopularGroups();
+			$scope.computeGroupsDistribution();
+		}
+
+		$scope.computeTopActiveGroups = () => {
+			$scope.loadTopActiveGroups();
+		}
+
+		$scope.computeTrendingTopics = () => {
+			$scope.loadTrendingTopics();
+		}
+
+		$scope.computeTopPopularGroups = () => {
+			$scope.loadTopPopularGroups();
+		}
+
+		$scope.computeGroupsDistribution = () => {
+			$scope.loadGroupsDistribution();
+		}
+
+
 			/*$scope.groups = GroupService.getGroupList();
 			const top5ActiveGroups = $scope.groups.contents.sort(function(group1, group2) { 
 						return group2.postsCount.total - group1.postsCount.total; })
 					.slice(0, TOP_COUNT);	// temporary
 				// top5ActiveGroups should scan posts and get the total for that month
 			top5ActiveGroupsSeries*/
-
-			Highcharts.chart('monthly-posts-container', {
+		$scope.loadTopActiveGroups = () => {
+			Highcharts.chart('top-active-groups-container', {
 			    title: {
 			    	text: `Top 5 Active Groups Per Month for ${moment().year()}`
 			    },
@@ -67,7 +105,9 @@ import _ from 'lodash';
 			    data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]
 			    }]
 		    });
+		}
 
+		$scope.loadTrendingTopics = () => {	
 		    Highcharts.chart('trending-topics-container', {
 			    series: [{
 			        type: "treemap",
@@ -132,8 +172,11 @@ import _ from 'lodash';
 			        text: 'Trending Topics'
 			    }
 			});
+		}
 
-			Highcharts.chart('popular-groups-container', {
+
+		$scope.loadTopPopularGroups = () => {
+			Highcharts.chart('top-popular-groups-container', {
 			    chart: {
 			        type: 'column'
 			    },
@@ -327,78 +370,9 @@ import _ from 'lodash';
 			        }]
 			    }
 			});
+		}
 
-
-		    /*Highcharts.chart('popular-groups-container', {
-			    chart: {
-			        type: 'bar'
-			    },
-			    title: {
-			        text: 'Top 5 Popular Groups by Age Group'
-			    },
-			    subtitle: {
-			        text: 'Source: PCAARRD KM Community'
-			    },
-			    xAxis: {
-			        categories: ['Banana', 'Biodiversity', 'Milkfish', 'Coconut', 'Peanut'],
-			        title: {
-			            text: 'Groups'
-			        }
-			    },
-			    yAxis: {
-			        min: 0,
-			        title: {
-			            text: 'Number of Members',
-			            align: 'high'
-			        },
-			        labels: {
-			            overflow: 'justify'
-			        }
-			    },
-			    plotOptions: {
-			        bar: {
-			            dataLabels: {
-			                enabled: true
-			            }
-			        }
-			    },
-			    legend: {
-			        layout: 'vertical',
-			        align: 'right',
-			        verticalAlign: 'top',
-			        x: -40,
-			        y: 80,
-			        floating: true,
-			        borderWidth: 1,
-			        backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
-			        shadow: true
-			    },
-			    credits: {
-			        enabled: false
-			    },
-			    series: [{
-			        name: 'All Ages',
-			        data: [3361, 2905, 2664, 1770, 703]
-			    }, {
-			        name: 'Ages 0 - 17',
-			        data: [107, 312, 135, 203, 92]
-			    }, {
-			        name: 'Ages 18 - 39',
-			        data: [1030, 756, 489, 408, 36]
-			    }, {
-			        name: 'Ages 40 - 49',
-			        data: [1022, 954, 250, 740, 438]
-			    }, {
-			        name: 'Ages 50 - 64',
-			        data: [1001, 756, 1747, 408, 126]
-			    }, {
-			        name: 'Ages 65+',
-			        data: [201, 127, 43, 72, 11]
-			    }]
-			});*/
-
-
-
+		$scope.loadGroupsDistribution = () => {
 			Highcharts.chart('groups-distribution-container', {
 			    chart: {
 			        type: 'pie'
@@ -486,7 +460,9 @@ import _ from 'lodash';
 			        }]
 			    }
 			});
-		});
+		}
+	
+
 	}
 
 })();
