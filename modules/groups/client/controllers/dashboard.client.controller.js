@@ -71,7 +71,7 @@ import _ from 'lodash';
 				}
 			});
 
-			// create an array containing the groups sorted by post counts in reverse
+			// create an array containing the groups sorted by post counts in reverse and limits up to topActiveGroupsSize
 			const topActiveGroupsSize = Object.keys(postsGroupsWithCount).length < 5? Object.keys(postsGroupsWithCount).length : 5;
 			let sortedGroupsArray =  _(postsGroupsWithCount).keys().sort((key1, key2) => postsGroupsWithCount[key2] - postsGroupsWithCount[key1]).map((key) => {
 				return key;
@@ -138,16 +138,13 @@ import _ from 'lodash';
 				return hashtagObject;
 			}).value().splice(0, trendingTopicsSize);
 
-			// 
-
-
 
 			/** Render the data to Trending Topics Highchart **/
 			$scope.loadTrendingTopics(trendingTopics);
 		}
 
 		$scope.computeTopPopularGroups = () => {
-			// retrieve the top active groups in array and sorted in reverse
+			// create object containing group as key and the value is the number of members
 			let groupsWithMembersCount = {};
 			_.forEach($scope.users, (user) => {
 				_.forEach(user.groupsJoined, (group) => {
@@ -210,11 +207,82 @@ import _ from 'lodash';
 				});
 			}
 
+
+			/** Render the data to Top Popular Groups Highchart **/
 			$scope.loadTopPopularGroups(topPopularGroups, topPopularGroupsWithAges);
 		}
 
 		$scope.computeGroupsDistribution = () => {
-			$scope.loadGroupsDistribution();
+			const totalGroups = $scope.groups.length;
+			let groupIndustriesSeries = [];
+			let groupIndustriesData = [];
+			
+			let groupsDistributionSeries = [];
+			
+			const industries = [...new Set($scope.groups.map((group) => group.classification.industry))];	// array of distinct industries
+			
+			_.forEach(industries, (industry) => {
+				// groups under the industry
+				let industryGroups = $scope.groups.filter((group) => group.classification.industry === industry);
+				let industryPercent = (industryGroups.length / totalGroups) * 100;
+				groupIndustriesData.push({name: industry, y: industryPercent, drilldown: industry});
+
+
+				let sectors = [...new Set(industryGroups.map((group) => group.classification.sector))];
+				let groupsDistributionSectorData = [];
+				_.forEach(sectors, (sector) => {	
+					// groups under the sector
+					let sectorGroups = industryGroups.filter((group) => group.classification.sector === sector);
+					let sectorPercent = (sectorGroups.length / totalGroups) * 100;
+					groupsDistributionSectorData.push({name: sector, y: sectorPercent, drilldown: sector});
+					
+
+					let isps = [...new Set(sectorGroups.map((group) => group.classification.isp))];
+					let groupsDistributionISPData = [];
+					_.forEach(isps, (isp) => {	
+						// groups under the isp
+						let ispGroups = sectorGroups.filter((group) => group.classification.isp === isp);
+						let ispPercent = (ispGroups.length / totalGroups) * 100;
+						let ispObject = {name: isp, y: ispPercent};
+
+						if (ispGroups[0].classification.specificCommodity){	// only applicable to groups with specific commodity
+							ispObject.drilldown = isp;
+
+							let specificCommodities = [...new Set(ispGroups.map((group) => group.classification.specificCommodity))];
+							let groupsDistributionSpecificCommodityData = [];
+							_.forEach(specificCommodities, (specificCommodity) => {	
+								// groups under the specific commodity
+								let specificCommodityGroups = ispGroups.filter((group) => group.classification.specificCommodity === specificCommodity);
+								let specificCommodityPercent = (specificCommodityGroups.length / totalGroups) * 100;
+								groupsDistributionSpecificCommodityData.push({name: specificCommodity, y: specificCommodityPercent});
+							});
+
+							groupsDistributionSeries.push({
+								name: 'Specific Commodity',
+								id: isp,
+								data: groupsDistributionSpecificCommodityData
+							});
+						}
+						groupsDistributionISPData.push(ispObject);
+					});
+
+					groupsDistributionSeries.push({
+						name: 'ISP',
+						id: sector,
+						data: groupsDistributionISPData
+					});
+				});
+
+				groupsDistributionSeries.push({
+					name: 'Sector',
+					id: industry,
+					data: groupsDistributionSectorData
+				});
+			});
+
+
+			/** Render the data to Groups Distribution Highchart **/
+			$scope.loadGroupsDistribution(groupIndustriesData, groupsDistributionSeries);
 		}
 
 		$scope.loadTopActiveGroups = (topActiveGroups) => {
@@ -308,12 +376,10 @@ import _ from 'lodash';
 			            }
 			        }
 			    },
-
 			    tooltip: {
 			        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
 			        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:f}</b> member/s<br/>'
 			    },
-
 			    series: [{
 			        name: 'Groups',
 			        colorByPoint: true,
@@ -325,7 +391,7 @@ import _ from 'lodash';
 			});
 		}
 
-		$scope.loadGroupsDistribution = () => {
+		$scope.loadGroupsDistribution = (groupIndustriesData, groupsDistributionSeries) => {
 			Highcharts.chart('groups-distribution-container', {
 			    chart: {
 			        type: 'pie'
@@ -344,78 +410,19 @@ import _ from 'lodash';
 			            }
 			        }
 			    },
-
 			    tooltip: {
 			        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
 			        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
 			    },
 			    series: [{
-			        name: 'Industry',
-			        colorByPoint: true,
-			        data: [{
-			            name: 'Agriculture',
-			            y: 62,
-			            drilldown: 'Agriculture'
-			        }, {
-			            name: 'Aquatic Resources',
-			            y: 25,
-			            drilldown: 'Aquatic Resources'
-			        }, {
-			            name: 'Natural Resources',
-			            y: 13,
-			            drilldown: 'Natural Resources'
-			        }]
-			    }],
+				    name: 'Industry',
+				    colorByPoint: true,
+				    data: groupIndustriesData
+				}],
 			    drilldown: {
-			        series: [{
-			            name: 'Sector',
-			            id: 'Agriculture',
-			            data: [
-		                    {name: 'Crops', y: 48, drilldown: 'Crops'},
-		                    {name: 'Livestock', y: 14}
-			            ]
-			        }, {
-			            name: 'ISP',
-			            id: 'Crops',
-			            data: [
-		                    {name: 'Abaca', y: 6},
-		                    {name: 'Coconut', y: 9},
-		                    {name: 'Coffee', y: 5},
-		                    {name: 'Legume', y: 18, drilldown: 'Legume'},
-		                    {name: 'Mango', y: 10}
-			            ]
-			        }, {
-			            name: 'Specific Commodity',
-			            id: 'Legume',
-			            data: [
-		                    {name: 'Mungbean', y: 12},
-		                    {name: 'Peanut', y: 6}
-			            ]
-			        },
-
-
-
-			           {
-			            name: 'Sector',
-			            id: 'Aquatic Resources',
-			            data: [
-			                ['Inland Aquatic', 11],
-			                ['Marine Resources', 5],
-			                ['Ocean Environment Services (OES)',9]
-			            ]
-			        }, {
-			            name: 'Sector',
-			            id: 'Natural Resources',
-			            data: [
-			                ['Forestry', 10],
-			                ['Inland Environment Services (IES)', 3]
-			            ]
-			        }]
+			        series: groupsDistributionSeries
 			    }
 			});
 		}
-	
-
 	}
-
 })();
