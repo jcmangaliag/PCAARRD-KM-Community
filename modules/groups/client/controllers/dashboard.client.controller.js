@@ -12,7 +12,7 @@ import _ from 'lodash';
 	function DashboardController ($scope, $stateParams, $q, GroupService, PostService, UserService, ngToast) {
 
 		$scope.loadAllData = () => {
-			$q.all([
+			$q.all([	// parallel data loading
 				GroupService.getAllGroups(),
 				PostService.getAllPosts(),
 				UserService.getAllUsers()
@@ -51,6 +51,10 @@ import _ from 'lodash';
 			);
 		}
 
+		$scope.retrieveUserAge = (user) => {
+			return moment().diff(moment(user.birthdate, 'MMMM D YYYY'), 'years');
+		}
+
 		$scope.computeTopActiveGroups = () => {
 			/** Getting the top active groups of current month **/
 
@@ -68,13 +72,10 @@ import _ from 'lodash';
 			});
 
 			// create an array containing the groups sorted by post counts in reverse
+			const topActiveGroupsSize = Object.keys(postsGroupsWithCount).length < 5? Object.keys(postsGroupsWithCount).length : 5;
 			let sortedGroupsArray =  _(postsGroupsWithCount).keys().sort((key1, key2) => postsGroupsWithCount[key2] - postsGroupsWithCount[key1]).map((key) => {
 				return key;
-			}).value();
-			
-			// limit the array size to at most 5
-			const topActiveGroupsSize = sortedGroupsArray.length < 5? sortedGroupsArray.length : 5;
-			sortedGroupsArray = sortedGroupsArray.slice(0, topActiveGroupsSize);
+			}).value().slice(0, topActiveGroupsSize);
 			
 
 			/** Getting the count of posts of the top active groups for the previous months of the current year **/
@@ -137,13 +138,79 @@ import _ from 'lodash';
 				return hashtagObject;
 			}).value().splice(0, trendingTopicsSize);
 
+			// 
+
+
 
 			/** Render the data to Trending Topics Highchart **/
 			$scope.loadTrendingTopics(trendingTopics);
 		}
 
 		$scope.computeTopPopularGroups = () => {
-			$scope.loadTopPopularGroups();
+			// retrieve the top active groups in array and sorted in reverse
+			let groupsWithMembersCount = {};
+			_.forEach($scope.users, (user) => {
+				_.forEach(user.groupsJoined, (group) => {
+					if (groupsWithMembersCount.hasOwnProperty(group)){
+						groupsWithMembersCount[group]++;
+					} else {
+						groupsWithMembersCount[group] = 1;
+					}
+				});
+			});
+
+			// create an array containing groups, members count, drilldown name sorted by members count in reverse
+			const topPopularGroupsSize = Object.keys(groupsWithMembersCount).length < 5? Object.keys(groupsWithMembersCount).length : 5; 
+			let popularGroupList = [];	// contains group handles of the top popular groups
+			let topPopularGroups =  _(groupsWithMembersCount).keys().sort((key1, key2) => groupsWithMembersCount[key2] - groupsWithMembersCount[key1]).map((key) => {
+				const groupName = $scope.retrieveGroupName(key);
+				popularGroupList.push(key);
+
+				return {
+					name: groupName,
+					y: groupsWithMembersCount[key],
+					drilldown: key
+				}
+			}).value().splice(0, topPopularGroupsSize);
+			popularGroupList = popularGroupList.slice(0, topPopularGroupsSize);
+
+			// find the members of the group and categorize them by their ages
+			let topPopularGroupsWithAges = [];	// contains the drilldown series of highchart
+			for (let i = 0; i < topPopularGroupsSize; i++){
+				let topPopularGroupsAgesList = [	// contains the age statistics of the group
+					['Ages 0 - 17', 0],
+					['Ages 18 - 29', 0],
+					['Ages 30 - 49', 0],
+					['Ages 50 - 64', 0],
+					['Ages 65+', 0],
+				];
+
+				_.forEach($scope.users, (user) => {	// checking if each user is a member of the group
+					if (user.groupsJoined.indexOf(popularGroupList[i]) > -1){
+						const userAge = $scope.retrieveUserAge(user);
+
+						if (userAge < 18){
+							topPopularGroupsAgesList[0][1]++;
+						} else if (userAge < 30) {
+							topPopularGroupsAgesList[1][1]++;
+						} else if (userAge < 50) {
+							topPopularGroupsAgesList[2][1]++;
+						} else if (userAge < 65) {
+							topPopularGroupsAgesList[3][1]++;
+						} else {
+							topPopularGroupsAgesList[4][1]++;
+						}
+					}
+				});
+
+				topPopularGroupsWithAges.push({
+					name: topPopularGroups[i].name,
+					id: topPopularGroups[i].drilldown,
+					data: topPopularGroupsAgesList
+				});
+			}
+
+			$scope.loadTopPopularGroups(topPopularGroups, topPopularGroupsWithAges);
 		}
 
 		$scope.computeGroupsDistribution = () => {
@@ -206,7 +273,7 @@ import _ from 'lodash';
 		}
 
 
-		$scope.loadTopPopularGroups = () => {
+		$scope.loadTopPopularGroups = (topPopularGroups, topPopularGroupsWithAges) => {
 			Highcharts.chart('top-popular-groups-container', {
 			    chart: {
 			        type: 'column'
@@ -237,168 +304,23 @@ import _ from 'lodash';
 			            borderWidth: 0,
 			            dataLabels: {
 			                enabled: true,
-			                format: '{point.y:.1f}%'
+			                format: '{point.y:f}'
 			            }
 			        }
 			    },
 
 			    tooltip: {
 			        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-			        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+			        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:f}</b> member/s<br/>'
 			    },
 
 			    series: [{
 			        name: 'Groups',
 			        colorByPoint: true,
-			        data: [{
-			            name: 'Banana',
-			            y: 56.33,
-			            drilldown: 'Banana'
-			        }, {
-			            name: 'Biodiversity',
-			            y: 24.03,
-			            drilldown: 'Biodiversity'
-			        }, {
-			            name: 'Milkfish',
-			            y: 10.38,
-			            drilldown: 'Milkfish'
-			        }, {
-			            name: 'Coconut',
-			            y: 4.77,
-			            drilldown: 'Coconut'
-			        }, {
-			            name: 'Peanut',
-			            y: 0.91,
-			            drilldown: 'Peanut'
-			        }]
+			        data: topPopularGroups
 			    }],
 			    drilldown: {
-			        series: [{
-			            name: 'Banana',
-			            id: 'Banana',
-			            data: [
-			                [
-			                    'Ages 0 - 17',
-			                    17.2
-			                ],
-			                [
-			                    'Ages 18 - 29',
-			                    24.13
-			                ],
-			                [
-			                    'Ages 30 - 49',
-			                    8.61
-			                ],
-			                [
-			                    'Ages 50 - 64',
-			                    5.33
-			                ],
-			                [
-			                    'Ages 65+',
-			                    1.06
-			                ]
-			            ]
-			        }, {
-			            name: 'Biodiversity',
-			            id: 'Biodiversity',
-			            data: [
-			                [
-			                    'Ages 0 - 17',
-			                    17.2
-			                ],
-			                [
-			                    'Ages 18 - 29',
-			                    24.13
-			                ],
-			                [
-			                    'Ages 30 - 49',
-			                    8.61
-			                ],
-			                [
-			                    'Ages 50 - 64',
-			                    5.33
-			                ],
-			                [
-			                    'Ages 65+',
-			                    1.06
-			                ]
-			            ]
-			        }, {
-			            name: 'Milkfish',
-			            id: 'Milkfish',
-			            data: [
-			                [
-			                    'Ages 0 - 17',
-			                    17.2
-			                ],
-			                [
-			                    'Ages 18 - 29',
-			                    24.13
-			                ],
-			                [
-			                    'Ages 30 - 49',
-			                    8.61
-			                ],
-			                [
-			                    'Ages 50 - 64',
-			                    5.33
-			                ],
-			                [
-			                    'Ages 65+',
-			                    1.06
-			                ]
-			            ]
-			        }, {
-			            name: 'Coconut',
-			            id: 'Coconut',
-			            data: [
-			                [
-			                    'Ages 0 - 17',
-			                    17.2
-			                ],
-			                [
-			                    'Ages 18 - 29',
-			                    24.13
-			                ],
-			                [
-			                    'Ages 30 - 49',
-			                    8.61
-			                ],
-			                [
-			                    'Ages 50 - 64',
-			                    5.33
-			                ],
-			                [
-			                    'Ages 65+',
-			                    1.06
-			                ]
-			            ]
-			        }, {
-			            name: 'Peanut',
-			            id: 'Peanut',
-			            data: [
-			                [
-			                    'Ages 0 - 17',
-			                    17.2
-			                ],
-			                [
-			                    'Ages 18 - 29',
-			                    24.13
-			                ],
-			                [
-			                    'Ages 30 - 49',
-			                    8.61
-			                ],
-			                [
-			                    'Ages 50 - 64',
-			                    5.33
-			                ],
-			                [
-			                    'Ages 65+',
-			                    1.06
-			                ]
-			            ]
-			        }]
+			        series: topPopularGroupsWithAges
 			    }
 			});
 		}
