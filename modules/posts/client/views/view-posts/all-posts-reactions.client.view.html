@@ -18,7 +18,7 @@
             this post</h4>
           </div>
           <div class="modal-body">
-            <h5 ng-repeat="user in reaction.users | orderBy: 'name'"><a ui-sref="user-profile({userID: user._id})">{{user.name}}</a></h5>
+            <h5 ng-repeat="user in reaction.users | orderBy: 'name'"><a ui-sref="user-profile({userID: user._id})" target="_blank">{{user.name}}</a></h5>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
