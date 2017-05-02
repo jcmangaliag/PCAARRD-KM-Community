@@ -38,6 +38,15 @@ const userControls = {
 	        res.send({ users: results });
 	    });
 	},
+	listByGroupPendingMembers : (req, res) => {
+		const groupPendingMembersList = req.params.groupPendingMembersID.split(',');
+
+		User.find({_id: {$in: groupPendingMembersList}}, (err, results) => {
+	        if (err) { return (err); }
+
+	        res.send({ users: results });
+	    });
+	},
 	updateOne : (req, res) => {
 		const userID = req.params.userID;
 

@@ -137,19 +137,6 @@ import _ from 'lodash';
 			return deferred.promise;
 		}
 
-		const addAdmin = (userID, groupHandle) => {
-			const deferred = $q.defer();
-
-			$http.put(`/api/groups/${groupHandle}/add-admin/${userID}`)
-			.then(response => {
-				deferred.resolve(response);
-			}, (error) => {
-				deferred.reject(error);
-			});
-
-			return deferred.promise;
-		}
-
 		const removeAdmin = (userID, groupHandle) => {
 			const deferred = $q.defer();
 
@@ -162,6 +149,34 @@ import _ from 'lodash';
 
 			return deferred.promise;
 		}
+
+		const addToGroupPendingMembersList = (userID, groupHandle) => {
+			const deferred = $q.defer();
+
+			$http.put(`/api/groups/${groupHandle}/add-to-pending-members/${userID}`)
+			.then(response => {
+				deferred.resolve(response);
+			}, (error) => {
+				deferred.reject(error);
+			});
+
+			return deferred.promise;
+		}
+
+		const removeFromGroupPendingMembersList = (userID, groupHandle) => {
+			const deferred = $q.defer();
+
+			$http.put(`/api/groups/${groupHandle}/remove-from-pending-members/${userID}`)
+			.then(response => {
+				deferred.resolve(response);
+			}, (error) => {
+				deferred.reject(error);
+			});
+
+			return deferred.promise;
+		}
+
+
 	
 		return {
 			getGroupList,
@@ -174,8 +189,9 @@ import _ from 'lodash';
 			getOneGroup,
 			updateGroup,
 			submitGroup,
-			addAdmin,
-			removeAdmin
+			removeAdmin,
+			addToGroupPendingMembersList,
+			removeFromGroupPendingMembersList
 		};
 	}
 

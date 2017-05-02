@@ -149,7 +149,27 @@ const groupControls = {
 
 			res.send("Group removed an admin.");
 		});
-	}
+	},
+	addToPendingMembers : (req, res) => {
+		const userID = req.params.userID;
+		const handle = req.params.handle;
+
+		Group.findOneAndUpdate({handle}, { $addToSet: {pendingMembers: userID}}, (err) => {
+			if (err) { return (err); }
+
+			res.send("Group added a pending member.");
+		});
+	},
+	removeFromPendingMembers : (req, res) => {
+		const userID = req.params.userID;
+		const handle = req.params.handle;
+
+		Group.findOneAndUpdate({handle}, { $pull: {pendingMembers: userID}}, (err) => {
+			if (err) { return (err); }
+
+			res.send("Group removed a pending member.");
+		});
+	},
 }
 
 export default groupControls;

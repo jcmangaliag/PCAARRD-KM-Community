@@ -307,7 +307,10 @@ import _ from 'lodash';
 	               align: 'right',
 	               verticalAlign: 'middle'
 			    },
-			    series: topActiveGroups
+			    series: topActiveGroups,
+			    tooltip: {
+			         pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y}</b> post/s<br/>'
+			    },
 		    });
 		}
 
@@ -337,7 +340,10 @@ import _ from 'lodash';
 			            }
 			        }],
 			        data: trendingTopics
-			    }]
+			    }],
+			    tooltip: {
+			         pointFormat: '<b>{point.name}</b>: {point.value}</b> mention/s<br/>'
+			    },
 			});
 		}
 

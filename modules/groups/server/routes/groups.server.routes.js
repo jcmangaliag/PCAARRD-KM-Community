@@ -41,6 +41,11 @@ const groupsRoutes = (app) => {
   app.route('/api/groups/:handle/remove-admin/:userID')
     .put(groupCtrl.removeAdmin);
 
+  app.route('/api/groups/:handle/add-to-pending-members/:userID')
+    .put(groupCtrl.addToPendingMembers);
+
+  app.route('/api/groups/:handle/remove-from-pending-members/:userID')
+    .put(groupCtrl.removeFromPendingMembers);
 };
 
 export default groupsRoutes;

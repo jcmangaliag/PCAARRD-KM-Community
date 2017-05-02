@@ -56,6 +56,24 @@
 			return deferred.promise;
 		}
 
+		const getAllGroupPendingMembers = (groupPendingMembersID) => {
+			const deferred = $q.defer();
+			const groupPendingMembers = groupPendingMembersID.toString();
+
+			if (groupPendingMembersID.length > 0){
+				$http.get(`/api/users/group-pending-members/${groupPendingMembers}`)
+				.then((response) => {
+					deferred.resolve(response.data.users);
+				}, (response) => {
+					deferred.reject(response);
+				});
+			} else {
+				deferred.resolve([]);
+			}
+
+			return deferred.promise;
+		}
+
 		const getOneUser = (userID) => {
 			const deferred = $q.defer();
 			
@@ -100,6 +118,7 @@
 			getAllUsersByGroup,
 			getAllUsers,
 			getAllGroupAdminstrators,
+			getAllGroupPendingMembers,
 			getOneUser,
 			joinGroup,
 			leaveGroup

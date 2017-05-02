@@ -42,7 +42,8 @@ const GroupSchema = mongoose.Schema({
     createdBy: {
     	type: String,
     	required: true
-    }
+    },
+    pendingMembers: Array
 });
 
 export default mongoose.model('Group', GroupSchema);

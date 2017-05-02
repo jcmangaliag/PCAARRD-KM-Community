@@ -78,17 +78,6 @@ import _ from 'lodash';
 			], true);
 		}
 
-		$scope.loadGroupAdmins = (userID) => {
-			UserService.getOneUser(userID)
-				.then((user) => {
-					if (user.photo) {
-						return user.photo.path.split('/')[1];
-					} else {
-						return '/layout/client/assets/images/11208269_1389692501358752_1755951646_n.jpg';
-					}
-				});
-		}
-
 		$scope.loadGroupAdmins = (groupAdminsID) => {	// load all info of group admins
 			UserService.getAllGroupAdminstrators(groupAdminsID)
 				.then((admins) => {
@@ -103,12 +92,14 @@ import _ from 'lodash';
 				});
 		}
 
-		$scope.joinThisGroup = (userID, groupHandle) => {
-			if (!UserAuthenticationService.isLoggedIn()){
-				UserAuthenticationService.loginFirst();
-				return;
-			}
+		$scope.loadGroupPendingMembers = (groupPendingMembersID) => {	// load all info of pending group members
+			UserService.getAllGroupPendingMembers(groupPendingMembersID)
+				.then((pendingMembers) => {
+					$scope.groupPendingMembers = pendingMembers;
+				});
+		}
 
+		$scope.joinThisGroup = (userID, groupHandle) => {
 			UserService.joinGroup(userID, groupHandle)
 				.then(() => {
 					return GroupService.updateGroup($scope.selectedGroup.handle, {membersCount: ++$scope.selectedGroup.membersCount});
@@ -124,9 +115,75 @@ import _ from 'lodash';
 			    		content: `Group was successfully joined.`
 			    	});
 
-					$scope.user.currentUser.groupsJoined.push($scope.selectedGroup.handle);
-					$scope.groupMembers.push($scope.user.currentUser);
+					return UserService.getOneUser(userID)
+				})
+				.then((user) => {
+					if (user._id == $scope.user.currentUser._id){
+						$scope.user.currentUser.groupsJoined.push($scope.selectedGroup.handle);
+					}
+					$scope.groupMembers.push(user);
 					$scope.userMembership = true;
+				});
+
+		}
+
+		$scope.onJoinThisGroup = (userID, groupHandle) => {
+			if (!UserAuthenticationService.isLoggedIn()){
+				UserAuthenticationService.loginFirst();
+				return;
+			}
+
+			if ($scope.selectedGroup.membership === "No Approval") {
+				$scope.joinThisGroup(userID, groupHandle);
+			} else {
+				$scope.addToPendingList(userID, groupHandle);
+			}
+		}
+
+		$scope.addToPendingList = (userID, groupHandle) => {
+			GroupService.addToGroupPendingMembersList(userID, groupHandle)
+				.then(() => {	    	
+					ngToast.create({
+			    		className: 'success',
+			    		content: `Group Join Request was successfully sent.`
+			    	});
+
+					$scope.groupPendingMembers.push(userID);
+					$scope.selectedGroup.pendingMembers.push(userID);
+				}, () => {
+					ngToast.create({
+			    		className: 'danger',
+			    		content: `Failed to send group join request.`
+			    	});
+				});
+		}
+
+		$scope.removeFromPendingList = (userID, groupHandle) => {
+			if (!UserAuthenticationService.isLoggedIn()){
+				UserAuthenticationService.loginFirst();
+				return;
+			}
+
+			GroupService.removeFromGroupPendingMembersList(userID, groupHandle)
+				.then(() => {	    	
+					ngToast.create({
+			    		className: 'success',
+			    		content: `Group Join Request was successfully removed.`
+			    	});
+
+					const groupIndexInSelectedGroup = $scope.selectedGroup.pendingMembers.indexOf(userID);
+					if (groupIndexInSelectedGroup > -1){
+						$scope.selectedGroup.pendingMembers.splice(groupIndexInSelectedGroup, 1);
+					}
+			    	const groupIndexInGroup = $scope.groupPendingMembers.map((user) => user._id).indexOf(userID);
+					if (groupIndexInGroup > -1){
+						$scope.groupPendingMembers.splice(groupIndexInGroup, 1);
+					}
+				}, () => {
+					ngToast.create({
+			    		className: 'danger',
+			    		content: `Failed to remove group join request.`
+			    	});
 				});
 		}
 
@@ -176,6 +233,25 @@ import _ from 'lodash';
 					$scope.userMembership = false;
 				});
 
+		}
+
+		$scope.acceptPendingMember = (pendingMemberID, groupHandle) => {
+			if (!UserAuthenticationService.isLoggedIn()){
+				UserAuthenticationService.loginFirst();
+				return;
+			}
+
+			$scope.removeFromPendingList(pendingMemberID, groupHandle);
+			$scope.joinThisGroup(pendingMemberID, groupHandle);
+		}
+
+		$scope.rejectPendingMember = (pendingMemberID, groupHandle) => {
+			if (!UserAuthenticationService.isLoggedIn()){
+				UserAuthenticationService.loginFirst();
+				return;
+			}
+
+			$scope.removeFromPendingList(pendingMemberID, groupHandle);
 		}
 
 		$scope.removeGroupAdmin = (userID, groupHandle) => {
@@ -295,6 +371,7 @@ import _ from 'lodash';
 						$scope.selectedGroup = result;
 						$scope.loadGroupAdmins($scope.selectedGroup.admin);
 						$scope.loadGroupMembers($scope.selectedGroup.handle);
+						$scope.loadGroupPendingMembers($scope.selectedGroup.pendingMembers);
 
 						$timeout(() => {
 							$scope.loadPostsAnalysis();
