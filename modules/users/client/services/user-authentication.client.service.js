@@ -19,7 +19,11 @@
 
 		const logout = () => {
 		  $window.localStorage.removeItem('pcaarrdcommunity-token');
-		  $state.go("login");
+		  if ($state.$current.name === 'communityHome'){
+		  	$window.location.reload();
+		  } else {
+		  	$state.go('communityHome')
+		  }
 		}
 
 		const isLoggedIn = () => {
@@ -122,7 +126,7 @@
 			const deferred = $q.defer();
 
 			if (isLoggedIn()) {
-				$timeout(() => $state.go('communityFeed'));
+				$timeout(() => $state.go('communityHome'));
 				deferred.reject();
 			} else {
 				deferred.resolve();
@@ -157,7 +161,7 @@
 		    		if (user.isAdmin){
 		    			deferred.resolve();
 		    		} else {
-		    			$timeout(() => $state.go('communityFeed'));
+		    			$timeout(() => $state.go('communityHome'));
 						deferred.reject();
 		    		}
 		    	}, () => {
@@ -180,7 +184,7 @@
 		    		if (user._id === userID || user.isAdmin){
 		    			deferred.resolve();
 		    		} else {
-		    			$timeout(() => $state.go('communityFeed'));
+		    			$timeout(() => $state.go('communityHome'));
 						deferred.reject();
 		    		}
 		    	}, () => {
@@ -210,7 +214,7 @@
 		    		if (group.admin.indexOf(currentUser._id) > -1 || currentUser.isAdmin){
 		    			deferred.resolve();
 		    		} else {
-		    			$timeout(() => $state.go('communityFeed'));
+		    			$timeout(() => $state.go('communityHome'));
 						deferred.reject();
 		    		}
 		    	}, () => {

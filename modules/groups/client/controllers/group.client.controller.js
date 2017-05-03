@@ -357,7 +357,7 @@ import _ from 'lodash';
 
 			$scope.paginate = _.cloneDeep(SharedPaginationService);
 			$scope.paginate.currentPage = 1;
-			$scope.paginate.groupsPerPage = 4;
+			$scope.paginate.groupsPerPage = 10;
 		}
 
 		$scope.getGroupData = () => {

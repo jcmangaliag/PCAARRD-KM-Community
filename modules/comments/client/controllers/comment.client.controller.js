@@ -17,7 +17,7 @@ import _ from 'lodash';
 		$scope.comments = CommentService.getCommentList();
 		$scope.paginate = SharedPaginationService;
 		$scope.paginate.currentPage = 1;
-		$scope.paginate.commentsPerPage = 3;
+		$scope.paginate.commentsPerPage = 5;
 
 		$scope.user = {};
 		$scope.user.isLoggedIn = UserAuthenticationService.isLoggedIn();

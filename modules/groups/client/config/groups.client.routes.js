@@ -11,6 +11,17 @@
 		$urlRouterProvider.otherwise('/page-not-found');
 
 		$stateProvider
+			/* View Posts from My Groups */
+			.state('communityHome', {
+				url: '/',
+				templateUrl: 'groups/client/views/community-home.client.view.html',
+				params: {
+					handle: "--my-groups--"
+				},
+				resolve: {
+					$title: () => 'Community Home'
+				}
+			})
 			.state('groups', {
 				url: '/groups/',
 				templateUrl: 'groups/client/views/view-groups.client.view.html',

@@ -11,20 +11,6 @@
 		$urlRouterProvider.otherwise('/page-not-found');
 
 		$stateProvider
-			/* View Posts from My Groups */
-			.state('communityFeed', {
-				url: '/',
-				templateUrl: 'posts/client/views/view-posts/community-feed.client.view.html',
-				params: {
-					handle: "--my-groups--"
-				},
-				resolve: {
-					$title: () => 'Community Feed',
-					authenticate: ['UserAuthenticationService', (UserAuthenticationService) => {
-						return UserAuthenticationService.authenticateLoggedIn();
-					}] 
-				}
-			})
 			/* View One Post */
 			.state('oneGroup.viewOneAdvertisementPost', {
 				url: '/view-posts/advertisement/:postID',

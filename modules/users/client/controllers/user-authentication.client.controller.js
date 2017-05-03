@@ -90,7 +90,7 @@ import _ from 'lodash';
 			    		content: `User was successfully registered.`
 			    	});
 
-					$state.go("communityFeed");
+					$state.go("communityHome");
 				}, (response) => {
 					ngToast.create({
 			    		className: 'danger',
@@ -102,7 +102,7 @@ import _ from 'lodash';
 		$scope.onProcessLoginData = () => {
 			UserAuthenticationService.login($scope.loginData)
 				.then(() => {
-					$state.go("communityFeed");
+					$state.go("communityHome");
 				}, (response) => {
 					ngToast.create({
 			    		className: 'danger',
