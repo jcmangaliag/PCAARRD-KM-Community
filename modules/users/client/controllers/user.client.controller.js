@@ -31,9 +31,7 @@ import _ from 'lodash';
 				$scope.selectedUser = result;
 				$scope.loadUserGroups($scope.selectedUser);
 				$scope.loadUserAdministeredGroups($scope.selectedUser);
-				if ($scope.user.currentUser._id == $scope.selectedUser._id){
-					$scope.loadUserPendingGroups($scope.selectedUser);
-				}
+				$scope.loadUserPendingGroups($scope.selectedUser);
 			}, (error) => {
 				// show 404 not found page
 			});

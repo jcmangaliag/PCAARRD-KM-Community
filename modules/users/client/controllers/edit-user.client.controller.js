@@ -76,11 +76,18 @@ import moment from 'moment';
 			} else {
 				EditUserService.submitEditedUser($scope.selectedUser)
 					.then(() => {
-						ngToast.create({
+				    	UserAuthenticationService.getCurrentUser()
+				    		.then((user) => {
+				    			if (user._id === $scope.selectedUser._id){
+				    				$window.location.reload();
+				    			} else {
+				    				$scope.enableViewChanges = true;
+				    			}
+				    		})
+				    	ngToast.create({
 				    		className: 'success',
 				    		content: `User was successfully edited. `
 				    	});
-				    	$window.location.reload();
 					});
 			}
 		}

@@ -75,5 +75,7 @@
 		  <div style="display: inline-block">
 		  	<shared-reset-submit-buttons></shared-reset-submit-buttons>
 		  </div>
+
+		  <button ng-if="enableViewChanges" ui-sref="user-profile({userID: selectedUser._id})" type="button" class="btn btn-primary">View Changes</button>
 	</form>
 </div>

@@ -16,7 +16,10 @@
 				template: '<user-registration></user-registration>',
 				controller: 'UserAuthenticationController',
 				resolve: {
-					$title: () => 'Register'
+					$title: () => 'Register',
+					authenticate: ['UserAuthenticationService', (UserAuthenticationService) => {
+						return UserAuthenticationService.authenticateLoggedOut();
+					}]
 				}
 			})
 			.state('registerAsAdmin', {
@@ -24,7 +27,10 @@
 				templateUrl: 'users/client/views/user-admin-registration.client.view.html',
 				controller: 'UserAuthenticationController',
 				resolve: {
-					$title: () => 'Register as Site Administrator'
+					$title: () => 'Register as Site Administrator',
+					authenticate: ['UserAuthenticationService', (UserAuthenticationService) => {
+						return UserAuthenticationService.authenticateLoggedOut();
+					}]
 				}
 			})
 			.state('login', {
@@ -32,7 +38,10 @@
 				templateUrl: 'users/client/views/user-login.client.view.html',
 				controller: 'UserAuthenticationController',
 				resolve: {
-					$title: () => 'Log In'
+					$title: () => 'Log In',
+					authenticate: ['UserAuthenticationService', (UserAuthenticationService) => {
+						return UserAuthenticationService.authenticateLoggedOut();
+					}]
 				}
 			})
 			.state('user-profile', {
@@ -57,7 +66,10 @@
 					selectedUser: ['UserService', '$stateParams', (UserService, $stateParams) => {
 						return UserService.getOneUser($stateParams.userID);				
 					}],
-					$title: ['selectedUser', (selectedUser) => `${selectedUser.name.first} ${selectedUser.name.last} - Edit`]
+					$title: ['selectedUser', (selectedUser) => `${selectedUser.name.first} ${selectedUser.name.last} - Edit`],
+					authenticate: ['UserAuthenticationService', '$stateParams', (UserAuthenticationService, $stateParams) => {
+						return UserAuthenticationService.authenticateCurrentUserOrSiteAdmin($stateParams.userID);
+					}]
 				}
 			});
 

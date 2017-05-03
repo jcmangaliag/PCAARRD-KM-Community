@@ -11,7 +11,7 @@
 		$urlRouterProvider.otherwise('/page-not-found');
 
 		$stateProvider
-			/* View Posts from */
+			/* View Posts from My Groups */
 			.state('communityFeed', {
 				url: '/',
 				templateUrl: 'posts/client/views/view-posts/community-feed.client.view.html',
@@ -19,7 +19,10 @@
 					handle: "--my-groups--"
 				},
 				resolve: {
-					$title: () => 'Community Feed'
+					$title: () => 'Community Feed',
+					authenticate: ['UserAuthenticationService', (UserAuthenticationService) => {
+						return UserAuthenticationService.authenticateLoggedIn();
+					}] 
 				}
 			})
 			/* View One Post */
@@ -30,7 +33,10 @@
 					selectedPost: ['PostService', '$stateParams', (PostService, $stateParams) => {
 						return PostService.getOnePost($stateParams.postID);				
 					}],
-					$title: ['selectedPost', (selectedPost) => `${selectedPost.adTitle}`]
+					$title: ['selectedPost', (selectedPost) => `${selectedPost.adTitle}`],
+					authenticate: ['UserAuthenticationService', '$stateParams', (UserAuthenticationService, $stateParams) => {
+						return UserAuthenticationService.authenticatePostVisiblity($stateParams.handle, $stateParams.postID);
+					}]
 				}
 			})
 			.state('oneGroup.viewOneEventPost', {
@@ -40,7 +46,10 @@
 					selectedPost: ['PostService', '$stateParams', (PostService, $stateParams) => {
 						return PostService.getOnePost($stateParams.postID);				
 					}],
-					$title: ['selectedPost', (selectedPost) => `${selectedPost.eventName}`]
+					$title: ['selectedPost', (selectedPost) => `${selectedPost.eventName}`],
+					authenticate: ['UserAuthenticationService', '$stateParams', (UserAuthenticationService, $stateParams) => {
+						return UserAuthenticationService.authenticatePostVisiblity($stateParams.handle, $stateParams.postID);
+					}]
 				}
 			})
 			.state('oneGroup.viewOneMediaPost', {
@@ -50,7 +59,10 @@
 					selectedPost: ['PostService', '$stateParams', (PostService, $stateParams) => {
 						return PostService.getOnePost($stateParams.postID);				
 					}],
-					$title: ['selectedPost', (selectedPost) => `${selectedPost.mediaTitle}`]
+					$title: ['selectedPost', (selectedPost) => `${selectedPost.mediaTitle}`],
+					authenticate: ['UserAuthenticationService', '$stateParams', (UserAuthenticationService, $stateParams) => {
+						return UserAuthenticationService.authenticatePostVisiblity($stateParams.handle, $stateParams.postID);
+					}]
 				}
 			})
 			.state('oneGroup.viewOneNewsPost', {
@@ -60,7 +72,10 @@
 					selectedPost: ['PostService', '$stateParams', (PostService, $stateParams) => {
 						return PostService.getOnePost($stateParams.postID);				
 					}],
-					$title: ['selectedPost', (selectedPost) => `${selectedPost.newsTitle}`]
+					$title: ['selectedPost', (selectedPost) => `${selectedPost.newsTitle}`],
+					authenticate: ['UserAuthenticationService', '$stateParams', (UserAuthenticationService, $stateParams) => {
+						return UserAuthenticationService.authenticatePostVisiblity($stateParams.handle, $stateParams.postID);
+					}]
 				}
 			})
 			.state('oneGroup.viewOneOthersPost', {
@@ -70,7 +85,10 @@
 					selectedPost: ['PostService', '$stateParams', (PostService, $stateParams) => {
 						return PostService.getOnePost($stateParams.postID);				
 					}],
-					$title: ['selectedPost', (selectedPost) => `${selectedPost.post}`]
+					$title: ['selectedPost', (selectedPost) => `${selectedPost.post}`],
+					authenticate: ['UserAuthenticationService', '$stateParams', (UserAuthenticationService, $stateParams) => {
+						return UserAuthenticationService.authenticatePostVisiblity($stateParams.handle, $stateParams.postID);
+					}]
 				}
 			})
 			.state('oneGroup.viewOneQuestionPost', {
@@ -80,7 +98,10 @@
 					selectedPost: ['PostService', '$stateParams', (PostService, $stateParams) => {
 						return PostService.getOnePost($stateParams.postID);				
 					}],
-					$title: ['selectedPost', (selectedPost) => `${selectedPost.question}`]
+					$title: ['selectedPost', (selectedPost) => `${selectedPost.question}`],
+					authenticate: ['UserAuthenticationService', '$stateParams', (UserAuthenticationService, $stateParams) => {
+						return UserAuthenticationService.authenticatePostVisiblity($stateParams.handle, $stateParams.postID);
+					}] 
 				}
 			})
 			.state('oneGroup.viewOneReportPost', {
@@ -90,7 +111,10 @@
 					selectedPost: ['PostService', '$stateParams', (PostService, $stateParams) => {
 						return PostService.getOnePost($stateParams.postID);				
 					}],
-					$title: ['selectedPost', (selectedPost) => `${selectedPost.reportTitle}`]
+					$title: ['selectedPost', (selectedPost) => `${selectedPost.reportTitle}`],
+					authenticate: ['UserAuthenticationService', '$stateParams', (UserAuthenticationService, $stateParams) => {
+						return UserAuthenticationService.authenticatePostVisiblity($stateParams.handle, $stateParams.postID);
+					}]
 				}
 			})
 

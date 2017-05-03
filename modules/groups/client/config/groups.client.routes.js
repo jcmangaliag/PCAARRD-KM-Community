@@ -24,7 +24,10 @@
 				template: '<add-group-classification></add-group-classification><group-classifications></group-classifications>',
 				controller: 'GroupClassificationController',
 				resolve: {
-					$title: () => 'Group Classifications'
+					$title: () => 'Group Classifications',
+					authenticate: ['UserAuthenticationService', (UserAuthenticationService) => {
+						return UserAuthenticationService.authenticateSiteAdmin();
+					}] 
 				}
 			})
 			.state('createGroup', {
@@ -32,7 +35,10 @@
 				templateUrl: 'groups/client/views/create-group.client.view.html',
 				controller: 'GroupController',
 				resolve: {
-					$title: () => 'Create Group'
+					$title: () => 'Create Group',
+					authenticate: ['UserAuthenticationService', (UserAuthenticationService) => {
+						return UserAuthenticationService.authenticateLoggedIn();
+					}]
 				}
 			})
 			.state('oneGroup', {
@@ -54,7 +60,10 @@
 					selectedGroup: ['GroupService', '$stateParams', (GroupService, $stateParams) => {
 						return GroupService.getOneGroup($stateParams.handle);				
 					}],
-					$title: ['selectedGroup', (selectedGroup) => `${selectedGroup.name} - Edit`]
+					$title: ['selectedGroup', (selectedGroup) => `${selectedGroup.name} - Edit`],
+					authenticate: ['UserAuthenticationService', '$stateParams', (UserAuthenticationService, $stateParams) => {
+						return UserAuthenticationService.authenticateGroupAdminOrSiteAdmin($stateParams.handle);
+					}] 
 				}
 			})
 			.state('oneGroupSettings', {
@@ -65,15 +74,21 @@
 					selectedGroup: ['GroupService', '$stateParams', (GroupService, $stateParams) => {
 						return GroupService.getOneGroup($stateParams.handle);				
 					}],
-					$title: ['selectedGroup', (selectedGroup) => `${selectedGroup.name} - Settings`]
+					$title: ['selectedGroup', (selectedGroup) => `${selectedGroup.name} - Settings`],
+					authenticate: ['UserAuthenticationService', '$stateParams', (UserAuthenticationService, $stateParams) => {
+						return UserAuthenticationService.authenticateGroupAdminOrSiteAdmin($stateParams.handle);
+					}]
 				}
 			})
 			.state('dashboard', {
-				url: '/dashboard',
+				url: '/community-dashboard',
 				templateUrl: 'groups/client/views/dashboard.client.view.html',
 				controller: 'DashboardController',
 				resolve: {
-					$title: () => 'Community Dashboard'
+					$title: () => 'Community Dashboard',
+					authenticate: ['UserAuthenticationService', (UserAuthenticationService) => {
+						return UserAuthenticationService.authenticateSiteAdmin();
+					}]
 				}
 			});
 
