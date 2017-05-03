@@ -173,6 +173,13 @@ import _ from 'lodash';
 			);
 		}
 
+		$scope.incrementMembersCount = (adminID, group) => {
+			const memberIndex = $scope.users.contents.map((user) => user._id).indexOf(adminID);
+			if (memberIndex > -1 && $scope.users.contents[memberIndex].groupsJoined.indexOf(group.handle) < 0){
+				group.membersCount++;
+			}
+		}
+
 		$scope.onProcessSettingsGroupData = () => {
 
 			if (!UserAuthenticationService.isLoggedIn()){
@@ -197,6 +204,7 @@ import _ from 'lodash';
 					if ($scope.selectedGroup.admin.indexOf(convertedAdmin) < 0){
 						$scope.selectedGroup.admin.push(convertedAdmin);
 					}
+					$scope.incrementMembersCount(convertedAdmin, $scope.selectedGroup);
 				});
 			}
 
