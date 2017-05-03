@@ -60,6 +60,13 @@ const groupControls = {
 		    res.send({groups: results });
 		});
 	},
+	listPendingGroups  : (req, res) => {
+		Group.find({pendingMembers: req.params.userID}, (err, results) => {
+			if (err) { return (err); }
+
+		    res.send({groups: results });
+		});
+	},
 	listByGroupSearch: (req, res) => {
 		let query = {};
 

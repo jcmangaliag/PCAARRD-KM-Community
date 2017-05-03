@@ -31,6 +31,9 @@ import _ from 'lodash';
 				$scope.selectedUser = result;
 				$scope.loadUserGroups($scope.selectedUser);
 				$scope.loadUserAdministeredGroups($scope.selectedUser);
+				if ($scope.user.currentUser._id == $scope.selectedUser._id){
+					$scope.loadUserPendingGroups($scope.selectedUser);
+				}
 			}, (error) => {
 				// show 404 not found page
 			});
@@ -52,6 +55,13 @@ import _ from 'lodash';
 			GroupService.getUserAdministeredGroups(selectedUser._id)
 				.then((groups) => {
 					$scope.userAdminGroups = groups;
+				});
+		}
+
+		$scope.loadUserPendingGroups = (selectedUser) => {	
+			GroupService.getUserPendingGroups(selectedUser._id)
+				.then((groups) => {
+					$scope.userPendingGroups = groups;
 				});
 		}
 	}

@@ -32,6 +32,9 @@ const groupsRoutes = (app) => {
   app.route('/api/groups/administered/:userID')
     .get(groupCtrl.listAdministeredGroups);
 
+  app.route('/api/groups/pending/:userID')
+    .get(groupCtrl.listPendingGroups);
+
   app.route('/api/groups/search/all') 
     .get(groupCtrl.listByGroupSearch);
 

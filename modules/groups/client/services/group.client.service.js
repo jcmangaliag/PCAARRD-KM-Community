@@ -95,6 +95,19 @@ import _ from 'lodash';
 			return deferred.promise;
 		}
 
+		const getUserPendingGroups = (userID) => {
+			const deferred = $q.defer();
+			
+			$http.get(`/api/groups/pending/${userID}`)
+			.then((response) => {
+				deferred.resolve(response.data.groups);
+			}, (response) => {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		}
+
 		const getOneGroup = (groupHandle) => {
 			const deferred = $q.defer();
 			
@@ -186,6 +199,7 @@ import _ from 'lodash';
 			getDiscoverGroups,
 			getSomeGroups,
 			getUserAdministeredGroups,
+			getUserPendingGroups,
 			getOneGroup,
 			updateGroup,
 			submitGroup,

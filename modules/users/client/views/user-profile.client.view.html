@@ -92,5 +92,18 @@
 		    </ul>
 			</div>
 		</div>
+
+		<div ng-if="user.currentUser && user.currentUser._id === selectedUser._id" class="post-ads" style="margin-bottom: 25px; background-color: white; border-radius: 5px; padding: 5%; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+		  <h4>My Pending Group<span ng-if="userPendingGroups.length > 1">s</span> ({{userPendingGroups.length}})</h4><hr />
+		  <div style="margin: auto; max-height: 400px; overflow-y: auto;">
+		    <ul class="list-group">
+
+		      <li ng-repeat="userPendingGroup in userPendingGroups | orderBy: 'name'" class="list-group-item">
+	      		<a ui-sref="oneGroup({handle: userPendingGroup.handle})"><img src="{{userPendingGroup.photo? userPendingGroup.photo.path.split('/')[1] : '/groups/client/assets/images/default-group-photo.png'}}" alt="Pic" style="width: 18%; border-radius: 8%; margin-right: 0.5em;" />{{userPendingGroup.name}}</a>
+		      </li>
+
+		    </ul>
+			</div>
+		</div>
 	</div>
 </div>
