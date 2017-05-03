@@ -7,9 +7,9 @@ import _ from 'lodash';
 		.module('layout')
 		.controller('HeaderController', HeaderController);
 
-	HeaderController.$inject = ['$scope', 'UserAuthenticationService'];
+	HeaderController.$inject = ['$scope', 'UserAuthenticationService', '$window'];
 
-	function HeaderController ($scope, UserAuthenticationService) {
+	function HeaderController ($scope, UserAuthenticationService, $window) {
 		$scope.options = {
 			showOptions: false
 		}
@@ -33,6 +33,10 @@ import _ from 'lodash';
 		    	});
 		    }
 		});
+
+		$scope.goToDPITC = () => {
+			$window.open("http://www.google.com", '_self');	// change to DPITC URL
+		}
 	}
 
 })();

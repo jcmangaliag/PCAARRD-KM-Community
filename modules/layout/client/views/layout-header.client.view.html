@@ -38,7 +38,7 @@
           </li>
 
           <li><a href="#" style="color: black;">
-            <button id="versionbutton">ALPHA VERSION</button></a>
+            <button id="versionbutton">ALPHA</button></a>
           </li>
         </ul>
       </div>
@@ -55,7 +55,7 @@
     <div style="background-color: #3062B7; padding: 0.2% 1%; color: white;">
       <div class="row">
         <div class="col-xs-4 col-sm-6 col-md-6" style="margin-top:0.4%;">
-           <h4 style="display: inline-block;"><a href="#" style="color: white;">HOME</a> / <a ui-sref="communityFeed" style="color: white;">COMMUNITY</a> </h4>
+           <h4 style="display: inline-block;"><a href="#/" data-toggle="modal" data-target="#go-to-dpitc-home" style="color: white;">HOME</a> / <a ui-sref="communityFeed" style="color: white;">COMMUNITY</a> </h4>
         </div>
 
         <div class="col-xs-8 col-sm-6 col-md-6 text-right">
@@ -91,6 +91,24 @@
                 <li ng-if="user.isLoggedIn" role="separator" class="divider"></li>
                 <li ng-if="user.isLoggedIn" ng-click="user.logout()"> <a href="#"><i class="fa fa-sign-out" aria-hidden="true"></i> Log Out</a></li>
               </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="go-to-dpitc-home" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Leave PCAARRD KM Community</h4>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to leave PCAARRD KM Community?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-danger" ng-click="goToDPITC()" data-dismiss="modal">Leave</button>
           </div>
         </div>
       </div>
