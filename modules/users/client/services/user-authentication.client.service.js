@@ -19,11 +19,7 @@
 
 		const logout = () => {
 		  $window.localStorage.removeItem('pcaarrdcommunity-token');
-		  if ($state.$current.name === 'communityHome'){
-		  	$window.location.reload();
-		  } else {
-		  	$state.go('communityHome')
-		  }
+		  $state.go('communityHome');
 		}
 
 		const isLoggedIn = () => {

@@ -6,6 +6,7 @@ import GroupClassificationController from './controllers/group-classification.cl
 import ViewGroupsCategoriesController from './controllers/view-groups-categories.client.controller.js';
 import DashboardController from './controllers/dashboard.client.controller';
 import EditSettingsGroupController from './controllers/edit-settings-group.client.controller';
+import CommunityHomeController from './controllers/community-home.client.controller';
 
 import groupClassificationsDirective from './directives/group-classifications.client.directive';
 import addGroupClassificationDirective from './directives/add-group-classification.client.directive';

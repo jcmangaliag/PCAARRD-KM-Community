@@ -35,7 +35,7 @@ import _ from 'lodash';
 		});
 
 		$scope.goToDPITC = () => {
-			$window.open("http://www.google.com", '_self');	// change to DPITC URL
+			$window.open("http://www.google.com", '_self');	// change to DPITC Home URL
 		}
 	}
 

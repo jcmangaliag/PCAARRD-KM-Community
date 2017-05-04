@@ -15,6 +15,7 @@
 			.state('communityHome', {
 				url: '/',
 				templateUrl: 'groups/client/views/community-home.client.view.html',
+				controller: 'CommunityHomeController',
 				params: {
 					handle: "--my-groups--"
 				},
