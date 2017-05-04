@@ -1,5 +1,11 @@
 # PCAARRD KM Community
-A web application that allows members to post a question, news, report, event, advertisement, media or others in their virtual spaces or groups. In addition, members can also comment and choose reactions on the existing posts.
+A web community that allows its users to see, create, and join virtual spaces / groups related to PCAARRD's commodities. These groups are classified by industry, sector, ISP, and specific commodity. Once a user becomes part of a group, he or she can participate in the group's discussions by posting, commenting, and reacting. Every group must have at least one group administrator, the one who can perform group administrative privileges. These privileges are editing group information, changing membership type, and etc.
+
+Categorized posting are implemented in this website. It is a feature that allows members to post a question, news, report, event, advertisement, media, or others in their groups. When viewing posts, they can choose to view posts in all categories or they can only view posts in one chosen category.
+
+In addition, there is also community feed for all site members to see at the Community homepage when they are logged in. Community feed contains latest posts in the groups users joined. This feature always gets users updated to the latest happenings in his or her groups. 
+
+This site has even more features for regular users including view all posts by user, filter posts and groups by text, set posts invisible to non-member of the group, edit user information, and more. For site administrators, they have access to administrative features, namely manage group classifications and community dashboard.
 
 ## Prerequisites
 1. Node.js v7. Follow the installation steps for your operating system: https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions
@@ -14,6 +20,12 @@ A web application that allows members to post a question, news, report, event, a
 git fetch origin
 git checkout development
 npm install
+```
+4. Create .env file in the PCAARRD-KM-Community directory containing these lines of code:
+
+```bash
+ADMIN_REG_ACCESS_HASH=a5da9b07136b82e16526490a0d159a39083aa6b0323c857d7b4925c7725c81d516a6bc4f987cfb9e8766886e5051e1718a5ddf933ceb92895a2110ef4214445b
+ADMIN_REG_ACCESS_SALT=57b6868a334f93c80f14c61d4da25655
 ```
 
 ## Running instructions
