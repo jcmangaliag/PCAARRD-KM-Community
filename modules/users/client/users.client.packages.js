@@ -6,7 +6,12 @@ import UserController from './controllers/user.client.controller';
 import EditUserController from './controllers/edit-user.client.controller'; 
 
 import userRegistrationDirective from './directives/user-registration.client.directive';
+import userLoginDirective from './directives/user-login.client.directive';
 
 import UserAuthenticationService from './services/user-authentication.client.service';
 import UserService from './services/user.client.service';
 import EditUserService from './services/edit-user.client.service';
+
+import userLoginStyle from './styles/user-login.client.style.scss';
+import userRegistrationStyle from './styles/user-registration.client.style.scss';
+import editUserStyle from './styles/edit-user.client.style.scss';

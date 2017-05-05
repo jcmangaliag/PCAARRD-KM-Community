@@ -35,7 +35,7 @@
 			})
 			.state('login', {
 				url: '/login',
-				templateUrl: 'users/client/views/user-login.client.view.html',
+				template: '<user-login></user-login>',
 				controller: 'UserAuthenticationController',
 				resolve: {
 					$title: () => 'Log In',

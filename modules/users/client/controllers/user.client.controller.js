@@ -42,11 +42,15 @@ import _ from 'lodash';
 			$scope.descriptionSize = $scope.descriptionSize === $scope.DESCRIPTION_LIMIT? undefined : $scope.DESCRIPTION_LIMIT;
 		}
 
-		$scope.loadUserGroups = (selectedUser) => {	
-			GroupService.getSomeGroups(selectedUser.groupsJoined)
-				.then((groups) => {
-					$scope.userGroups = groups;
-				});
+		$scope.loadUserGroups = (selectedUser) => {
+			if (selectedUser.groupsJoined.length > 0){	
+				GroupService.getSomeGroups(selectedUser.groupsJoined)
+					.then((groups) => {
+						$scope.userGroups = groups;
+					});
+			} else {
+				$scope.userGroups = [];
+			}
 		}
 
 		$scope.loadUserAdministeredGroups = (selectedUser) => {	

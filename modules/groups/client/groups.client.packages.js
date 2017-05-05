@@ -24,4 +24,7 @@ import EditSettingsGroupService from './services/edit-settings-group.client.serv
 
 import viewOneGroupStyle from './styles/view-one-group.client.style.scss';
 import communityHomeStyle from './styles/community-home.client.style.scss';
-
+import addGroupClassificationStyle from './styles/add-group-classification.client.style.scss';
+import createGroupStyle from './styles/create-group.client.style.scss';
+import editGroupStyle from './styles/edit-one-group.client.style.scss';
+import settingsGroupStyle from './styles/settings-one-group.client.style.scss';
