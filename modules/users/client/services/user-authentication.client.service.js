@@ -36,6 +36,19 @@
 		  }
 		}
 
+		const getCurrentUserID = () => {
+ 		  if(isLoggedIn()){
+ 		    const token = getToken();
+ 		    let payload = token.split('.')[1];
+ 		    payload = $window.atob(payload);
+ 		    payload = JSON.parse(payload);
+ 
+ 		    return payload._id;
+ 		  } else {
+ 		  	return null;
+ 		  }
+ 		}
+
 		const getCurrentUser = () => {
 			if (isLoggedIn()) {
 				const deferred = $q.defer();
@@ -259,6 +272,7 @@
 		  getToken,
 		  logout,
 		  isLoggedIn,
+		  getCurrentUserID,
 		  getCurrentUser,
 		  register,
 		  login,
