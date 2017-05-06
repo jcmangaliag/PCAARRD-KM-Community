@@ -1,8 +1,7 @@
-<div ng-show="user.isLoggedIn">
+<div ng-show="user.isLoggedIn">	<!-- Community Feed -->
 	<div id="view-posts" class="post-ads" style="margin-bottom: 2%; background-color: white; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); padding: 0.5%;"><h3 style="margin-top: 10px; padding-left: 10px;"><i class="fa fa-rss" aria-hidden="true"></i> Community Feed</h3><hr />
 		<div class="row" style="margin: 1% 0px; padding: 0 10px;">
-		  <view-posts-categories></view-posts-categories>
-		  <search-posts></search-posts>
+		  <posts-filter-panel></posts-filter-panel>
 		</div>
 	</div>
 	<view-posts></view-posts>

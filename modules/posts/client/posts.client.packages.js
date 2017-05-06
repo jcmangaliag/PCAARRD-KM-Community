@@ -19,6 +19,7 @@ import AddPostPrivacyDirective from './directives/add-post/add-post-privacy.clie
 
 import DeletePostDirective from './directives/delete-post.client.directive';
 import SearchPostsDirective from './directives/search-posts.client.directive';
+import PostsFilterPanelDirective from './directives/posts-filter-panel.client.directive';
 
 import ViewPostsCategoriesDirective from './directives/view-posts/view-posts-categories.client.directive';
 import ViewPostDirective from './directives/view-posts/view-post.client.directive';
