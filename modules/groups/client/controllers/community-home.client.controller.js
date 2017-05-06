@@ -7,9 +7,9 @@ import _ from 'lodash';
 		.module('groups')
 		.controller('CommunityHomeController', CommunityHomeController);
 
-	CommunityHomeController.$inject = ['$scope', 'UserAuthenticationService'];
+	CommunityHomeController.$inject = ['$scope', 'UserAuthenticationService', 'GroupService'];
 
-	function CommunityHomeController ($scope, UserAuthenticationService) {
+	function CommunityHomeController ($scope, UserAuthenticationService, GroupService) {
 		$scope.$watch(() => {
 		    return UserAuthenticationService.isLoggedIn();
 		}, (isLoggedIn) => {
