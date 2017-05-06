@@ -48,17 +48,9 @@ import _ from 'lodash';
 					$scope.setPostsData();
 				} else {	// in community feed or in specific group
 
-					if ($stateParams.handle === '--my-groups--'){
-						$scope.user = {};
-						$scope.user.isLoggedIn = UserAuthenticationService.isLoggedIn();
-					}
-
 					if ($scope.user.isLoggedIn){
 						UserAuthenticationService.getCurrentUser()
 					    	.then((result)=> {
-					    		if ($stateParams.handle === '--my-groups--'){
-					    			$scope.user.currentUser = result;
-					    		}
 					    		const memberOfGroup = ($stateParams.handle === '--my-groups--' || result.groupsJoined.indexOf($stateParams.handle) > -1)? true : false;
 					    		ViewPostsCategoriesService.setUser(result._id, memberOfGroup);
 					    		$scope.setPostsData();

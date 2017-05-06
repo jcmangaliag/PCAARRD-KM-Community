@@ -15,7 +15,8 @@ import viewGroupInfoPanelDirective from './directives/view-group-info-panel.clie
 import viewManageGroupPanelDirective from './directives/view-manage-group-panel.client.directive';
 import viewGroupMembersPanelDirective from './directives/view-group-members-panel.client.directive';
 import viewGroupPostsStatisticsPanelDirective from './directives/view-group-posts-statistics-panel.client.directive';
-import communityLandingPageDirective from './directives/community-landing-page.client.directive.js';
+import communityLandingPageDirective from './directives/community-landing-page.client.directive';
+import communityFeedDirective from './directives/community-feed.client.directive';
 
 import GroupService from './services/group.client.service';
 import GroupClassificationService from './services/group-classification.client.service';

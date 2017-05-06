@@ -67,7 +67,7 @@
 		</div>
 
 		<div class="post-ads" style="margin-bottom: 25px; background-color: white; border-radius: 5px; padding: 5%; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-		  <h4>{{user.currentUser && user.currentUser._id === selectedUser._id? "My" : selectedUser.name.first + "'s"}} Administered Group<span ng-if="userAdminGroups.length > 1">s</span> ({{userAdminGroups.length}})</h4><hr />
+		  <h4>{{user.currentUser && user.currentUser._id === selectedUser._id? "My" : selectedUser.name.first + "'s"}} Administered Group<span ng-if="userAdminGroups.length > 1">s</span> <span class="badge" style="font-size: 14px;">{{userAdminGroups.length}}</span></h4><hr />
 		  <div style="margin: auto; max-height: 400px; overflow-y: auto;">
 		    <ul class="list-group">
 
@@ -80,7 +80,7 @@
 		</div>
 
 		<div class="post-ads" style="margin-bottom: 25px; background-color: white; border-radius: 5px; padding: 5%; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-		  <h4>{{user.currentUser && user.currentUser._id === selectedUser._id? "My" : selectedUser.name.first + "'s"}} Group<span ng-if="userGroups.length > 1">s</span> ({{userGroups.length}})</h4><hr />
+		  <h4>{{user.currentUser && user.currentUser._id === selectedUser._id? "My" : selectedUser.name.first + "'s"}} Group<span ng-if="userGroups.length > 1">s</span> <span class="badge" style="font-size: 14px;">{{userGroups.length}}</span></h4><hr />
 		  <div style="margin: auto; max-height: 400px; overflow-y: auto;">
 		    <ul class="list-group">
 
@@ -93,7 +93,7 @@
 		</div>
 
 		<div ng-if="user.currentUser && (user.currentUser._id === selectedUser._id || user.currentUser.isAdmin)" class="post-ads" style="margin-bottom: 25px; background-color: white; border-radius: 5px; padding: 5%; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-		  <h4>{{user.currentUser && user.currentUser._id === selectedUser._id? "My" : selectedUser.name.first + "'s"}} Pending Group<span ng-if="userPendingGroups.length > 1">s</span> ({{userPendingGroups.length}})</h4><hr />
+		  <h4>{{user.currentUser && user.currentUser._id === selectedUser._id? "My" : selectedUser.name.first + "'s"}} Pending Group<span ng-if="userPendingGroups.length > 1">s</span> <span class="badge" style="font-size: 14px;">{{userPendingGroups.length}}</span></h4><hr />
 		  <div style="margin: auto; max-height: 400px; overflow-y: auto;">
 		    <ul class="list-group">
 

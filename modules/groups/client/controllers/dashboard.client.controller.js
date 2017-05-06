@@ -286,7 +286,7 @@ import _ from 'lodash';
 		$scope.loadTopActiveGroups = (topActiveGroups) => {
 			Highcharts.chart('top-active-groups-container', {
 			    title: {
-			    	text: `Top Active Groups Per Month for ${moment().year()}`
+			    	text: `Monthly Posts of Top Active Groups in ${moment().format("MMMM, YYYY")}`
 			    },
 			    subtitle: {
 			    	text: 'Source: PCAARRD KM Community'
@@ -354,7 +354,7 @@ import _ from 'lodash';
 			        type: 'column'
 			    },
 			    title: {
-			        text: 'Top Popular Groups by Age Group'
+			        text: 'Top Popular Groups by Age Group with Drill Down'
 			    },
 			    subtitle: {
 			        text: 'Source: PCAARRD KM Community'
@@ -404,7 +404,7 @@ import _ from 'lodash';
 			        type: 'pie'
 			    },
 			    title: {
-			        text: 'Groups Distribution'
+			        text: 'Groups Distribution with Drill Down'
 			    },
 			    subtitle: {
 			        text: 'Source: PCAARRD KM Community'
