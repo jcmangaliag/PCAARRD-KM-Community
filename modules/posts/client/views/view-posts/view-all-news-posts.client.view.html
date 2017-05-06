@@ -1,9 +1,9 @@
 <div class="row">
-  <div class="col-xs-6 col-sm-6">
+  <div class="col-xs-9 col-sm-9">
     <h4 style="display: inline;"><span title="Post Category" style="font-weight: normal;" class="label label-info">News</span> <span ng-if="!post.showPublic" title="Private Post" class="label label-default" style="font-weight: normal;"><i class="fa fa-lock" aria-hidden="true"></i></span></h4>
-    <span ng-if="groupBelonged ==='--my-groups--' || groupBelonged ==='--user--'"><i class="fa fa-caret-right" aria-hidden="true"></i> <h4 title="Group" style="display: inline;"><span class="label label-success"><a style="color: white; font-weight: bold;" ui-sref="oneGroup({handle: post.groupBelonged})">{{ getGroupName(post.groupBelonged) }}</a></span></h4></span>
+    <span ng-if="groupBelonged ==='--my-groups--' || groupBelonged ==='--user--'"><i style="margin: 0 5px;" class="fa fa-caret-right" aria-hidden="true"></i> <h4 title="Group" style="display: inline;"><span class="label label-success"><a style="color: white; font-weight: bold;" ui-sref="oneGroup({handle: post.groupBelonged})">{{ getGroupName(post.groupBelonged) }}</a></span></h4></span>
   </div>
-  <div class="col-xs-6 col-sm-6" style="text-align: right;">
+  <div class="col-xs-3 col-sm-3" style="text-align: right;">
     <delete-post></delete-post>
   </div>
 </div>
