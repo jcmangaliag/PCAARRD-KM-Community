@@ -65,6 +65,13 @@ const postControls = {
 	        res.send({ posts: results });
 	    });
 	},
+	listLengthByUser : (req, res) => {
+		Post.find({'postedBy._id': req.params.userID}).count((err, count) => {
+	        if (err) { return (err); }
+
+	        res.send({ postsLength: count });
+	    });
+	},
 	listByUserAndCategory : (req, res) => {
 		Post.find({'postedBy._id': req.params.userID, category: req.params.category, showPublic: true}, (err, results) => {
 	        if (err) { return (err); }

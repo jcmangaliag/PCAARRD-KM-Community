@@ -8,9 +8,9 @@ import _ from 'lodash';
 		.module('users')
 		.controller('UserController', UserController);
 
-	UserController.$inject = ['$scope', '$stateParams', 'UserService', 'UserAuthenticationService', 'GroupService'];
+	UserController.$inject = ['$scope', '$stateParams', 'UserService', 'UserAuthenticationService', 'GroupService', 'CommentService', 'PostService'];
 
-	function UserController ($scope, $stateParams, UserService, UserAuthenticationService, GroupService) {
+	function UserController ($scope, $stateParams, UserService, UserAuthenticationService, GroupService, CommentService, PostService) {
 
 		$scope.fullUserDescription = false;
 		$scope.readUserDescription = "Read More";
@@ -32,6 +32,8 @@ import _ from 'lodash';
 				$scope.loadUserGroups($scope.selectedUser);
 				$scope.loadUserAdministeredGroups($scope.selectedUser);
 				$scope.loadUserPendingGroups($scope.selectedUser);
+				$scope.loadUserPostsCount($scope.selectedUser);
+				$scope.loadUserCommentsCount($scope.selectedUser);
 			}, (error) => {
 				// show 404 not found page
 			});
@@ -64,6 +66,20 @@ import _ from 'lodash';
 			GroupService.getUserPendingGroups(selectedUser._id)
 				.then((groups) => {
 					$scope.userPendingGroups = groups;
+				});
+		}
+
+		$scope.loadUserPostsCount = (selectedUser) => {
+			PostService.getAllPostsCountByUser(selectedUser._id)
+				.then((postsLength) => {
+					$scope.userPostsLength = postsLength;
+				});
+		}
+
+		$scope.loadUserCommentsCount = (selectedUser) => {
+			CommentService.getCommentsLengthByOneUser(selectedUser._id)
+				.then((commentsLength) => {
+					$scope.userCommentsLength = commentsLength;
 				});
 		}
 	}

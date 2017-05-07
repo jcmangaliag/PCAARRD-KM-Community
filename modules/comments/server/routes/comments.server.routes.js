@@ -17,6 +17,9 @@ const commentsRoutes = (app) => {
   app.route('/api/comments/referredPost/:referredPost/commentedBy/:commentedBy')
   	.get(commentCtrl.listByUserComments);
 
+  app.route('/api/comments/commentedBy/:commentedBy/length')
+  	.get(commentCtrl.listLengthByOneUser);
+
   app.route('/api/comments/reactions/:id')
   	.put(commentCtrl.updateReactions);
 

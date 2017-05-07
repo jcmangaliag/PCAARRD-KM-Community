@@ -149,6 +149,18 @@ import _ from 'lodash';
 			return deferred.promise;
 		}
 
+		const getAllPostsCountByUser = (userID) => {
+			const deferred = $q.defer();
+			$http.get(`/api/posts/user/${userID}/length`)
+			.then((response) => {
+				deferred.resolve(response.data.postsLength);
+			}, (response) => {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		}
+
 		const getOnePost = (postID) => {
 			const deferred = $q.defer();
 			
@@ -260,6 +272,7 @@ import _ from 'lodash';
 			getAllPostsByMyGroups,
 			getPostsByUserAndCategory,
 			getAllPostsByUser,
+			getAllPostsCountByUser,
 			getOnePost,
 			setPostReaction,
 			deleteOnePost,

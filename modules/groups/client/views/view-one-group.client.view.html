@@ -9,7 +9,7 @@
 
   <div class="col-xs-12 col-sm-12 col-md-6">
     <div ng-if="'oneGroup' | isState">
-      <add-post ng-if="user.currentUser && (user.currentUser.groupsJoined.indexOf(selectedGroup.handle) > -1)" add-post></add-post>
+      <add-post ng-if="user.currentUser && (user.currentUser.groupsJoined.indexOf(selectedGroup.handle) > -1)"></add-post>
 
       <div class="row" style="margin: 3% 0px;">
         <div ng-if="!user.currentUser || (user.currentUser.groupsJoined.indexOf(selectedGroup.handle) < 0)" class="alert alert-info alert-dismissible" role="alert">

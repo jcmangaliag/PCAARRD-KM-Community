@@ -11,7 +11,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title">{{reaction.count}} people 
+              <h4 class="modal-title">{{reaction.count}} people <span ng-if="highlightReaction(reaction)">including you </span>
                 <span ng-if="reaction.name=='thumbsUp'"> liked </span>
                 <span ng-if="reaction.name=='happy'"> {{reaction.count > 1? 'are' : 'is'}} happy with </span>
                 <span ng-if="reaction.name=='sad'"> {{reaction.count > 1? 'are' : 'is'}} sad with </span>

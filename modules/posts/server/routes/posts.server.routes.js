@@ -24,6 +24,9 @@ const postsRoutes = (app) => {
   app.route('/api/posts/user/:userID')
     .get(postCtrl.listByUser);
 
+  app.route('/api/posts/user/:userID/length')
+    .get(postCtrl.listLengthByUser);
+
   app.route('/api/posts/user/:userID/category/:category')
     .get(postCtrl.listByUserAndCategory);
 

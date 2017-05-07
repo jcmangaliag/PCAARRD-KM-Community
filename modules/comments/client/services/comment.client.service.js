@@ -39,6 +39,19 @@ import _ from 'lodash';
 			return deferred.promise;
 		}
 
+		const getCommentsLengthByOneUser = (userID) => {
+			const deferred = $q.defer();
+
+			$http.get(`/api/comments/commentedBy/${userID}/length`)
+			.then((response) => {
+				deferred.resolve(response.data.commentsLength);
+			}, (response) => {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		}
+
 		const getOneComment = (commentID) => {
 			const deferred = $q.defer();
 			
@@ -128,6 +141,7 @@ import _ from 'lodash';
 			getCommentList,
 			getComments,
 			getCommentsByUser,
+			getCommentsLengthByOneUser,
 			getOneComment,
 			submitComment,
 			setCommentReaction,

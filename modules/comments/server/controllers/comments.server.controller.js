@@ -31,6 +31,17 @@ const commentControls = {
 	        res.send({ comments: results });
 	    });
 	},
+	listLengthByOneUser : (req, res) => {
+		const commentedBy = req.params.commentedBy;
+
+		Comment.find({'commentedBy._id': commentedBy}).count((err, count) => {
+	        if (err) { 
+	        	return (err); 
+	        }
+
+	        res.send({ commentsLength: count });
+	    });
+	},
 	listOne : (req, res) => {
 		const id = req.params.id;
 
