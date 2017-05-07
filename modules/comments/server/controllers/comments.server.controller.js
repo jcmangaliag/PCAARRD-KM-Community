@@ -17,6 +17,15 @@ const commentControls = {
 	        res.send({ comments: results });
 	    });
 	},
+	listLengthByGroupBelonged : (req, res) => {
+		const groupBelonged = req.params.groupBelonged;
+
+		Comment.find({groupBelonged}).count((err, count) => {
+	        if (err) { return (err); }
+
+	        res.send({ commentsLength: count });
+	    });
+	},
 	listByUserComments : (req, res) => {
 		const referredPost = req.params.referredPost;
 		const commentedBy = req.params.commentedBy;

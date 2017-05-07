@@ -45,6 +45,8 @@ import _ from 'lodash';
 			}
 
 			$scope.addCommentFormData.referredPost = postID;
+			$scope.addCommentFormData.groupBelonged = $scope.selectedGroup.handle;
+
 			if ($scope.technologyHandle.enable){
 				$scope.addCommentFormData.technologyHandles = $scope.selectedTechnologies;
 			}

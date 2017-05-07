@@ -26,6 +26,19 @@ import _ from 'lodash';
 			});
 		}
 
+		const getCommentsLengthByGroupBelonged = (groupHandle) => {
+			const deferred = $q.defer();
+
+			$http.get(`/api/comments/groupBelonged/${groupHandle}/length`)
+			.then((response) => {
+				deferred.resolve(response.data.commentsLength);
+			}, (response) => {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		}
+
 		const getCommentsByUser = (referredPost, userID) => {
 			const deferred = $q.defer();
 
@@ -140,6 +153,7 @@ import _ from 'lodash';
 		return {
 			getCommentList,
 			getComments,
+			getCommentsLengthByGroupBelonged,
 			getCommentsByUser,
 			getCommentsLengthByOneUser,
 			getOneComment,

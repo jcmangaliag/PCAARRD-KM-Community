@@ -14,6 +14,9 @@ const commentsRoutes = (app) => {
   	.get(commentCtrl.listByReferredPost)
   	.delete(commentCtrl.removeByReferredPost);
 
+  app.route('/api/comments/groupBelonged/:groupBelonged/length')
+  	.get(commentCtrl.listLengthByGroupBelonged);
+
   app.route('/api/comments/referredPost/:referredPost/commentedBy/:commentedBy')
   	.get(commentCtrl.listByUserComments);
 

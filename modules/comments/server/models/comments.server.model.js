@@ -5,6 +5,10 @@ const CommentSchema = mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		required: true
 	},
+	groupBelonged: {
+		type: String,
+		required: true
+	},
 	comment: {
 		type: String,
 		required: true

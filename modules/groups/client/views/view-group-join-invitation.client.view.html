@@ -1,0 +1,14 @@
+<div class="post-ads" style="margin-bottom: 25px; background-color: white; border-radius: 5px; padding: 15px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+  <h4>Currently, <span style="font-style: italic;">{{selectedGroup.name}}</span> has...</h4><hr />
+
+  <h4><span style="font-weight: normal;" class="label label-success">{{groupAdmins.length}}</span> <span style="font-weight: normal;" class="label label-default">Adminstrator<span ng-if="groupAdmins.length > 1">s</span></span></h4>
+
+  <h4><span style="font-weight: normal;" class="label label-success">{{groupMembers.length}}</span> <span style="font-weight: normal;" class="label label-default">Member<span ng-if="groupMembers.length > 1">s</span></span></h4>
+
+  <h4><span style="font-weight: normal;" class="label label-success">{{selectedGroup.postsCount.total}}</span> <span style="font-weight: normal;" class="label label-default">Total Post<span ng-if="selectedGroup.postsCount.total > 1">s</span></span></h4>
+
+  <h4><span style="font-weight: normal;" class="label label-success">{{groupCommentsCount}}</span> <span style="font-weight: normal;" class="label label-default">Comment<span ng-if="groupCommentsCount > 1">s</span></span></h4>
+
+  <hr />
+  <h4><span ng-if="!user.currentUser">Sign in and </span> Join <span style="font-style: italic;">{{selectedGroup.name}}</span> now to get full access and post updates.</h4>
+</div>

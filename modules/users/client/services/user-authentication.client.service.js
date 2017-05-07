@@ -121,7 +121,7 @@
 		const loginFirst = () => {
 			ngToast.create({
 	    		className: 'danger',
-	    		content: `You are currently not logged in. Please log in first!`
+	    		content: `You are currently not logged in. Please sign in first!`
 	    	});
 
 		    $state.go('login');

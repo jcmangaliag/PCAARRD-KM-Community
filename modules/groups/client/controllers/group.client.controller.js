@@ -8,9 +8,9 @@ import _ from 'lodash';
 		.module('groups')
 		.controller('GroupController', GroupController);
 
-	GroupController.$inject = ['$scope', '$state', '$q', '$timeout', 'ngToast', '$stateParams', 'GroupClassificationService', 'ViewGroupsCategoriesService', 'GroupService', 'SharedPaginationService', 'UserAuthenticationService', 'UserService', '$filter'];
+	GroupController.$inject = ['$scope', '$state', '$q', '$timeout', 'ngToast', '$stateParams', 'GroupClassificationService', 'ViewGroupsCategoriesService', 'GroupService', 'SharedPaginationService', 'UserAuthenticationService', 'UserService', '$filter', 'CommentService'];
 
-	function GroupController ($scope, $state, $q, $timeout, ngToast, $stateParams, GroupClassificationService, ViewGroupsCategoriesService, GroupService, SharedPaginationService, UserAuthenticationService, UserService, $filter) {
+	function GroupController ($scope, $state, $q, $timeout, ngToast, $stateParams, GroupClassificationService, ViewGroupsCategoriesService, GroupService, SharedPaginationService, UserAuthenticationService, UserService, $filter, CommentService) {
 		
 		/* for View One Group */
 
@@ -92,6 +92,13 @@ import _ from 'lodash';
 			UserService.getAllGroupPendingMembers(groupPendingMembersID)
 				.then((pendingMembers) => {
 					$scope.groupPendingMembers = pendingMembers;
+				});
+		}
+
+		$scope.loadGroupCommentsCount = (groupHandle) => {
+			CommentService.getCommentsLengthByGroupBelonged(groupHandle)
+				.then((commentsCount) => {
+					$scope.groupCommentsCount = commentsCount;
 				});
 		}
 
@@ -343,6 +350,8 @@ import _ from 'lodash';
 		}
 
 
+
+
 		/* for View One and View All Groups */
 
 		$scope.setGroupsData = () => {
@@ -368,6 +377,7 @@ import _ from 'lodash';
 						$scope.loadGroupAdmins($scope.selectedGroup.admin);
 						$scope.loadGroupMembers($scope.selectedGroup.handle);
 						$scope.loadGroupPendingMembers($scope.selectedGroup.pendingMembers);
+						$scope.loadGroupCommentsCount($scope.selectedGroup.handle);
 
 						$timeout(() => {
 							$scope.loadPostsAnalysis();
@@ -417,6 +427,10 @@ import _ from 'lodash';
 		}
 
 		$scope.getGroupData();
+
+
+
+
 
 
 		/* for Create Group */
