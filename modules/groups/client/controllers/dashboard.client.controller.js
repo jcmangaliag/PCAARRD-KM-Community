@@ -1,5 +1,6 @@
 import moment from 'moment';
 import _ from 'lodash';
+
 (() => {
 	'use strict';
 	
@@ -7,9 +8,20 @@ import _ from 'lodash';
 		.module('groups')
 		.controller('DashboardController', DashboardController);
 
-	DashboardController.$inject = ['$scope', '$stateParams', '$q', 'GroupService', 'PostService', 'UserService', 'ngToast'];
+	DashboardController.$inject = ['$scope', '$stateParams', '$q', 'GroupService', 'PostService', 'UserService', 'ngToast', 'SharedPaginationService', '$filter'];
 
-	function DashboardController ($scope, $stateParams, $q, GroupService, PostService, UserService, ngToast) {
+	function DashboardController ($scope, $stateParams, $q, GroupService, PostService, UserService, ngToast, SharedPaginationService, $filter) {
+
+		$scope.paginate = SharedPaginationService;
+		$scope.paginate.currentPage = 1;
+		$scope.paginate.groupsPerPage = 10;
+
+		$scope.$watch('searchGroupsStatisticsValue', function(value){ 
+			if ($scope.groups){
+				$scope.groups = $filter('filter')($scope.groupsCopy, value);
+				$scope.paginate.currentPage = 1;
+			}
+    	});
 
 		$scope.loadAllData = () => {
 			$q.all([	// parallel data loading
@@ -18,6 +30,7 @@ import _ from 'lodash';
 				UserService.getAllUsers()
 			]).then((results) => {
 				$scope.groups = results[0];
+				$scope.groupsCopy = _.toArray(results[0]);
 				$scope.posts = results[1];
 				$scope.users = results[2];
 

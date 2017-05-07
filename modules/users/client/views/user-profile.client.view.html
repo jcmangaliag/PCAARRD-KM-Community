@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3" style="padding-right: 0;">
-		<div style="padding: 20px; margin-bottom: 25px; background-color: white; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-			<img src="{{selectedUser.photo? selectedUser.photo.path.split('/')[1] : '/users/client/assets/images/default-user-photo.png'}}" style="width: 100%; max-width: 500px;">
+		<div style="padding: 15px; margin-bottom: 25px; background-color: white; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+			<img src="{{selectedUser.photo? selectedUser.photo.path.split('/')[1] : '/users/client/assets/images/default-user-photo.png'}}" style="border-radius: 25px; padding: 20px; width: 100%; max-width: 500px;">
 			<h3 style="margin-bottom: 3px;">{{selectedUser.name.first + " " + selectedUser.name.last}}</h3>
 			<p style="color: gray;">{{selectedUser.email}}</p>
 			<h4 style="margin-top:20px;"><span style="font-weight: normal;" class="label label-primary">{{selectedUser.isAdmin? 'Site Administrator' : 'Regular User'}}</span></h4>

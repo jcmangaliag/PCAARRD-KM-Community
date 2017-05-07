@@ -2,6 +2,70 @@
 	<h3 style="margin: 0;"><i class="fa fa-users" aria-hidden="true"></i> Community Dashboard</h3>
 </div>
 
+
+<div style="padding: 15px; background-color: white; margin: 0 auto 25px; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+	<div class="row">
+		<div class="col-xs-12 col-sm-6" style="margin-top: 10px;">
+			<h3 style="margin: 0;"><i class="fa fa-list" aria-hidden="true"></i> Groups Statistics <span class="badge" style="font-size: 14px;">{{groupsCopy.length}}</span></h3>
+		</div>
+		<div class="col-xs-12 col-sm-6" style="margin-top: 10px;">
+			<div class="input-group pull-right">
+				<span class="input-group-addon"><i class="fa fa-filter" aria-hidden="true"></i></span>
+				<input type="text" ng-model="searchGroupsStatisticsValue" style="display: inline-block;" class="form-control" placeholder="Filter Groups Statistics">
+			</div>
+		</div>
+		<div class="col-xs-12 col-lg-12" style="margin-top: 10px;">
+		  <div ng-if="searchGroupsStatisticsValue">
+		    <h4>{{groups.length}} group<span ng-if="groups.length > 1">s</span> contain<span ng-if="groups.length < 2">s</span> "<span style="font-style: italic;">{{searchGroupsStatisticsValue}}</span>"</h4>
+		  </div>
+		</div>
+	</div>
+	<hr />
+
+	<div class="table-responsive">
+		<table class="table table-bordered table-striped table-hover">
+		    <thead>
+		      <tr>
+		        <th rowspan="2">Group</th>
+		        <th colspan="2" class="text-center">Number of</th>
+		        <th colspan="8" class="text-center">Number of Posts</th>
+		      </tr>
+		      <tr>
+		        <th>Administrators</th>
+		        <th>Members</th>
+		        <th>Total</th>
+		      	<th>Question</th>
+		        <th>Incident Report</th>
+		        <th>Media or URL</th>
+		        <th>News</th>
+		        <th>Event</th>
+		        <th>Advertisement</th>
+		        <th>Others</th>
+		      </tr>
+		    </thead>
+		    <tbody>
+		      <tr ng-repeat="group in groups | orderBy: 'name' | limitTo: paginate.pageLimit(paginate.currentPage, paginate.groupsPerPage)">
+		      	<td><a ui-sref="oneGroup({handle: group.handle})">{{group.name}}</a></td>
+		      	<td>{{group.admin.length}}</td>
+		      	<td>{{group.membersCount}}</td>
+		      	<td>{{group.postsCount.total}}</td>
+		      	<td>{{group.postsCount.question}}</td>
+		      	<td>{{group.postsCount.report}}</td>
+		      	<td>{{group.postsCount.media}}</td>
+		      	<td>{{group.postsCount.news}}</td>
+		      	<td>{{group.postsCount.event}}</td>
+		      	<td>{{group.postsCount.advertisement}}</td>
+		      	<td>{{group.postsCount.others}}</td>
+		      </tr>
+		    </tbody>
+	  	</table>
+	</div>
+	<div ng-if="paginate.hasMoreItems(paginate.currentPage, paginate.groupsPerPage, groups.length)" class="text-center" style="margin-bottom:10px;">
+		<button ng-click="paginate.loadMoreItems(paginate)" style="width: 50%;" type="button" class="btn btn-primary" >See More Groups</button>
+	</div>
+</div>
+
+
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 		<div style="padding: 15px; background-color: white; margin-bottom: 25px; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
