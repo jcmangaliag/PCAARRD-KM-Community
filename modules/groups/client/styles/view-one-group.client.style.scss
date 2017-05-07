@@ -34,3 +34,14 @@
 	    }
 	}
 }
+
+#group-posts-distribution-container .highcharts-container {
+	margin: 0 auto;
+}
+
+
+@media (max-width: 991px) {
+  .group-header__icon {
+  	width: 300px;
+  }
+}

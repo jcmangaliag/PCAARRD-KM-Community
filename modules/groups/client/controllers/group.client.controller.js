@@ -43,26 +43,22 @@ import _ from 'lodash';
 			        tickmarkPlacement: 'on',
 			        lineWidth: 0
 			    },
-
 			    yAxis: {
 			        gridLineInterpolation: 'polygon',
 			        lineWidth: 0,
 			        min: 0
 			    },
-
-
 			    tooltip: {
 			        shared: true,
 			        pointFormat: '<span style="color:{series.color}">{series.name}: <b>{point.y:,.0f}</b><br/>'
 			    },
-
 			    series: [{
 			        name: 'Number of Posts',
 			        data: [0, 0, 0, 0, 0, 0, 0],
 			        pointPlacement: 'on'
 			    }]
-			})
-			$scope.postsAnalysisChart.setSize(330);
+			});
+			$scope.postsAnalysisChart.setSize(310);
 		}
 
 		$scope.updatePostsAnalysis = () => {
