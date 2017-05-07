@@ -201,8 +201,8 @@ import _ from 'lodash';
 					$scope.removeGroupAdmin(userID, groupHandle);
 				} else {
 					ngToast.create({
-			    		className: 'danger',
-			    		content: `Error: The group should have at least one Group Admin.`
+			    		className: 'warning',
+			    		content: `The group should have at least one Group Admin.`
 			    	});
 
 					return;
@@ -292,8 +292,8 @@ import _ from 'lodash';
 					$scope.removeGroupAdmin(memberID, groupHandle);
 				} else {
 					ngToast.create({
-			    		className: 'danger',
-			    		content: `Error: The group should have at least one Group Admin.`
+			    		className: 'warning',
+			    		content: `The group should have at least one Group Admin.`
 			    	});
 
 					return;
@@ -341,8 +341,8 @@ import _ from 'lodash';
 				$scope.removeGroupAdmin(adminID, groupHandle);
 			} else {
 				ngToast.create({
-		    		className: 'danger',
-		    		content: `Error: The group should have at least one Group Admin.`
+		    		className: 'warning',
+		    		content: `The group should have at least one Group Admin.`
 		    	});
 
 				return;

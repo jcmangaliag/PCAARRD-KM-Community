@@ -13,9 +13,12 @@
 	<shared-view-hashtags selected-hashtags="selectedPost.hashtags"></shared-view-hashtags>
 
 </div>
+
+<div ng-if="!user.currentUser || (user.currentUser.groupsJoined.indexOf(selectedGroup.handle) < 0)" class="alert alert-info alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> <span ng-if="!user.currentUser">Sign in and </span> Join the group to be able to react and write comment.
+</div>
     		
 <one-post-reactions></one-post-reactions>
-
 
 <section id="write-comment">
 	<add-comment ng-show="user.currentUser && (user.currentUser.groupsJoined.indexOf(selectedGroup.handle) > -1)"></add-comment>
