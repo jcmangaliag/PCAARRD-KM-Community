@@ -10,6 +10,7 @@
 	    &__icon {
 	    	width: 100%;
     		padding: 20px;
+    		max-width: 500px;
     		object-fit: cover;
 	    }
 
@@ -37,11 +38,4 @@
 
 #group-posts-distribution-container .highcharts-container {
 	margin: 0 auto;
-}
-
-
-@media (max-width: 991px) {
-  .group-header__icon {
-  	width: 300px;
-  }
 }
