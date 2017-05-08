@@ -27,41 +27,41 @@
 		    <thead>
 		      <tr>
 		        <th rowspan="2">
-		        	<a href="#/" ng-click="changeSort(['name'])">Group</a> <i ng-if="sortGroupBy.indexOf('name') > -1" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+		        	<a href="#/" ng-click="changeSort(['name'])">Group</a> <i ng-if="sortGroupBy[0] === 'name'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
 		        </th>
-		        <th colspan="2" class="text-center">Number of</th>
+		        <th colspan="2" class="text-center">Number of Users</th>
 		        <th colspan="8" class="text-center">Number of Posts</th>
 		      </tr>
 		      <tr>
 		        <th>
-		        	<a href="#/" ng-click="changeSort(['admin.length', 'name'])">Administrators</a> <i ng-if="sortGroupBy.indexOf('admin.length') > -1" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+		        	<a href="#/" ng-click="changeSort(['admin.length', 'name'])">Administrators</a> <i ng-if="sortGroupBy[0] === 'admin.length'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
 				</th>
 		        <th>
-		        	<a href="#/" ng-click="changeSort(['membersCount', 'name'])">Members</a> <i ng-if="sortGroupBy.indexOf('membersCount') > -1" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+		        	<a href="#/" ng-click="changeSort(['membersCount', 'name'])">Members</a> <i ng-if="sortGroupBy[0] === 'membersCount'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
 		        </th>
 		        <th>
-		        	<a href="#/" ng-click="changeSort(['postsCount.total', 'name'])">Total</a> <i ng-if="sortGroupBy.indexOf('postsCount.total') > -1" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+		        	<a href="#/" ng-click="changeSort(['postsCount.total', 'name'])">Total</a> <i ng-if="sortGroupBy[0] === 'postsCount.total'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
 		        </th>
 		      	<th>
-		      		<a href="#/" ng-click="changeSort(['postsCount.question', 'name'])">Question</a> <i ng-if="sortGroupBy.indexOf('postsCount.question') > -1" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+		      		<a href="#/" ng-click="changeSort(['postsCount.question', 'name'])">Question</a> <i ng-if="sortGroupBy[0] === 'postsCount.question'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
 		      	</th>
 		        <th>
-		        	<a href="#/" ng-click="changeSort(['postsCount.report', 'name'])">Incident Report</a> <i ng-if="sortGroupBy.indexOf('postsCount.report') > -1" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+		        	<a href="#/" ng-click="changeSort(['postsCount.report', 'name'])">Incident Report</a> <i ng-if="sortGroupBy[0] === 'postsCount.report'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
 		        </th>
 		        <th>
-		        	<a href="#/" ng-click="changeSort(['postsCount.media', 'name'])">Media or URL</a> <i ng-if="sortGroupBy.indexOf('postsCount.media') > -1" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+		        	<a href="#/" ng-click="changeSort(['postsCount.media', 'name'])">Media or URL</a> <i ng-if="sortGroupBy[0] === 'postsCount.media'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
 		        </th>
 		        <th>
-		        	<a href="#/" ng-click="changeSort(['postsCount.news', 'name'])">News</a> <i ng-if="sortGroupBy.indexOf('postsCount.news') > -1" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+		        	<a href="#/" ng-click="changeSort(['postsCount.news', 'name'])">News</a> <i ng-if="sortGroupBy[0] === 'postsCount.news'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
 		        </th>
 		        <th>
-		        	<a href="#/" ng-click="changeSort(['postsCount.event', 'name'])">Event</a> <i ng-if="sortGroupBy.indexOf('postsCount.event') > -1" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+		        	<a href="#/" ng-click="changeSort(['postsCount.event', 'name'])">Event</a> <i ng-if="sortGroupBy[0] === 'postsCount.event'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
 		        </th>
 		        <th>
-		        	<a href="#/" ng-click="changeSort(['postsCount.advertisement', 'name'])">Advertisement</a> <i ng-if="sortGroupBy.indexOf('postsCount.advertisement') > -1" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+		        	<a href="#/" ng-click="changeSort(['postsCount.advertisement', 'name'])">Advertisement</a> <i ng-if="sortGroupBy[0] === 'postsCount.advertisement'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
 		        </th>
 		        <th>
-		        	<a href="#/" ng-click="changeSort(['postsCount.others', 'name'])">Others</a> <i ng-if="sortGroupBy.indexOf('postsCount.others') > -1" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+		        	<a href="#/" ng-click="changeSort(['postsCount.others', 'name'])">Others</a> <i ng-if="sortGroupBy[0] === 'postsCount.others'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
 		        </th>
 		      </tr>
 		    </thead>

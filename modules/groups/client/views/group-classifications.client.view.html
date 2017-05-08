@@ -21,10 +21,18 @@
 			<table class="table table-bordered table-striped table-hover">
 			    <thead>
 			      <tr>
-			        <th>Industry</th>
-			        <th>Sector</th>
-			        <th>ISP</th>
-			        <th>Specific Commodity</th>
+			        <th>
+			        	<a href="#/" ng-click="changeSort(['industry', 'sector', 'isp', 'specificCommodity'])">Industry</a> <i ng-if="sortGroupClassificationBy[0] === 'industry'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+			        </th>
+			        <th>
+			        	<a href="#/" ng-click="changeSort(['sector', 'isp', 'specificCommodity'])">Sector</a> <i ng-if="sortGroupClassificationBy[0] === 'sector'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+			        </th>
+			        <th>
+			        	<a href="#/" ng-click="changeSort(['isp', 'specificCommodity'])">ISP</a> <i ng-if="sortGroupClassificationBy[0] === 'isp'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+			        </th>
+			        <th>
+			        	<a href="#/" ng-click="changeSort(['!specificCommodity', 'specificCommodity', 'isp'])">Specific Commodity</a> <i ng-if="sortGroupClassificationBy[0] === '!specificCommodity'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+			        </th>
 			        <th>Existing Group</th>
 
 			        <th ng-if="!editedGroupClassificationFormData">Edit</th>
@@ -36,7 +44,7 @@
 			      </tr>
 			    </thead>
 			    <tbody>
-			      <tr ng-repeat="groupClassification in groupClassifications.contents | orderBy: ['industry','sector', 'isp', 'specificCommodity'] | limitTo: paginate.pageLimit(paginate.currentPage, paginate.classificationsPerPage)">
+			      <tr ng-repeat="groupClassification in groupClassifications.contents | orderBy: sortGroupClassificationBy: sortReverse | limitTo: paginate.pageLimit(paginate.currentPage, paginate.classificationsPerPage)">
 
 
 			        <td ng-if="!isEditingClassification(groupClassification._id)">{{groupClassification.industry}}</td>

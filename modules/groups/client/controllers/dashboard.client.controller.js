@@ -15,7 +15,7 @@ import _ from 'lodash';
 		$scope.paginate = SharedPaginationService;
 		$scope.paginate.currentPage = 1;
 		$scope.paginate.groupsPerPage = 10;
-		$scope.sortGroupBy = 'name';
+		$scope.sortGroupBy = ['name'];
 		$scope.sortReverse = false;
 
 		$scope.changeSort = (groupFields) => {

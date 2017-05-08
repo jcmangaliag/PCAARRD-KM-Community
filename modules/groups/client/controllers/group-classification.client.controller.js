@@ -18,6 +18,13 @@ import _ from 'lodash';
 		$scope.paginate.classificationsPerPage = 10;
 
 		$scope.editedGroupClassificationFormData = null;
+		$scope.sortGroupClassificationBy = ['industry', 'sector', 'isp', 'specificCommodity'];
+		$scope.sortReverse = false;
+
+		$scope.changeSort = (groupClassificationFields) => {
+			$scope.sortReverse = (_.isEqual($scope.sortGroupClassificationBy, groupClassificationFields))? !$scope.sortReverse : false;
+			$scope.sortGroupClassificationBy = groupClassificationFields;
+		} 
 
 		$scope.clearGroupClassificationForm = () => {
 			$scope.addGroupClassificationFormData = null;
