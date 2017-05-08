@@ -18,9 +18,9 @@ import _ from 'lodash';
 		$scope.sortGroupBy = 'name';
 		$scope.sortReverse = false;
 
-		$scope.changeSort = (groupField) => {
-			$scope.sortReverse = ($scope.sortGroupBy === groupField)? !$scope.sortReverse : true;
-			$scope.sortGroupBy = groupField;
+		$scope.changeSort = (groupFields) => {
+			$scope.sortReverse = (_.isEqual($scope.sortGroupBy, groupFields))? !$scope.sortReverse : true;
+			$scope.sortGroupBy = groupFields;
 		} 
 
 		$scope.$watch('searchGroupsStatisticsValue', function(value){ 
