@@ -19,7 +19,7 @@
 
     	<shared-view-hashtags selected-hashtags="comment.hashtags"></shared-view-hashtags>
 
-      	<div style=" margin-top: 1%; border-radius: 5px; background-color: white;">
+      	<div style=" margin-top: 6px; border-radius: 5px; background-color: white;">
 
       		<h5 style="display: inline; padding-right:3%;" ng-repeat="reaction in comment.reactions">
 		        <i title="{{reaction.name}}" ng-click="onSetCommentReaction(comment, selectedGroup.handle, $index)" class="fa fa-2x" ng-class="{'fa-thumbs-o-up' : reaction.name=='thumbsUp', 'fa-smile-o': reaction.name=='happy', 'fa-frown-o': reaction.name=='sad'}" aria-hidden="true" style="cursor: pointer;" ng-style="highlightReaction(reaction)? { 'color':'#286090' } : { 'color': '#333333' }"></i>

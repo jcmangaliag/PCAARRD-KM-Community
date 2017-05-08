@@ -9,17 +9,17 @@
 
 <h3 style="margin: 10px 0 0 0;">{{selectedPost.mediaTitle}}</h3>
 
-<div style="padding: 1% 0 2% 0">
+<div style="padding: 6px 0 12px 0">
 	<p style="color: gray;">posted by <a ui-sref="user-profile({userID: selectedPost.postedBy._id})" style="font-weight: bold; color: gray;">{{selectedPost.postedBy.name}}</a> on {{selectedPost.datePosted}}</p>
 </div>
 
-<div ng-if="selectedPost.description" style="margin-bottom: 3%;">
-	<p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Description</p>
+<div ng-if="selectedPost.description" style="margin-bottom: 18px;">
+	<p style="color: gray; margin-bottom: 12px; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Description</p>
   	<h4 ng-bind-html="selectedPost.description | parseURL | emoji" style="white-space: pre-wrap;"></h4>
 </div>
 
-<div ng-if="selectedPost.urls.length > 0" style="margin-bottom: 3%;">
-	<p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">URL/s</p>
+<div ng-if="selectedPost.urls.length > 0" style="margin-bottom: 18px;">
+	<p style="color: gray; margin-bottom: 12px; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">URL/s</p>
 	<ul class="list-group">
   		<li class="list-group-item" ng-repeat="url in selectedPost.urls"><a href="{{url.url}}" target="_blank">{{url.urlTitle}}</a></li>
   	</ul>

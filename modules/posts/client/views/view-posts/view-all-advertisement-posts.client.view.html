@@ -14,7 +14,7 @@
 <p ng-if="post.price" style="margin-bottom: 2px;"><img src="posts/client/assets/images/philippine-peso.png" alt="Php" style="height: 30px; margin-right: 10px;" />{{post.price}}</p>
 
 <p style="padding: 4px 0; white-space: pre-wrap; max-height: 80px;" data-ng-bind="post.details | parseURL | emoji" data-ellipsis></p>
-<div style="margin: -1% 0 1% 0;">
+<div style="margin: -10px 0 10px 0;">
 	<a ui-sref="oneGroup.viewOneAdvertisementPost({handle: post.groupBelonged, postID: post._id, '#': 'read-post'})" >See More</a>
 </div>
 
