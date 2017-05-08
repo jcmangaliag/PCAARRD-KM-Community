@@ -90,14 +90,14 @@ import _ from 'lodash';
 		}
 
 		$scope.computeTopActiveGroups = (selectedMonth, selectedYear) => {
-			/** Getting the top active groups of current month **/
+			/** Getting the top active groups of the selected month and year **/
 
 			// retrieve all posts of the selected month and year
-			let currentMonthPosts = $scope.retrievePostsOnSelectedDate(selectedMonth, selectedYear);
+			let selectedMonthPosts = $scope.retrievePostsOnSelectedDate(selectedMonth, selectedYear);
 			
-			// create object containing group handles as key and the value is the count of posts from the currentMonthPosts
+			// create object containing group handles as key and the value is the count of posts from the selectedMonthPosts
 			let postsGroupsWithCount = {};
-			_.forEach(currentMonthPosts, (post) => {
+			_.forEach(selectedMonthPosts, (post) => {
 				if (postsGroupsWithCount.hasOwnProperty(post.groupBelonged)){
 					postsGroupsWithCount[post.groupBelonged]++;
 				} else {
@@ -112,9 +112,10 @@ import _ from 'lodash';
 			}).value().slice(0, topActiveGroupsSize);
 			
 
-			/** Getting the count of posts of the top active groups for the previous months of the current year **/
+			/** Getting the count of posts of the top active groups for the previous months of the selected year **/
 
-			// in each group in the top active, retrieve the count of posts for the months of this year
+			// in each group in the top active, retrieve the count of posts for the months of the selected year
+			// if previous years, get all months, if current year, get until the current month
 			const consideredMonths = moment().format("YYYY") > selectedYear? moment.months() : moment.months().slice(0, moment().month()+1);
 			let topActiveGroups = [];
 
@@ -143,11 +144,11 @@ import _ from 'lodash';
 
 		$scope.computeTrendingTopics = (selectedMonth, selectedYear) => {
 			// retrieve all posts of the selected month and year
-			let currentMonthPosts = $scope.retrievePostsOnSelectedDate(selectedMonth, selectedYear);
+			let selectedMonthPosts = $scope.retrievePostsOnSelectedDate(selectedMonth, selectedYear);
 
 			// create object containing hashtags as key and the value is its count
 			let hashtagsWithCount = {};
-			_.forEach(currentMonthPosts, (post) => {
+			_.forEach(selectedMonthPosts, (post) => {
 				_.forEach(post.hashtags, (hashtag) => {
 					const formattedHashtag = hashtag.toLowerCase();
 					if (hashtagsWithCount.hasOwnProperty(formattedHashtag)){
