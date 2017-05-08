@@ -17,6 +17,8 @@ import _ from 'lodash';
 		$scope.paginate.groupsPerPage = 10;
 		$scope.sortGroupBy = ['name'];
 		$scope.sortReverse = false;
+		$scope.trendingTopics = { selectedMonth: moment().format('MMMM'), selectedYear: moment().format('YYYY')};
+		$scope.activeGroups = { selectedMonth: moment().format('MMMM'), selectedYear: moment().format('YYYY')};
 
 		$scope.changeSort = (groupFields) => {
 			$scope.sortReverse = (_.isEqual($scope.sortGroupBy, groupFields))? !$scope.sortReverse : true;
@@ -52,9 +54,21 @@ import _ from 'lodash';
 
 		$scope.loadAllData();
 
+		$scope.getAllMonths = () => {
+			return moment.months();
+		}
+
+		$scope.getAllYears = () => {
+			let years = [];
+			for (let i = moment().get('year'); i > 2015; i--){
+				years.push(i);
+			}
+			return years;
+		}
+
 		$scope.computeAnalytics = () => {
-			$scope.computeTopActiveGroups();
-			$scope.computeTrendingTopics();
+			$scope.computeTopActiveGroups($scope.activeGroups.selectedMonth, $scope.activeGroups.selectedYear);	// current month and year
+			$scope.computeTrendingTopics($scope.trendingTopics.selectedMonth, $scope.trendingTopics.selectedYear);
 			$scope.computeTopPopularGroups();
 			$scope.computeGroupsDistribution();
 		}
@@ -64,10 +78,10 @@ import _ from 'lodash';
 			return $scope.groups[groupIndex].name;
 		}
 
-		$scope.retrieveCurrentMonthPosts = () => {
+		$scope.retrievePostsOnSelectedDate = (selectedMonth, selectedYear) => {
 			return $scope.posts.filter((post) =>
-				(moment(post.datePosted, 'MMMM Do YYYY, h:mm:ss a').format('M') == moment().month()+1) && 
-				(moment(post.datePosted, 'MMMM Do YYYY, h:mm:ss a').format('YYYY') == moment().year())
+				(moment(post.datePosted, 'MMMM Do YYYY, h:mm:ss a').format('MMMM') == selectedMonth) && 
+				(moment(post.datePosted, 'MMMM Do YYYY, h:mm:ss a').format('YYYY') == selectedYear)
 			);
 		}
 
@@ -75,11 +89,11 @@ import _ from 'lodash';
 			return moment().diff(moment(user.birthdate, 'MMMM D YYYY'), 'years');
 		}
 
-		$scope.computeTopActiveGroups = () => {
+		$scope.computeTopActiveGroups = (selectedMonth, selectedYear) => {
 			/** Getting the top active groups of current month **/
 
-			// retrieve all posts of the current month and year
-			let currentMonthPosts = $scope.retrieveCurrentMonthPosts();
+			// retrieve all posts of the selected month and year
+			let currentMonthPosts = $scope.retrievePostsOnSelectedDate(selectedMonth, selectedYear);
 			
 			// create object containing group handles as key and the value is the count of posts from the currentMonthPosts
 			let postsGroupsWithCount = {};
@@ -101,7 +115,7 @@ import _ from 'lodash';
 			/** Getting the count of posts of the top active groups for the previous months of the current year **/
 
 			// in each group in the top active, retrieve the count of posts for the months of this year
-			const consideredMonths = moment.months().slice(0, moment().month()+1);
+			const consideredMonths = moment().format("YYYY") > selectedYear? moment.months() : moment.months().slice(0, moment().month()+1);
 			let topActiveGroups = [];
 
 			_.forEach(sortedGroupsArray, (group) => {
@@ -110,7 +124,7 @@ import _ from 'lodash';
 				_.forEach(consideredMonths, (month) => {
 					const postsCount = $scope.posts.filter((post) => 
 						(moment(post.datePosted, 'MMMM Do YYYY, h:mm:ss a').format('MMMM') == month) && 
-						(moment(post.datePosted, 'MMMM Do YYYY, h:mm:ss a').format('YYYY') == moment().year()) &&
+						(moment(post.datePosted, 'MMMM Do YYYY, h:mm:ss a').format('YYYY') == selectedYear) &&
 						(post.groupBelonged === group)
 					).length;	
 
@@ -120,14 +134,16 @@ import _ from 'lodash';
 				topActiveGroups.push({name: $scope.retrieveGroupName(group), data: groupPostsCountList});
 			});
 
-
+			// show all months if previous year or show until current month if current year
+			const monthsList = moment().format("YYYY") > selectedYear? moment.monthsShort() : moment.monthsShort().slice(0, moment().month()+1);
+			
 			/** Render the data to Top Active Groups Highchart **/
-			$scope.loadTopActiveGroups(topActiveGroups);
+			$scope.loadTopActiveGroups(topActiveGroups, selectedMonth, selectedYear, monthsList);
 		}
 
-		$scope.computeTrendingTopics = () => {
-			// retrieve all posts of the current month and year
-			let currentMonthPosts = $scope.retrieveCurrentMonthPosts();
+		$scope.computeTrendingTopics = (selectedMonth, selectedYear) => {
+			// retrieve all posts of the selected month and year
+			let currentMonthPosts = $scope.retrievePostsOnSelectedDate(selectedMonth, selectedYear);
 
 			// create object containing hashtags as key and the value is its count
 			let hashtagsWithCount = {};
@@ -160,7 +176,7 @@ import _ from 'lodash';
 
 
 			/** Render the data to Trending Topics Highchart **/
-			$scope.loadTrendingTopics(trendingTopics);
+			$scope.loadTrendingTopics(trendingTopics, selectedMonth, selectedYear);
 		}
 
 		$scope.computeTopPopularGroups = () => {
@@ -303,24 +319,25 @@ import _ from 'lodash';
 			$scope.loadGroupsDistribution(groupIndustriesData, groupsDistributionSeries);
 		}
 
-		$scope.loadTopActiveGroups = (topActiveGroups) => {
+		$scope.loadTopActiveGroups = (topActiveGroups, selectedMonth, selectedYear, monthsList) => {
 			Highcharts.chart('top-active-groups-container', {
 			    title: {
-			    	text: `Monthly Posts of Top Active Groups in ${moment().format("MMMM, YYYY")}`
+			    	text: `Top Active Groups in ${selectedMonth}, ${selectedYear}`
 			    },
 			    subtitle: {
 			    	text: 'Source: PCAARRD KM Community'
 			    },
 			    yAxis: {
-		             title: {
-	                     text: 'Number of Posts'
-		             }
+					allowDecimals: false,
+					title: {
+					 	text: 'Number of Posts'
+					}
 			    },
 			    xAxis: {
 	                 title: {
 	                     text: 'Month'
 	               	 }, 
-	               	 categories: moment.monthsShort().slice(0, moment().month()+1)
+	               	 categories: monthsList
 			    },
 			    legend: {
 	               layout: 'vertical',
@@ -334,10 +351,10 @@ import _ from 'lodash';
 		    });
 		}
 
-		$scope.loadTrendingTopics = (trendingTopics) => {	
+		$scope.loadTrendingTopics = (trendingTopics, selectedMonth, selectedYear) => {	
 		    Highcharts.chart('trending-topics-container', {
 		    	title: {
-			        text: `Trending Topics in ${moment().format("MMMM, YYYY")}`
+			        text: `Trending Topics in  ${selectedMonth}, ${selectedYear}`
 			    }, 
 			    subtitle: {
 			    	text: 'Source: PCAARRD KM Community'
@@ -386,10 +403,10 @@ import _ from 'lodash';
 			        }
 			    },
 			    yAxis: {
+			    	allowDecimals: false,
 			        title: {
 			            text: 'Number of Members'
 			        }
-
 			    },
 			    legend: {
 			        enabled: false

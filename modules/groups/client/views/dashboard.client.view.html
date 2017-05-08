@@ -6,7 +6,7 @@
 <div style="padding: 15px; background-color: white; margin: 0 auto 25px; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 	<div class="row">
 		<div class="col-xs-12 col-sm-6" style="margin-top: 10px;">
-			<h3 style="margin: 0;"><i class="fa fa-list" aria-hidden="true"></i> Groups Statistics <span class="badge" style="font-size: 14px;">{{groupsCopy.length}}</span></h3>
+			<h3 style="margin: 0;">Groups Statistics <span class="badge" style="font-size: 14px;">{{groupsCopy.length}}</span></h3>
 		</div>
 		<div class="col-xs-12 col-sm-6" style="margin-top: 10px;">
 			<div class="input-group pull-right">
@@ -89,23 +89,55 @@
 
 
 <div class="row">
-	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-		<div style="padding: 15px; background-color: white; margin-bottom: 25px; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-			<div id="groups-distribution-container"></div>
-		</div>
-	</div>
 
 	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 		<div style="padding: 15px; background-color: white; margin-bottom: 25px; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+			<h5>Select Month and Year</h5>
+			<form ng-submit="computeTopActiveGroups(activeGroups.selectedMonth, activeGroups.selectedYear)">
+				<div class="form-group">
+					<select class="form-control" ng-model="activeGroups.selectedMonth" style="max-width: 170px; display: inline-block;" required>
+						<option value="" selected>---Select Month---</option>
+					    <option value="{{month}}" ng-repeat="month in getAllMonths()">{{month}}</option>
+					</select>
+					<select class="form-control" ng-model="activeGroups.selectedYear" style="max-width: 150px; display: inline-block;" required>
+						<option value="" selected>---Select Year---</option>
+					    <option value="{{year}}" ng-repeat="year in getAllYears()">{{year}}</option>
+					</select>
+					<button type="submit" class="btn btn-primary">Show</button>
+				</div>
+			</form>
+			<hr />
 			<div id="top-active-groups-container"></div>
 		</div>
 	</div>
 
 	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 		<div style="padding: 15px; background-color: white; margin-bottom: 25px; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+			<h5>Select Month and Year</h5>
+			<form ng-submit="computeTrendingTopics(trendingTopics.selectedMonth, trendingTopics.selectedYear)">
+				<div class="form-group">
+					<select class="form-control" ng-model="trendingTopics.selectedMonth" style="max-width: 170px; display: inline-block;" required>
+						<option value="" selected>---Select Month---</option>
+					    <option value="{{month}}" ng-repeat="month in getAllMonths()">{{month}}</option>
+					</select>
+					<select class="form-control" ng-model="trendingTopics.selectedYear" style="max-width: 150px; display: inline-block;" required>
+						<option value="" selected>---Select Year---</option>
+					    <option value="{{year}}" ng-repeat="year in getAllYears()">{{year}}</option>
+					</select>
+					<button type="submit" class="btn btn-primary">Show</button>
+				</div>
+			</form>
+			<hr />
 			<div id="trending-topics-container"></div>
 		</div>
 	</div>
+
+	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+		<div style="padding: 15px; background-color: white; margin-bottom: 25px; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+			<div id="groups-distribution-container"></div>
+		</div>
+	</div>
+
 
 	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 		<div style="padding: 15px; background-color: white; margin-bottom: 25px; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
