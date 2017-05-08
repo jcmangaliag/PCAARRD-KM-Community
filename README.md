@@ -21,12 +21,7 @@ git fetch origin
 git checkout development
 npm install
 ```
-4. Create .env file in the PCAARRD-KM-Community directory containing these lines of code:
-
-```bash
-ADMIN_REG_ACCESS_HASH=a5da9b07136b82e16526490a0d159a39083aa6b0323c857d7b4925c7725c81d516a6bc4f987cfb9e8766886e5051e1718a5ddf933ceb92895a2110ef4214445b
-ADMIN_REG_ACCESS_SALT=57b6868a334f93c80f14c61d4da25655
-```
+4. Create .env file in the PCAARRD-KM-Community directory containing secret keys. Contact me to obtain the secret hash and salt.
 
 ## Running instructions
 1. Open another terminal and run MongoDB using:

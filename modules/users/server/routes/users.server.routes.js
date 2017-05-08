@@ -5,13 +5,6 @@ import passportConfig from '../config/users.server.passport';
 import env from 'node-env-file';
 env(`${__dirname} /../../../../.env`);
 
-/*import jwt from 'express-jwt';
-
-const auth = jwt({
-  secret: 'MY_SECRET',
-  userProperty: 'payload'
-});
-*/
 
 const usersRoutes = (app) => {
 
@@ -45,13 +38,6 @@ const usersRoutes = (app) => {
 
   app.route('/api/users/:userID/leave-group/:groupHandle')
     .put(userCtrl.leaveGroup);
-
-/*  // Catch unauthorised errors
-  app.use((err, req, res, next) => {
-    if (err.name === 'UnauthorizedError') {
-      res.status(401).json({"message" : err.name + ": " + err.message});
-    }
-  });*/
 
 };
 
