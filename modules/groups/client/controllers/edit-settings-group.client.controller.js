@@ -173,11 +173,15 @@ import _ from 'lodash';
 			);
 		}
 
-		$scope.incrementMembersCount = (adminID, group) => {
-			const memberIndex = $scope.users.contents.map((user) => user._id).indexOf(adminID);
-			if (memberIndex > -1 && $scope.users.contents[memberIndex].groupsJoined.indexOf(group.handle) < 0){
-				group.membersCount++;
+		$scope.validateNewAdminsMembership = (adminIDs, group) => {
+			for (let i = 0; i < adminIDs.length; i++){
+				const memberIndex = $scope.users.contents.map((user) => user._id).indexOf(adminIDs[i]);
+				if (memberIndex > -1 && $scope.users.contents[memberIndex].groupsJoined.indexOf(group.handle) < 0){
+					return i;	// don't validate if the admin is not a member
+				}
 			}
+
+			return true;
 		}
 
 		$scope.onProcessSettingsGroupData = () => {
@@ -191,31 +195,34 @@ import _ from 'lodash';
 				const validatedEmails = $scope.validateAdminEmailAddress($scope.multipleFields.admins);
 				if (validatedEmails !== true){
 					ngToast.create({
-			    		className: 'danger',
-			    		content: `Error: ${validatedEmails} does not exist!`
+			    		className: 'warning',
+			    		content: `User ${validatedEmails} does not exist!`
 			    	});
 
 			    	return;
 				}
 
 				const convertedAdmins = $scope.convertEmailToUserID($scope.multipleFields.admins);
+				const validatedMembers = $scope.validateNewAdminsMembership(convertedAdmins, $scope.selectedGroup);
+				if (validatedMembers !== true){
+
+					ngToast.create({
+			    		className: 'warning',
+			    		content: `User ${$scope.multipleFields.admins[validatedMembers]} is not a member of this group!`
+			    	});
+
+			    	return;
+				}
 
 				_.forEach(convertedAdmins, (convertedAdmin) => {
 					if ($scope.selectedGroup.admin.indexOf(convertedAdmin) < 0){
 						$scope.selectedGroup.admin.push(convertedAdmin);
 					}
-					$scope.incrementMembersCount(convertedAdmin, $scope.selectedGroup);
 				});
 			}
 
 			EditSettingsGroupService.submitModifiedGroup($scope.selectedGroup)
 				.then(() => {
-					
-					if ($scope.newGroupAdmins.enable){	// make sure admins are members of the group
-				    	_.forEach($scope.selectedGroup.admin, (admin) => {
-							UserService.joinGroup(admin, $scope.selectedGroup.handle);
-						});
-			    	}
 
 					ngToast.create({
 			    		className: 'success',

@@ -16,15 +16,14 @@ import _ from 'lodash';
 
 		$scope.MIN_TECHNOLOGY = 1;
 		$scope.technologiesList = [];
+		$scope.loadingTechnologiesBarON = true;
 
 		SharedTechnologyHandlesService.getTechnologies()
 			.then((technologies) => {
 				_.forEach(technologies, (technology) => $scope.technologiesList.push(technology.title));
+				$scope.loadingTechnologiesBarON = false;
 			}, (error) => {
-				ngToast.create({
-		    		className: 'danger',
-		    		content: `There is a problem with loading the technologies.`
-		    	});
+				$scope.loadingTechnologiesBarON = false;
 			});
 
 		$scope.selectedTechnologies = [''];
