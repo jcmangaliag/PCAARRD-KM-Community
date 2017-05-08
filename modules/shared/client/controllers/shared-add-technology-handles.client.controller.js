@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 (() => {
 	'use strict';
 	
@@ -5,24 +7,25 @@
 		.module('shared')
 		.controller('SharedAddTechnologyHandlesController', SharedAddTechnologyHandlesController);
 
-	SharedAddTechnologyHandlesController.$inject = ['$scope'];
+	SharedAddTechnologyHandlesController.$inject = ['$scope', 'ngToast', 'SharedTechnologyHandlesService'];
 
-	function SharedAddTechnologyHandlesController ($scope) {
+	function SharedAddTechnologyHandlesController ($scope, ngToast, SharedTechnologyHandlesService) {
 		$scope.technologyHandle = { 
 			enable: false
 		};
 
 		$scope.MIN_TECHNOLOGY = 1;
+		$scope.technologiesList = [];
 
-		// get the existing technologies from API and store in techologiesList array
-		// dummy technologies
-		$scope.technologiesList = [
-			'beacons', 
-			'carrageenan', 
-			'bioroe', 
-			'diagnosticKit', 
-			'milkfishFryCounter'
-		];
+		SharedTechnologyHandlesService.getTechnologies()
+			.then((technologies) => {
+				_.forEach(technologies, (technology) => $scope.technologiesList.push(technology.title));
+			}, (error) => {
+				ngToast.create({
+		    		className: 'danger',
+		    		content: `There is a problem with loading the technologies.`
+		    	});
+			});
 
 		$scope.selectedTechnologies = [''];
 
