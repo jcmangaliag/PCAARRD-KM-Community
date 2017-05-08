@@ -15,6 +15,13 @@ import _ from 'lodash';
 		$scope.paginate = SharedPaginationService;
 		$scope.paginate.currentPage = 1;
 		$scope.paginate.groupsPerPage = 10;
+		$scope.sortGroupBy = 'name';
+		$scope.sortReverse = false;
+
+		$scope.changeSort = (groupField) => {
+			$scope.sortReverse = ($scope.sortGroupBy === groupField)? !$scope.sortReverse : true;
+			$scope.sortGroupBy = groupField;
+		} 
 
 		$scope.$watch('searchGroupsStatisticsValue', function(value){ 
 			if ($scope.groups){

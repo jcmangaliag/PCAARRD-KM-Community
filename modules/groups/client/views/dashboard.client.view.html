@@ -26,25 +26,47 @@
 		<table class="table table-bordered table-striped table-hover">
 		    <thead>
 		      <tr>
-		        <th rowspan="2">Group</th>
+		        <th rowspan="2">
+		        	<a href="#/" ng-click="changeSort('name')">Group</a> <i ng-if="sortGroupBy === 'name'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+		        </th>
 		        <th colspan="2" class="text-center">Number of</th>
 		        <th colspan="8" class="text-center">Number of Posts</th>
 		      </tr>
 		      <tr>
-		        <th>Administrators</th>
-		        <th>Members</th>
-		        <th>Total</th>
-		      	<th>Question</th>
-		        <th>Incident Report</th>
-		        <th>Media or URL</th>
-		        <th>News</th>
-		        <th>Event</th>
-		        <th>Advertisement</th>
-		        <th>Others</th>
+		        <th>
+		        	<a href="#/" ng-click="changeSort('admin.length')">Administrators</a> <i ng-if="sortGroupBy === 'admin.length'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+				</th>
+		        <th>
+		        	<a href="#/" ng-click="changeSort('membersCount')">Members</a> <i ng-if="sortGroupBy === 'membersCount'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+		        </th>
+		        <th>
+		        	<a href="#/" ng-click="changeSort('postsCount.total')">Total</a> <i ng-if="sortGroupBy === 'postsCount.total'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+		        </th>
+		      	<th>
+		      		<a href="#/" ng-click="changeSort('postsCount.question')">Question</a> <i ng-if="sortGroupBy === 'postsCount.question'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+		      	</th>
+		        <th>
+		        	<a href="#/" ng-click="changeSort('postsCount.report')">Incident Report</a> <i ng-if="sortGroupBy === 'postsCount.report'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+		        </th>
+		        <th>
+		        	<a href="#/" ng-click="changeSort('postsCount.media')">Media or URL</a> <i ng-if="sortGroupBy === 'postsCount.media'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+		        </th>
+		        <th>
+		        	<a href="#/" ng-click="changeSort('postsCount.news')">News</a> <i ng-if="sortGroupBy === 'postsCount.news'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+		        </th>
+		        <th>
+		        	<a href="#/" ng-click="changeSort('postsCount.event')">Event</a> <i ng-if="sortGroupBy === 'postsCount.event'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+		        </th>
+		        <th>
+		        	<a href="#/" ng-click="changeSort('postsCount.advertisement')">Advertisement</a> <i ng-if="sortGroupBy === 'postsCount.advertisement'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+		        </th>
+		        <th>
+		        	<a href="#/" ng-click="changeSort('postsCount.others')">Others</a> <i ng-if="sortGroupBy === 'postsCount.others'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+		        </th>
 		      </tr>
 		    </thead>
 		    <tbody>
-		      <tr ng-repeat="group in groups | orderBy: 'name' | limitTo: paginate.pageLimit(paginate.currentPage, paginate.groupsPerPage)">
+		      <tr ng-repeat="group in groups | orderBy: sortGroupBy  : sortReverse | limitTo: paginate.pageLimit(paginate.currentPage, paginate.groupsPerPage)">
 		      	<td><a ui-sref="oneGroup({handle: group.handle})">{{group.name}}</a></td>
 		      	<td>{{group.admin.length}}</td>
 		      	<td>{{group.membersCount}}</td>
