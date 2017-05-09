@@ -23,8 +23,8 @@ import _ from 'lodash';
 					$scope.adminRegistration.allow = response;
 				}, (response) => {
 					ngToast.create({
-			    		className: 'danger',
-			    		content: `Error: Invalid Access Key!`
+			    		className: 'warning',
+			    		content: `Invalid Access Key!`
 			    	});
 
 			    	$scope.adminRegistration.enteredAccessKey = "";
@@ -64,16 +64,16 @@ import _ from 'lodash';
 		$scope.onProcessUserData = () => {
 			if($scope.enteredPassword !== $scope.reenteredPassword){
 				ngToast.create({
-		    		className: 'danger',
-		    		content: `Error: Passwords do not match.`
+		    		className: 'warning',
+		    		content: `Passwords do not match.`
 		    	});
 		    	return;
 			}
 
 			if ($scope.usedEmail()){
 				ngToast.create({
-		    		className: 'danger',
-		    		content: `Error: Email is already used.`
+		    		className: 'warning',
+		    		content: `Email is already used.`
 		    	});
 		    	return;
 			}
@@ -105,8 +105,8 @@ import _ from 'lodash';
 					$state.go("communityHome");
 				}, (response) => {
 					ngToast.create({
-			    		className: 'danger',
-			    		content: `Error: Incorrect username or password.`
+			    		className: 'warning',
+			    		content: `Incorrect username or password.`
 			    	});
 				});
 		}

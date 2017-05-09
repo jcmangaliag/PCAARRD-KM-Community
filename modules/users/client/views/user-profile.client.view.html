@@ -11,13 +11,13 @@
 
 			<h4>User Statistics</h4><hr />
 
-			 <h4><span style="font-weight: normal;" class="label label-success">{{userAdminGroups.length}}</span> <span style="font-weight: normal;" class="label label-default">Groups Administered</span></h4>
+			 <h4><span style="font-weight: normal;" class="label label-success">{{userAdminGroups.length}}</span> <span style="font-weight: normal;" class="label label-default">Group<span ng-if="userAdminGroups.length > 1">s</span> Administered</span></h4>
 
-			 <h4><span style="font-weight: normal;" class="label label-success">{{userGroups.length}}</span> <span style="font-weight: normal;" class="label label-default">Groups Joined</span></h4>
+			 <h4><span style="font-weight: normal;" class="label label-success">{{userGroups.length}}</span> <span style="font-weight: normal;" class="label label-default">Group<span ng-if="userGroups.length > 1">s</span> Joined</span></h4>
 
-			 <h4><span style="font-weight: normal;" class="label label-success">{{userPostsLength}}</span> <span style="font-weight: normal;" class="label label-default">Public and Private Posts</span></h4>
+			 <h4><span style="font-weight: normal;" class="label label-success">{{userPostsLength}}</span> <span style="font-weight: normal;" class="label label-default">Public and Private Post<span ng-if="userPostsLength > 1">s</span></span></h4>
 
-			 <h4><span style="font-weight: normal;" class="label label-success">{{userCommentsLength}}</span> <span style="font-weight: normal;" class="label label-default">Comments</span></h4>
+			 <h4><span style="font-weight: normal;" class="label label-success">{{userCommentsLength}}</span> <span style="font-weight: normal;" class="label label-default">Comment<span ng-if="userCommentsLength > 1">s</span></span></h4>
 		</div>
 
 		<div style="padding: 15px; margin-bottom: 25px; background-color: white; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">

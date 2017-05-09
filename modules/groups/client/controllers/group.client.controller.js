@@ -504,11 +504,11 @@ import _ from 'lodash';
 		    		const validatedEmails = $scope.validateAdminEmailAddress($scope.multipleFields.admins);
 					if (validatedEmails !== true){
 						ngToast.create({
-				    		className: 'danger',
-				    		content: `Error: ${validatedEmails} does not exist!`
+				    		className: 'warning',
+				    		content: `User ${validatedEmails} does not exist!`
 				    	});
 
-				    	return $q.reject(`Error: ${validatedEmails} does not exist!`);
+				    	return $q.reject(`User ${validatedEmails} does not exist!`);
 					}
 
 					$scope.addGroupFormData.admin = $scope.convertEmailToUserID($scope.multipleFields.admins);
