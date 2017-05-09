@@ -28,49 +28,62 @@ import _ from 'lodash';
 		$scope.loadPostsAnalysis = () => {
 			$scope.postsAnalysisChart = Highcharts.chart('group-posts-distribution-container', {
 			    chart: {
-			        polar: true,
-			        type: 'line'
+			        type: 'bar'
 			    },
 			    title: {
 			        text: `No Group`
 			    },
-			    pane: {
-			        size: '80%'
+			    subtitle: {
+			        text: `PCAARRD KM Community`
 			    },
 			    xAxis: {
-			        categories: ['Media or URL', 'Others', 'News',
-			                'Advertisement', 'Incident Report', 'Event', 'Question'],
-			        tickmarkPlacement: 'on',
-			        lineWidth: 0
+			        categories: ['Total', 'Question', 'Incident Report', 'Media or URL', 'News', 'Event', 'Advertisement', 'Others'],
+			        title: {
+			            text: null
+			        }
 			    },
 			    yAxis: {
-			        gridLineInterpolation: 'polygon',
-			        lineWidth: 0,
-			        min: 0
+			        min: 0,
+			        title: {
+			            text: 'Number of Posts',
+			            align: 'high'
+			        },
+			        labels: {
+			            overflow: 'justify'
+			        },
+			        allowDecimals: false
 			    },
-			    tooltip: {
-			        shared: true,
-			        pointFormat: '<span style="color:{series.color}">{series.name}: <b>{point.y:,.0f}</b><br/>'
+			    plotOptions: {
+			        bar: {
+			            dataLabels: {
+			                enabled: true
+			            }
+			        }
+			    },
+			    legend: {
+			        enabled: false
+			    },
+			    credits: {
+			        enabled: false
 			    },
 			    series: [{
 			        name: 'Number of Posts',
-			        data: [0, 0, 0, 0, 0, 0, 0],
-			        pointPlacement: 'on'
+			        data: [0, 0, 0, 0, 0, 0, 0, 0, 0]
 			    }]
 			});
-			$scope.postsAnalysisChart.setSize(310);
 		}
 
 		$scope.updatePostsAnalysis = () => {
 			$scope.postsAnalysisChart.setTitle({text: `${$scope.selectedGroup.name} Posts`}, {text: 'Source: PCAARRD KM Community'});
 			$scope.postsAnalysisChart.series[0].setData([
-				$scope.selectedGroup.postsCount.media, 
-				$scope.selectedGroup.postsCount.others,
-				$scope.selectedGroup.postsCount.news,
-				$scope.selectedGroup.postsCount.advertisement,  
-				$scope.selectedGroup.postsCount.report, 			
-				$scope.selectedGroup.postsCount.event, 
-				$scope.selectedGroup.postsCount.question
+				$scope.selectedGroup.postsCount.total,
+				$scope.selectedGroup.postsCount.question, 
+				$scope.selectedGroup.postsCount.report,
+				$scope.selectedGroup.postsCount.media,
+				$scope.selectedGroup.postsCount.news,  
+				$scope.selectedGroup.postsCount.event, 			
+				$scope.selectedGroup.postsCount.advertisement, 
+				$scope.selectedGroup.postsCount.others
 			], true);
 		}
 
