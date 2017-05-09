@@ -81,6 +81,11 @@
     height: 100%;
 }
 
+.features-list .main-feature li.list-group-item {
+    border: none;
+    background-color: transparent;
+}
+
 @media only screen and (max-width: 992px) {
     .features-list {
         display: block;
