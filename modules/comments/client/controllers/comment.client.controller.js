@@ -135,7 +135,7 @@ import _ from 'lodash';
 					});
 			} else {
 				ngToast.create({
-		    		className: 'danger',
+		    		className: 'warning',
 		    		content: `You must join the group first before reacting.`
 		    	});
 			}

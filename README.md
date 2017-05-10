@@ -8,7 +8,7 @@ In addition, there is also community feed for all site members to see at the Com
 This site contains even more features for regular users including view all posts by user, filter posts and groups by text, set posts invisible to non-member of the group, edit user information, and more. For site administrators, they have access to administrative features, namely manage group classifications and community dashboard.
 
 ## Prerequisites
-1. Node.js v7. Follow the installation steps for your operating system: https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions
+1. Node.js v6. Follow the installation steps for your operating system: https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions
 2. MongoDB. Download link: https://www.mongodb.com/download-center#community. Installation instructions for Ubuntu users: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/
 
 ## Installation instructions

@@ -67,7 +67,7 @@ import _ from 'lodash';
 		}
 
 		$scope.computeAnalytics = () => {
-			$scope.computeTopActiveGroups($scope.activeGroups.startMonth, $scope.activeGroups.startYear, $scope.activeGroups.endMonth, $scope.activeGroups.endYear);	// current month and year
+			$scope.computeTopActiveGroups($scope.activeGroups.startMonth, $scope.activeGroups.startYear, $scope.activeGroups.endMonth, $scope.activeGroups.endYear);
 			$scope.computeTrendingTopics($scope.trendingTopics.selectedMonth, $scope.trendingTopics.selectedYear);
 			$scope.computeTopPopularGroups();
 			$scope.computeGroupsDistribution();

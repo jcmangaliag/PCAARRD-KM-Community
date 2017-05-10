@@ -15,7 +15,10 @@ const webpackConfig = {
 	},
 	resolve: {
 		modulesDirectories: ['node_modules', 'modules'],
-		extension: ['', '.js']
+		extension: ['', '.js'],
+		alias: {
+			angular: "angular/angular.min.js"
+		}
 	},
 	module: {
 		loaders: [
@@ -51,7 +54,11 @@ const webpackConfig = {
       		{ 
       			test: /\.(ttf|eot|svg|jpe?g|png|gif|ico)(\?v=[0-9]\.[0-9]\.[0-9])?$/, 
       			loader: "file-loader" 
-      		}
+      		},
+      		{
+	            test: /angular\.min\.js$/,
+	            loader: 'exports?angular'
+	        }
 		]
 	},
 	plugins: [

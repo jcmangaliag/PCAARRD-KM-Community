@@ -16,7 +16,7 @@
 				template: '<user-registration></user-registration>',
 				controller: 'UserAuthenticationController',
 				resolve: {
-					$title: () => 'Register',
+					$title: () => 'Sign Up',
 					authenticate: ['UserAuthenticationService', (UserAuthenticationService) => {
 						return UserAuthenticationService.authenticateLoggedOut();
 					}]
@@ -27,7 +27,7 @@
 				templateUrl: 'users/client/views/user-admin-registration.client.view.html',
 				controller: 'UserAuthenticationController',
 				resolve: {
-					$title: () => 'Register as Site Administrator',
+					$title: () => 'Sign Up as Site Administrator',
 					authenticate: ['UserAuthenticationService', (UserAuthenticationService) => {
 						return UserAuthenticationService.authenticateLoggedOut();
 					}]
@@ -38,7 +38,7 @@
 				template: '<user-login></user-login>',
 				controller: 'UserAuthenticationController',
 				resolve: {
-					$title: () => 'Log In',
+					$title: () => 'Sign In',
 					authenticate: ['UserAuthenticationService', (UserAuthenticationService) => {
 						return UserAuthenticationService.authenticateLoggedOut();
 					}]
