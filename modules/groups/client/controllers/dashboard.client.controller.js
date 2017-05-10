@@ -18,7 +18,7 @@ import _ from 'lodash';
 		$scope.sortGroupBy = ['name'];
 		$scope.sortReverse = false;
 		$scope.trendingTopics = { selectedMonth: moment().format('MMMM'), selectedYear: moment().format('YYYY')};
-		$scope.activeGroups = { selectedMonth: moment().format('MMMM'), selectedYear: moment().format('YYYY')};
+		$scope.activeGroups = { startMonth: moment.months()[0], startYear: moment().format('YYYY'), endMonth: moment().format('MMMM'), endYear: moment().format('YYYY')};
 
 		$scope.changeSort = (groupFields) => {
 			$scope.sortReverse = (_.isEqual($scope.sortGroupBy, groupFields))? !$scope.sortReverse : true;
@@ -67,15 +67,28 @@ import _ from 'lodash';
 		}
 
 		$scope.computeAnalytics = () => {
-			$scope.computeTopActiveGroups($scope.activeGroups.selectedMonth, $scope.activeGroups.selectedYear);	// current month and year
+			$scope.computeTopActiveGroups($scope.activeGroups.startMonth, $scope.activeGroups.startYear, $scope.activeGroups.endMonth, $scope.activeGroups.endYear);	// current month and year
 			$scope.computeTrendingTopics($scope.trendingTopics.selectedMonth, $scope.trendingTopics.selectedYear);
 			$scope.computeTopPopularGroups();
 			$scope.computeGroupsDistribution();
 		}
 
+		$scope.validStartEndDate = (startMonth, startYear, endMonth, endYear) => {
+			return moment(`${startMonth} ${startYear}`, 'MMMM YYYY') <= moment(`${endMonth} ${endYear}`, 'MMMM YYYY');
+		}
+
 		$scope.retrieveGroupName = (groupHandle) => {
 			const groupIndex = $scope.groups.map((group) => group.handle).indexOf(groupHandle);
 			return $scope.groups[groupIndex].name;
+		}
+
+		$scope.retrievePostsOnDateInterval = (startMonth, startYear, endMonth, endYear) => {
+			const startDate = moment(`${startMonth} ${startYear}`, 'MMMM YYYY');
+			const endDate = moment(`${endMonth} ${endYear}`, 'MMMM YYYY');
+			
+			return $scope.posts.filter((post) =>
+				moment(moment(post.datePosted, 'MMMM Do YYYY, h:mm:ss a').format('MMMM YYYY'), 'MMMM YYYY').isBetween(startDate, endDate, null, '[]')
+			);
 		}
 
 		$scope.retrievePostsOnSelectedDate = (selectedMonth, selectedYear) => {
@@ -89,11 +102,20 @@ import _ from 'lodash';
 			return moment().diff(moment(user.birthdate, 'MMMM D YYYY'), 'years');
 		}
 
-		$scope.computeTopActiveGroups = (selectedMonth, selectedYear) => {
-			/** Getting the top active groups of the selected month and year **/
+		$scope.computeTopActiveGroups = (startMonth, startYear, endMonth, endYear) => {
 
-			// retrieve all posts of the selected month and year
-			let selectedMonthPosts = $scope.retrievePostsOnSelectedDate(selectedMonth, selectedYear);
+			/** Getting the top active groups in the date interval **/
+
+			if (!$scope.validStartEndDate(startMonth, startYear, endMonth, endYear)){
+				ngToast.create({
+		    		className: 'warning',
+		    		content: `The start date should be earlier than end date.`
+		    	});
+		    	return;
+			}
+
+			// retrieve all posts in the date interval
+			let selectedMonthPosts = $scope.retrievePostsOnDateInterval(startMonth, startYear, endMonth, endYear);
 			
 			// create object containing group handles as key and the value is the count of posts from the selectedMonthPosts
 			let postsGroupsWithCount = {};
@@ -112,34 +134,41 @@ import _ from 'lodash';
 			}).value().slice(0, topActiveGroupsSize);
 			
 
-			/** Getting the count of posts of the top active groups for the previous months of the selected year **/
+			/** Getting the count of posts of the top active groups in the date interval **/
 
-			// in each group in the top active, retrieve the count of posts for the months of the selected year
-			// if previous years, get all months, if current year, get until the current month
-			const consideredMonths = moment().format("YYYY") > selectedYear? moment.months() : moment.months().slice(0, moment().month()+1);
+			let betweenDates = [];
+			let pointedDate = moment(`${startMonth} ${startYear}`, 'MMM YYYY');	// iterated date
+			const endDate = moment(`${endMonth} ${endYear}`, 'MMM YYYY');
 			let topActiveGroups = [];
 
+			while (endDate >= pointedDate){
+				betweenDates.push(pointedDate.format("MMM YYYY"));
+				pointedDate.add(1, 'month');
+			}
+
+			// in each group in the top active, retrieve the count of posts for the months of date interval
+			// then add to the groupPostsCountList the number of posts in every month
 			_.forEach(sortedGroupsArray, (group) => {
 				let groupPostsCountList = [];	// storage of post counts in different months
 
-				_.forEach(consideredMonths, (month) => {
+				_.forEach(betweenDates, (betweenDate) => {
+					const selectedMonth = moment(betweenDate, 'MMM YYYY').format('MMM');
+					const selectedYear = moment(betweenDate, 'MMM YYYY').format('YYYY');
+
 					const postsCount = $scope.posts.filter((post) => 
-						(moment(post.datePosted, 'MMMM Do YYYY, h:mm:ss a').format('MMMM') == month) && 
+						(moment(post.datePosted, 'MMMM Do YYYY, h:mm:ss a').format('MMM') == selectedMonth) && 
 						(moment(post.datePosted, 'MMMM Do YYYY, h:mm:ss a').format('YYYY') == selectedYear) &&
 						(post.groupBelonged === group)
 					).length;	
 
 					groupPostsCountList.push(postsCount);
 				});
-
+				// add to the topActiveGroups list the group name and the array of posts count
 				topActiveGroups.push({name: $scope.retrieveGroupName(group), data: groupPostsCountList});
 			});
 
-			// show all months if previous year or show until current month if current year
-			const monthsList = moment().format("YYYY") > selectedYear? moment.monthsShort() : moment.monthsShort().slice(0, moment().month()+1);
-			
 			/** Render the data to Top Active Groups Highchart **/
-			$scope.loadTopActiveGroups(topActiveGroups, selectedMonth, selectedYear, monthsList);
+			$scope.loadTopActiveGroups(topActiveGroups, startMonth, startYear, endMonth, endYear, betweenDates);
 		}
 
 		$scope.computeTrendingTopics = (selectedMonth, selectedYear) => {
@@ -320,10 +349,10 @@ import _ from 'lodash';
 			$scope.loadGroupsDistribution(groupIndustriesData, groupsDistributionSeries);
 		}
 
-		$scope.loadTopActiveGroups = (topActiveGroups, selectedMonth, selectedYear, monthsList) => {
+		$scope.loadTopActiveGroups = (topActiveGroups, startMonth, startYear, endMonth, endYear, monthsList) => {
 			Highcharts.chart('top-active-groups-container', {
 			    title: {
-			    	text: `Top Active Groups in ${selectedMonth}, ${selectedYear}`
+			    	text: `Top Active Groups from ${startMonth} ${startYear} to ${endMonth} ${endYear}`
 			    },
 			    subtitle: {
 			    	text: 'Source: PCAARRD KM Community'
@@ -336,7 +365,7 @@ import _ from 'lodash';
 			    },
 			    xAxis: {
 	                 title: {
-	                     text: 'Month'
+	                     text: 'Date'
 	               	 }, 
 	               	 categories: monthsList
 			    },
