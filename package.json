@@ -4,10 +4,9 @@
   "description": "An application that allows members to communicate with each other in virtual spaces or groups.",
   "main": "index.js",
   "scripts": {
-    
+    "start": "NODE_PATH=$NODE_PATH:./modules/core/client/core.client.run.js ./node_modules/.bin/babel-node modules/core/server/core.server.app.js",
     "dev": "npm start & webpack-dev-server --config modules/core/server/config/core.server.webpack.config.babel.js --progress --colors",
-    "build": "webpack --progress --colors --config modules/core/server/config/core.server.webpack.production-config.babel.js",
-    "start": "NODE_PATH=$NODE_PATH:./modules/core/client/core.client.run.js ./node_modules/.bin/babel-node modules/core/server/core.server.app.js"
+    "build": "webpack --progress --colors --config modules/core/server/config/core.server.webpack.production-config.babel.js"
   },
   "repository": {
     "type": "git",
