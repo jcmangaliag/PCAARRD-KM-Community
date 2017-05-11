@@ -17,7 +17,9 @@
 			<div ng-repeat="group in groups.contents | orderBy: 'name' | limitTo: paginate.pageLimit(paginate.currentPage, paginate.groupsPerPage)" class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="padding: 1%;">
 				<div class="row">
 					<div class="col-xs-3" style="text-align: right;">
-						<img alt="Group Picture" src="{{group.photo? group.photo.path.split('/')[1] : '/groups/client/assets/images/default-group-photo.png'}}" style="width: 100%; max-width: 180px;  height: 140px; object-fit: cover;" />
+						<a ui-sref="oneGroup({handle: group.handle})">
+							<img alt="Group Picture" src="{{group.photo? group.photo.path.split('/')[1] : '/groups/client/assets/images/default-group-photo.png'}}" style="width: 100%; max-width: 180px;  height: 140px; object-fit: cover;" />
+						</a>
 					</div>
 					<div class="col-xs-9">
 						<div>
