@@ -11,7 +11,7 @@
 		ngToastProvider.configure({
       		maxNumber: 3,
       		timeout: 3000,
-      		animation: 'slide'
+      		animation: 'fade'
     	});
 	}
 

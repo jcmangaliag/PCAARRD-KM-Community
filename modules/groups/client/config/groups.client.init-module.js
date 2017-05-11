@@ -1,4 +1,4 @@
-import uiRouter from 'angular-ui-router';
+import uiRouter from 'angular-ui-router/release/angular-ui-router.min';
 import highCharts from 'highcharts/highstock';
 import highChartsExporting from 'highcharts/modules/exporting';
 import highChartsDrilldown from 'highcharts/modules/drilldown';

@@ -1,4 +1,4 @@
-import angular_bootstrap_affix from 'angular-bootstrap-affix';
+import angular_bootstrap_affix from 'angular-bootstrap-affix/dist/angular-bootstrap-affix.min';
 
 (function () {
 	'use strict';
