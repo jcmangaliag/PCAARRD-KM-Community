@@ -1,0 +1,1 @@
+web: node modules/core/server/core.server.app.js
