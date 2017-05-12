@@ -1,0 +1,2 @@
+'use strict';Object.defineProperty(exports,'__esModule',{value:!0});var _mongoose=require('mongoose'),_mongoose2=_interopRequireDefault(_mongoose);function _interopRequireDefault(a){return a&&a.__esModule?a:{default:a}}var GroupClassificationSchema=_mongoose2.default.Schema({industry:{type:String,required:!0},sector:{type:String,required:!0},isp:{type:String,required:!0},specificCommodity:String,isUsed:Boolean});exports.default=_mongoose2.default.model('GroupClassification',GroupClassificationSchema);
+//# sourceMappingURL=groups-classification.server.model.js.map

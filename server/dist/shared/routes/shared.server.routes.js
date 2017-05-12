@@ -1,0 +1,2 @@
+'use strict';Object.defineProperty(exports,'__esModule',{value:!0});var _sharedServer=require('../controller/shared.server.controller'),_sharedServer2=_interopRequireDefault(_sharedServer);function _interopRequireDefault(a){return a&&a.__esModule?a:{default:a}}var sharedRoutes=function(a){a.route('/api/uploads/files').post(_sharedServer2.default.uploadFile),a.route('/api/uploads/image').post(_sharedServer2.default.uploadImage)};exports.default=sharedRoutes;
+//# sourceMappingURL=shared.server.routes.js.map
