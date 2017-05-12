@@ -1,3 +1,5 @@
+import _ from 'lodash/lodash.min';
+
 (() => {
 	'use strict';
 	
@@ -5,44 +7,174 @@
 		.module('posts')
 		.factory('PostService', PostService);
 
-	PostService.$inject = ['$http', 'ngToast'];
+	PostService.$inject = ['$http', 'ngToast', '$q', 'CommentService', 'GroupService', 'UserService'];
 
-	function PostService ($http, ngToast) {
+	function PostService ($http, ngToast, $q, CommentService, GroupService, UserService) { // to do: check if there's err in http requests
 
-		let postList = {
-			contents: []
-		};
-
-		/* temporary user */
-		const username = "Mark Eric Cabanli";
-		const userid = "Mark's id";
+		let postList = { contents: [] }, postListCopy = { contents: [] }, groupBelonged;
 
 		const getPostList = () => {
 			return postList;
 		}
 
-		const getPostsByCategory = (category) => {
-			$http.get(`/api/posts/category/${category}`)
-			.then(response => {
-				postList.contents = response.data.posts;
-			});
+		const getPostListCopy = () => {
+			return postListCopy;
+		}
+
+		const setGroupBelonged = (groupHandle) => {
+			groupBelonged = groupHandle;
+		}
+
+		const getGroupBelonged = () => {
+			return groupBelonged;
 		}
 
 		const getAllPosts = () => {
-			$http.get('/api/posts')
-			.then(response => {
+			const deferred = $q.defer();
+
+			$http.get(`/api/posts`)
+			.then((response) => {
 				postList.contents = response.data.posts;
+				postListCopy.contents = _.toArray(response.data.posts);
+				deferred.resolve(response.data.posts);
+			}, (response) => {
+				deferred.reject(response);
 			});
+
+			return deferred.promise;
 		}
 
-		const getOnePost = ($scope, postID) => {
+		const getPostsByGroupAndCategory = (category, memberOfGroup) => {
+			const deferred = $q.defer();
+			const config = memberOfGroup? {} : {params: {showPublic : true}};	
+
+			$http.get(`/api/posts/group-belonged/${groupBelonged}/category/${category}`, config)
+			.then((response) => {
+				postList.contents = response.data.posts;
+				postListCopy.contents = _.toArray(response.data.posts);
+
+				deferred.resolve(response.data.posts);
+			}, (response) => {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		}
+
+		const getAllPostsByGroup = (memberOfGroup) => {
+			const deferred = $q.defer();
+			const config = memberOfGroup? {} : {params: {showPublic : true}};
+
+			$http.get(`/api/posts/group-belonged/${groupBelonged}`, config)
+			.then((response) => {
+				postList.contents = response.data.posts;
+				postListCopy.contents = _.toArray(response.data.posts);
+				deferred.resolve(response.data.posts);
+			}, (response) => {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		}
+
+		const getPostsByMyGroupsAndCategory = (category, userID) => {
+			const deferred = $q.defer();
+
+			UserService.getOneUser(userID)
+				.then((response) => {
+					const groupsJoined = response.groupsJoined.toString() || "none";
+					return $http.get(`/api/posts/my-groups/${groupsJoined}/category/${category}`);
+				}, (response) => {
+					// error in getting one user
+				})
+				.then((response) => {	// after getting all posts by my groups and category
+					postList.contents = response.data.posts;
+					postListCopy.contents = _.toArray(response.data.posts);
+					deferred.resolve(response.data.posts);
+				}, (response) => {
+					// error in getting one user or in getting all posts by my groups and category
+					deferred.reject(response);
+				});
+
+			return deferred.promise;
+		}
+
+		const getAllPostsByMyGroups = (userID) => {
+			const deferred = $q.defer();
+			
+			UserService.getOneUser(userID)
+				.then((response) => {
+					const groupsJoined = response.groupsJoined.toString() || "none";
+					return $http.get(`/api/posts/my-groups/${groupsJoined}`);
+				}, (response) => {
+					// error in getting one user
+				})
+				.then((response) => {	// after getting all posts by my groups and category
+					postList.contents = response.data.posts;
+					postListCopy.contents = _.toArray(response.data.posts);
+					deferred.resolve(response.data.posts);
+				}, (response) => {
+					// error in getting one user or in getting all posts by my groups and category
+					deferred.reject(response);
+				});
+
+			return deferred.promise;
+		}
+
+		const getPostsByUserAndCategory = (category, userID) => {
+			const deferred = $q.defer();
+			$http.get(`/api/posts/user/${userID}/category/${category}`)
+			.then((response) => {
+				postList.contents = response.data.posts;
+				postListCopy.contents = _.toArray(response.data.posts);
+				deferred.resolve(response.data.posts);
+			}, (response) => {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		}
+
+		const getAllPostsByUser = (userID) => {
+			const deferred = $q.defer();
+			$http.get(`/api/posts/user/${userID}`)
+			.then((response) => {
+				postList.contents = response.data.posts;
+				postListCopy.contents = _.toArray(response.data.posts);
+				deferred.resolve(response.data.posts);
+			}, (response) => {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		}
+
+		const getAllPostsCountByUser = (userID) => {
+			const deferred = $q.defer();
+			$http.get(`/api/posts/user/${userID}/length`)
+			.then((response) => {
+				deferred.resolve(response.data.postsLength);
+			}, (response) => {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		}
+
+		const getOnePost = (postID) => {
+			const deferred = $q.defer();
+			
 			$http.get(`/api/posts/${postID}`)
-			.then(response => {
-				$scope.selectedPost = response.data.post;
+			.then((response) => {
+				deferred.resolve(response.data.post);
+			}, (response) => {
+				deferred.reject(response);
 			});
+
+			return deferred.promise;
 		}
 
-		const setPostReaction = ($scope, post, reactionIndex) => {
+		const setPostReaction = ($scope, post, reactionIndex, currentUser) => {
 			$scope.selectedPost = post;
 			let reactions = $scope.selectedPost.reactions;
 			const reactionsLength = reactions.length;
@@ -52,13 +184,14 @@
 			for (let i = 1; i < reactionsLength; i++){
 				if (reactionIndex == 0)	// skip duplicate checking when commenting
 					break;
-
-				if (reactions[i].users.indexOf(userid) >= 0){ // remove duplicate user and count
-					duplicateReactionIndex = i;
-					const removeUserIndex = reactions[i].users.indexOf(userid);
-					reactions[i].users.splice(removeUserIndex, 1);
-					reactions[i].count--;
-					break;
+				if (reactions[i].users.length > 0){
+					const removeUserIndex = reactions[i].users.map((user) => user._id).indexOf(currentUser._id);
+					if (removeUserIndex >= 0){ // remove duplicate user and count
+						duplicateReactionIndex = i;
+						reactions[i].users.splice(removeUserIndex, 1);
+						reactions[i].count--;
+						break;
+					}
 				}
 			}
 
@@ -67,8 +200,8 @@
 				reactions[reactionIndex].count++;
 
 				// avoid duplication of user in comments userlist
-				if (reactionIndex > 0 || (reactions[0].users.indexOf(userid) < 0)){
-					reactions[reactionIndex].users.push(userid);
+				if (reactionIndex > 0 || reactions[0].users.length === 0 || (reactions[0].users.map((user) => user._id).indexOf(currentUser._id) < 0)){
+					reactions[reactionIndex].users.push(currentUser);
 				}
 			}
 			
@@ -79,14 +212,72 @@
 			});
 		}
 
+		const decrementCommentsCount = (post, comment, userCommentsCount, userID) => {
+			post.reactions[0].count--;
+			
+			if (userCommentsCount < 1){
+				const userIndex = post.reactions[0].users.map((user) => user._id).indexOf(userID);
+				if (userIndex > -1){
+					post.reactions[0].users.splice(userIndex, 1);
+				}
+			}
+
+			$http.put(`/api/posts/reactions/${post._id}`, {
+				reactions: post.reactions
+			}).then(response => {
+
+			});
+		}
+
+		const deleteOnePost = ($scope, $stateParams, post) => {
+			$http.delete(`/api/posts/${post._id}`)
+			.then(response => {	
+				CommentService.deleteCommentsByReferredPost(post._id);
+
+				GroupService.getOneGroup(post.groupBelonged)
+				.then((refreshedGroup) => {
+					refreshedGroup.postsCount.total--;
+					refreshedGroup.postsCount[post.category]--;
+					GroupService.updateGroup(refreshedGroup.handle, {postsCount: refreshedGroup.postsCount});
+					if ($scope.selectedGroup){
+						$scope.selectedGroup.postsCount = refreshedGroup.postsCount;
+						$scope.updatePostsAnalysis();
+					}
+				}, (error) => {
+					// show 404 not found page
+				});
+
+				if ($stateParams.postID){	// if viewing one post
+					$scope.returnToGroup($stateParams.handle);	
+				} else {
+					$scope.getPostData();	
+				}
+
+				ngToast.create({
+		    		className: 'success',
+		    		content: `The post was successfully deleted.`
+		    	});
+			});
+		}
+
 		return {
 			getPostList,
-			getPostsByCategory,
+			getPostListCopy,
+			setGroupBelonged,
+			getGroupBelonged,
 			getAllPosts,
+			getPostsByGroupAndCategory,
+			getAllPostsByGroup,
+			getPostsByMyGroupsAndCategory,
+			getAllPostsByMyGroups,
+			getPostsByUserAndCategory,
+			getAllPostsByUser,
+			getAllPostsCountByUser,
 			getOnePost,
 			setPostReaction,
-			userid 
-		};	/* temporary userid */
+			deleteOnePost,
+			decrementCommentsCount
+		};	
 	}
 
 })();

@@ -1,0 +1,81 @@
+<button ui-sref="user-profile({userID: selectedUser._id})" type="button" class="btn btn-primary">Go Back</button>
+
+<div style="padding: 15px; background-color: white; margin: 25px auto; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); max-width: 600px;">
+	<div style="margin-bottom: 1%;">
+		<h3 style="margin: 0;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit User Information</h3>
+	</div>
+	<hr />
+	<form style="padding: 1% 2% 2% 2%; text-align: left;" ng-submit="onProcessEditedUserData()">
+
+		<div class="form-group" style="width:49%; display: inline-block;">
+		    <label>First Name <span style="color:red;">*</span></label>
+		    <input type="text" class="form-control" placeholder="Enter your first name" ng-model="selectedUser.name.first" required />
+		  </div>
+
+		  <div class="form-group" style="width:49%; display: inline-block;">
+		    <label>Last Name <span style="color:red;">*</span></label>
+		    <input type="text" class="form-control" placeholder="Enter your last name" ng-model="selectedUser.name.last" required />
+		  </div>
+
+	 	  <div class="form-group">
+		    <label>Sex <span style="color:red;">*</span></label>
+		    <select class="form-control" ng-model="selectedUser.sex" required>
+		    	<option value="" selected>---Select Sex---</option>
+		        <option value="Male" selected>Male</option>
+		        <option value="Female">Female</option>
+		    </select>
+		  </div>
+
+
+		  <div class="form-group">
+		    <label style="display: block;">Birthdate <span style="color:red;">*</span></label>
+		    <select class="form-control" ng-model="selectedMonth" style="width:33%; display: inline-block;" required>
+		    	<option value="" selected>---Month---</option>
+		        <option value="{{month}}" ng-repeat="month in getAllMonths()">{{month}}</option>
+		    </select>
+		    <select class="form-control" ng-model="selectedDay" style="width:32%; display: inline-block;" required>
+		    	<option value="" selected>---Day---</option>
+		        <option value="{{day}}" ng-repeat="day in getAllDays()">{{day}}</option>
+		    </select>
+		    <select class="form-control" ng-model="selectedYear" style="width:33%; display: inline-block;" required>
+		    	<option value="" selected>---Year---</option>
+		        <option value="{{year}}" ng-repeat="year in getAllYears()">{{year}}</option>
+		    </select>
+		  </div>
+
+		  <div class="form-group">
+		    <label>Country <span style="color:red;">*</span></label>
+		    <input type="text" class="form-control" placeholder="Enter your country" ng-model="selectedUser.country" required />
+		  </div>
+
+		  <div class="form-group">
+		    <label>City or Province <span style="color:red;">*</span></label>
+		    <input type="text" class="form-control" placeholder="Enter your city or province" ng-model="selectedUser.location" required />
+		  </div>
+
+		  <div class="form-group">
+		    <label>Contact Number </label>
+		    <input type="text" class="form-control" placeholder="Enter your contact number" ng-model="selectedUser.contactNumber" />
+		  </div>
+
+		  <div class="form-group">
+		    <label>About</label>
+		    <textarea class="form-control" style="resize: vertical;" rows="3" placeholder="Enter about yourself" ng-model="selectedUser.about"></textarea>
+		  </div>
+
+		  <div class="form-group">
+		    <label>New User Photo Upload</label>
+		    <shared-add-photo selected-upload-photo="selectedPhoto"></shared-add-photo>
+		  </div>
+
+		  <shared-form-legends></shared-form-legends>
+
+		  <shared-progress-bar></shared-progress-bar>
+
+		  <div style="display: inline-block">
+		  	<shared-reset-submit-buttons></shared-reset-submit-buttons>
+		  </div>
+
+		  <button ng-if="enableViewChanges" ui-sref="user-profile({userID: selectedUser._id})" type="button" class="btn btn-primary">View Changes</button>
+	</form>
+</div>

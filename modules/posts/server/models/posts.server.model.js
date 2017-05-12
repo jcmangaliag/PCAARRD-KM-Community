@@ -10,7 +10,7 @@ const PostSchema = mongoose.Schema({
 		required: true
 	},
 	postedBy: {
-		type: String,
+		type: Object,
 		required: true
 	},
 	datePosted: {
@@ -25,8 +25,12 @@ const PostSchema = mongoose.Schema({
 		type: Array,
 		required: true
 	},
+	showPublic: {
+		type: Boolean,
+		required: true
+	},
 	files: Array,
-	technologyHandle: String,
+	technologyHandles: Array,
 	question: String,
 	description: String,
 	adTitle: String,
@@ -47,7 +51,6 @@ const PostSchema = mongoose.Schema({
 	startDateTime: String,
 	endDateTime: String,
 	audience: String
-
 });
 
 export default mongoose.model('Post', PostSchema);

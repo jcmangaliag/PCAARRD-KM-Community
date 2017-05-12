@@ -1,7 +1,16 @@
-<div style="margin: 2%; border-radius: 8px;">
-  <span class="label label-info">Others</span> <a style="color: #333333;" ng-click="autoScrollPost(true)" ui-sref="oneGroup.viewOneOthersPost({id: post._id})">
-  <h4 style="text-decoration: underline; font-weight: bolder; max-height: 70px; white-space: pre-wrap;" data-ellipsis data-ng-bind="post.post"></h4> </a>
-  <p style="padding-bottom: 2%; color: gray;">submitted by <a href="#" style="text-decoration: underline; color: gray; font-weight: bold;">{{post.postedBy}}</a> on {{post.datePosted}}</p>
-
-   <all-posts-reactions></all-posts-reactions>
+<div class="row">
+  <div class="col-xs-9 col-sm-9">
+    <h4 style="display: inline;"><span title="Post Category" style="font-weight: normal;" class="label label-info">Others</span> <span ng-if="!post.showPublic" title="Private Post" class="label label-default" style="font-weight: normal;"><i class="fa fa-lock" aria-hidden="true"></i></span></h4>
+    <span ng-if="groupBelonged ==='--my-groups--' || groupBelonged ==='--user--'"><i style="margin: 0 5px;" class="fa fa-caret-right" aria-hidden="true"></i> <h4 title="Group" style="display: inline;"><span class="label label-success"><a style="color: white; font-weight: bold;" ui-sref="oneGroup({handle: post.groupBelonged})">{{ getGroupName(post.groupBelonged) }}</a></span></h4></span>
+  </div>
+  <div class="col-xs-3 col-sm-3" style="text-align: right;">
+    <delete-post></delete-post>
+  </div>
 </div>
+ <a style="color: #333333; display: inline-block;" ui-sref="oneGroup.viewOneOthersPost({handle: post.groupBelonged, postID: post._id, '#': 'read-post'})">
+<h4 style="font-weight: bolder;"><span ng-bind="post.post | limitTo: 300"></span><span ng-if="post.post.length > 300">...</span></h4> </a>
+<p style="color: gray; margin-bottom: 2px;">posted by <a ui-sref="user-profile({userID: post.postedBy._id})" style="color: gray; font-weight: bold;">{{post.postedBy.name}}</a> on {{post.datePosted}}</p>
+<div style="margin: 10px 0 10px 0;">
+	<a ui-sref="oneGroup.viewOneOthersPost({handle: post.groupBelonged, postID: post._id, '#': 'read-post'})">See More</a>
+</div>
+

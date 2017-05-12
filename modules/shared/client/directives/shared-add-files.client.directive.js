@@ -10,9 +10,7 @@
 		const directive = {
 			restrict: 'E',
 			templateUrl: '/shared/client/views/shared-add-files.client.view.html',
-			scope: {
-				formData: '='
-			} 
+			controller: 'SharedAddFilesController' 
 		}
 
 		return directive;

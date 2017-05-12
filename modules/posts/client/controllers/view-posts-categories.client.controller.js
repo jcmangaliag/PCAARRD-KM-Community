@@ -5,9 +5,9 @@
 		.module('posts')
 		.controller('ViewPostsCategoriesController', ViewPostsCategoriesController);
 
-	ViewPostsCategoriesController.$inject = ['$scope', 'ViewPostsCategoriesService'];
+	ViewPostsCategoriesController.$inject = ['$scope', '$stateParams', 'ViewPostsCategoriesService', 'UserAuthenticationService'];
 
-	function ViewPostsCategoriesController ($scope, ViewPostsCategoriesService) {
+	function ViewPostsCategoriesController ($scope, $stateParams, ViewPostsCategoriesService, UserAuthenticationService) {
 		const {setCurrentViewPostsCategory} = ViewPostsCategoriesService;
 		$scope.setCurrentViewPostsCategory = _.partial(setCurrentViewPostsCategory);
 		$scope.currentViewPostsCategory = ViewPostsCategoriesService.getCurrentViewPostsCategory();

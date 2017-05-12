@@ -1,0 +1,6 @@
+<div ng-if="selectedTechnologyHandles.length > 0" style="margin-bottom: 18px;">
+	<p style="color: gray; margin-bottom: 12px; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Technologies</p>
+	<ul class="list-group">
+	  <li class="list-group-item" ng-repeat="technology in selectedTechnologyHandles track by $index">{{technology}}</li>
+	</ul>
+</div>

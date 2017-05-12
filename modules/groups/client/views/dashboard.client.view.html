@@ -1,0 +1,158 @@
+<div style="padding: 15px; background-color: white; margin-bottom: 25px; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+	<h3 style="margin: 0;"><i class="fa fa-users" aria-hidden="true"></i> Community Dashboard</h3>
+</div>
+
+
+<div style="padding: 15px; background-color: white; margin: 0 auto 25px; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+	<div class="row">
+		<div class="col-xs-12 col-sm-6" style="margin-top: 10px;">
+			<h3 style="margin: 0;">Groups Statistics <span class="badge" style="font-size: 14px;">{{groupsCopy.length}}</span></h3>
+		</div>
+		<div class="col-xs-12 col-sm-6" style="margin-top: 10px;">
+			<div class="input-group pull-right">
+				<span class="input-group-addon"><i class="fa fa-filter" aria-hidden="true"></i></span>
+				<input type="text" ng-model="searchGroupsStatisticsValue" style="display: inline-block;" class="form-control" placeholder="Filter Groups Statistics">
+			</div>
+		</div>
+		<div class="col-xs-12 col-lg-12" style="margin-top: 10px;">
+		  <div ng-if="searchGroupsStatisticsValue">
+		    <h4>{{groups.length}} group<span ng-if="groups.length > 1">s</span> contain<span ng-if="groups.length < 2">s</span> "<span style="font-style: italic;">{{searchGroupsStatisticsValue}}</span>"</h4>
+		  </div>
+		</div>
+	</div>
+	<hr />
+
+	<div class="table-responsive">
+		<table class="table table-bordered table-striped table-hover">
+		    <thead>
+		      <tr>
+		        <th rowspan="2">
+		        	<a href="#/" ng-click="changeSort(['name'])">Group</a> <i ng-if="sortGroupBy[0] === 'name'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+		        </th>
+		        <th colspan="2" class="text-center">Number of Users</th>
+		        <th colspan="8" class="text-center">Number of Posts</th>
+		      </tr>
+		      <tr>
+		        <th>
+		        	<a href="#/" ng-click="changeSort(['admin.length', 'name'])">Administrators</a> <i ng-if="sortGroupBy[0] === 'admin.length'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+				</th>
+		        <th>
+		        	<a href="#/" ng-click="changeSort(['membersCount', 'name'])">Members</a> <i ng-if="sortGroupBy[0] === 'membersCount'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+		        </th>
+		        <th>
+		        	<a href="#/" ng-click="changeSort(['postsCount.total', 'name'])">Total</a> <i ng-if="sortGroupBy[0] === 'postsCount.total'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+		        </th>
+		      	<th>
+		      		<a href="#/" ng-click="changeSort(['postsCount.question', 'name'])">Question</a> <i ng-if="sortGroupBy[0] === 'postsCount.question'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+		      	</th>
+		        <th>
+		        	<a href="#/" ng-click="changeSort(['postsCount.report', 'name'])">Incident Report</a> <i ng-if="sortGroupBy[0] === 'postsCount.report'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+		        </th>
+		        <th>
+		        	<a href="#/" ng-click="changeSort(['postsCount.media', 'name'])">Media or URL</a> <i ng-if="sortGroupBy[0] === 'postsCount.media'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+		        </th>
+		        <th>
+		        	<a href="#/" ng-click="changeSort(['postsCount.news', 'name'])">News</a> <i ng-if="sortGroupBy[0] === 'postsCount.news'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+		        </th>
+		        <th>
+		        	<a href="#/" ng-click="changeSort(['postsCount.event', 'name'])">Event</a> <i ng-if="sortGroupBy[0] === 'postsCount.event'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+		        </th>
+		        <th>
+		        	<a href="#/" ng-click="changeSort(['postsCount.advertisement', 'name'])">Advertisement</a> <i ng-if="sortGroupBy[0] === 'postsCount.advertisement'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+		        </th>
+		        <th>
+		        	<a href="#/" ng-click="changeSort(['postsCount.others', 'name'])">Others</a> <i ng-if="sortGroupBy[0] === 'postsCount.others'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+		        </th>
+		      </tr>
+		    </thead>
+		    <tbody>
+		      <tr ng-repeat="group in groups | orderBy: sortGroupBy  : sortReverse | limitTo: paginate.pageLimit(paginate.currentPage, paginate.groupsPerPage)">
+		      	<td><a ui-sref="oneGroup({handle: group.handle})">{{group.name}}</a></td>
+		      	<td>{{group.admin.length}}</td>
+		      	<td>{{group.membersCount}}</td>
+		      	<td>{{group.postsCount.total}}</td>
+		      	<td>{{group.postsCount.question}}</td>
+		      	<td>{{group.postsCount.report}}</td>
+		      	<td>{{group.postsCount.media}}</td>
+		      	<td>{{group.postsCount.news}}</td>
+		      	<td>{{group.postsCount.event}}</td>
+		      	<td>{{group.postsCount.advertisement}}</td>
+		      	<td>{{group.postsCount.others}}</td>
+		      </tr>
+		    </tbody>
+	  	</table>
+	</div>
+	<div ng-if="paginate.hasMoreItems(paginate.currentPage, paginate.groupsPerPage, groups.length)" class="text-center" style="margin-bottom:10px;">
+		<button ng-click="paginate.loadMoreItems(paginate)" style="width: 50%;" type="button" class="btn btn-primary" >See More Groups</button>
+	</div>
+</div>
+
+
+<div class="row">
+
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+		<div style="padding: 15px; background-color: white; margin-bottom: 25px; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+			<h5>Selected Date Interval</h5>
+			<form ng-submit="computeTopActiveGroups(activeGroups.startMonth, activeGroups.startYear, activeGroups.endMonth, activeGroups.endYear)">
+				<div class="form-group">
+					<select title="Start Month" class="form-control" ng-model="activeGroups.startMonth" style="max-width: 114px; display: inline-block;" required>
+						<option value="" selected>-Month-</option>
+					    <option value="{{month}}" ng-repeat="month in getAllMonths()">{{month}}</option>
+					</select>
+					<select title="Start Year" class="form-control" ng-model="activeGroups.startYear" style="max-width: 80px; display: inline-block;" required>
+						<option value="" selected>-Year-</option>
+					    <option value="{{year}}" ng-repeat="year in getAllYears()">{{year}}</option>
+					</select>
+					<p style="display: inline; margin: 0 5px;">to</p>
+					<select title="End Month" class="form-control" ng-model="activeGroups.endMonth" style="max-width: 114px; display: inline-block;" required>
+						<option value="" selected>-Month-</option>
+					    <option value="{{month}}" ng-repeat="month in getAllMonths()">{{month}}</option>
+					</select>
+					<select title="End Year" class="form-control" ng-model="activeGroups.endYear" style="max-width: 80px; display: inline-block;" required>
+						<option value="" selected>-Year-</option>
+					    <option value="{{year}}" ng-repeat="year in getAllYears()">{{year}}</option>
+					</select>
+					<button type="submit" class="btn btn-primary">Show</button>
+				</div>
+			</form>
+			<hr />
+			<div id="top-active-groups-container"></div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+		<div style="padding: 15px; background-color: white; margin-bottom: 25px; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+			<h5>Selected Month and Year</h5>
+			<form ng-submit="computeTrendingTopics(trendingTopics.selectedMonth, trendingTopics.selectedYear)">
+				<div class="form-group">
+					<select title="Selected Month" class="form-control" ng-model="trendingTopics.selectedMonth" style="max-width: 114px; display: inline-block;" required>
+						<option value="" selected>-Month-</option>
+					    <option value="{{month}}" ng-repeat="month in getAllMonths()">{{month}}</option>
+					</select>
+					<select title="Selected Year" class="form-control" ng-model="trendingTopics.selectedYear" style="max-width: 80px; display: inline-block;" required>
+						<option value="" selected>-Year-</option>
+					    <option value="{{year}}" ng-repeat="year in getAllYears()">{{year}}</option>
+					</select>
+					<button type="submit" class="btn btn-primary">Show</button>
+				</div>
+			</form>
+			<hr />
+			<div id="trending-topics-container"></div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+		<div style="padding: 15px; background-color: white; margin-bottom: 25px; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+			<div id="groups-distribution-container"></div>
+		</div>
+	</div>
+
+
+	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+		<div style="padding: 15px; background-color: white; margin-bottom: 25px; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+			<div id="top-popular-groups-container"></div>
+		</div>
+	</div>
+
+	
+</div>

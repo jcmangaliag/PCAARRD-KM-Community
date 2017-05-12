@@ -9,24 +9,28 @@
     <div class="shared__addhashtags--body" ng-repeat="author in multipleFields.authors track by $index">
       <input type="text" style="display: inline-block;" class="form-control shared__addhashtags--field" placeholder="Enter an author" ng-model="multipleFields.authors[$index]" required />
   
-      <button type="button" ng-hide="{{multipleFields.authors.length >= MAX_AUTHOR}}"  class="btn btn-primary" ng-if="$last" ng-click="addField(multipleFields.authors, MAX_AUTHOR)"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+      <button title="Add" type="button" ng-hide="{{multipleFields.authors.length >= MAX_AUTHOR}}"  class="btn btn-primary" ng-if="$last" ng-click="addField(multipleFields.authors, MAX_AUTHOR)"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
 
-      <button type="button" ng-hide="{{multipleFields.authors.length <= MIN_AUTHOR}}" class="btn btn-danger" ng-if="$last" ng-click="removeField(multipleFields.authors, MIN_AUTHOR)"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button>
+      <button title="Remove" type="button" ng-hide="{{multipleFields.authors.length <= MIN_AUTHOR}}" class="btn btn-danger" ng-if="$last" ng-click="removeField(multipleFields.authors, MIN_AUTHOR)"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button>
     </div>
   </div>
 
   <div class="form-group">
     <label for="post-ads__desc">News Body <span style="color:red;">*</span></label>
-    <textarea class="form-control" id="post-ads__desc" rows="7" placeholder="Enter the news body" ng-model="addPostFormData.newsBody" required></textarea>
+    <textarea class="form-control" style="resize: vertical;" id="post-ads__desc" rows="5" placeholder="Enter the news body" ng-model="addPostFormData.newsBody" required></textarea>
   </div>
 
-  <shared-add-files form-data="addPostFormData"></shared-add-files>
+  <shared-add-files></shared-add-files>
 
-  <shared-add-technology-handle selected-technology-handle="addPostFormData.technologyHandle"></shared-add-technology-handle>
+  <shared-add-technology-handles></shared-add-technology-handles>
 
   <shared-add-hashtags></shared-add-hashtags>
 
+  <add-post-privacy></add-post-privacy>
+
   <shared-form-legends></shared-form-legends>
+
+  <shared-progress-bar></shared-progress-bar>
 
   <shared-reset-submit-buttons></shared-reset-submit-buttons>
 </form>

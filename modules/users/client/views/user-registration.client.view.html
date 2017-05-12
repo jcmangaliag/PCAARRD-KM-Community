@@ -1,0 +1,73 @@
+<div style="padding: 15px; background-color: white; margin: 1% auto; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); max-width: 500px;">
+	<h3 style="margin: 0;"><i class="fa fa-user-plus" aria-hidden="true"></i> Create an <span ng-if="adminRegistration.allow">Administrator</span> Account </h3>
+	
+	<hr />
+	<form style="padding: 1% 2% 2% 2%; text-align: left;" ng-submit="onProcessUserData()">
+
+	  <div class="form-group" style="width:49%; display: inline-block;">
+	    <label>First Name <span style="color:red;">*</span></label>
+	    <input type="text" class="form-control" placeholder="Enter your first name" ng-model="addUserFormData.name.first" required />
+	  </div>
+
+	  <div class="form-group" style="width:49%; display: inline-block;">
+	    <label>Last Name <span style="color:red;">*</span></label>
+	    <input type="text" class="form-control" placeholder="Enter your last name" ng-model="addUserFormData.name.last" required />
+	  </div>
+
+ 	  <div class="form-group">
+	    <label>Sex <span style="color:red;">*</span></label>
+	    <select class="form-control" ng-model="addUserFormData.sex" required>
+	    	<option value="" selected>---Select Sex---</option>
+	        <option value="Male" selected>Male</option>
+	        <option value="Female">Female</option>
+	    </select>
+	  </div>
+
+
+	  <div class="form-group">
+	    <label style="display: block;">Birthdate <span style="color:red;">*</span></label>
+	    <select class="form-control" ng-model="selectedMonth" style="width:33%; display: inline-block;" required>
+	    	<option value="" selected>---Month---</option>
+	        <option value="{{month}}" ng-repeat="month in getAllMonths()">{{month}}</option>
+	    </select>
+	    <select class="form-control" ng-model="selectedDay" style="width:32%; display: inline-block;" required>
+	    	<option value="" selected>---Day---</option>
+	        <option value="{{day}}" ng-repeat="day in getAllDays()">{{day}}</option>
+	    </select>
+	    <select class="form-control" ng-model="selectedYear" style="width:33%; display: inline-block;" required>
+	    	<option value="" selected>---Year---</option>
+	        <option value="{{year}}" ng-repeat="year in getAllYears()">{{year}}</option>
+	    </select>
+	  </div>
+
+	  <div class="form-group">
+	    <label>Country <span style="color:red;">*</span></label>
+	    <input type="text" class="form-control" placeholder="Enter your country" ng-model="addUserFormData.country" required />
+	  </div>
+
+	  <div class="form-group">
+	    <label>City or Province <span style="color:red;">*</span></label>
+	    <input type="text" class="form-control" placeholder="Enter your city or province" ng-model="addUserFormData.location" required />
+	  </div> 
+
+	  <div class="form-group">
+	    <label>Email Address <span style="color:red;">*</span></label>
+	    <input type="email" class="form-control" placeholder="Enter your email address" ng-model="addUserFormData.email" required />
+	  </div>
+
+	  <div class="form-group">
+	    <label>Password <span style="color:red;">*</span></label>
+	    <input type="password" class="form-control" placeholder="Enter your password" ng-model="enteredPassword" required />
+	  </div>
+
+	  <div class="form-group">
+	    <label>Re-enter Password <span style="color:red;">*</span></label>
+	    <input type="password" class="form-control" placeholder="Re-enter your password" ng-model="reenteredPassword" required />
+	  </div>
+
+
+	  <shared-form-legends></shared-form-legends>
+
+	  <shared-reset-submit-buttons></shared-reset-submit-buttons>
+	</form>
+</div>

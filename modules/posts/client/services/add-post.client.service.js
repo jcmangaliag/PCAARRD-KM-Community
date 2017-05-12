@@ -14,12 +14,13 @@
 
 			$http.post('/api/posts', addPostFormData)
 			.then(response => {
-				deferred.resolve(addPostFormData);
+				deferred.resolve(response);
 				ViewPostsCategoriesService.setCurrentViewPostsCategory(addPostFormData.category);
-
+				const capitalizedCategory = addPostFormData.category.charAt(0).toUpperCase() + addPostFormData.category.slice(1);
+				
 				ngToast.create({
 		    		className: 'success',
-		    		content: `${addPostFormData.category} was successfully posted. `
+		    		content: `${capitalizedCategory} was successfully posted. `
 		    	});
 			});
 

@@ -11,16 +11,20 @@
 
   <div class="form-group">
     <label for="post-ads__desc">Features and Other Details <span style="color:red;">*</span></label>
-    <textarea class="form-control" id="post-ads__desc" rows="3" placeholder="Enter the features and other details" ng-model="addPostFormData.details" required></textarea>
+    <textarea class="form-control" style="resize: vertical;" id="post-ads__desc" rows="3" placeholder="Enter the features and other details" ng-model="addPostFormData.details" required></textarea>
   </div>
 
-  <shared-add-files form-data="addPostFormData"></shared-add-files>
+  <shared-add-files></shared-add-files>
 
-  <shared-add-technology-handle selected-technology-handle="addPostFormData.technologyHandle"></shared-add-technology-handle>
+  <shared-add-technology-handles></shared-add-technology-handles>
 
   <shared-add-hashtags></shared-add-hashtags>
 
+  <add-post-privacy></add-post-privacy>
+
   <shared-form-legends></shared-form-legends>
+
+  <shared-progress-bar></shared-progress-bar>
 
   <shared-reset-submit-buttons></shared-reset-submit-buttons>
 </form>

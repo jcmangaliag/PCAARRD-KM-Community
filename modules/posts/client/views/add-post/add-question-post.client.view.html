@@ -1,4 +1,4 @@
-<form class="post-question__form" ng-submit="onProcessPostData('question')">
+<form class="post-question__form" ng-submit="onProcessPostData('question')" enctype="multipart/form-data">
   <div class="form-group">
     <label for="post-question__name">Question <span style="color:red;">*</span></label>
     <input type="text" class="form-control" id="post-question__name" placeholder="Enter your question" ng-model="addPostFormData.question" required />
@@ -6,16 +6,22 @@
 
   <div class="form-group">
     <label for="post-question__desc">Description</label>
-    <textarea class="form-control" id="post-question__desc" rows="3" placeholder="Enter the description" ng-model="addPostFormData.description"></textarea>
+    <textarea class="form-control" style="resize: vertical;" id="post-question__desc" rows="3" placeholder="Enter the description" ng-model="addPostFormData.description"></textarea>
   </div>
 
-  <shared-add-files form-data="addPostFormData"></shared-add-files>
+  <shared-add-files></shared-add-files>
 
-  <shared-add-technology-handle selected-technology-handle="addPostFormData.technologyHandle"></shared-add-technology-handle>
+  <shared-add-technology-handles></shared-add-technology-handles>
 
   <shared-add-hashtags></shared-add-hashtags>
 
+  <add-post-privacy></add-post-privacy>
+
   <shared-form-legends></shared-form-legends>
+
+  <shared-progress-bar></shared-progress-bar>
 
   <shared-reset-submit-buttons></shared-reset-submit-buttons>
 </form>
+
+

@@ -1,4 +1,4 @@
-$footer-height: 440px;
+$footer-height: 350px;
 
 html {
   position: relative;
@@ -11,8 +11,4 @@ body {
 
 .ng-toast__list {
 	list-style: none;
-}
-
-li.ng-toast__message:first-letter {
-    text-transform: capitalize;
 }

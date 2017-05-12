@@ -1,0 +1,32 @@
+<button ng-click="returnToGroup(selectedGroup.handle)" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span> Go Back</button>
+	
+<div style="padding: 15px; background-color: white; margin: 25px 0; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+
+	<div ui-view></div>
+
+    <shared-view-files ng-if="selectedPost.files" selected-files="selectedPost.files"></shared-view-files>
+    
+    <shared-view-technology-handles ng-if="selectedPost.technologyHandles" selected-technology-handles="selectedPost.technologyHandles"></shared-view-technology-handles>
+
+    <div style="margin-bottom: 18px;">
+    	<p style="color: gray; margin-bottom: 12px; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Hashtags</p>
+		<shared-view-hashtags selected-hashtags="selectedPost.hashtags"></shared-view-hashtags>
+	</div>
+
+</div>
+
+<div ng-if="!user.currentUser || (user.currentUser.groupsJoined.indexOf(selectedGroup.handle) < 0)" class="alert alert-info alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> <span ng-if="!user.currentUser">Sign in and </span> Join the group to be able to react and write comment.
+</div>
+    		
+<one-post-reactions></one-post-reactions>
+
+<section id="write-comment">
+	<add-comment ng-show="user.currentUser && (user.currentUser.groupsJoined.indexOf(selectedGroup.handle) > -1)"></add-comment>
+</section>
+
+	
+<h4 style="padding: 0 10px;">{{selectedPost.reactions[0].count}} Comment<span ng-show="selectedPost.reactions[0].count > 1">s</span></h4>
+
+	
+<view-comments></view-comments>

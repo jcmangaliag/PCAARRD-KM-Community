@@ -1,0 +1,44 @@
+<button ui-sref="oneGroup({handle: selectedGroup.handle})" type="button" class="btn btn-primary">Go Back</button>
+
+<div style="padding: 15px; background-color: white; margin: 25px auto; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); max-width: 650px;">
+		<div style="margin-bottom: 1%;">
+			<h3 style="margin: 0;"><i class="fa fa-cog" aria-hidden="true"></i> Change {{selectedGroup.name}} Settings</h3>
+		</div>
+		<hr />
+		<form style="padding: 1% 2% 2% 2%; text-align: left;" ng-submit="onProcessSettingsGroupData()">
+
+		  <div style="padding: 0 0 2% 0;">
+			  <a href="#/" ng-click="toggleAddNewGroupAdmins()"> <i class="fa" ng-class="{'fa-plus-square' : !newGroupAdmins.enable, 'fa-minus-square': newGroupAdmins.enable}" aria-hidden="true"></i> New Group Administrator/s </a>
+			</div>
+
+		  <div class="form-group" ng-if="newGroupAdmins.enable">
+			  <label>Add New Group Administrator/s <span style="color:red;">*</span> <span style="font-style: italic;"> (Must be members of the group)</span></label>
+			  <div class="shared__addhashtags--body" ng-repeat="admin in multipleFields.admins track by $index">
+			    <input type="email" style="display: inline-block; max-width: 80%;" class="form-control shared__addhashtags--field" placeholder="Enter email address" ng-model="multipleFields.admins[$index]" required />
+
+			    <button title="Add" type="button" class="btn btn-primary" ng-if="$last" ng-click="addField(multipleFields.admins)"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+
+			    <button title="Remove" type="button" ng-hide="{{multipleFields.admins.length <= MIN_ADMIN}}" class="btn btn-danger" ng-if="$last" ng-click="removeField(multipleFields.admins, MIN_ADMIN)"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button>
+			  </div>
+			</div>
+
+			<div class="form-group">
+			    <label>Group Membership <span style="color:red;">*</span> <span style="font-style: italic;"> (How to become member of the group)</span></label>
+			    <select class="form-control" ng-model="selectedGroup.membership" style="width: 60%;" required>
+			    	<option value="" selected>---Select Group Membership---</option>
+			        <option value="Group Admin Approval" selected>Group Admin Approval</option>
+			        <option value="No Approval">No Approval</option>
+			    </select>
+			  </div>
+
+		  <shared-form-legends></shared-form-legends>
+
+		  <shared-progress-bar></shared-progress-bar>
+
+		  <div style="display: inline-block">
+		  	<shared-reset-submit-buttons></shared-reset-submit-buttons>
+		  </div>
+
+		  <button ng-if="enableViewChanges" ui-sref="oneGroup({handle: selectedGroup.handle})" type="button" class="btn btn-primary">View Changes</button>
+		</form>
+</div>

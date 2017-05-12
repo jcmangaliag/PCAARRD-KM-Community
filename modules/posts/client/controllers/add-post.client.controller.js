@@ -1,5 +1,5 @@
 import moment from 'moment';
-import _ from 'lodash';
+import _ from 'lodash/lodash.min';
 
 (() => {
 	'use strict';
@@ -8,18 +8,19 @@ import _ from 'lodash';
 		.module('posts')
 		.controller('AddPostController', AddPostController);
 
-	AddPostController.$inject = ['$scope', 'AddPostService', 'AddPostCategoriesService'];
+	AddPostController.$inject = ['$scope', 'ngToast', '$q', '$stateParams', 'AddPostService', 'AddPostCategoriesService', 'GroupService', 'SharedUploadService', 'UserAuthenticationService', 'UserService'];
 
-	function AddPostController ($scope, AddPostService, AddPostCategoriesService) {
+	function AddPostController ($scope, ngToast, $q, $stateParams, AddPostService, AddPostCategoriesService, GroupService, SharedUploadService, UserAuthenticationService, UserService) {
 
 		const {submitPost} = AddPostService;
 		$scope.submitPost = _.partial(submitPost);
 		$scope.addPostFormData = {
-			category: AddPostCategoriesService.getCurrentAddPostCategory().postCategory.category
+			category: AddPostCategoriesService.getCurrentAddPostCategory().postCategory.category,
+			showPublic: true
 		};
 		$scope.multipleFields = {
 			authors: [''],
-			urls: ['']
+			urls: [{url: '', urlTitle: ''}]
 		};
 		$scope.MIN_AUTHOR = 1;
 		$scope.MAX_AUTHOR = 5;
@@ -35,6 +36,19 @@ import _ from 'lodash';
 					selected: $scope.defaultDatetime 
 				};
 			}
+			if ($scope.addPostFormData.category === "report"){
+				$scope.addPostFormData.dateTime = $scope.defaultDatetime;
+			}
+
+			$scope.user = {};
+			$scope.user.isLoggedIn = UserAuthenticationService.isLoggedIn();
+
+			if ($scope.user.isLoggedIn){
+				UserAuthenticationService.getCurrentUser()
+			    	.then((result)=> {
+			    		$scope.user.currentUser = result;
+			    	});
+		    }
 		}
 
 		$scope.toggleEndDateTime = () => {
@@ -43,7 +57,11 @@ import _ from 'lodash';
 
 		$scope.addField = (fieldArray, maxField) => {
 			if (fieldArray.length < maxField){
-				fieldArray.push('');
+				if (fieldArray === $scope.multipleFields.urls){
+					fieldArray.push({url: '', urlTitle: ''});
+				} else {
+					fieldArray.push('');
+				}
 			}
 		}
 
@@ -56,7 +74,11 @@ import _ from 'lodash';
 		$scope.clearMultipleFields = () => {
 			_.forOwn($scope.multipleFields, (fieldArray) => { 
 				fieldArray.length = 0;
-				fieldArray.push('');
+				if (fieldArray === $scope.multipleFields.urls){
+					fieldArray.push({url: '', urlTitle: ''});
+				} else {
+					fieldArray.push('');
+				}
 			});
 		}
 
@@ -67,7 +89,10 @@ import _ from 'lodash';
 		$scope.clearForm = () => {
 			const category = $scope.addPostFormData.category;
 			$scope.addPostFormData = null;
+			$scope.clearUploadFiles();
 			$scope.clearHashtags();
+			$scope.clearTechnologyHandles();
+			$scope.technologyHandle.enable = false;
 			$scope.clearMultipleFields();
 
 			if (category === 'event'){
@@ -81,9 +106,20 @@ import _ from 'lodash';
 			if (category === 'report'){
 				$scope.addPostFormData = { dateTime: $scope.defaultDatetime };
 			}
+
+			if (category === 'advertisement'){
+				$scope.price = null;
+			}
+
+			$scope.addPostFormData = {category: category, showPublic: true};
 		}
 
 		$scope.onProcessPostData = (postCategory) => {
+
+			if (!UserAuthenticationService.isLoggedIn()){
+				UserAuthenticationService.loginFirst();
+				return;
+			}
 
 			if (postCategory === 'advertisement' && $scope.price){
 				$scope.addPostFormData.price = $scope.price.toFixed(2);
@@ -97,16 +133,18 @@ import _ from 'lodash';
 				$scope.addPostFormData.authors = $scope.multipleFields.authors;
 			}
 
-			if (postCategory === 'media' && $scope.addPostFormData.mediaType === 'url'){
-				$scope.addPostFormData.urls = $scope.multipleFields.urls;
-			}
-
-			if (postCategory === 'media' && $scope.addPostFormData.mediaType === 'files' && !$scope.addPostFormData.files){
-				alert("No file selected. Please select files.");
+			if (postCategory === 'media' && $scope.addPostFormData.mediaType === 'files' && $scope.selectedUploadFiles.length < 1){
+				ngToast.create({
+		    		className: 'danger',
+		    		content: `No file selected. Please select files.`
+		    	});
 				return;
-			}
+			} 
 
 			$scope.addPostFormData.category = postCategory;
+			if ($scope.technologyHandle.enable){
+				$scope.addPostFormData.technologyHandles = $scope.selectedTechnologies;
+			}
 			$scope.addPostFormData.hashtags = $scope.hashtags;
 			$scope.addPostFormData.datePosted = moment().format('MMMM Do YYYY, h:mm:ss a');
 			$scope.addPostFormData.reactions = [
@@ -132,14 +170,60 @@ import _ from 'lodash';
 				}
 			];
 
-			// hardcoded as of now, should be Object IDs
-			$scope.addPostFormData.postedBy = "Tomas Angelo Poe";
-			$scope.addPostFormData.groupBelonged = "Banana";
+			if ($scope.user.isLoggedIn){
+				$scope.addPostFormData.postedBy = {
+					_id: $scope.user.currentUser._id,
+					name: `${$scope.user.currentUser.name.first} ${$scope.user.currentUser.name.last}`
+				}
+			}
+			$scope.addPostFormData.groupBelonged = $stateParams.handle;
+
+			if (postCategory === 'media' && $scope.addPostFormData.mediaType === 'url'){
+				$scope.addPostFormData.urls = $scope.multipleFields.urls;
+
+			} else if ($scope.selectedUploadFiles.length > 0){
+				let uploadedFiles = [];
+				$scope.progressBarON = true;
+				SharedUploadService.uploadFiles($scope.selectedUploadFiles, uploadedFiles)
+					.then((result) => {
+						$scope.progressBarON = false;
+						$scope.addPostFormData.files = uploadedFiles;
+						return $scope.submitPost($scope.addPostFormData);
+					}, (error) => {
+						$scope.progressBarON = false;
+						ngToast.create({
+				    		className: 'danger',
+				    		content: `Error: ${error.data.message}`
+				    	});
+
+				    	return $q.reject(error);
+					})
+					.then(() => {
+						$scope.onSetGroupPosts(postCategory);
+						$scope.clearForm();
+					});
+
+				return;
+			}
 
 			$scope.submitPost($scope.addPostFormData)
-			.then(() => {
-				$scope.clearForm();
-			});
+				.then(() => {
+					$scope.onSetGroupPosts(postCategory);
+					$scope.clearForm();
+				});
+		}
+
+		$scope.onSetGroupPosts = (postCategory) => {
+			GroupService.getOneGroup($scope.selectedGroup.handle)
+				.then((refreshedGroup) => {
+					refreshedGroup.postsCount.total++;
+					refreshedGroup.postsCount[postCategory]++;
+					GroupService.updateGroup(refreshedGroup.handle, {postsCount: refreshedGroup.postsCount});
+					$scope.selectedGroup.postsCount = refreshedGroup.postsCount;
+					$scope.updatePostsAnalysis();
+				}, (error) => {
+					// show 404 not found page
+				});
 		}
 
 		$scope.loadAdditionalFormFields();

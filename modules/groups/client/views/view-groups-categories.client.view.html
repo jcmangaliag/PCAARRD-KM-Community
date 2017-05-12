@@ -1,0 +1,15 @@
+<div class="row">
+	<div class="col-xs-12 col-sm-6 col-md-4">
+		<div class="btn-group" style="padding-right: 10px;">
+		  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-right: 20px;"> {{currentViewGroupsCategory.category}} <span class="badge">{{groupsCopy.contents.length}}</span> <span class="caret"></span></button>
+
+		  <ul class="dropdown-menu">
+		    <li ng-repeat="groupCategory in viewGroupsCategories" ng-click="setCurrentViewGroupsCategory(groupCategory); resetSearchGroup(); resetGroupsCurrentPage();"><a href="#/">{{groupCategory}}</a></li>
+		  </ul>
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-6 col-md-8">
+		<div ng-if="searchGroupsValue"><h4>{{groups.contents.length}} group<span ng-if="groups.contents.length > 1">s</span> contain<span ng-if="groups.contents.length < 2">s</span> "<span style="font-style: italic;">{{searchGroupsValue}}</span>"</h4></div>
+	</div>
+</div>
+

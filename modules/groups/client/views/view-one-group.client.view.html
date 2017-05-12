@@ -1,42 +1,41 @@
-<div>
-  <img src="/groups/client/assets/images/744849-banana-wallpaper.jpg" class="group-photo" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);" />
-  <hr />
-  <div class="row group-header">
-    <div class="col-xs-12 col-sm-4 " style="padding-top: 1%;" >
-      <img src="/groups/client/assets/images/Fruit_02.png" class="group-header__icon" />
-      <a ui-sref="oneGroup" style="color: #333333;"><h2 style="padding-left: 4%; display: inline-block; font-weight:bold;">Banana</h2></a>
-      <div style="padding-top:3%">
-      <a href="#"  style="color: #333333;"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></a>
-       <a href="#"  style="color: #333333;"><i style="padding-left: 4%" class="fa fa-cog fa-2x" aria-hidden="true"></i></a>
-       </div>
+<img src="{{selectedGroup.coverPhoto? selectedGroup.coverPhoto.path.split('/')[1] : '/groups/client/assets/images/default-group-cover-photo.png'}}" class="group-photo" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); margin-bottom: 30px;" />
+
+<div class="row">
+  <div class="col-xs-12 col-sm-12 col-md-3" style="padding-right: 0;">
+    <view-group-info-panel></view-group-info-panel>
+    <div ng-if="!user.currentUser || (user.currentUser.groupsJoined.indexOf(selectedGroup.handle) < 0)">
+      <view-group-join-invitation></view-group-join-invitation>
+    </div>
+    <view-manage-group-panel ng-if="user.currentUser && selectedGroup.admin.indexOf(user.currentUser._id) > -1"></view-manage-group-panel>
+  </div>
+
+  <div class="col-xs-12 col-sm-12 col-md-6">
+    <div ng-if="'oneGroup' | isState">
+
+      <add-post ng-if="user.currentUser && (user.currentUser.groupsJoined.indexOf(selectedGroup.handle) > -1)"></add-post>
+
+      <div class="row" style="margin: 0 0 25px;">
+        <div ng-if="!user.currentUser || (user.currentUser.groupsJoined.indexOf(selectedGroup.handle) < 0)" class="alert alert-info alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <strong>Reminder!</strong> You are only seeing public posts. Be sure to <span ng-if="!user.currentUser">sign in and </span> join the group to see private posts.
+        </div>
+
+        <div class="post-ads row" style="margin: 0; background-color: white; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); padding: 15px 10px;">
+          <posts-filter-panel></posts-filter-panel>
+        </div>
+      </div>
+    
+      <view-posts></view-posts>
     </div>
 
-    <div class="col-xs-12 col-sm-5 group-header--align__name" style="text-align: justify;">
-     <p> Welcome to Banana Community! <br/> <br/>As we all know, banana has several nutritional benefits that is why it is a very important fruit for the Filipino citizens. Our goal is not only to inform people about these nutritional benefits, but also to allow members to share and communicate their own insights, events, news, questions, incident reports, or media resources that are related to banana so other members will learn a lot more about banana.</p>
-    </div> 
-
-    <div class="col-xs-12 col-sm-3 group-header__actions">
-      <button type="button" class="btn btn-danger" ng-click="showToast()"> Leave Group </button>
+    <div ng-if="!('oneGroup' | isState)" id="read-post">
+      <view-post></view-post>
     </div>
   </div>
-  <hr />
 
-
-  <div>
-    <div class="col-xs-12 col-sm-8">
-      <div ng-if="viewOnePost">
-        <div ui-view autoscroll="autoScroll.status"></div>
-      </div>
-
-      <div ng-if="!viewOnePost">
-        <add-post></add-post>
-        <view-posts></view-posts>
-      </div>
-    </div>
-    
-    <div class="col-xs-12 col-sm-4">
-      <group-members></group-members>
-      <group-statistics></group-statistics>
-    </div>
+  <div class="col-xs-12 col-sm-12 col-md-3" style="padding-left: 0;">
+    <view-group-posts-statistics-panel></view-group-posts-statistics-panel>
+    <view-group-members-panel></view-group-members-panel>
   </div>
 </div>
+

@@ -8,80 +8,100 @@
 	groupRoutes.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 
 	function groupRoutes ($stateProvider, $urlRouterProvider, $locationProvider) {
-		$urlRouterProvider.otherwise('/');
+		$urlRouterProvider.otherwise('/page-not-found');
 
 		$stateProvider
+			/* View Posts from My Groups */
+			.state('communityHome', {
+				url: '/',
+				templateUrl: 'groups/client/views/community-home.client.view.html',
+				controller: 'CommunityHomeController',
+				params: {
+					handle: "--my-groups--"
+				},
+				resolve: {
+					$title: () => 'Community Home'
+				}
+			})
+			.state('groups', {
+				url: '/groups/',
+				templateUrl: 'groups/client/views/view-groups.client.view.html',
+				controller: 'GroupController',
+				resolve: {
+					$title: () => 'See Groups'
+				}
+			})
+			.state('manageGroupClassification', {
+				url: '/manage-group-classification',	
+				template: '<add-group-classification></add-group-classification><group-classifications></group-classifications>',
+				controller: 'GroupClassificationController',
+				resolve: {
+					$title: () => 'Group Classifications',
+					authenticate: ['UserAuthenticationService', (UserAuthenticationService) => {
+						return UserAuthenticationService.authenticateSiteAdmin();
+					}] 
+				}
+			})
+			.state('createGroup', {
+				url: '/create-group',	
+				templateUrl: 'groups/client/views/create-group.client.view.html',
+				controller: 'GroupController',
+				resolve: {
+					$title: () => 'Create Group',
+					authenticate: ['UserAuthenticationService', (UserAuthenticationService) => {
+						return UserAuthenticationService.authenticateLoggedIn();
+					}]
+				}
+			})
 			.state('oneGroup', {
-				url: '/groups/banana',	// should be /groups/:groupID
+				url: '/groups/:handle',	
 				templateUrl: 'groups/client/views/view-one-group.client.view.html',
-				controller: 'OneGroupController'
-			})
-
-			/* View One Post */
-
-			
-			.state('oneGroup.viewOneAdvertisementPost', {
-				url: '/view-posts/advertisement/:id',
-				templateUrl: 'posts/client/views/view-posts/view-one-advertisement-post.client.view.html',
-				controller: 'PostController',
-				params: {
-					postType: "view-one-post"
+				controller: 'GroupController',
+				resolve: {
+					selectedGroup: ['GroupService', '$stateParams', (GroupService, $stateParams) => {
+						return GroupService.getOneGroup($stateParams.handle);				
+					}],
+					$title: ['selectedGroup', (selectedGroup) => `${selectedGroup.name}`]
 				}
 			})
-			.state('oneGroup.viewOneEventPost', {
-				url: '/view-posts/event/:id',
-				templateUrl: 'posts/client/views/view-posts/view-one-event-post.client.view.html',
-				controller: 'PostController',
-				params: {
-					postType: "view-one-post"
+			.state('oneGroupEdit', {
+				url: '/groups/:handle/edit',	
+				templateUrl: 'groups/client/views/edit-one-group.client.view.html',
+				controller: 'EditSettingsGroupController',
+				resolve: {
+					selectedGroup: ['GroupService', '$stateParams', (GroupService, $stateParams) => {
+						return GroupService.getOneGroup($stateParams.handle);				
+					}],
+					$title: ['selectedGroup', (selectedGroup) => `${selectedGroup.name} - Edit`],
+					authenticate: ['UserAuthenticationService', '$stateParams', (UserAuthenticationService, $stateParams) => {
+						return UserAuthenticationService.authenticateGroupAdminOrSiteAdmin($stateParams.handle);
+					}] 
 				}
 			})
-			.state('oneGroup.viewOneMediaPost', {
-				url: '/view-posts/media/:id',
-				templateUrl: 'posts/client/views/view-posts/view-one-media-post.client.view.html',
-				controller: 'PostController',
-				params: {
-					postType: "view-one-post"
+			.state('oneGroupSettings', {
+				url: '/groups/:handle/settings',
+				templateUrl: 'groups/client/views/settings-one-group.client.view.html',
+				controller: 'EditSettingsGroupController',
+				resolve: {
+					selectedGroup: ['GroupService', '$stateParams', (GroupService, $stateParams) => {
+						return GroupService.getOneGroup($stateParams.handle);				
+					}],
+					$title: ['selectedGroup', (selectedGroup) => `${selectedGroup.name} - Settings`],
+					authenticate: ['UserAuthenticationService', '$stateParams', (UserAuthenticationService, $stateParams) => {
+						return UserAuthenticationService.authenticateGroupAdminOrSiteAdmin($stateParams.handle);
+					}]
 				}
 			})
-			.state('oneGroup.viewOneNewsPost', {
-				url: '/view-posts/news/:id',
-				templateUrl: 'posts/client/views/view-posts/view-one-news-post.client.view.html',
-				controller: 'PostController',
-				params: {
-					postType: "view-one-post"
+			.state('dashboard', {
+				url: '/community-dashboard',
+				templateUrl: 'groups/client/views/dashboard.client.view.html',
+				controller: 'DashboardController',
+				resolve: {
+					$title: () => 'Community Dashboard',
+					authenticate: ['UserAuthenticationService', (UserAuthenticationService) => {
+						return UserAuthenticationService.authenticateSiteAdmin();
+					}]
 				}
-			})
-			.state('oneGroup.viewOneOthersPost', {
-				url: '/view-posts/others/:id',
-				templateUrl: 'posts/client/views/view-posts/view-one-others-post.client.view.html',
-				controller: 'PostController',
-				params: {
-					postType: "view-one-post"
-				}
-			})
-			.state('oneGroup.viewOneQuestionPost', {
-				url: '/view-posts/question/:id',
-				templateUrl: 'posts/client/views/view-posts/view-one-question-post.client.view.html',
-				controller: 'PostController',
-				params: {
-					postType: "view-one-post"
-				}
-			})
-			.state('oneGroup.viewOneReportPost', {
-				url: '/view-posts/report/:id',
-				templateUrl: 'posts/client/views/view-posts/view-one-report-post.client.view.html',
-				controller: 'PostController',
-				params: {
-					postType: "view-one-post"
-				}
-			})
-
-			/* Settings */
-
-			.state('oneGroup.settings', {
-				url: '/settings',
-				templateUrl: 'groups/client/views/view-group-settings.client.view.html'
 			});
 
 		$locationProvider.html5Mode(true);

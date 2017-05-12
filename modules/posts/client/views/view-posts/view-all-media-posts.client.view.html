@@ -1,22 +1,26 @@
-<div style="margin: 2%; border-radius: 8px;"> 
-
-  <span class="label label-info">Media</span> <span class="label label-warning">{{post.mediaType}}</span>
-  <a style="color: #333333;" ng-click="autoScrollPost(true)" ui-sref="oneGroup.viewOneMediaPost({id: post._id})">
-  <h4 style="text-decoration: underline; font-weight: bolder; max-height: 70px; white-space: pre-wrap;" data-ellipsis data-ng-bind="post.mediaTitle"></h4> </a>
-  <p style="color: gray; padding-bottom: 2%;">submitted by <a href="#" style="text-decoration: underline; color: gray; font-weight: bold;">{{post.postedBy}}</a> on {{post.datePosted}}</p>
-
-  <p ng-if="post.description" style="padding: 1% 0; white-space: pre-wrap; max-height: 80px;" data-ng-bind="post.description" data-ellipsis></p>
-
-  <div ng-if="post.urls.length > 0">
-    <ul class="list-group">
-      <li class="list-group-item" ng-repeat="url in post.urls | limitTo: 3"><a href="{{url}}">{{url}}</a></li>
-    </ul>
-    <span ng-if="post.urls.length > 3">…</span>
+ <div class="row">
+  <div class="col-xs-9 col-sm-9">
+    <h4 style="display: inline;"><span title="Post Category" style="font-weight: normal;" class="label label-info">Media</span> <span title="Media Type" style="font-weight: normal;" class="label label-warning">{{post.mediaType}}</span> <span ng-if="!post.showPublic" title="Private Post" class="label label-default" style="font-weight: normal;"><i class="fa fa-lock" aria-hidden="true"></i></span>
+    <span ng-if="groupBelonged ==='--my-groups--' || groupBelonged ==='--user--'"><i style="margin: 0 5px;" class="fa fa-caret-right" aria-hidden="true"></i> <h4 title="Group" style="display: inline;"><span class="label label-success"><a style="color: white; font-weight: bold;" ui-sref="oneGroup({handle: post.groupBelonged})">{{ getGroupName(post.groupBelonged) }}</a></span></h4></span>
   </div>
-
-  <div style="margin: 2% 0 2% 0;">
-  	(<a ui-sref="oneGroup.viewOneMediaPost({id: post._id})" ng-click="autoScrollPost(true)">Read More</a>)
+  <div class="col-xs-3 col-sm-3" style="text-align: right;">
+    <delete-post></delete-post>
   </div>
-
-  <all-posts-reactions></all-posts-reactions>
 </div>
+<a style="color: #333333; display: inline-block;" ui-sref="oneGroup.viewOneMediaPost({handle: post.groupBelonged, postID: post._id, '#': 'read-post'})">
+<h4 style="font-weight: bolder; white-space: pre-wrap;"><span ng-bind="post.mediaTitle | limitTo: 200"></span><span ng-if="post.mediaTitle.length > 200" >...</span></h4> </a>
+<p style="color: gray; margin-bottom: 2px;">posted by <a ui-sref="user-profile({userID: post.postedBy._id})" style="color: gray; font-weight: bold;">{{post.postedBy.name}}</a> on {{post.datePosted}}</p>
+
+<p ng-if="post.description" style="padding: 4px 0; white-space: pre-wrap; max-height: 80px;" data-ng-bind="post.description | parseURL | emoji" data-ellipsis></p>
+
+<div ng-if="post.urls.length > 0">
+  <ul class="list-group">
+    <li class="list-group-item" ng-repeat="url in post.urls | limitTo: 3"><a href="{{url.url}}" target="_blank">{{url.urlTitle}}</a></li>
+  </ul>
+  <span ng-if="post.urls.length > 3">…</span>
+</div>
+
+<div style="margin: 0% 0 10px 0;">
+	<a ui-sref="oneGroup.viewOneMediaPost({handle: post.groupBelonged, postID: post._id, '#': 'read-post'})">See More</a>
+</div>
+

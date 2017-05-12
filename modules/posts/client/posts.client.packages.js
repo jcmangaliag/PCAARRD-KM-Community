@@ -1,4 +1,5 @@
 import postModule from './config/posts.client.init-module';
+import postRoutes from './config/posts.client.routes';
 
 import AddPostController from './controllers/add-post.client.controller';
 import AddPostCategoriesController from './controllers/add-post-categories.client.controller';
@@ -14,8 +15,14 @@ import AddMediaPostDirective from './directives/add-post/add-media-post.client.d
 import AddNewsPostDirective from './directives/add-post/add-news-post.client.directive';
 import AddOthersPostDirective from './directives/add-post/add-others-post.client.directive';
 import AddReportPostDirective from './directives/add-post/add-report-post.client.directive';
+import AddPostPrivacyDirective from './directives/add-post/add-post-privacy.client.directive';
+
+import DeletePostDirective from './directives/delete-post.client.directive';
+import SearchPostsDirective from './directives/search-posts.client.directive';
+import PostsFilterPanelDirective from './directives/posts-filter-panel.client.directive';
 
 import ViewPostsCategoriesDirective from './directives/view-posts/view-posts-categories.client.directive';
+import ViewPostDirective from './directives/view-posts/view-post.client.directive';
 import ViewPostsDirective from './directives/view-posts/view-posts.client.directive';
 import AllPostsReactionsDirective from './directives/view-posts/all-posts-reactions.client.directive';
 import OnePostReactionsDirective from './directives/view-posts/one-post-reactions.client.directive';

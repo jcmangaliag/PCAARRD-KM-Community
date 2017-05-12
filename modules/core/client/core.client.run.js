@@ -5,12 +5,10 @@ import coreModule from './core.client.packages';
 	'use strict';
 
 	angular.module('core', [
-		'shared',
-		'home', 
 		'groups', 
 		'layout', 
-		'posts', 
-		'comments'
+		'shared',
+		'users'
 	]);
 	
 	angular.bootstrap(document, ['core']);

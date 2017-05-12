@@ -1,21 +1,28 @@
 import express from 'express';
+import favicon from 'serve-favicon';
 import path from 'path';
 import bodyParser from 'body-parser';
-import config from './config/core.server.config';
+import passport from 'passport';
+import appConfig from './config/core.server.app-config';
 import mongoDB from './config/core.server.db';
 import moduleRoutes from './routes/core.server.routes';
 
 const app = express();
+app.use(favicon(path.join(`${__dirname} /../client/assets`, 'images', 'favicon.ico')));
 app.use(bodyParser.json());
+app.use(passport.initialize());
+
+app.use(express.static(`${__dirname} /../../../public`));
 
 moduleRoutes(app);
 
-app.use(express.static(__dirname + '/../../'));
+app.use(express.static(`${__dirname} /../../`));
+app.use(express.static(`${__dirname} /../../../uploads`));
 
 app.all('/*', (req, res) => {
-	res.sendFile(path.join(`${__dirname}/../client/base-view/core-content.client.view.html`));
+	res.sendFile(path.join(`${__dirname}/../../../public/core-content.client.view.html`));
 });
 
-app.listen(config.port, () => {
-	console.log(`Server running on ${config.host}:${config.port}`);
+app.listen(appConfig.port, () => {
+	console.log(`Server running on ${appConfig.host}:${appConfig.port}`);
 });

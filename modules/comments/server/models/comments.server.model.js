@@ -5,12 +5,16 @@ const CommentSchema = mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		required: true
 	},
+	groupBelonged: {
+		type: String,
+		required: true
+	},
 	comment: {
 		type: String,
 		required: true
 	},
 	commentedBy: {
-		type: String, // mongoose.Schema.Types.ObjectId,
+		type: Object, 
 		required: true
 	},
 	dateCommented: {
@@ -25,7 +29,8 @@ const CommentSchema = mongoose.Schema({
 		type: Array,
 		required: true
 	},
-	technologyHandle: String
+	technologyHandles: Array,
+	files: Array
 });
 
 export default mongoose.model('Comment', CommentSchema);

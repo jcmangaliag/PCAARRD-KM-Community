@@ -5,9 +5,9 @@
 		.module('posts')
 		.factory('ViewPostsCategoriesService', ViewPostsCategoriesService);
 
-	ViewPostsCategoriesService.$inject = ['PostService'];
+	ViewPostsCategoriesService.$inject = ['PostService', '$q'];
 
-	function ViewPostsCategoriesService (PostService) {
+	function ViewPostsCategoriesService (PostService, $q) {
 
 		const viewPostsCategories = [
 			{
@@ -48,6 +48,8 @@
 			postCategory: viewPostsCategories[0]
 		}
 
+		let userID = null, memberOfGroup = false;
+
 		const getViewPostsCategories = () => {
 			return viewPostsCategories;
 		}
@@ -62,18 +64,77 @@
 			retrievePostsByCategory(currentViewPostsCategory.postCategory.category);
 		}
 
+		const setUser = (userid, memberOfCurrentGroup) => {
+			userID = userid;
+			memberOfGroup = memberOfCurrentGroup;
+		}
+
 		const retrievePostsByCategory = (category) => {
-			if (category == "all"){
-				PostService.getAllPosts();
+			const deferred = $q.defer();
+
+			if (category === "all"){
+				if (PostService.getGroupBelonged() === '--my-groups--'){	// no need to check memberOfGroup
+					PostService.getAllPostsByMyGroups(userID)
+					.then((results) => {
+						deferred.resolve();
+					}, (error) => {
+						// posts not found
+						deferred.reject(error);
+					});
+				} else if (PostService.getGroupBelonged() === '--user--') {
+					PostService.getAllPostsByUser(userID)
+					.then((results) => {
+						deferred.resolve();
+					}, (error) => {
+						// posts not found
+						deferred.reject(error);
+					});
+				} else {
+					PostService.getAllPostsByGroup(memberOfGroup)
+					.then((results) => {
+						deferred.resolve();
+					}, (error) => {
+						// posts not found
+						deferred.reject(error);
+					});
+				}
+				
 			} else {
-				PostService.getPostsByCategory(currentViewPostsCategory.postCategory.category);
+				if (PostService.getGroupBelonged() === '--my-groups--'){
+					PostService.getPostsByMyGroupsAndCategory(currentViewPostsCategory.postCategory.category, userID)
+					.then((results) => {
+						deferred.resolve();
+					}, (error) => {
+						// posts not found
+						deferred.reject(error);
+					});
+				} else if (PostService.getGroupBelonged() === '--user--') {
+					PostService.getPostsByUserAndCategory(currentViewPostsCategory.postCategory.category, userID)
+					.then((results) => {
+						deferred.resolve();
+					}, (error) => {
+						// posts not found
+						deferred.reject(error);
+					});
+				} else {
+					PostService.getPostsByGroupAndCategory(currentViewPostsCategory.postCategory.category, memberOfGroup)
+					.then((results) => {
+						deferred.resolve();
+					}, (error) => {
+						// posts not found
+						deferred.reject(error);
+					});
+				}
 			}
+
+			return deferred.promise;
 		}
 
 		return {
 			getViewPostsCategories,
 			getCurrentViewPostsCategory,
 			setCurrentViewPostsCategory,
+			setUser,
 			retrievePostsByCategory
 		};
 	}

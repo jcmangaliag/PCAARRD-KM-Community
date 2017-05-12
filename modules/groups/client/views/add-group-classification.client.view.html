@@ -1,0 +1,31 @@
+<section id="add-group-classification">
+	<div style="padding: 15px; background-color: white; margin: 0 auto 25px; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); max-width: 500px;">
+		<div style="margin-bottom: 1%;">
+			<h3 style="margin: 0;"><i class="fa fa-plus" aria-hidden="true"></i> Add Group Classification</h3>
+		</div>
+		<hr />
+		<form style="padding: 1% 2% 2% 2%; text-align: left;" ng-submit="onProcessGroupClassificationForm()">
+			<div class="form-group">
+				<label>Industry</label>
+		    	<input type="text" class="form-control" placeholder="Enter the group's industry" ng-model="addGroupClassificationFormData.industry" required />
+		    </div>
+
+		    <div class="form-group">
+		    	<label>Sector</label>
+		    	<input type="text" class="form-control" placeholder="Enter the group's sector" ng-model="addGroupClassificationFormData.sector" required />
+		    </div>
+
+		    <div class="form-group">
+		    	<label>ISP</label>
+		    	<input type="text" class="form-control" placeholder="Enter the group's ISP" ng-model="addGroupClassificationFormData.isp" required />
+		    </div>
+
+		    <div class="form-group">
+		    	<label>Specific Commodity <span style="font-style: italic;">(Optional)</span></label>
+		    	<input type="text" class="form-control" placeholder="Enter the group's specific commodity" ng-model="addGroupClassificationFormData.specificCommodity" />
+		    </div>
+
+			<shared-reset-submit-buttons></shared-reset-submit-buttons>
+		</form>
+	</div>
+</section>
