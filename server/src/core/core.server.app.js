@@ -14,8 +14,8 @@ app.use(passport.initialize());
 
 moduleRoutes(app);
 
-app.use(express.static(`${__dirname} /../../../public`));	// for production
-app.use(express.static(`${__dirname} /../../../client`));	// for development
+app.use(express.static(`${__dirname} /../../../public`));
+app.use(express.static(`${__dirname} /../../../client`));
 app.use(express.static(`${__dirname} /../../../uploads`));
 
 app.all('/*', (req, res) => {
