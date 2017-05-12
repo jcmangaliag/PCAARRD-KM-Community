@@ -20,7 +20,7 @@ app.use(express.static(`${__dirname} /../../`));
 app.use(express.static(`${__dirname} /../../../uploads`));
 
 app.all('/*', (req, res) => {
-	res.sendFile(path.join(`${__dirname}/../client/base-view/core-content.client.view.html`));
+	res.sendFile(path.join(`${__dirname}/../../../public/core-content.client.view.html`));
 });
 
 app.listen(appConfig.port, () => {
