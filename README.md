@@ -33,12 +33,16 @@ sudo service mongod start
 
   * On development
 ```bash
-npm run dev-client or npm run dev-server
+npm run dev-client (when working with client files)
+or
+npm run dev-server (when working with server files)
 ```
 
    * On production
 ```bash
-npm build and npm start
+npm run build (transpile and minify server codes and create client bundle)
+and 
+npm start (run the built server and client codes)
 ```
 3. Open a web browser and go to:
 
