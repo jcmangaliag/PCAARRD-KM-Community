@@ -12,6 +12,8 @@ app.use(favicon(path.join(`${__dirname} /../client/assets`, 'images', 'favicon.i
 app.use(bodyParser.json());
 app.use(passport.initialize());
 
+app.use(express.static(`${__dirname} /../../../public`));
+
 moduleRoutes(app);
 
 app.use(express.static(`${__dirname} /../../`));
