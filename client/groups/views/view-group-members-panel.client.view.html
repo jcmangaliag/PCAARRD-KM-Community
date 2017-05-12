@@ -1,0 +1,137 @@
+<div ng-if="user.currentUser && selectedGroup.admin.indexOf(user.currentUser._id) > -1" class="post-ads" style="margin-bottom: 25px; background-color: white; border-radius: 5px; padding: 15px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+  <h4>Pending Member<span ng-if="groupPendingMembers.length > 1">s</span> <span class="badge" style="font-size: 14px;">{{groupPendingMembers.length}}</span></h4><hr />
+  <div style="margin: auto; max-height: 200px; overflow-y: auto;">
+    <ul class="list-group">
+
+      <li ng-repeat="pendingMember in groupPendingMembers | orderBy: ['name.first', 'name.last']" class="list-group-item">
+      	<div class="row">
+	      	<div class="col-xs-8 col-sm-8" style="padding-right: 0;">
+	      		<a ui-sref="user-profile({userID: pendingMember._id})"><img src="{{pendingMember.photo? pendingMember.photo.path.split('/')[1] : '/users/assets/images/default-user-photo.png'}}" alt="Pic" style="width: 18%; max-width: 80px; border-radius: 8%; margin-right: 0.5em;" />{{pendingMember.name.first + ' ' + pendingMember.name.last}}</a>
+	      	</div>
+
+	      	<div ng-if="user.currentUser && selectedGroup.admin.indexOf(user.currentUser._id) > -1" class="col-xs-4 col-sm-4" style="padding-left: 0;">
+
+	      		<button title="Reject Join Request" type="button" class="btn btn-danger btn-sm pull-right" data-toggle="modal" data-target="#{{'rejectPendingMember' + pendingMember._id}}"><i class="fa fa-times-circle fa-lg" aria-hidden="true"></i></button>
+
+	      		<div class="modal fade" id="{{'rejectPendingMember' + pendingMember._id}}" tabindex="-1" role="dialog">
+		          <div class="modal-dialog" role="document">
+		            <div class="modal-content">
+		              <div class="modal-header">
+		                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		                <h4 class="modal-title">Reject Join Request</h4>
+		              </div>
+		              <div class="modal-body">
+		                <p>Are you sure you want to reject this member's join request?</p>
+		              </div>
+		              <div class="modal-footer">
+		                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+		                <button type="button" class="btn btn-danger" ng-click="rejectPendingMember(pendingMember._id, selectedGroup.handle)" data-dismiss="modal">Reject Join Request</button>
+		              </div>
+		            </div>
+		          </div>
+		        </div>
+
+		        <button title="Accept Join Request" type="button" class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#{{'acceptPendingMember' + pendingMember._id}}"><i class="fa fa-check-circle fa-lg" aria-hidden="true"></i></button>
+
+		        <div class="modal fade" id="{{'acceptPendingMember' + pendingMember._id}}" tabindex="-1" role="dialog">
+		          <div class="modal-dialog" role="document">
+		            <div class="modal-content">
+		              <div class="modal-header">
+		                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		                <h4 class="modal-title">Accept Join Request</h4>
+		              </div>
+		              <div class="modal-body">
+		                <p>Are you sure you want to accept this member's join request?</p>
+		              </div>
+		              <div class="modal-footer">
+		                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+		                <button type="button" class="btn btn-success" ng-click="acceptPendingMember(pendingMember._id, selectedGroup.handle)" data-dismiss="modal">Accept Join Request</button>
+		              </div>
+		            </div>
+		          </div>
+		        </div>
+	      	</div>
+      	</div>
+      </li>
+
+    </ul>
+	</div>
+</div>
+
+<div class="post-ads" style="margin-bottom: 25px; background-color: white; border-radius: 5px; padding: 15px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+  <h4>Administrator<span ng-if="groupAdmins.length > 1">s</span> <span class="badge" style="font-size: 14px;">{{groupAdmins.length}}</span></h4><hr />
+  <div style="margin: auto; max-height: 200px; overflow-y: auto;">
+    <ul class="list-group">
+
+      <li ng-repeat="admin in groupAdmins | orderBy: ['name.first', 'name.last']" class="list-group-item">
+      	<div class="row">
+	      	<div ng-class="user.currentUser && selectedGroup.admin.indexOf(user.currentUser._id) > -1? 'col-xs-10 col-sm-10': 'col-xs-12 col-sm-12'">
+	      		<a ui-sref="user-profile({userID: admin._id})"><img src="{{admin.photo? admin.photo.path.split('/')[1] : '/users/assets/images/default-user-photo.png'}}" alt="Pic" style="width: 18%; max-width: 80px; border-radius: 8%; margin-right: 0.5em;" />{{admin.name.first + ' ' + admin.name.last}}</a>
+	      	</div>
+	      	<div ng-if="user.currentUser && selectedGroup.admin.indexOf(user.currentUser._id) > -1" class="col-xs-2 col-sm-2">
+	      		<button title="Remove Admin Role" type="button" class="btn btn-danger btn-sm pull-right" data-toggle="modal" data-target="#{{'removeAdmin' + admin._id}}"><i class="fa fa-times-circle fa-lg" aria-hidden="true"></i></button>
+
+	      		<div class="modal fade" id="{{'removeAdmin' + admin._id}}" tabindex="-1" role="dialog">
+		          <div class="modal-dialog" role="document">
+		            <div class="modal-content">
+		              <div class="modal-header">
+		                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		                <h4 class="modal-title">Remove Admin Role</h4>
+		              </div>
+		              <div class="modal-body">
+		                <p>Are you sure you want to remove this member's admin role?</p>
+		              </div>
+		              <div class="modal-footer">
+		                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+		                <button type="button" class="btn btn-danger" ng-click="onRemoveAdmin(admin._id, selectedGroup.handle)" data-dismiss="modal">Remove Admin Role</button>
+		              </div>
+		            </div>
+		          </div>
+		        </div>
+	      	</div>
+      	</div>
+      </li>
+
+    </ul>
+	</div>
+</div>
+
+<div ng-if="user.currentUser && (user.currentUser.groupsJoined.indexOf(selectedGroup.handle) > -1)" class="post-ads" style="margin-bottom: 25px; background-color: white; border-radius: 5px; padding: 15px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+  <h4>Member<span ng-if="groupMembers.length > 1">s</span> <span class="badge" style="font-size: 14px;">{{groupMembers.length}}</span></h4><hr />
+  <div style="margin: auto; max-height: 400px; overflow-y: auto;">
+    <ul class="list-group">
+
+      <li ng-repeat="member in groupMembers | orderBy: ['name.first', 'name.last']" class="list-group-item">
+      	<div class="row">
+	      	<div ng-class="user.currentUser && selectedGroup.admin.indexOf(user.currentUser._id) > -1? 'col-xs-10 col-sm-10': 'col-xs-12 col-sm-12'">
+	      		<a ui-sref="user-profile({userID: member._id})"><img src="{{member.photo? member.photo.path.split('/')[1] : '/users/assets/images/default-user-photo.png'}}" alt="Pic" style="width: 18%; max-width: 80px; border-radius: 8%; margin-right: 0.5em;" />{{member.name.first + ' ' + member.name.last}}</a>
+	      	</div>
+	      	<div ng-if="user.currentUser && selectedGroup.admin.indexOf(user.currentUser._id) > -1" class="col-xs-2 col-sm-2">
+	      		<button title="Remove Member" type="button" class="btn btn-danger btn-sm pull-right" data-toggle="modal" data-target="#{{'removeMember' + member._id}}"><i class="fa fa-times-circle fa-lg" aria-hidden="true"></i></button>
+
+	      		<div class="modal fade" id="{{'removeMember' + member._id}}" tabindex="-1" role="dialog">
+		          <div class="modal-dialog" role="document">
+		            <div class="modal-content">
+		              <div class="modal-header">
+		                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		                <h4 class="modal-title">Remove Member</h4>
+		              </div>
+		              <div class="modal-body">
+		              	<p ng-if="selectedGroup.admin.indexOf(member._id) > -1">Warning: This will also remove the member as group administrator.</p>
+		                <p>Are you sure you want to remove this member?</p>
+		              </div>
+		              <div class="modal-footer">
+		                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+		                <button type="button" class="btn btn-danger" ng-click="removeMember(member._id, selectedGroup.handle)" data-dismiss="modal">Remove Member</button>
+		              </div>
+		            </div>
+		          </div>
+		        </div>
+	      	</div>
+      	</div>
+      </li>
+
+    </ul>
+	</div>
+</div>
+

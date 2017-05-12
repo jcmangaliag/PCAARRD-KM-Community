@@ -4,14 +4,14 @@ import path from 'path';
 const webpackProductionConfig = {
 	entry: [
 		'bootstrap-loader',
-		'./modules/core/client/core.client.run'
+		'./client/core/core.client.run'
 	],
 	output: {
 		path: path.join(__dirname, '../../../../public'),
 		filename: 'bundle.js'
 	},
 	resolve: {
-		modulesDirectories: ['node_modules', 'modules'],
+		modulesDirectories: ['node_modules', 'client'],
 		extension: ['', '.js'],
 		alias: {
 			angular: "angular/angular.min.js"

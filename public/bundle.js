@@ -13796,8 +13796,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./core-content.client.style.scss", function() {
-				var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./core-content.client.style.scss");
+			module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./core-content.client.style.scss", function() {
+				var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./core-content.client.style.scss");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -14666,7 +14666,7 @@
 			/* 404 Not Found */
 			.state('pageNotFound', {
 				url: '/page-not-found',
-				templateUrl: 'shared/client/views/shared-page-not-found.client.view.html',
+				templateUrl: 'shared/views/shared-page-not-found.client.view.html',
 				resolve: {
 					$title: function $title() {
 						return '404 - Page Not Found';
@@ -31907,7 +31907,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/shared/client/views/shared-add-hashtags.client.view.html',
+				templateUrl: '/shared/views/shared-add-hashtags.client.view.html',
 				controller: 'SharedAddHashtagsController'
 			};
 
@@ -31930,7 +31930,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/shared/client/views/shared-view-hashtags.client.view.html',
+				templateUrl: '/shared/views/shared-view-hashtags.client.view.html',
 				scope: {
 					selectedHashtags: '='
 				}
@@ -31955,7 +31955,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/shared/client/views/shared-add-files.client.view.html',
+				templateUrl: '/shared/views/shared-add-files.client.view.html',
 				controller: 'SharedAddFilesController'
 			};
 
@@ -31978,7 +31978,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/shared/client/views/shared-view-files.client.view.html',
+				templateUrl: '/shared/views/shared-view-files.client.view.html',
 				scope: {
 					selectedFiles: '='
 				}
@@ -32033,7 +32033,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/shared/client/views/shared-add-technology-handles.client.view.html',
+				templateUrl: '/shared/views/shared-add-technology-handles.client.view.html',
 				controller: 'SharedAddTechnologyHandlesController'
 			};
 
@@ -32056,7 +32056,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/shared/client/views/shared-view-technology-handles.client.view.html',
+				templateUrl: '/shared/views/shared-view-technology-handles.client.view.html',
 				scope: {
 					selectedTechnologyHandles: '='
 				}
@@ -32081,7 +32081,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/shared/client/views/shared-reset-submit-buttons.client.view.html'
+				templateUrl: '/shared/views/shared-reset-submit-buttons.client.view.html'
 			};
 
 			return directive;
@@ -32103,7 +32103,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/shared/client/views/shared-form-legends.client.view.html'
+				templateUrl: '/shared/views/shared-form-legends.client.view.html'
 			};
 
 			return directive;
@@ -32160,7 +32160,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/shared/client/views/shared-progress-bar.client.view.html'
+				templateUrl: '/shared/views/shared-progress-bar.client.view.html'
 			};
 
 			return directive;
@@ -32182,7 +32182,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/shared/client/views/shared-add-photo.client.view.html',
+				templateUrl: '/shared/views/shared-add-photo.client.view.html',
 				scope: {
 					selectedUploadPhoto: '='
 				}
@@ -32385,8 +32385,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./shared-add-hashtags.client.style.scss", function() {
-				var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./shared-add-hashtags.client.style.scss");
+			module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./shared-add-hashtags.client.style.scss", function() {
+				var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./shared-add-hashtags.client.style.scss");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -32430,8 +32430,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./shared-add-files.client.style.scss", function() {
-				var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./shared-add-files.client.style.scss");
+			module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./shared-add-files.client.style.scss", function() {
+				var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./shared-add-files.client.style.scss");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -33329,7 +33329,7 @@
 			/* View Posts from My Groups */
 			.state('communityHome', {
 				url: '/',
-				templateUrl: 'groups/client/views/community-home.client.view.html',
+				templateUrl: 'groups/views/community-home.client.view.html',
 				controller: 'CommunityHomeController',
 				params: {
 					handle: "--my-groups--"
@@ -33341,7 +33341,7 @@
 				}
 			}).state('groups', {
 				url: '/groups/',
-				templateUrl: 'groups/client/views/view-groups.client.view.html',
+				templateUrl: 'groups/views/view-groups.client.view.html',
 				controller: 'GroupController',
 				resolve: {
 					$title: function $title() {
@@ -33362,7 +33362,7 @@
 				}
 			}).state('createGroup', {
 				url: '/create-group',
-				templateUrl: 'groups/client/views/create-group.client.view.html',
+				templateUrl: 'groups/views/create-group.client.view.html',
 				controller: 'GroupController',
 				resolve: {
 					$title: function $title() {
@@ -33374,7 +33374,7 @@
 				}
 			}).state('oneGroup', {
 				url: '/groups/:handle',
-				templateUrl: 'groups/client/views/view-one-group.client.view.html',
+				templateUrl: 'groups/views/view-one-group.client.view.html',
 				controller: 'GroupController',
 				resolve: {
 					selectedGroup: ['GroupService', '$stateParams', function (GroupService, $stateParams) {
@@ -33386,7 +33386,7 @@
 				}
 			}).state('oneGroupEdit', {
 				url: '/groups/:handle/edit',
-				templateUrl: 'groups/client/views/edit-one-group.client.view.html',
+				templateUrl: 'groups/views/edit-one-group.client.view.html',
 				controller: 'EditSettingsGroupController',
 				resolve: {
 					selectedGroup: ['GroupService', '$stateParams', function (GroupService, $stateParams) {
@@ -33401,7 +33401,7 @@
 				}
 			}).state('oneGroupSettings', {
 				url: '/groups/:handle/settings',
-				templateUrl: 'groups/client/views/settings-one-group.client.view.html',
+				templateUrl: 'groups/views/settings-one-group.client.view.html',
 				controller: 'EditSettingsGroupController',
 				resolve: {
 					selectedGroup: ['GroupService', '$stateParams', function (GroupService, $stateParams) {
@@ -33416,7 +33416,7 @@
 				}
 			}).state('dashboard', {
 				url: '/community-dashboard',
-				templateUrl: 'groups/client/views/dashboard.client.view.html',
+				templateUrl: 'groups/views/dashboard.client.view.html',
 				controller: 'DashboardController',
 				resolve: {
 					$title: function $title() {
@@ -50847,7 +50847,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/groups/client/views/group-classifications.client.view.html'
+				templateUrl: '/groups/views/group-classifications.client.view.html'
 			};
 
 			return directive;
@@ -50869,7 +50869,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/groups/client/views/add-group-classification.client.view.html'
+				templateUrl: '/groups/views/add-group-classification.client.view.html'
 			};
 
 			return directive;
@@ -50891,7 +50891,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/groups/client/views/view-groups-categories.client.view.html',
+				templateUrl: '/groups/views/view-groups-categories.client.view.html',
 				controller: 'ViewGroupsCategoriesController'
 			};
 
@@ -50914,7 +50914,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/groups/client/views/view-group-info-panel.client.view.html'
+				templateUrl: '/groups/views/view-group-info-panel.client.view.html'
 			};
 
 			return directive;
@@ -50936,7 +50936,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/groups/client/views/view-manage-group-panel.client.view.html'
+				templateUrl: '/groups/views/view-manage-group-panel.client.view.html'
 			};
 
 			return directive;
@@ -50958,7 +50958,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/groups/client/views/view-group-members-panel.client.view.html'
+				templateUrl: '/groups/views/view-group-members-panel.client.view.html'
 			};
 
 			return directive;
@@ -50980,7 +50980,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/groups/client/views/view-group-posts-statistics-panel.client.view.html'
+				templateUrl: '/groups/views/view-group-posts-statistics-panel.client.view.html'
 			};
 
 			return directive;
@@ -51002,7 +51002,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/groups/client/views/view-group-join-invitation.client.view.html'
+				templateUrl: '/groups/views/view-group-join-invitation.client.view.html'
 			};
 
 			return directive;
@@ -51024,7 +51024,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/groups/client/views/community-landing-page.client.view.html'
+				templateUrl: '/groups/views/community-landing-page.client.view.html'
 			};
 
 			return directive;
@@ -51046,7 +51046,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/groups/client/views/community-feed.client.view.html'
+				templateUrl: '/groups/views/community-feed.client.view.html'
 			};
 
 			return directive;
@@ -51503,8 +51503,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./view-one-group.client.style.scss", function() {
-				var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./view-one-group.client.style.scss");
+			module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./view-one-group.client.style.scss", function() {
+				var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./view-one-group.client.style.scss");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -51548,8 +51548,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./community-home.client.style.scss", function() {
-				var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./community-home.client.style.scss");
+			module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./community-home.client.style.scss", function() {
+				var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./community-home.client.style.scss");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -51702,7 +51702,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/layout/client/views/layout-header.client.view.html',
+				templateUrl: '/layout/views/layout-header.client.view.html',
 				controller: 'HeaderController'
 			};
 
@@ -51731,8 +51731,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./layout-header.client.style.scss", function() {
-				var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./layout-header.client.style.scss");
+			module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./layout-header.client.style.scss", function() {
+				var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./layout-header.client.style.scss");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -51770,7 +51770,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/layout/client/views/layout-footer.client.view.html'
+				templateUrl: '/layout/views/layout-footer.client.view.html'
 			};
 
 			return directive;
@@ -51798,8 +51798,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./layout-footer.client.style.scss", function() {
-				var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./layout-footer.client.style.scss");
+			module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./layout-footer.client.style.scss", function() {
+				var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./layout-footer.client.style.scss");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -52089,7 +52089,7 @@
 			/* View One Post */
 			.state('oneGroup.viewOneAdvertisementPost', {
 				url: '/view-posts/advertisement/:postID',
-				templateUrl: 'posts/client/views/view-posts/view-one-advertisement-post.client.view.html',
+				templateUrl: 'posts/views/view-posts/view-one-advertisement-post.client.view.html',
 				resolve: {
 					selectedPost: ['PostService', '$stateParams', function (PostService, $stateParams) {
 						return PostService.getOnePost($stateParams.postID);
@@ -52103,7 +52103,7 @@
 				}
 			}).state('oneGroup.viewOneEventPost', {
 				url: '/view-posts/event/:postID',
-				templateUrl: 'posts/client/views/view-posts/view-one-event-post.client.view.html',
+				templateUrl: 'posts/views/view-posts/view-one-event-post.client.view.html',
 				resolve: {
 					selectedPost: ['PostService', '$stateParams', function (PostService, $stateParams) {
 						return PostService.getOnePost($stateParams.postID);
@@ -52117,7 +52117,7 @@
 				}
 			}).state('oneGroup.viewOneMediaPost', {
 				url: '/view-posts/media/:postID',
-				templateUrl: 'posts/client/views/view-posts/view-one-media-post.client.view.html',
+				templateUrl: 'posts/views/view-posts/view-one-media-post.client.view.html',
 				resolve: {
 					selectedPost: ['PostService', '$stateParams', function (PostService, $stateParams) {
 						return PostService.getOnePost($stateParams.postID);
@@ -52131,7 +52131,7 @@
 				}
 			}).state('oneGroup.viewOneNewsPost', {
 				url: '/view-posts/news/:postID',
-				templateUrl: 'posts/client/views/view-posts/view-one-news-post.client.view.html',
+				templateUrl: 'posts/views/view-posts/view-one-news-post.client.view.html',
 				resolve: {
 					selectedPost: ['PostService', '$stateParams', function (PostService, $stateParams) {
 						return PostService.getOnePost($stateParams.postID);
@@ -52145,7 +52145,7 @@
 				}
 			}).state('oneGroup.viewOneOthersPost', {
 				url: '/view-posts/others/:postID',
-				templateUrl: 'posts/client/views/view-posts/view-one-others-post.client.view.html',
+				templateUrl: 'posts/views/view-posts/view-one-others-post.client.view.html',
 				resolve: {
 					selectedPost: ['PostService', '$stateParams', function (PostService, $stateParams) {
 						return PostService.getOnePost($stateParams.postID);
@@ -52159,7 +52159,7 @@
 				}
 			}).state('oneGroup.viewOneQuestionPost', {
 				url: '/view-posts/question/:postID',
-				templateUrl: 'posts/client/views/view-posts/view-one-question-post.client.view.html',
+				templateUrl: 'posts/views/view-posts/view-one-question-post.client.view.html',
 				resolve: {
 					selectedPost: ['PostService', '$stateParams', function (PostService, $stateParams) {
 						return PostService.getOnePost($stateParams.postID);
@@ -52173,7 +52173,7 @@
 				}
 			}).state('oneGroup.viewOneReportPost', {
 				url: '/view-posts/report/:postID',
-				templateUrl: 'posts/client/views/view-posts/view-one-report-post.client.view.html',
+				templateUrl: 'posts/views/view-posts/view-one-report-post.client.view.html',
 				resolve: {
 					selectedPost: ['PostService', '$stateParams', function (PostService, $stateParams) {
 						return PostService.getOnePost($stateParams.postID);
@@ -52661,7 +52661,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/posts/client/views/add-post/add-post.client.view.html'
+				templateUrl: '/posts/views/add-post/add-post.client.view.html'
 			};
 
 			return directive;
@@ -52683,7 +52683,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/posts/client/views/add-post/add-post-categories.client.view.html',
+				templateUrl: '/posts/views/add-post/add-post-categories.client.view.html',
 				controller: 'AddPostCategoriesController'
 			};
 
@@ -52706,7 +52706,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/posts/client/views/add-post/add-advertisement-post.client.view.html',
+				templateUrl: '/posts/views/add-post/add-advertisement-post.client.view.html',
 				controller: 'AddPostController'
 			};
 
@@ -52729,7 +52729,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/posts/client/views/add-post/add-question-post.client.view.html',
+				templateUrl: '/posts/views/add-post/add-question-post.client.view.html',
 				controller: 'AddPostController'
 			};
 
@@ -52752,7 +52752,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/posts/client/views/add-post/add-event-post.client.view.html',
+				templateUrl: '/posts/views/add-post/add-event-post.client.view.html',
 				controller: 'AddPostController'
 			};
 
@@ -52775,7 +52775,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/posts/client/views/add-post/add-media-post.client.view.html',
+				templateUrl: '/posts/views/add-post/add-media-post.client.view.html',
 				controller: 'AddPostController'
 			};
 
@@ -52798,7 +52798,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/posts/client/views/add-post/add-news-post.client.view.html',
+				templateUrl: '/posts/views/add-post/add-news-post.client.view.html',
 				controller: 'AddPostController'
 			};
 
@@ -52821,7 +52821,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/posts/client/views/add-post/add-others-post.client.view.html',
+				templateUrl: '/posts/views/add-post/add-others-post.client.view.html',
 				controller: 'AddPostController'
 			};
 
@@ -52844,7 +52844,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/posts/client/views/add-post/add-report-post.client.view.html',
+				templateUrl: '/posts/views/add-post/add-report-post.client.view.html',
 				controller: 'AddPostController'
 			};
 
@@ -52867,7 +52867,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/posts/client/views/add-post/add-post-privacy.client.view.html'
+				templateUrl: '/posts/views/add-post/add-post-privacy.client.view.html'
 			};
 
 			return directive;
@@ -52889,7 +52889,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/posts/client/views/delete-post.client.view.html'
+				templateUrl: '/posts/views/delete-post.client.view.html'
 			};
 
 			return directive;
@@ -52911,7 +52911,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/posts/client/views/search-posts.client.view.html'
+				templateUrl: '/posts/views/search-posts.client.view.html'
 			};
 
 			return directive;
@@ -52933,7 +52933,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/posts/client/views/posts-filter-panel.client.view.html'
+				templateUrl: '/posts/views/posts-filter-panel.client.view.html'
 			};
 
 			return directive;
@@ -52955,7 +52955,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/posts/client/views/view-posts/view-posts-categories.client.view.html',
+				templateUrl: '/posts/views/view-posts/view-posts-categories.client.view.html',
 				controller: 'ViewPostsCategoriesController'
 			};
 
@@ -52978,7 +52978,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/posts/client/views/view-posts/view-post.client.view.html',
+				templateUrl: '/posts/views/view-posts/view-post.client.view.html',
 				controller: 'PostController'
 			};
 
@@ -53001,7 +53001,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/posts/client/views/view-posts/view-posts.client.view.html',
+				templateUrl: '/posts/views/view-posts/view-posts.client.view.html',
 				controller: 'PostController'
 			};
 
@@ -53024,7 +53024,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/posts/client/views/view-posts/all-posts-reactions.client.view.html'
+				templateUrl: '/posts/views/view-posts/all-posts-reactions.client.view.html'
 			};
 
 			return directive;
@@ -53046,7 +53046,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/posts/client/views/view-posts/one-post-reactions.client.view.html'
+				templateUrl: '/posts/views/view-posts/one-post-reactions.client.view.html'
 			};
 
 			return directive;
@@ -53068,7 +53068,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/posts/client/views/view-posts/view-all-advertisement-posts.client.view.html'
+				templateUrl: '/posts/views/view-posts/view-all-advertisement-posts.client.view.html'
 			};
 
 			return directive;
@@ -53090,7 +53090,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/posts/client/views/view-posts/view-all-event-posts.client.view.html'
+				templateUrl: '/posts/views/view-posts/view-all-event-posts.client.view.html'
 			};
 
 			return directive;
@@ -53112,7 +53112,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/posts/client/views/view-posts/view-all-media-posts.client.view.html'
+				templateUrl: '/posts/views/view-posts/view-all-media-posts.client.view.html'
 			};
 
 			return directive;
@@ -53134,7 +53134,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/posts/client/views/view-posts/view-all-news-posts.client.view.html'
+				templateUrl: '/posts/views/view-posts/view-all-news-posts.client.view.html'
 			};
 
 			return directive;
@@ -53156,7 +53156,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/posts/client/views/view-posts/view-all-others-posts.client.view.html'
+				templateUrl: '/posts/views/view-posts/view-all-others-posts.client.view.html'
 			};
 
 			return directive;
@@ -53178,7 +53178,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/posts/client/views/view-posts/view-all-question-posts.client.view.html'
+				templateUrl: '/posts/views/view-posts/view-all-question-posts.client.view.html'
 			};
 
 			return directive;
@@ -53200,7 +53200,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/posts/client/views/view-posts/view-all-report-posts.client.view.html'
+				templateUrl: '/posts/views/view-posts/view-all-report-posts.client.view.html'
 			};
 
 			return directive;
@@ -53752,8 +53752,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./post-categories.client.style.scss", function() {
-				var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./post-categories.client.style.scss");
+			module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./post-categories.client.style.scss", function() {
+				var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./post-categories.client.style.scss");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -53797,8 +53797,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./add-question-post.client.style.scss", function() {
-				var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./add-question-post.client.style.scss");
+			module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./add-question-post.client.style.scss", function() {
+				var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./add-question-post.client.style.scss");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -53842,8 +53842,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./add-advertisement-post.client.style.scss", function() {
-				var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./add-advertisement-post.client.style.scss");
+			module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./add-advertisement-post.client.style.scss", function() {
+				var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/autoprefixer-loader/index.js?browsers=last 3 versions!../../../node_modules/sass-loader/lib/loader.js?outputStyle=expanded!./add-advertisement-post.client.style.scss");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -54122,7 +54122,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/comments/client/views/add-comment.client.view.html',
+				templateUrl: '/comments/views/add-comment.client.view.html',
 				controller: 'CommentController'
 			};
 
@@ -54145,7 +54145,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/comments/client/views/view-comments.client.view.html',
+				templateUrl: '/comments/views/view-comments.client.view.html',
 				controller: 'CommentController'
 			};
 
@@ -54168,7 +54168,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/comments/client/views/delete-comment.client.view.html'
+				templateUrl: '/comments/views/delete-comment.client.view.html'
 			};
 
 			return directive;
@@ -54436,7 +54436,7 @@
 				}
 			}).state('registerAsAdmin', {
 				url: '/register-as-admin',
-				templateUrl: 'users/client/views/user-admin-registration.client.view.html',
+				templateUrl: 'users/views/user-admin-registration.client.view.html',
 				controller: 'UserAuthenticationController',
 				resolve: {
 					$title: function $title() {
@@ -54460,7 +54460,7 @@
 				}
 			}).state('user-profile', {
 				url: '/users/profile/:userID',
-				templateUrl: 'users/client/views/user-profile.client.view.html',
+				templateUrl: 'users/views/user-profile.client.view.html',
 				controller: 'UserController',
 				params: {
 					handle: "--user--"
@@ -54475,7 +54475,7 @@
 				}
 			}).state('edit-user', {
 				url: '/users/profile/:userID/edit',
-				templateUrl: 'users/client/views/edit-user.client.view.html',
+				templateUrl: 'users/views/edit-user.client.view.html',
 				controller: 'EditUserController',
 				resolve: {
 					selectedUser: ['UserService', '$stateParams', function (UserService, $stateParams) {
@@ -54828,7 +54828,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/users/client/views/user-registration.client.view.html'
+				templateUrl: '/users/views/user-registration.client.view.html'
 			};
 
 			return directive;
@@ -54850,7 +54850,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: '/users/client/views/user-login.client.view.html'
+				templateUrl: '/users/views/user-login.client.view.html'
 			};
 
 			return directive;

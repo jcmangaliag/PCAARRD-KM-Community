@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-xs-9 col-sm-9">
+    <h4 style="display: inline;"><span title="Post Category" style="font-weight: normal;" class="label label-info">Advertisement</span> <span ng-if="!post.showPublic" title="Private Post" class="label label-default" style="font-weight: normal;"><i class="fa fa-lock" aria-hidden="true"></i></span></h4>
+    <span ng-if="groupBelonged ==='--my-groups--' || groupBelonged ==='--user--'"><i style="margin: 0 5px;" class="fa fa-caret-right" aria-hidden="true"></i> <h4 title="Group" style="display: inline;"><span class="label label-success"><a style="color: white; font-weight: bold;" ui-sref="oneGroup({handle: post.groupBelonged})">{{ getGroupName(post.groupBelonged) }}</a></span></h4></span>
+  </div>
+  <div class="col-xs-3 col-sm-3" style="text-align: right;">
+    <delete-post></delete-post>
+  </div>
+</div>
+<a style="color: #333333; display: inline-block;"  ui-sref="oneGroup.viewOneAdvertisementPost({handle: post.groupBelonged, postID: post._id, '#': 'read-post'})">
+<h4 style="font-weight: bolder; white-space: pre-wrap;"><span ng-bind="post.adTitle | limitTo: 200"></span><span ng-if="post.adTitle.length > 200" >...</span></h4></a>
+<p style="color: gray; margin-bottom: 2px;">posted by <a ui-sref="user-profile({userID: post.postedBy._id})" style="color: gray; font-weight: bold;">{{post.postedBy.name}}</a> on {{post.datePosted}}</p>
+
+<p ng-if="post.price" style="margin-bottom: 2px;"><img src="posts/assets/images/philippine-peso.png" alt="Php" style="height: 30px; margin-right: 10px;" />{{post.price}}</p>
+
+<p style="padding: 4px 0; white-space: pre-wrap; max-height: 80px;" data-ng-bind="post.details | parseURL | emoji" data-ellipsis></p>
+<div style="margin: -10px 0 10px 0;">
+	<a ui-sref="oneGroup.viewOneAdvertisementPost({handle: post.groupBelonged, postID: post._id, '#': 'read-post'})" >See More</a>
+</div>
+
+

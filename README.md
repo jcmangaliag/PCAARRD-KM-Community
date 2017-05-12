@@ -31,11 +31,21 @@ sudo service mongod start
 ```
 2. In another terminal (in PCAARRD-KM-Community directory), run the web application using:
 
+  * On development
 ```bash
-npm run dev
+npm run dev-client or npm run dev-server
+```
+
+   * On production
+```bash
+npm build and npm start
 ```
 3. Open a web browser and go to:
 
 ```bash
-localhost:8080
+localhost:8080 on development
+```
+
+```bash
+localhost:3000 on production
 ```
