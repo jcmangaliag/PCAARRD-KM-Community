@@ -3,10 +3,11 @@ import userAuthCtrl from '../controllers/users-authentication.server.controller'
 import userCtrl from '../controllers/users.server.controller';
 import passportConfig from '../config/users.server.passport';
 import env from 'node-env-file';
-
-/*if (!process.env.ADMIN_REG_ACCESS_HASH || !process.env.ADMIN_REG_ACCESS_SALT){
+console.log("ang hash ay")
+console.log(process.env.ADMIN_REG_ACCESS_HASH)
+if (!process.env.ADMIN_REG_ACCESS_HASH || !process.env.ADMIN_REG_ACCESS_SALT){
   env(`${__dirname} /../../../../.env`);
-}*/
+}
 
 
 const usersRoutes = (app) => {
