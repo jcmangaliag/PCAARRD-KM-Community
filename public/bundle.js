@@ -32349,7 +32349,7 @@
 			var getTechnologies = function getTechnologies() {
 				var deferred = $q.defer();
 
-				$http.get('http://technology-dashboard-api.herokuapp.com/technologies').then(function (response) {
+				$http.get('https://technology-dashboard-api.herokuapp.com/technologies').then(function (response) {
 					deferred.resolve(response.data);
 				}, function (response) {
 					deferred.reject(response);

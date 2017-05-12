@@ -19,7 +19,7 @@ app.use(express.static(`${__dirname} /../../../client`));
 app.use(express.static(`${__dirname} /../../../uploads`));
 
 app.all('/*', (req, res) => {
-	res.sendFile(path.join(`${__dirname}/../../../client/core/base-view/core-content.client.view.html`));	// in production
+	res.sendFile(path.join(`${__dirname}/../../../client/core/base-view/core-content.client.view.html`));
 });
 
 app.listen(appConfig.port, () => {

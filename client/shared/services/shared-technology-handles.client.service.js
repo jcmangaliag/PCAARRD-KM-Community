@@ -14,7 +14,7 @@ import _ from 'lodash';
 		const getTechnologies = () => {
 			const deferred = $q.defer();
 
-			$http.get(`http://technology-dashboard-api.herokuapp.com/technologies`)
+			$http.get(`https://technology-dashboard-api.herokuapp.com/technologies`)
 			.then((response) => {
 				deferred.resolve(response.data);
 			}, (response) => {

@@ -21,8 +21,6 @@ const sharedControls = {
   },
   uploadImage: (req, res) => {
     multerImageUpload(req, res, (err) => {
-        console.log("ang err ay");
-        console.log(err);
         if (err) {
             if (err.code === 'LIMIT_FILE_SIZE') {
                 res.json({ success: false, message: 'File size is too large. Max limit is 10MB.' });
