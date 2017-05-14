@@ -1,5 +1,6 @@
 import multerFileUpload from '../config/shared.server.multer-files-config.js';
 import multerImageUpload from '../config/shared.server.multer-image-config.js';
+import cloudinaryConfig from '../config/shared.server.cloudinary-config.js';
 
 const sharedControls = { 
 	uploadFile: (req, res) => {
@@ -14,7 +15,13 @@ const sharedControls = {
             if (!req.file) {
                 res.json({ success: false, message: 'No file was selected.' });
             } else {
-                res.json({ success: true, message: 'File uploaded!', file: req.file });
+                cloudinaryConfig.uploader.upload(req.file.path, (result) => {
+                    if (result.error){
+                         res.json({ success: false, message: result.error.message});
+                    } else {
+                       res.json({ success: true, message: 'File uploaded!', file: result}); 
+                    }
+               });
             }
         }
     });
@@ -31,7 +38,13 @@ const sharedControls = {
             if (!req.file) {
                 res.json({ success: false, message: 'No photo was selected.' });
             } else {
-                res.json({ success: true, message: 'File uploaded!', image: req.file });
+                cloudinaryConfig.uploader.upload(req.file.path, (result) => {   // only accepts image
+                    if (result.error){
+                         res.json({ success: false, message: result.error.message});
+                    } else {
+                       res.json({ success: true, message: 'File uploaded!', image: result}); 
+                    }
+               });
             }
         }
     });
