@@ -6,7 +6,7 @@
       <li ng-repeat="pendingMember in groupPendingMembers | orderBy: ['name.first', 'name.last']" class="list-group-item">
       	<div class="row">
 	      	<div class="col-xs-8 col-sm-8" style="padding-right: 0;">
-	      		<a ui-sref="user-profile({userID: pendingMember._id})"><img src="{{pendingMember.photo? pendingMember.photo.url : '/users/assets/images/default-user-photo.png'}}" alt="Pic" style="width: 18%; max-width: 80px; border-radius: 8%; margin-right: 0.5em;" />{{pendingMember.name.first + ' ' + pendingMember.name.last}}</a>
+	      		<a ui-sref="user-profile({userID: pendingMember._id})"><img src="{{pendingMember.photo? pendingMember.photo.secure_url : '/users/assets/images/default-user-photo.png'}}" alt="Pic" style="width: 18%; max-width: 80px; border-radius: 8%; margin-right: 0.5em;" />{{pendingMember.name.first + ' ' + pendingMember.name.last}}</a>
 	      	</div>
 
 	      	<div ng-if="user.currentUser && selectedGroup.admin.indexOf(user.currentUser._id) > -1" class="col-xs-4 col-sm-4" style="padding-left: 0;">
@@ -66,7 +66,7 @@
       <li ng-repeat="admin in groupAdmins | orderBy: ['name.first', 'name.last']" class="list-group-item">
       	<div class="row">
 	      	<div ng-class="user.currentUser && selectedGroup.admin.indexOf(user.currentUser._id) > -1? 'col-xs-10 col-sm-10': 'col-xs-12 col-sm-12'">
-	      		<a ui-sref="user-profile({userID: admin._id})"><img src="{{admin.photo? admin.photo.url : '/users/assets/images/default-user-photo.png'}}" alt="Pic" style="width: 18%; max-width: 80px; border-radius: 8%; margin-right: 0.5em;" />{{admin.name.first + ' ' + admin.name.last}}</a>
+	      		<a ui-sref="user-profile({userID: admin._id})"><img src="{{admin.photo? admin.photo.secure_url : '/users/assets/images/default-user-photo.png'}}" alt="Pic" style="width: 18%; max-width: 80px; border-radius: 8%; margin-right: 0.5em;" />{{admin.name.first + ' ' + admin.name.last}}</a>
 	      	</div>
 	      	<div ng-if="user.currentUser && selectedGroup.admin.indexOf(user.currentUser._id) > -1" class="col-xs-2 col-sm-2">
 	      		<button title="Remove Admin Role" type="button" class="btn btn-danger btn-sm pull-right" data-toggle="modal" data-target="#{{'removeAdmin' + admin._id}}"><i class="fa fa-times-circle fa-lg" aria-hidden="true"></i></button>
@@ -104,7 +104,7 @@
       <li ng-repeat="member in groupMembers | orderBy: ['name.first', 'name.last']" class="list-group-item">
       	<div class="row">
 	      	<div ng-class="user.currentUser && selectedGroup.admin.indexOf(user.currentUser._id) > -1? 'col-xs-10 col-sm-10': 'col-xs-12 col-sm-12'">
-	      		<a ui-sref="user-profile({userID: member._id})"><img src="{{member.photo? member.photo.url : '/users/assets/images/default-user-photo.png'}}" alt="Pic" style="width: 18%; max-width: 80px; border-radius: 8%; margin-right: 0.5em;" />{{member.name.first + ' ' + member.name.last}}</a>
+	      		<a ui-sref="user-profile({userID: member._id})"><img src="{{member.photo? member.photo.secure_url : '/users/assets/images/default-user-photo.png'}}" alt="Pic" style="width: 18%; max-width: 80px; border-radius: 8%; margin-right: 0.5em;" />{{member.name.first + ' ' + member.name.last}}</a>
 	      	</div>
 	      	<div ng-if="user.currentUser && selectedGroup.admin.indexOf(user.currentUser._id) > -1" class="col-xs-2 col-sm-2">
 	      		<button title="Remove Member" type="button" class="btn btn-danger btn-sm pull-right" data-toggle="modal" data-target="#{{'removeMember' + member._id}}"><i class="fa fa-times-circle fa-lg" aria-hidden="true"></i></button>

@@ -74,7 +74,7 @@
 
           <span ng-if="user.isLoggedIn">
              <a ui-sref="user-profile({userID: user.currentUser._id})" style="color: white; margin: 0 1%;">
-             <img src="{{user.currentUser.photo? user.currentUser.photo.url: '/users/assets/images/default-user-photo.png'}}" class="user-profile__pic" alt="Pic" style="width: 38px; border-radius: 8%;" /><h4 style="display: inline;">{{user.currentUser.name.first}}</h4></a>
+             <img src="{{user.currentUser.photo? user.currentUser.photo.secure_url: '/users/assets/images/default-user-photo.png'}}" class="user-profile__pic" alt="Pic" style="width: 38px; border-radius: 8%;" /><h4 style="display: inline;">{{user.currentUser.name.first}}</h4></a>
           </span>
 
           <div class="btn-group" ng-if="user.isLoggedIn">

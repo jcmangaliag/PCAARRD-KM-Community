@@ -15,7 +15,7 @@
 		    <ul class="list-group">
 
 		      <li ng-repeat="userGroup in userGroups | orderBy: 'name'" class="list-group-item">
-	      		<a ui-sref="oneGroup({handle: userGroup.handle})"><img src="{{userGroup.photo? userGroup.photo.url : '/groups/assets/images/default-group-photo.png'}}" alt="Pic" style="width: 18%; max-width: 80px;  border-radius: 8%; margin-right: 0.5em;" />{{userGroup.name}}</a>
+	      		<a ui-sref="oneGroup({handle: userGroup.handle})"><img src="{{userGroup.photo? userGroup.photo.secure_url : '/groups/assets/images/default-group-photo.png'}}" alt="Pic" style="width: 18%; max-width: 80px;  border-radius: 8%; margin-right: 0.5em;" />{{userGroup.name}}</a>
 		      </li>
 
 		    </ul>
