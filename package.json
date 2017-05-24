@@ -4,13 +4,11 @@
   "description": "An application that allows members to communicate with each other in virtual spaces or groups.",
   "main": "index.js",
   "scripts": {
-    "start-server": "cross-env NODE_ENV=development babel-node server/src/core/core.server.app.js",
-    "dev-client": "npm run start-server & webpack-dev-server --config server/src/core/config/core.server.webpack.config.babel.js --progress --colors",
-    "start-nodemon-server": "cross-env NODE_ENV=development nodemon server/src/core/core.server.app.js --exec babel-node",
-    "dev-server": "npm run start-nodemon-server & webpack-dev-server --config server/src/core/config/core.server.webpack.config.babel.js --progress --colors",
-    "build-client": "webpack --config server/src/core/config/core.server.webpack.production-config.babel.js --progress --colors",
-    "build-server": "babel ./server/src -d ./server/dist --presets babili -s",
-    "build": "npm run build-server & npm run build-client",
+    "dev:server": "cross-env NODE_ENV=development nodemon server/src/core/core.server.app.js --exec babel-node",
+    "dev": "npm run dev:server & webpack-dev-server --config server/src/core/config/core.server.webpack.config.babel.js --progress --colors",
+    "build:client": "webpack --config server/src/core/config/core.server.webpack.production-config.babel.js --progress --colors",
+    "build:server": "babel ./server/src -d ./server/dist --presets babili -s",
+    "build": "npm run build:server & npm run build:client",
     "start": "NODE_PATH=$NODE_PATH:./client/core/core.client.run.js cross-env NODE_ENV=production node server/dist/core/core.server.app.js"
   },
   "repository": {
