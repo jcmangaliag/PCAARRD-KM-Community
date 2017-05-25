@@ -19,7 +19,7 @@
       <div class="container">
         <div class="carousel-caption" style="background-color: rgba(0, 39, 150, 0.6)">
           <h1>Plenty of Groups</h1>
-          <p>{{groups.contents.length}} groups under crops, livestocks, and many more are there to fulfill your interests. You can join in any of them.</p>
+          <p>{{groups.contents.length}} group<span ng-if="groups.contents.length > 1">s</span> under crops, livestocks, and many more are there to fulfill your interests. You can join in any of them.</p>
           <p><a class="btn btn-lg btn-success" ui-sref="groups" role="button">See Groups</a></p>
         </div>
       </div>
