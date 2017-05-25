@@ -56,7 +56,7 @@ localhost:8080
 
    * On production
 ```bash
-localhost:80
+localhost:3000
 ```
 
 4. Stop the production server using:
