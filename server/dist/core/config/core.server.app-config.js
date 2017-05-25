@@ -1,2 +1,2 @@
-'use strict';Object.defineProperty(exports,'__esModule',{value:!0});var config={name:'PCAARRD KM Communities',host:'localhost',port:process.env.PORT||3e3,env:process.env.NODE_ENV||'development'};exports.default=config;
+'use strict';Object.defineProperty(exports,'__esModule',{value:!0});var config={name:'PCAARRD KM Communities',host:'localhost',port:'production'==process.env.NODE_ENV?80:3e3,env:process.env.NODE_ENV||'development'};exports.default=config;
 //# sourceMappingURL=core.server.app-config.js.map

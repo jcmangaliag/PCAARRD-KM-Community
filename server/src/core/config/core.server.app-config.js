@@ -1,7 +1,7 @@
 const config = {
 	name: 'PCAARRD KM Communities',
 	host: 'localhost',
-	port: process.env.PORT || 3000,
+	port: (process.env.NODE_ENV == 'production')? 80 : 3000,
 	env: process.env.NODE_ENV || 'development'
 };
 
