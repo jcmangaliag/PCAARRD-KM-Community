@@ -10,7 +10,7 @@ highChartsDrilldown(highCharts);
 highChartsTreeMap(highCharts);
 highChartsMore(highCharts);
 
-window.Highcharts = highCharts; 
+window.Highcharts = highCharts;
 
 (function () {
 	'use strict';
