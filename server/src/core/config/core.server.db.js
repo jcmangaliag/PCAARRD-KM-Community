@@ -1,4 +1,4 @@
 import mongoose from 'mongoose';
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/community');
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/community');
