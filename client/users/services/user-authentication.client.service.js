@@ -97,11 +97,11 @@
 			$http.post('/api/users/login/', userCredentials)
 			.then(response => {
 				saveToken(response.data.token);
-				$http.post('https://dpitc.net/keystone/signin', {
+				deferred.resolve(response.data.token);
+				return $http.post('https://dpitc.net/keystone/signin', {	// login to DPITC keystone
 					email: "community@dpitc.net",
 					password: "community2017"
 				});
-				deferred.resolve(response.data.token);
 			}, (response) => {
 				deferred.reject(response);
 			});
