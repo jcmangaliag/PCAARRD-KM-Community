@@ -1,9 +1,10 @@
 import moment from 'moment';
 import _ from 'lodash/lodash.min';
+import piwikConfig from './../assets/js/piwikConfig';
 
 (() => {
 	'use strict';
-	
+
 	angular
 		.module('groups')
 		.controller('GroupController', GroupController);
@@ -11,8 +12,10 @@ import _ from 'lodash/lodash.min';
 	GroupController.$inject = ['$scope', '$state', '$q', '$timeout', 'ngToast', '$stateParams', 'GroupClassificationService', 'ViewGroupsCategoriesService', 'GroupService', 'SharedPaginationService', 'UserAuthenticationService', 'UserService', '$filter', 'CommentService'];
 
 	function GroupController ($scope, $state, $q, $timeout, ngToast, $stateParams, GroupClassificationService, ViewGroupsCategoriesService, GroupService, SharedPaginationService, UserAuthenticationService, UserService, $filter, CommentService) {
-		
+
 		/* for View One Group */
+
+		piwikConfig();
 
 		$scope.fullGroupDescription = false;
 		$scope.readGroupDescription = "Read More";
@@ -77,12 +80,12 @@ import _ from 'lodash/lodash.min';
 			$scope.postsAnalysisChart.setTitle({text: `${$scope.selectedGroup.name} Posts`}, {text: 'Source: PCAARRD KM Community'});
 			$scope.postsAnalysisChart.series[0].setData([
 				$scope.selectedGroup.postsCount.total,
-				$scope.selectedGroup.postsCount.question, 
+				$scope.selectedGroup.postsCount.question,
 				$scope.selectedGroup.postsCount.report,
 				$scope.selectedGroup.postsCount.media,
-				$scope.selectedGroup.postsCount.news,  
-				$scope.selectedGroup.postsCount.event, 			
-				$scope.selectedGroup.postsCount.advertisement, 
+				$scope.selectedGroup.postsCount.news,
+				$scope.selectedGroup.postsCount.event,
+				$scope.selectedGroup.postsCount.advertisement,
 				$scope.selectedGroup.postsCount.others
 			], true);
 		}
@@ -158,7 +161,7 @@ import _ from 'lodash/lodash.min';
 
 		$scope.addToPendingList = (userID, groupHandle) => {
 			GroupService.addToGroupPendingMembersList(userID, groupHandle)
-				.then(() => {	    	
+				.then(() => {
 					ngToast.create({
 			    		className: 'success',
 			    		content: `Group Join Request was successfully sent.`
@@ -181,7 +184,7 @@ import _ from 'lodash/lodash.min';
 			}
 
 			GroupService.removeFromGroupPendingMembersList(userID, groupHandle)
-				.then(() => {	    	
+				.then(() => {
 					ngToast.create({
 			    		className: 'success',
 			    		content: `Group Join Request was successfully removed.`
@@ -223,7 +226,7 @@ import _ from 'lodash/lodash.min';
 			}
 
 			UserService.leaveGroup(userID, groupHandle)
-				.then(() => {	    	
+				.then(() => {
 					return GroupService.updateGroup($scope.selectedGroup.handle, {membersCount: --$scope.selectedGroup.membersCount});
 				}, () => {
 					ngToast.create({
@@ -272,7 +275,7 @@ import _ from 'lodash/lodash.min';
 
 		$scope.removeGroupAdmin = (userID, groupHandle) => {
 			GroupService.removeAdmin(userID, groupHandle)
-				.then(() => {	    	
+				.then(() => {
 					ngToast.create({
 			    		className: 'success',
 			    		content: `Group Admin was successfully removed.`
@@ -314,7 +317,7 @@ import _ from 'lodash/lodash.min';
 			}
 
 			UserService.leaveGroup(memberID, groupHandle)
-				.then(() => {	    	
+				.then(() => {
 					return GroupService.updateGroup($scope.selectedGroup.handle, {membersCount: --$scope.selectedGroup.membersCount});
 				}, () => {
 					ngToast.create({
@@ -337,7 +340,7 @@ import _ from 'lodash/lodash.min';
 					}
 
 			    	const groupIndexInGroup = $scope.groupMembers.map((user) => user._id).indexOf(memberID);
-					
+
 					if (groupIndexInGroup > -1){
 						$scope.groupMembers.splice(groupIndexInGroup, 1);
 					}
@@ -404,7 +407,7 @@ import _ from 'lodash/lodash.min';
 					.then((currentUser)=> {	// load the current user
 			    		$scope.user.currentUser = currentUser;
 			    		if ($scope.user.currentUser){
-			    			$scope.userMembership = $scope.user.currentUser.groupsJoined.indexOf($scope.selectedGroup.handle) > -1? true: false; 
+			    			$scope.userMembership = $scope.user.currentUser.groupsJoined.indexOf($scope.selectedGroup.handle) > -1? true: false;
 			    		}
 			    	});
 
@@ -424,7 +427,7 @@ import _ from 'lodash/lodash.min';
 			}
 		}
 
-		$scope.$watch('searchGroupsValue', function(value){ 
+		$scope.$watch('searchGroupsValue', function(value){
 			if ($scope.groups){
 				$scope.groups.contents = $filter('filter')($scope.groupsCopy.contents, value);
 				$scope.paginate.currentPage = 1;
@@ -472,7 +475,7 @@ import _ from 'lodash/lodash.min';
 		}
 
 		$scope.clearMultipleFields = () => {
-			_.forOwn($scope.multipleFields, (fieldArray) => { 
+			_.forOwn($scope.multipleFields, (fieldArray) => {
 				fieldArray.length = 0;
 				fieldArray.push('');
 			});
@@ -489,14 +492,14 @@ import _ from 'lodash/lodash.min';
 					return adminEmail;
 				}
 			}
-			
+
 			return true;
 		}
 
 		$scope.convertEmailToUserID = (adminEmails) => {
 			const userList = $scope.users.contents;
 			return adminEmails.map((adminEmail) => {
-					return userList[userList.map((user) => user.email).indexOf(adminEmail)]._id; 
+					return userList[userList.map((user) => user.email).indexOf(adminEmail)]._id;
 				}
 			);
 		}
@@ -509,10 +512,10 @@ import _ from 'lodash/lodash.min';
 				UserAuthenticationService.loginFirst();
 				return;
 			}
-			
+
 			UserAuthenticationService.getCurrentUser()
 				.then((result)=> {
-		    		$scope.addGroupFormData.createdBy = result._id;	
+		    		$scope.addGroupFormData.createdBy = result._id;
 
 		    		const validatedEmails = $scope.validateAdminEmailAddress($scope.multipleFields.admins);
 					if (validatedEmails !== true){
@@ -551,7 +554,7 @@ import _ from 'lodash/lodash.min';
 					_.forEach($scope.addGroupFormData.admin, (admin) => {
 						UserService.joinGroup(admin, groupHandle);
 					});
-					
+
 					$scope.clearGroupForm();
 		    	});
 		}
@@ -563,7 +566,7 @@ import _ from 'lodash/lodash.min';
 
 		GroupClassificationService.getAllGroupClassifications();
 		$scope.groupClassifications = GroupClassificationService.getGroupClassificationList();
-		
+
 	}
 
 })();

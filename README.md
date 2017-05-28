@@ -10,6 +10,10 @@ This site contains even more features for regular users including view all posts
 ## Prerequisites
 1. Node.js v6. Follow the installation steps for your operating system: https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions
 2. MongoDB. Download link: https://www.mongodb.com/download-center#community. Installation instructions for Ubuntu users: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/
+3. pm2 (Advanced Node.js process manager) if using production. Install using:
+```bash
+npm install -g pm2
+```
 
 ## Installation instructions
 1. Fork and clone the repository.
@@ -21,6 +25,7 @@ git fetch origin
 git checkout development
 npm install
 ```
+
 4. Create .env file in the PCAARRD-KM-Community directory containing secret keys. Contact me to obtain the secret hash and salt.
 
 ## Running instructions
@@ -33,9 +38,7 @@ sudo service mongod start
 
   * On development
 ```bash
-npm run dev-client (when working with client files)
-or
-npm run dev-server (when working with server files)
+npm run dev
 ```
 
    * On production
@@ -46,10 +49,18 @@ npm start (run the built server and client codes)
 ```
 3. Open a web browser and go to:
 
+  * On development
 ```bash
-localhost:8080 on development
+localhost:8080
 ```
 
+   * On production
 ```bash
-localhost:3000 on production
+localhost:3000
+```
+
+4. Stop the production server using:
+
+```bash
+npm run stop:prod
 ```
