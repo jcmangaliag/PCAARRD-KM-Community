@@ -18,6 +18,12 @@ app.use(express.static(`${__dirname} /../../../public`));
 app.use(express.static(`${__dirname} /../../../client`));
 app.use(express.static(`${__dirname} /../../../uploads`));
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 app.all('/*', (req, res) => {
 	res.sendFile(path.join(`${__dirname}/../../../client/core/base-view/core-content.client.view.html`));
 });
