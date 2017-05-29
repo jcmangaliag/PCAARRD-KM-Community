@@ -4,7 +4,7 @@
 			<img src="{{selectedUser.photo? selectedUser.photo.path.split('/')[1] : '/users/assets/images/default-user-photo.png'}}" style="border-radius: 25px; padding: 20px; width: 100%; max-width: 500px;">
 			<h3 style="margin-bottom: 3px;">{{selectedUser.name.first + " " + selectedUser.name.last}}</h3>
 			<p style="color: gray;">{{selectedUser.email}}</p>
-			<h4 style="margin-top:20px;"><span style="font-weight: normal;" class="label label-primary">{{selectedUser.isAdmin? 'Site Administrator' : 'Regular User'}}</span></h4>
+			<h4 style="margin-top: 20px;"><span style="font-weight: normal;" class="label label-primary">{{selectedUser.isAdmin? 'Site Administrator' : 'Regular User'}}</span></h4>
 		</div>
 
 		<div style="padding: 15px; margin-bottom: 25px; background-color: white; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
@@ -42,6 +42,21 @@
 			<div style="margin-bottom: 20px;">
 				<p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Birthdate</p>
 			  	<h5>{{selectedUser.birthdate}}</h5>
+			</div>
+
+			<div style="margin-bottom: 20px;">
+				<p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Occupation</p>
+			  	<h5>{{selectedUser.occupation}}</h5>
+			</div>
+
+			<div style="margin-bottom: 20px;">
+				<p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Affiliation</p>
+			  	<h5>{{selectedUser.affiliation}}</h5>
+			</div>
+
+			<div style="margin-bottom: 20px;">
+				<p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Mailing Address</p>
+			  	<h5>{{selectedUser.mailingAddress}}</h5>
 			</div>
 
 			<div style="margin-bottom: 20px;">

@@ -54523,6 +54523,8 @@
 			UserService.getAllUsers();
 			$scope.users = UserService.getUserList();
 
+			$scope.occupationList = ["Student", "Farmer", "Researcher / Scientist", "Academician", "Policymaker", "Entrepreneur", "Extension worker", "Media", "Others"];
+
 			$scope.validateAdminRegistration = function () {
 				UserAuthenticationService.allowAdminRegistration($scope.adminRegistration.enteredAccessKey).then(function (response) {
 					$scope.adminRegistration.allow = response;
@@ -54733,6 +54735,8 @@
 		EditUserController.$inject = ['$scope', '$window', '$stateParams', '$q', 'UserAuthenticationService', 'UserService', 'SharedUploadService', 'EditUserService', 'ngToast'];
 
 		function EditUserController($scope, $window, $stateParams, $q, UserAuthenticationService, UserService, SharedUploadService, EditUserService, ngToast) {
+
+			$scope.occupationList = ["Student", "Farmer", "Researcher / Scientist", "Academician", "Policymaker", "Entrepreneur", "Extension worker", "Media", "Others"];
 
 			UserService.getOneUser($stateParams.userID).then(function (result) {
 				$scope.selectedUser = result;
@@ -54957,7 +54961,7 @@
 				$http.post('/api/users/login/', userCredentials).then(function (response) {
 					saveToken(response.data.token);
 					deferred.resolve(response.data.token);
-					return $http.post('https://dpitc.net/keystone/signin', { // login to DPITC keystone
+					return $http.post('http://10.0.4.149:5000/keystone/signin', { // login to DPITC keystone
 						email: "community@dpitc.net",
 						password: "community2017"
 					});

@@ -16,6 +16,17 @@ import _ from 'lodash/lodash.min';
 		UserService.getAllUsers();
 		$scope.users = UserService.getUserList();
 
+		$scope.occupationList = [
+			"Student", 
+			"Farmer",
+			"Researcher / Scientist",
+			"Academician",
+			"Policymaker",
+			"Entrepreneur",
+			"Extension worker",
+			"Media",
+			"Others"
+		];		
 
 		$scope.validateAdminRegistration = () => {
 			UserAuthenticationService.allowAdminRegistration($scope.adminRegistration.enteredAccessKey)

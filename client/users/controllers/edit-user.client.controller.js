@@ -12,6 +12,18 @@ import moment from 'moment';
 
 	function EditUserController ($scope, $window, $stateParams, $q, UserAuthenticationService, UserService, SharedUploadService, EditUserService, ngToast) {
 
+		$scope.occupationList = [
+			"Student", 
+			"Farmer",
+			"Researcher / Scientist",
+			"Academician",
+			"Policymaker",
+			"Entrepreneur",
+			"Extension worker",
+			"Media",
+			"Others"
+		];		
+
 		UserService.getOneUser($stateParams.userID)
 			.then((result) => {
 				$scope.selectedUser = result;

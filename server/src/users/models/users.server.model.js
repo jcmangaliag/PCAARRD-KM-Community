@@ -40,6 +40,18 @@ let UserSchema = mongoose.Schema({
 		type: String,
 		required: true
 	},
+	affiliation: {
+		type: String,
+		required: true
+	},
+	mailingAddress: {
+		type: String,
+		required: true
+	},
+	occupation: {
+		type: String,
+		required: true
+	},
 	about: String,
 	groupsJoined: Array
 });

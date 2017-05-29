@@ -51,6 +51,24 @@
 	  </div> 
 
 	  <div class="form-group">
+	    <label>Office/Agency Affiliation <span style="color:red;">*</span></label>
+	    <input type="text" class="form-control" placeholder="Enter your office/agency affiliation" ng-model="addUserFormData.affiliation" required />
+	  </div> 
+
+	  <div class="form-group">
+	    <label>Complete Mailing Address <span style="color:red;">*</span></label>
+	    <input type="text" class="form-control" placeholder="Enter your complete mailing address" ng-model="addUserFormData.mailingAddress" required />
+	  </div> 
+
+	  <div class="form-group">
+	    <label style="display: block;">Occupation / Profession / Sector <span style="color:red;">*</span></label>
+	    <select class="form-control" ng-model="addUserFormData.occupation" required>
+	    	<option value="" selected>---Occupation / Profession / Sector---</option>
+	        <option value="{{occupation}}" ng-repeat="occupation in occupationList">{{occupation}}</option>
+	    </select>
+	  </div> 
+
+	  <div class="form-group">
 	    <label>Email Address <span style="color:red;">*</span></label>
 	    <input type="email" class="form-control" placeholder="Enter your email address" ng-model="addUserFormData.email" required />
 	  </div>
