@@ -9,8 +9,7 @@
     "build:client": "webpack --config server/src/core/config/core.server.webpack.production-config.babel.js --progress --colors",
     "build:server": "babel ./server/src -d ./server/dist --presets babili -s",
     "build": "npm run build:server & npm run build:client",
-    "start": "NODE_PATH=$NODE_PATH:./client/core/core.client.run.js cross-env NODE_ENV=production pm2 start server/dist/core/core.server.app.js",
-    "stop:prod": "pm2 stop all"
+    "start": "NODE_PATH=$NODE_PATH:./client/core/core.client.run.js cross-env NODE_ENV=production pm2 start server/dist/core/core.server.app.js --name PCAARRD-KM-Community"
   },
   "repository": {
     "type": "git",

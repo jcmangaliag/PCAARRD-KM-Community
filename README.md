@@ -62,5 +62,10 @@ localhost:3000
 4. Stop the production server using:
 
 ```bash
-npm run stop:prod
+pm2 stop <process id of PCAARRD-KM-Community>
+```
+
+To get the process id of this application, use:
+```bash
+pm2 show PCAARRD-KM-Community
 ```
