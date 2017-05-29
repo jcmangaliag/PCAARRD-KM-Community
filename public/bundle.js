@@ -54488,6 +54488,14 @@
 						return UserAuthenticationService.authenticateCurrentUserOrSiteAdmin($stateParams.userID);
 					}]
 				}
+			}).state('terms-of-service', {
+				url: '/users/legal/terms-of-service',
+				templateUrl: 'users/views/user-terms-of-service.client.view.html',
+				resolve: {
+					$title: function $title() {
+						return 'Terms of Service';
+					}
+				}
 			});
 
 			$locationProvider.html5Mode(true);
@@ -54961,7 +54969,7 @@
 				$http.post('/api/users/login/', userCredentials).then(function (response) {
 					saveToken(response.data.token);
 					deferred.resolve(response.data.token);
-					return $http.post('http://10.0.4.149:5000/keystone/signin', { // login to DPITC keystone
+					return $http.post('https://dpitc.net/keystone/signin', { // login to DPITC keystone
 						email: "community@dpitc.net",
 						password: "community2017"
 					});

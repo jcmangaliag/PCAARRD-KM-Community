@@ -98,7 +98,7 @@
 			.then(response => {
 				saveToken(response.data.token);
 				deferred.resolve(response.data.token);
-				return $http.post('http://10.0.4.149:5000/keystone/signin', {	// login to DPITC keystone
+				return $http.post('https://dpitc.net/keystone/signin', {	// login to DPITC keystone
 					email: "community@dpitc.net",
 					password: "community2017"
 				});

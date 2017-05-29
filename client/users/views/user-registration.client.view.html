@@ -5,17 +5,17 @@
 	<form style="padding: 1% 2% 2% 2%; text-align: left;" ng-submit="onProcessUserData()">
 
 	  <div class="form-group" style="width:49%; display: inline-block;">
-	    <label>First Name <span style="color:red;">*</span></label>
+	    <label>First Name </label>
 	    <input type="text" class="form-control" placeholder="Enter your first name" ng-model="addUserFormData.name.first" required />
 	  </div>
 
 	  <div class="form-group" style="width:49%; display: inline-block;">
-	    <label>Last Name <span style="color:red;">*</span></label>
+	    <label>Last Name </label>
 	    <input type="text" class="form-control" placeholder="Enter your last name" ng-model="addUserFormData.name.last" required />
 	  </div>
 
  	  <div class="form-group">
-	    <label>Sex <span style="color:red;">*</span></label>
+	    <label>Sex </label>
 	    <select class="form-control" ng-model="addUserFormData.sex" required>
 	    	<option value="" selected>---Select Sex---</option>
 	        <option value="Male" selected>Male</option>
@@ -25,7 +25,7 @@
 
 
 	  <div class="form-group">
-	    <label style="display: block;">Birthdate <span style="color:red;">*</span></label>
+	    <label style="display: block;">Birthdate </label>
 	    <select class="form-control" ng-model="selectedMonth" style="width:33%; display: inline-block;" required>
 	    	<option value="" selected>---Month---</option>
 	        <option value="{{month}}" ng-repeat="month in getAllMonths()">{{month}}</option>
@@ -41,27 +41,27 @@
 	  </div>
 
 	  <div class="form-group">
-	    <label>Country <span style="color:red;">*</span></label>
+	    <label>Country </label>
 	    <input type="text" class="form-control" placeholder="Enter your country" ng-model="addUserFormData.country" required />
 	  </div>
 
 	  <div class="form-group">
-	    <label>City or Province <span style="color:red;">*</span></label>
+	    <label>City or Province </label>
 	    <input type="text" class="form-control" placeholder="Enter your city or province" ng-model="addUserFormData.location" required />
 	  </div> 
 
 	  <div class="form-group">
-	    <label>Office/Agency Affiliation <span style="color:red;">*</span></label>
+	    <label>Office/Agency Affiliation </label>
 	    <input type="text" class="form-control" placeholder="Enter your office/agency affiliation" ng-model="addUserFormData.affiliation" required />
 	  </div> 
 
 	  <div class="form-group">
-	    <label>Complete Mailing Address <span style="color:red;">*</span></label>
+	    <label>Complete Mailing Address </label>
 	    <input type="text" class="form-control" placeholder="Enter your complete mailing address" ng-model="addUserFormData.mailingAddress" required />
 	  </div> 
 
 	  <div class="form-group">
-	    <label style="display: block;">Occupation / Profession / Sector <span style="color:red;">*</span></label>
+	    <label style="display: block;">Occupation / Profession / Sector </label>
 	    <select class="form-control" ng-model="addUserFormData.occupation" required>
 	    	<option value="" selected>---Occupation / Profession / Sector---</option>
 	        <option value="{{occupation}}" ng-repeat="occupation in occupationList">{{occupation}}</option>
@@ -69,22 +69,25 @@
 	  </div> 
 
 	  <div class="form-group">
-	    <label>Email Address <span style="color:red;">*</span></label>
+	    <label>Email Address </label>
 	    <input type="email" class="form-control" placeholder="Enter your email address" ng-model="addUserFormData.email" required />
 	  </div>
 
 	  <div class="form-group">
-	    <label>Password <span style="color:red;">*</span></label>
-	    <input type="password" class="form-control" placeholder="Enter your password" ng-model="enteredPassword" required />
+	    <label>Password </label>
+	    <input type="password" class="form-control" placeholder="Enter your password" ng-model="enteredPassword" pattern=".{6,}" title="Password should have a minimum length of 6 characters" required />
 	  </div>
 
 	  <div class="form-group">
-	    <label>Re-enter Password <span style="color:red;">*</span></label>
-	    <input type="password" class="form-control" placeholder="Re-enter your password" ng-model="reenteredPassword" required />
+	    <label>Re-enter Password </label>
+	    <input type="password" class="form-control" placeholder="Re-enter your password" ng-model="reenteredPassword" pattern=".{6,}" title="Password should have a minimum length of 6 characters" required />
 	  </div>
 
-
-	  <shared-form-legends></shared-form-legends>
+  	<div class="form-group">
+  		<div class="checkbox">
+		  <label><input type="checkbox" value="I agree" required> I agree to the <a ui-sref="terms-of-service" target="_blank">terms of service</a>. </label>
+		</div>
+  	</div>
 
 	  <shared-reset-submit-buttons></shared-reset-submit-buttons>
 	</form>
