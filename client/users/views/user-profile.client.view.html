@@ -20,6 +20,14 @@
 			 <h4><span style="font-weight: normal;" class="label label-success">{{userCommentsLength}}</span> <span style="font-weight: normal;" class="label label-default">Comment<span ng-if="userCommentsLength > 1">s</span></span></h4>
 		</div>
 
+		<div ng-if="user.currentUser && (user.currentUser._id === selectedUser._id || user.currentUser.isAdmin)" class="post-ads" style="margin-bottom: 25px; background-color: white; border-radius: 5px; padding: 15px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+		  <h4>Manage {{user.currentUser && user.currentUser._id === selectedUser._id? "My" : selectedUser.name.first + "'s"}} Profile</h4><hr />
+		  <div>
+		    <button ui-sref="edit-user({userID: selectedUser._id})" title="Edit User Info" type="button" class="btn btn-primary"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i> Edit</button>
+		    <button ui-sref="settings-user({userID: selectedUser._id})" title="Change User Settings" type="button" class="btn btn-primary"><i class="fa fa-cog fa-lg" aria-hidden="true"></i> Settings</button>
+		  </div>
+		</div>
+
 		<div style="padding: 15px; margin-bottom: 25px; background-color: white; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 
 			<h4>Personal Information</h4><hr />
@@ -29,7 +37,7 @@
 			  	<h5>{{selectedUser.country}}</h5>
 			</div>
 
-			<div style="margin-bottom: 20px;">
+			<div ng-if="(user.currentUser && (user.currentUser._id === selectedUser._id) || user.currentUser.isAdmin) || selectedUser.infoVisibility.location" style="margin-bottom: 20px;">
 				<p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Location</p>
 			  	<h5>{{selectedUser.location}}</h5>
 			</div>
@@ -39,32 +47,32 @@
 			  	<h5>{{selectedUser.sex}}</h5>
 			</div>
 
-			<div style="margin-bottom: 20px;">
+			<div ng-if="(user.currentUser && (user.currentUser._id === selectedUser._id) || user.currentUser.isAdmin) || selectedUser.infoVisibility.birthdate" style="margin-bottom: 20px;">
 				<p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Birthdate</p>
 			  	<h5>{{selectedUser.birthdate}}</h5>
 			</div>
 
-			<div style="margin-bottom: 20px;">
+			<div ng-if="(user.currentUser && (user.currentUser._id === selectedUser._id) || user.currentUser.isAdmin) || selectedUser.infoVisibility.occupation" style="margin-bottom: 20px;">
 				<p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Occupation</p>
 			  	<h5>{{selectedUser.occupation}}</h5>
 			</div>
 
-			<div style="margin-bottom: 20px;">
+			<div ng-if="(user.currentUser && (user.currentUser._id === selectedUser._id) || user.currentUser.isAdmin) || selectedUser.infoVisibility.affiliation" style="margin-bottom: 20px;">
 				<p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Affiliation</p>
 			  	<h5>{{selectedUser.affiliation}}</h5>
 			</div>
 
-			<div style="margin-bottom: 20px;">
+			<div ng-if="(user.currentUser && (user.currentUser._id === selectedUser._id) || user.currentUser.isAdmin) || selectedUser.infoVisibility.mailingAddress" style="margin-bottom: 20px;">
 				<p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Mailing Address</p>
 			  	<h5>{{selectedUser.mailingAddress}}</h5>
 			</div>
 
-			<div style="margin-bottom: 20px;">
+			<div ng-if="(user.currentUser && (user.currentUser._id === selectedUser._id) || user.currentUser.isAdmin) || selectedUser.infoVisibility.contactNumber" style="margin-bottom: 20px;">
 				<p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">Contact Number</p>
 			  	<h5>{{selectedUser.contactNumber? selectedUser.contactNumber : 'N/A'}}</h5>
 			</div>
 
-			<div style="margin-bottom: 20px;">
+			<div ng-if="(user.currentUser && (user.currentUser._id === selectedUser._id) || user.currentUser.isAdmin) || selectedUser.infoVisibility.about" style="margin-bottom: 20px;">
 				<p style="color: gray; margin-bottom: 2%; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">About</p>
 			  	<span ng-if="selectedUser.about">
 				  	<p style="white-space: pre-wrap;" ng-style="selectedUser.about.length > DESCRIPTION_LIMIT? {'margin-bottom': '0px'} : {'margin-bottom': '25px'}"><span ng-bind-html="selectedUser.about | parseURL | emoji | limitTo: descriptionSize"></span><span ng-if="selectedUser.about.length > descriptionSize">...</span></p>
@@ -86,14 +94,6 @@
 
 
 	<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3" style="padding-left: 0;">
-		<div ng-if="user.currentUser && (user.currentUser._id === selectedUser._id || user.currentUser.isAdmin)" class="post-ads" style="margin-bottom: 25px; background-color: white; border-radius: 5px; padding: 15px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-		  <h4>Manage {{user.currentUser && user.currentUser._id === selectedUser._id? "My" : selectedUser.name.first + "'s"}} Profile</h4><hr />
-		  <div>
-		    <button ui-sref="edit-user({userID: selectedUser._id})" title="Edit User Info" type="button" class="btn btn-primary"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i> Edit</button>
-		    <!-- <button title="Change User Settings" type="button" class="btn btn-primary"><i class="fa fa-cog fa-lg" aria-hidden="true"></i> Settings</button> -->
-		  </div>
-		</div>
-
 		<div class="post-ads" style="margin-bottom: 25px; background-color: white; border-radius: 5px; padding: 15px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 		  <h4>{{user.currentUser && user.currentUser._id === selectedUser._id? "My" : selectedUser.name.first + "'s"}} Administered Group<span ng-if="userAdminGroups.length > 1">s</span> <span class="badge" style="font-size: 14px;">{{userAdminGroups.length}}</span></h4><hr />
 		  <div style="margin: auto; max-height: 400px; overflow-y: auto;">

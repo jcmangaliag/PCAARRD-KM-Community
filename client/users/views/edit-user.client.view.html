@@ -2,7 +2,7 @@
 
 <div style="padding: 15px; background-color: white; margin: 25px auto; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); max-width: 600px;">
 	<div style="margin-bottom: 1%;">
-		<h3 style="margin: 0;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit User Information</h3>
+		<h3 style="margin: 0;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit {{user.currentUser && user.currentUser._id === selectedUser._id? "My" : firstName + "'s"}} Information</h3>
 	</div>
 	<hr />
 	<form style="padding: 1% 2% 2% 2%; text-align: left;" ng-submit="onProcessEditedUserData()">

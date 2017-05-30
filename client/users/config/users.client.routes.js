@@ -61,12 +61,26 @@
 			.state('edit-user', {
 				url: '/users/profile/:userID/edit',
 				templateUrl: 'users/views/edit-user.client.view.html',
-				controller: 'EditUserController',
+				controller: 'EditSettingsUserController',
 				resolve: {
 					selectedUser: ['UserService', '$stateParams', (UserService, $stateParams) => {
 						return UserService.getOneUser($stateParams.userID);				
 					}],
 					$title: ['selectedUser', (selectedUser) => `${selectedUser.name.first} ${selectedUser.name.last} - Edit`],
+					authenticate: ['UserAuthenticationService', '$stateParams', (UserAuthenticationService, $stateParams) => {
+						return UserAuthenticationService.authenticateCurrentUserOrSiteAdmin($stateParams.userID);
+					}]
+				}
+			})
+			.state('settings-user', {
+				url: '/users/profile/:userID/settings',
+				templateUrl: 'users/views/settings-user.client.view.html',
+				controller: 'EditSettingsUserController',
+				resolve: {
+					selectedUser: ['UserService', '$stateParams', (UserService, $stateParams) => {
+						return UserService.getOneUser($stateParams.userID);				
+					}],
+					$title: ['selectedUser', (selectedUser) => `${selectedUser.name.first} ${selectedUser.name.last} - Settings`],
 					authenticate: ['UserAuthenticationService', '$stateParams', (UserAuthenticationService, $stateParams) => {
 						return UserAuthenticationService.authenticateCurrentUserOrSiteAdmin($stateParams.userID);
 					}]

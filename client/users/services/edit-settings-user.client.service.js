@@ -5,13 +5,13 @@ import _ from 'lodash/lodash.min';
 	
 	angular
 		.module('users')
-		.factory('EditUserService', EditUserService);
+		.factory('EditSettingsUserService', EditSettingsUserService);
 
-	EditUserService.$inject = ['$http', '$q', 'UserAuthenticationService'];
+	EditSettingsUserService.$inject = ['$http', '$q', 'UserAuthenticationService'];
 
-	function EditUserService ($http, $q, UserAuthenticationService) {
+	function EditSettingsUserService ($http, $q, UserAuthenticationService) {
 
-		const submitEditedUser = (updatedFields) => {
+		const submitModifiedUser = (updatedFields) => {
 			const deferred = $q.defer();
 
 			$http.put(`/api/users/${updatedFields._id}`, updatedFields)
@@ -23,7 +23,7 @@ import _ from 'lodash/lodash.min';
 		}
 	
 		return {
-			submitEditedUser
+			submitModifiedUser
 		};
 	}
 

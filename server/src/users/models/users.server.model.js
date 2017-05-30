@@ -52,6 +52,10 @@ let UserSchema = mongoose.Schema({
 		type: String,
 		required: true
 	},
+	infoVisibility: {
+		type: Object,
+		required: true
+	},
 	about: String,
 	groupsJoined: Array
 });

@@ -94,6 +94,16 @@ import _ from 'lodash/lodash.min';
 			$scope.addUserFormData.birthdate = `${$scope.selectedMonth} ${$scope.selectedDay} ${$scope.selectedYear}`;
 			$scope.addUserFormData.photo = null;
 
+			$scope.addUserFormData.infoVisibility = {
+				location: true,
+				birthdate: true,
+				occupation: true,
+				affiliation: true,
+				mailingAddress: true,
+				contactNumber: true,
+				about: true
+			}
+
 			UserAuthenticationService.register($scope.addUserFormData, $scope.reenteredPassword, $scope.adminRegistration.enteredAccessKey)
 				.then(() => {
 					ngToast.create({

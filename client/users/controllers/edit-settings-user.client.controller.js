@@ -6,11 +6,11 @@ import moment from 'moment';
 	
 	angular
 		.module('users')
-		.controller('EditUserController', EditUserController);
+		.controller('EditSettingsUserController', EditSettingsUserController);
 
-	EditUserController.$inject = ['$scope', '$window', '$stateParams', '$q', 'UserAuthenticationService', 'UserService', 'SharedUploadService', 'EditUserService', 'ngToast'];
+	EditSettingsUserController.$inject = ['$scope', '$window', '$stateParams', '$q', 'UserAuthenticationService', 'UserService', 'SharedUploadService', 'EditSettingsUserService', 'ngToast'];
 
-	function EditUserController ($scope, $window, $stateParams, $q, UserAuthenticationService, UserService, SharedUploadService, EditUserService, ngToast) {
+	function EditSettingsUserController ($scope, $window, $stateParams, $q, UserAuthenticationService, UserService, SharedUploadService, EditSettingsUserService, ngToast) {
 
 		$scope.occupationList = [
 			"Student", 
@@ -30,6 +30,7 @@ import moment from 'moment';
 				$scope.selectedMonth = moment($scope.selectedUser.birthdate, 'MMMM Do YYYY').format('MMMM');
 				$scope.selectedDay = moment($scope.selectedUser.birthdate, 'MMMM Do YYYY').format('D');
 				$scope.selectedYear = moment($scope.selectedUser.birthdate, 'MMMM Do YYYY').format('YYYY');
+				$scope.firstName = angular.copy($scope.selectedUser.name.first);
 			}, (error) => {
 				// show 404 not found page
 			});
@@ -68,7 +69,7 @@ import moment from 'moment';
 					.then((result) => {	// after uploading user photo
 						$scope.progressBarON = false;
 						$scope.selectedUser.photo = result.data.image;
-						return EditUserService.submitEditedUser($scope.selectedUser);
+						return EditSettingsUserService.submitModifiedUser($scope.selectedUser);
 					}, (error) => {
 						$scope.progressBarON = false;
 						ngToast.create({
@@ -86,13 +87,14 @@ import moment from 'moment';
 				    	$window.location.reload();
 					});
 			} else {
-				EditUserService.submitEditedUser($scope.selectedUser)
+				EditSettingsUserService.submitModifiedUser($scope.selectedUser)
 					.then(() => {
 				    	UserAuthenticationService.getCurrentUser()
 				    		.then((user) => {
 				    			if (user._id === $scope.selectedUser._id){
 				    				$window.location.reload();
 				    			} else {
+				    				$scope.firstName = $scope.selectedUser.name.first;
 				    				$scope.enableViewChanges = true;
 				    			}
 				    		})
@@ -102,6 +104,22 @@ import moment from 'moment';
 				    	});
 					});
 			}
+		}
+
+
+		$scope.onProcessSettingsUserData = () => {
+			if (!UserAuthenticationService.isLoggedIn()){
+				UserAuthenticationService.loginFirst();
+				return;
+			}
+
+			EditSettingsUserService.submitModifiedUser($scope.selectedUser)
+				.then(() => {
+					ngToast.create({
+			    		className: 'success',
+			    		content: `User Settings was successfully changed. `
+			    	});
+				});
 		}
 	}
 

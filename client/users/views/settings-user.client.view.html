@@ -1,0 +1,97 @@
+<button ui-sref="user-profile({userID: selectedUser._id})" type="button" class="btn btn-primary">Go Back</button>
+
+<div style="padding: 15px; background-color: white; margin: 25px auto; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); max-width: 600px;">
+	<div style="margin-bottom: 1%;">
+		<h3 style="margin: 0;"><i class="fa fa-cog" aria-hidden="true"></i> Change {{user.currentUser && user.currentUser._id === selectedUser._id? "My" : firstName + "'s"}} Settings</h3>
+	</div>
+	<hr />
+	<form style="padding: 1% 2% 2% 2%; text-align: left;" ng-submit="onProcessSettingsUserData()">
+		<div class="table-responsive">
+			<table class="table table-bordered table-striped table-hover">
+			    <thead>
+			      <tr>
+			        <th>Personal Information</th>
+			        <th>Visible to Everyone</th>
+			        <th>Visible to Only Me</th>
+			      </tr>
+			    </thead>
+			    <tbody>
+			      <tr>
+			      	<td>Location</td>
+			      	<td>
+				  		<label><input type="radio" name="location" ng-model="selectedUser.infoVisibility.location" ng-value="true" required></label>
+					</td>
+			      	<td>
+			  			<label><input type="radio" name="location" ng-model="selectedUser.infoVisibility.location" ng-value="false" required></label>
+			      	</td>
+			      </tr>
+
+			      <tr>
+			      	<td>Birthdate</td>
+			      	<td>
+				  		<label><input type="radio" name="birthdate" ng-model="selectedUser.infoVisibility.birthdate" ng-value="true" required></label>
+					</td>
+			      	<td>
+			  			<label><input type="radio" name="birthdate" ng-model="selectedUser.infoVisibility.birthdate" ng-value="false" required></label>
+			      	</td>
+			      </tr>
+
+			      <tr>
+			      	<td>Occupation</td>
+			      	<td>
+				  		<label><input type="radio" name="occupation" ng-model="selectedUser.infoVisibility.occupation" ng-value="true" required></label>
+					</td>
+			      	<td>
+			  			<label><input type="radio" name="occupation" ng-model="selectedUser.infoVisibility.occupation" ng-value="false" required></label>
+			      	</td>
+			      </tr>
+
+			      <tr>
+			      	<td>Affiliation</td>
+			      	<td>
+				  		<label><input type="radio" name="affiliation" ng-model="selectedUser.infoVisibility.affiliation" ng-value="true" required></label>
+					</td>
+			      	<td>
+			  			<label><input type="radio" name="affiliation" ng-model="selectedUser.infoVisibility.affiliation" ng-value="false" required></label>
+			      	</td>
+			      </tr>
+
+			      <tr>
+			      	<td>Mailing Address</td>
+			      	<td>
+				  		<label><input type="radio" name="mailingAddress" ng-model="selectedUser.infoVisibility.mailingAddress" ng-value="true" required></label>
+					</td>
+			      	<td>
+			  			<label><input type="radio" name="mailingAddress" ng-model="selectedUser.infoVisibility.mailingAddress" ng-value="false" required></label>
+			      	</td>
+			      </tr>
+
+			      <tr>
+			      	<td>Contact Number</td>
+			      	<td>
+				  		<label><input type="radio" name="contactNumber" ng-model="selectedUser.infoVisibility.contactNumber" ng-value="true" required></label>
+					</td>
+			      	<td>
+			  			<label><input type="radio" name="contactNumber" ng-model="selectedUser.infoVisibility.contactNumber" ng-value="false" required></label>
+			      	</td>
+			      </tr>
+
+			      <tr>
+			      	<td>About</td>
+			      	<td>
+				  		<label><input type="radio" name="about" ng-model="selectedUser.infoVisibility.about" ng-value="true" required></label>
+					</td>
+			      	<td>
+			  			<label><input type="radio" name="about" ng-model="selectedUser.infoVisibility.about" ng-value="false" required></label>
+			      	</td>
+			      </tr>
+			    </tbody>
+		  	</table>
+		</div>
+
+		  <div style="display: inline-block">
+		  	<shared-reset-submit-buttons></shared-reset-submit-buttons>
+		  </div>
+
+	</form>
+</div>
