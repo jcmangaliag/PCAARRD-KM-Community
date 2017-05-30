@@ -51672,6 +51672,7 @@
 			}, function (userID) {
 				$scope.user.isLoggedIn = UserAuthenticationService.isLoggedIn();
 				if ($scope.user.isLoggedIn) {
+					$scope.eResourcesAccess = "downloads";
 					if ($scope.user.currentUser && userID && $scope.user.currentUser._id != userID) {
 						// if the page is not updated with the current user, it will reload to update
 						$window.location.reload();
@@ -51682,6 +51683,7 @@
 					});
 				} else {
 					$scope.user.currentUser = null;
+					$scope.eResourcesAccess = "";
 				}
 			});
 		}
@@ -54362,9 +54364,9 @@
 
 	var _userClient2 = _interopRequireDefault(_userClient);
 
-	var _editUserClient = __webpack_require__(305);
+	var _editSettingsUserClient = __webpack_require__(305);
 
-	var _editUserClient2 = _interopRequireDefault(_editUserClient);
+	var _editSettingsUserClient2 = _interopRequireDefault(_editSettingsUserClient);
 
 	var _userRegistrationClient = __webpack_require__(306);
 
@@ -54382,9 +54384,9 @@
 
 	var _userClient4 = _interopRequireDefault(_userClient3);
 
-	var _editUserClient3 = __webpack_require__(310);
+	var _editSettingsUserClient3 = __webpack_require__(310);
 
-	var _editUserClient4 = _interopRequireDefault(_editUserClient3);
+	var _editSettingsUserClient4 = _interopRequireDefault(_editSettingsUserClient3);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -54476,13 +54478,28 @@
 			}).state('edit-user', {
 				url: '/users/profile/:userID/edit',
 				templateUrl: 'users/views/edit-user.client.view.html',
-				controller: 'EditUserController',
+				controller: 'EditSettingsUserController',
 				resolve: {
 					selectedUser: ['UserService', '$stateParams', function (UserService, $stateParams) {
 						return UserService.getOneUser($stateParams.userID);
 					}],
 					$title: ['selectedUser', function (selectedUser) {
 						return selectedUser.name.first + ' ' + selectedUser.name.last + ' - Edit';
+					}],
+					authenticate: ['UserAuthenticationService', '$stateParams', function (UserAuthenticationService, $stateParams) {
+						return UserAuthenticationService.authenticateCurrentUserOrSiteAdmin($stateParams.userID);
+					}]
+				}
+			}).state('settings-user', {
+				url: '/users/profile/:userID/settings',
+				templateUrl: 'users/views/settings-user.client.view.html',
+				controller: 'EditSettingsUserController',
+				resolve: {
+					selectedUser: ['UserService', '$stateParams', function (UserService, $stateParams) {
+						return UserService.getOneUser($stateParams.userID);
+					}],
+					$title: ['selectedUser', function (selectedUser) {
+						return selectedUser.name.first + ' ' + selectedUser.name.last + ' - Settings';
 					}],
 					authenticate: ['UserAuthenticationService', '$stateParams', function (UserAuthenticationService, $stateParams) {
 						return UserAuthenticationService.authenticateCurrentUserOrSiteAdmin($stateParams.userID);
@@ -54599,6 +54616,16 @@
 				$scope.addUserFormData.dateJoined = (0, _moment2.default)().format('MMMM Do YYYY, h:mm:ss a');
 				$scope.addUserFormData.birthdate = $scope.selectedMonth + ' ' + $scope.selectedDay + ' ' + $scope.selectedYear;
 				$scope.addUserFormData.photo = null;
+
+				$scope.addUserFormData.infoVisibility = {
+					location: true,
+					birthdate: true,
+					occupation: true,
+					affiliation: true,
+					mailingAddress: true,
+					contactNumber: true,
+					about: true
+				};
 
 				UserAuthenticationService.register($scope.addUserFormData, $scope.reenteredPassword, $scope.adminRegistration.enteredAccessKey).then(function () {
 					ngToast.create({
@@ -54738,11 +54765,11 @@
 	(function () {
 		'use strict';
 
-		angular.module('users').controller('EditUserController', EditUserController);
+		angular.module('users').controller('EditSettingsUserController', EditSettingsUserController);
 
-		EditUserController.$inject = ['$scope', '$window', '$stateParams', '$q', 'UserAuthenticationService', 'UserService', 'SharedUploadService', 'EditUserService', 'ngToast'];
+		EditSettingsUserController.$inject = ['$scope', '$window', '$stateParams', '$q', 'UserAuthenticationService', 'UserService', 'SharedUploadService', 'EditSettingsUserService', 'ngToast'];
 
-		function EditUserController($scope, $window, $stateParams, $q, UserAuthenticationService, UserService, SharedUploadService, EditUserService, ngToast) {
+		function EditSettingsUserController($scope, $window, $stateParams, $q, UserAuthenticationService, UserService, SharedUploadService, EditSettingsUserService, ngToast) {
 
 			$scope.occupationList = ["Student", "Farmer", "Researcher / Scientist", "Academician", "Policymaker", "Entrepreneur", "Extension worker", "Media", "Others"];
 
@@ -54751,6 +54778,7 @@
 				$scope.selectedMonth = (0, _moment2.default)($scope.selectedUser.birthdate, 'MMMM Do YYYY').format('MMMM');
 				$scope.selectedDay = (0, _moment2.default)($scope.selectedUser.birthdate, 'MMMM Do YYYY').format('D');
 				$scope.selectedYear = (0, _moment2.default)($scope.selectedUser.birthdate, 'MMMM Do YYYY').format('YYYY');
+				$scope.firstName = angular.copy($scope.selectedUser.name.first);
 			}, function (error) {
 				// show 404 not found page
 			});
@@ -54789,7 +54817,7 @@
 						// after uploading user photo
 						$scope.progressBarON = false;
 						$scope.selectedUser.photo = result.data.image;
-						return EditUserService.submitEditedUser($scope.selectedUser);
+						return EditSettingsUserService.submitModifiedUser($scope.selectedUser);
 					}, function (error) {
 						$scope.progressBarON = false;
 						ngToast.create({
@@ -54807,11 +54835,12 @@
 						$window.location.reload();
 					});
 				} else {
-					EditUserService.submitEditedUser($scope.selectedUser).then(function () {
+					EditSettingsUserService.submitModifiedUser($scope.selectedUser).then(function () {
 						UserAuthenticationService.getCurrentUser().then(function (user) {
 							if (user._id === $scope.selectedUser._id) {
 								$window.location.reload();
 							} else {
+								$scope.firstName = $scope.selectedUser.name.first;
 								$scope.enableViewChanges = true;
 							}
 						});
@@ -54821,6 +54850,20 @@
 						});
 					});
 				}
+			};
+
+			$scope.onProcessSettingsUserData = function () {
+				if (!UserAuthenticationService.isLoggedIn()) {
+					UserAuthenticationService.loginFirst();
+					return;
+				}
+
+				EditSettingsUserService.submitModifiedUser($scope.selectedUser).then(function () {
+					ngToast.create({
+						className: 'success',
+						content: 'User Settings was successfully changed. '
+					});
+				});
 			};
 		}
 	})();
@@ -54969,10 +55012,6 @@
 				$http.post('/api/users/login/', userCredentials).then(function (response) {
 					saveToken(response.data.token);
 					deferred.resolve(response.data.token);
-					return $http.post('https://dpitc.net/keystone/signin', { // login to DPITC keystone
-						email: "community@dpitc.net",
-						password: "community2017"
-					});
 				}, function (response) {
 					deferred.reject(response);
 				});
@@ -55315,13 +55354,13 @@
 	(function () {
 		'use strict';
 
-		angular.module('users').factory('EditUserService', EditUserService);
+		angular.module('users').factory('EditSettingsUserService', EditSettingsUserService);
 
-		EditUserService.$inject = ['$http', '$q', 'UserAuthenticationService'];
+		EditSettingsUserService.$inject = ['$http', '$q', 'UserAuthenticationService'];
 
-		function EditUserService($http, $q, UserAuthenticationService) {
+		function EditSettingsUserService($http, $q, UserAuthenticationService) {
 
-			var submitEditedUser = function submitEditedUser(updatedFields) {
+			var submitModifiedUser = function submitModifiedUser(updatedFields) {
 				var deferred = $q.defer();
 
 				$http.put('/api/users/' + updatedFields._id, updatedFields).then(function (response) {
@@ -55332,7 +55371,7 @@
 			};
 
 			return {
-				submitEditedUser: submitEditedUser
+				submitModifiedUser: submitModifiedUser
 			};
 		}
 	})();

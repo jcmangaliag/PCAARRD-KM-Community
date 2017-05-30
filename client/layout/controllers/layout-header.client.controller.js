@@ -27,6 +27,7 @@ import _ from 'lodash/lodash.min';
 		}, (userID) => {
 			$scope.user.isLoggedIn = UserAuthenticationService.isLoggedIn();
 			if ($scope.user.isLoggedIn){
+				$scope.eResourcesAccess = "downloads";
 				if ($scope.user.currentUser && userID && $scope.user.currentUser._id != userID){
 					// if the page is not updated with the current user, it will reload to update
 					$window.location.reload();
@@ -38,6 +39,7 @@ import _ from 'lodash/lodash.min';
 			    	});
 			} else {
 				$scope.user.currentUser = null;
+				$scope.eResourcesAccess = "";
 			} 
 		});
 	}

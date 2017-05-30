@@ -98,10 +98,6 @@
 			.then(response => {
 				saveToken(response.data.token);
 				deferred.resolve(response.data.token);
-				return $http.post('https://dpitc.net/keystone/signin', {	// login to DPITC keystone
-					email: "community@dpitc.net",
-					password: "community2017"
-				});
 			}, (response) => {
 				deferred.reject(response);
 			});
