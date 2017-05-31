@@ -21,6 +21,9 @@
 			<table class="table table-bordered table-striped table-hover">
 			    <thead>
 			      <tr>
+			      	<th>
+			      		<a href="#/" ng-click="changeSort(['type', 'industry', 'sector', 'isp', 'specificCommodity', 'organization', 'isps[0]'])">Type</a> <i ng-if="sortGroupClassificationBy[0] === 'type'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+			      	</th>
 			        <th>
 			        	<a href="#/" ng-click="changeSort(['industry', 'sector', 'isp', 'specificCommodity'])">Industry</a> <i ng-if="sortGroupClassificationBy[0] === 'industry'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
 			        </th>
@@ -28,39 +31,53 @@
 			        	<a href="#/" ng-click="changeSort(['sector', 'isp', 'specificCommodity'])">Sector</a> <i ng-if="sortGroupClassificationBy[0] === 'sector'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
 			        </th>
 			        <th>
-			        	<a href="#/" ng-click="changeSort(['isp', 'specificCommodity'])">ISP</a> <i ng-if="sortGroupClassificationBy[0] === 'isp'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+			        	<a href="#/" ng-click="changeSort(['isp', 'specificCommodity'])">Industry's ISP</a> <i ng-if="sortGroupClassificationBy[0] === 'isp'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
 			        </th>
 			        <th>
 			        	<a href="#/" ng-click="changeSort(['!specificCommodity', 'specificCommodity', 'isp'])">Specific Commodity</a> <i ng-if="sortGroupClassificationBy[0] === '!specificCommodity'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
 			        </th>
+			        <th>
+			        	<a href="#/" ng-click="changeSort(['organization'])">Organization</a> <i ng-if="sortGroupClassificationBy[0] === 'organization'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+			        </th>
+			        <th>
+			        	<a href="#/" ng-click="changeSort(['isps[0]'])">Organization's ISPs</a> <i ng-if="sortGroupClassificationBy[0] === 'isps[0]'" class="fa" ng-class="sortReverse? 'fa-caret-up' : 'fa-caret-down'" aria-hidden="true"></i>
+			        </th>
 			        <th>Existing Group</th>
 
-			        <th ng-if="!editedGroupClassificationFormData">Edit</th>
-			        <th ng-if="editedGroupClassificationFormData">Save</th>
+			        <th ng-if="!editType">Edit</th>
+			        <th ng-if="editType">Save</th>
 
-			        <th ng-if="!editedGroupClassificationFormData">Delete</th>
-			        <th ng-if="editedGroupClassificationFormData">Cancel</th>
+			        <th ng-if="!editType">Delete</th>
+			        <th ng-if="editType">Cancel</th>
 			       
 			      </tr>
 			    </thead>
 			    <tbody>
 			      <tr ng-repeat="groupClassification in groupClassifications.contents | orderBy: sortGroupClassificationBy: sortReverse | limitTo: paginate.pageLimit(paginate.currentPage, paginate.classificationsPerPage)">
 
+			      	<td>{{groupClassification.type}}</td>
 
-			        <td ng-if="!isEditingClassification(groupClassification._id)">{{groupClassification.industry}}</td>
-			        <td ng-if="isEditingClassification(groupClassification._id)"><input type="text" class="form-control" placeholder="Enter the industry" ng-model="editedGroupClassificationFormData.industry" ng-style="!editedGroupClassificationFormData.industry? { 'border-color': 'red'}:'' " /></td>
-
-
-			        <td ng-if="!isEditingClassification(groupClassification._id)">{{groupClassification.sector}}</td>
-			        <td ng-if="isEditingClassification(groupClassification._id)"><input type="text" class="form-control " placeholder="Enter the sector" ng-model="editedGroupClassificationFormData.sector" ng-style="!editedGroupClassificationFormData.sector? { 'border-color': 'red'}:'' " /></td>
+			        <td ng-if="!(isEditingClassification(groupClassification._id) && editType ==='industry-based')">{{groupClassification.industry}} <span ng-if="!groupClassification.industry">-</span> </td>
+			        <td ng-if="isEditingClassification(groupClassification._id) && editType ==='industry-based'"><input type="text" class="form-control" placeholder="Enter the industry" ng-model="editedGroupClassificationFormData.industry" ng-style="!editedGroupClassificationFormData.industry? { 'border-color': 'red'}:'' " /></td>
 
 
-			        <td ng-if="!isEditingClassification(groupClassification._id)">{{groupClassification.isp}}</td>
-			        <td ng-if="isEditingClassification(groupClassification._id)"><input type="text" class="form-control" placeholder="Enter the ISP" ng-model="editedGroupClassificationFormData.isp" ng-style="!editedGroupClassificationFormData.isp? { 'border-color': 'red'}:'' " /></td>
+			        <td ng-if="!(isEditingClassification(groupClassification._id) && editType ==='industry-based')">{{groupClassification.sector}} <span ng-if="!groupClassification.sector">-</span> </td>
+			        <td ng-if="isEditingClassification(groupClassification._id) && editType ==='industry-based'"><input type="text" class="form-control " placeholder="Enter the sector" ng-model="editedGroupClassificationFormData.sector" ng-style="!editedGroupClassificationFormData.sector? { 'border-color': 'red'}:'' " /></td>
 
 
-			        <td ng-if="!isEditingClassification(groupClassification._id)">{{groupClassification.specificCommodity}} <span ng-if="!groupClassification.specificCommodity">-</span> </td>
-			        <td ng-if="isEditingClassification(groupClassification._id)"><input type="text" class="form-control" placeholder="Enter the specific commodity" ng-model="editedGroupClassificationFormData.specificCommodity" /></td>
+			        <td ng-if="!(isEditingClassification(groupClassification._id) && editType ==='industry-based')">{{groupClassification.isp}} <span ng-if="!groupClassification.isp">-</span> </td>
+			        <td ng-if="isEditingClassification(groupClassification._id) && editType ==='industry-based'"><input type="text" class="form-control" placeholder="Enter the ISP" ng-model="editedGroupClassificationFormData.isp" ng-style="!editedGroupClassificationFormData.isp? { 'border-color': 'red'}:'' " /></td>
+
+
+			        <td ng-if="!(isEditingClassification(groupClassification._id) && editType ==='industry-based')">{{groupClassification.specificCommodity}} <span ng-if="!groupClassification.specificCommodity">-</span> </td>
+			        <td ng-if="isEditingClassification(groupClassification._id) && editType ==='industry-based'"><input type="text" class="form-control" placeholder="Enter the specific commodity" ng-model="editedGroupClassificationFormData.specificCommodity" /></td>
+
+
+			        <td ng-if="!(isEditingClassification(groupClassification._id) && editType ==='rd-based')">{{groupClassification.organization}} <span ng-if="!groupClassification.organization">-</span> </td>
+			        <td ng-if="isEditingClassification(groupClassification._id) && editType ==='rd-based'"><input type="text" class="form-control" placeholder="Enter the organization" ng-model="editedGroupClassificationFormData.organization" ng-style="!editedGroupClassificationFormData.organization? { 'border-color': 'red'}:'' " /></td>
+
+			        <td ng-if="!(isEditingClassification(groupClassification._id) && editType ==='rd-based')"><span ng-if="groupClassification.isps.length > 0">{{groupClassification.isps.join()}}</span> <span ng-if="groupClassification.isps.length < 1">-</span> </td>
+			        <td ng-if="isEditingClassification(groupClassification._id) && editType ==='rd-based'"><input type="text" class="form-control" placeholder="Enter the organization's ISPs" ng-model="editedGroupClassificationFormData.isps" /></td>
 
 			        <td ng-if="!groupClassification.isUsed">-</td>
 			        <td ng-if="groupClassification.isUsed"><a style="cursor: pointer;" ng-click="goToGroup(groupClassification._id)">{{groupClassification.specificCommodity || groupClassification.isp}}</a></td>
@@ -71,7 +88,7 @@
 			        	<i title="Edit Disabled" ng-if="groupClassification.isUsed" class="fa fa-lg fa-ban" data-toggle="modal" data-target="#disabled-modification" style="cursor: pointer;" aria-hidden="true"></i>
 			        </td>
 			        <td ng-if="editedGroupClassificationFormData._id">
-			        	<i title="Save" ng-if="isEditingClassification(groupClassification._id)" class="fa fa-lg fa-save" ng-click="(!editedGroupClassificationFormData.industry || !editedGroupClassificationFormData.sector || !editedGroupClassificationFormData.isp) || onProcessEditedGroupClassification()" aria-hidden="true" ng-style="(!editedGroupClassificationFormData.industry || !editedGroupClassificationFormData.sector || !editedGroupClassificationFormData.isp)? {'opacity': 0.5} : {'cursor': 'pointer'}"></i>
+			        	<i title="Save" ng-if="isEditingClassification(groupClassification._id)" class="fa fa-lg fa-save" ng-click="!disableSave() && onProcessEditedGroupClassification()" aria-hidden="true" ng-style="disableSave()? {'opacity': 0.5} : {'cursor': 'pointer'}"></i>
 			        </td>
 
 

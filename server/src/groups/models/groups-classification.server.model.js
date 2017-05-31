@@ -1,20 +1,20 @@
 import mongoose from 'mongoose';
 
 const GroupClassificationSchema = mongoose.Schema({
-	industry: {
-		type: String,
-		required: true
-	},
-	sector: {
-		type: String,
-		required: true
-	},
-	isp: {
-		type: String,
-		required: true
-	},
+	industry: String,
+	sector: String,
+	isp: String,
 	specificCommodity: String,
-	isUsed: Boolean
+	organization: String,
+	isps: Array,
+	isUsed: {
+		type: Boolean,
+		required: true
+	},
+	type: {
+		type: String,
+		required: true
+	}
 });
 
 export default mongoose.model('GroupClassification', GroupClassificationSchema);

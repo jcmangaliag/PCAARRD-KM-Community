@@ -49831,40 +49831,52 @@
 
 		function GroupClassificationController($scope, $state, GroupClassificationService, GroupService, SharedPaginationService, $filter, ngToast, UserAuthenticationService) {
 
+			/* for Add Group Classification */
+
 			$scope.addGroupClassificationFormData = {};
 
-			$scope.paginate = SharedPaginationService;
-			$scope.paginate.currentPage = 1;
-			$scope.paginate.classificationsPerPage = 10;
+			$scope.isp = {
+				enable: false
+			};
 
-			$scope.editedGroupClassificationFormData = null;
-			$scope.sortGroupClassificationBy = ['industry', 'sector', 'isp', 'specificCommodity'];
-			$scope.sortReverse = false;
+			$scope.MIN_ISP = 1;
+			$scope.addedISPs = [''];
 
-			$scope.changeSort = function (groupClassificationFields) {
-				$scope.sortReverse = _lodash2.default.isEqual($scope.sortGroupClassificationBy, groupClassificationFields) ? !$scope.sortReverse : false;
-				$scope.sortGroupClassificationBy = groupClassificationFields;
+			$scope.toggleISP = function () {
+				$scope.clearISPs();
+				$scope.isp.enable = !$scope.isp.enable;
+			};
+
+			$scope.addISP = function () {
+				$scope.addedISPs.push('');
+			};
+
+			$scope.removeISP = function () {
+				if ($scope.addedISPs.length > $scope.MIN_ISP) {
+					$scope.addedISPs.pop();
+				}
+			};
+
+			$scope.clearISPs = function () {
+				$scope.addedISPs.length = 0;
+				$scope.addedISPs.push('');
 			};
 
 			$scope.clearGroupClassificationForm = function () {
 				$scope.addGroupClassificationFormData = null;
 			};
 
+			// Industry-based Classification
+
 			$scope.validateExistingGroupClassification = function (formData) {
 				GroupClassificationService.getAllGroupClassifications();
 
 				return $scope.groupClassifications.contents.map(function (item) {
-					return (item.specificCommodity || item.isp).toLowerCase();
+					if (item.type === "Industry-based") return (item.specificCommodity || item.isp).toLowerCase();
 				}).indexOf((formData.specificCommodity || formData.isp).toLowerCase());
 			};
 
-			$scope.getExistingGroupClassification = function (existingGroupClassificationIndex) {
-				GroupClassificationService.getAllGroupClassifications();
-
-				return $scope.groupClassifications.contents[existingGroupClassificationIndex];
-			};
-
-			$scope.onProcessGroupClassificationForm = function () {
+			$scope.onProcessIndustryClassificationForm = function () {
 				var existingGroupClassification = $scope.validateExistingGroupClassification($scope.addGroupClassificationFormData);
 
 				if (!UserAuthenticationService.isLoggedIn()) {
@@ -49875,35 +49887,95 @@
 				if (existingGroupClassification < 0) {
 					// the specific commodity or isp does not exist
 					$scope.addGroupClassificationFormData.isUsed = false;
+					$scope.addGroupClassificationFormData.type = "Industry-based";
 
 					if (!$scope.addGroupClassificationFormData.specificCommodity) $scope.addGroupClassificationFormData.specificCommodity = null;
 
 					GroupClassificationService.submitGroupClassification($scope.addGroupClassificationFormData).then(function () {
 						$scope.clearGroupClassificationForm();
+						$scope.clearISPs();
 					});
 				} else {
 					ngToast.create({
 						className: 'danger',
 						content: 'Error: The Specific Commodity or ISP already exists!'
 					});
+					$scope.searchClassificationsValue = "";
 				}
+			};
+
+			// R&D and Tech Transfer-based Classification
+
+			$scope.validateExistingRDClassification = function (formData) {
+				GroupClassificationService.getAllGroupClassifications();
+
+				return $scope.groupClassifications.contents.map(function (item) {
+					if (item.type === "R&D and Tech Transfer-based") return item.organization.toLowerCase();
+				}).indexOf(formData.organization.toLowerCase());
+			};
+
+			$scope.onProcessRDClassificationForm = function () {
+				var existingRDClassification = $scope.validateExistingRDClassification($scope.addGroupClassificationFormData);
+
+				if (!UserAuthenticationService.isLoggedIn()) {
+					UserAuthenticationService.loginFirst();
+					return;
+				}
+
+				if (existingRDClassification < 0) {
+					// the organization does not exist
+					$scope.addGroupClassificationFormData.isUsed = false;
+					$scope.addGroupClassificationFormData.type = "R&D and Tech Transfer-based";
+
+					if ($scope.isp.enable) {
+						$scope.addGroupClassificationFormData.isps = $scope.addedISPs;
+					}
+
+					GroupClassificationService.submitGroupClassification($scope.addGroupClassificationFormData).then(function () {
+						$scope.clearGroupClassificationForm();
+						$scope.clearISPs();
+					});
+				} else {
+					ngToast.create({
+						className: 'danger',
+						content: 'Error: The Organization already exists!'
+					});
+				}
+			};
+
+			/* for Edit and View Group Classifications */
+
+			$scope.paginate = SharedPaginationService;
+			$scope.paginate.currentPage = 1;
+			$scope.paginate.classificationsPerPage = 10;
+
+			$scope.editedGroupClassificationFormData = null;
+			$scope.editType = null;
+			$scope.sortGroupClassificationBy = ['industry', 'sector', 'isp', 'specificCommodity'];
+			$scope.sortReverse = false;
+
+			$scope.changeSort = function (groupClassificationFields) {
+				$scope.sortReverse = _lodash2.default.isEqual($scope.sortGroupClassificationBy, groupClassificationFields) ? !$scope.sortReverse : false;
+				$scope.sortGroupClassificationBy = groupClassificationFields;
+			};
+
+			$scope.getExistingGroupClassification = function (existingGroupClassificationIndex) {
+				GroupClassificationService.getAllGroupClassifications();
+
+				return $scope.groupClassifications.contents[existingGroupClassificationIndex];
 			};
 
 			$scope.onEditGroupClassification = function (groupClassification) {
 				$scope.editedGroupClassificationFormData = _lodash2.default.cloneDeep(groupClassification);
+				$scope.editType = groupClassification.type === "Industry-based" ? "industry-based" : "rd-based";
 			};
 
 			$scope.isEditingClassification = function (groupClassificationID) {
 				return $scope.editedGroupClassificationFormData && $scope.editedGroupClassificationFormData._id === groupClassificationID;
 			};
 
-			$scope.onProcessEditedGroupClassification = function () {
+			$scope.onProcessEditedIndustryClassification = function () {
 				var existingGroupClassification = $scope.validateExistingGroupClassification($scope.editedGroupClassificationFormData);
-
-				if (!UserAuthenticationService.isLoggedIn()) {
-					UserAuthenticationService.loginFirst();
-					return;
-				}
 
 				if (existingGroupClassification < 0 || $scope.getExistingGroupClassification(existingGroupClassification)._id === $scope.editedGroupClassificationFormData._id) {
 					var updatedFields = {
@@ -49916,6 +49988,7 @@
 
 					GroupClassificationService.updateGroupClassification($scope.editedGroupClassificationFormData._id, updatedFields).then(function () {
 						$scope.editedGroupClassificationFormData = null;
+						$scope.editType = null;
 
 						ngToast.create({
 							className: 'success',
@@ -49932,8 +50005,58 @@
 				}
 			};
 
+			$scope.onProcessEditedRDClassification = function () {
+				var existingRDClassification = $scope.validateExistingRDClassification($scope.editedGroupClassificationFormData);
+
+				if (existingRDClassification < 0 || $scope.getExistingGroupClassification(existingRDClassification)._id === $scope.editedGroupClassificationFormData._id) {
+					var updatedFields = {
+						organization: $scope.editedGroupClassificationFormData.organization,
+						isps: $scope.editedGroupClassificationFormData.isps ? $scope.editedGroupClassificationFormData.isps.split(',') : []
+					};
+
+					GroupClassificationService.updateGroupClassification($scope.editedGroupClassificationFormData._id, updatedFields).then(function () {
+						$scope.editedGroupClassificationFormData = null;
+						$scope.editType = null;
+
+						ngToast.create({
+							className: 'success',
+							content: 'The Group Classification was successfully updated.'
+						});
+
+						$scope.searchClassificationsValue = "";
+					});
+				} else {
+					ngToast.create({
+						className: 'danger',
+						content: 'Error: The Organization already exists!'
+					});
+				}
+			};
+
+			$scope.onProcessEditedGroupClassification = function () {
+				if (!UserAuthenticationService.isLoggedIn()) {
+					UserAuthenticationService.loginFirst();
+					return;
+				}
+
+				if ($scope.editedGroupClassificationFormData.type === "Industry-based") {
+					$scope.onProcessEditedIndustryClassification();
+				} else {
+					$scope.onProcessEditedRDClassification();
+				}
+			};
+
+			$scope.disableSave = function () {
+				if ($scope.editedGroupClassificationFormData.type === "Industry-based") {
+					return !$scope.editedGroupClassificationFormData.industry || !$scope.editedGroupClassificationFormData.sector || !$scope.editedGroupClassificationFormData.isp;
+				} else {
+					return !$scope.editedGroupClassificationFormData.organization;
+				}
+			};
+
 			$scope.cancelEditGroupClassification = function () {
 				$scope.editedGroupClassificationFormData = null;
+				$scope.editType = null;
 			};
 
 			$scope.onDeleteOneGroupClassification = function (groupClassification) {
