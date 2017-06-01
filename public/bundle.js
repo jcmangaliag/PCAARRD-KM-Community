@@ -33900,9 +33900,22 @@
 				});
 			};
 
+			$scope.createGroupOptions = function (groupClassification) {
+				if (groupClassification.type === "Industry-based") {
+					return groupClassification.industry + ' -> ' + groupClassification.sector + ' -> ' + groupClassification.isp + ' -> ' + (groupClassification.specificCommodity || "(None)");
+				} else {
+					return groupClassification.organization + ' -> ' + (groupClassification.isps.length < 1 ? "(None)" : groupClassification.isps.join(', '));
+				}
+			};
+
 			$scope.generateGroupNameAndHandle = function (classification) {
-				$scope.addGroupFormData.name = classification && (classification.specificCommodity || classification.isp) || "";
-				$scope.addGroupFormData.handle = $scope.addGroupFormData.name.replace(/\s/g, "").toLowerCase();
+				if (classification && classification.type === "Industry-based") {
+					$scope.addGroupFormData.name = classification && (classification.specificCommodity || classification.isp) || "";
+					$scope.addGroupFormData.handle = $scope.addGroupFormData.name.replace(/\s/g, "").toLowerCase();
+				} else {
+					$scope.addGroupFormData.name = classification && classification.organization || "";
+					$scope.addGroupFormData.handle = $scope.addGroupFormData.name.replace(/\s/g, "").toLowerCase();
+				}
 			};
 
 			$scope.validateAdminEmailAddress = function (adminEmails) {
@@ -49951,7 +49964,7 @@
 
 			$scope.editedGroupClassificationFormData = null;
 			$scope.editType = null;
-			$scope.sortGroupClassificationBy = ['industry', 'sector', 'isp', 'specificCommodity'];
+			$scope.sortGroupClassificationBy = ['type', 'industry', 'sector', 'isp', 'specificCommodity', 'organization', 'isps[0]'];
 			$scope.sortReverse = false;
 
 			$scope.changeSort = function (groupClassificationFields) {
@@ -50407,17 +50420,22 @@
 			};
 
 			$scope.computeGroupsDistribution = function () {
-				var totalGroups = $scope.groups.length;
+				// get only industry-based groups
+				var industryBasedGroups = $scope.groups.filter(function (group) {
+					return group.classification.type === "Industry-based";
+				});
+
+				var totalGroups = industryBasedGroups.length;
 				var groupIndustriesData = [];
 				var groupsDistributionSeries = [];
 
-				var industries = [].concat(_toConsumableArray(new Set($scope.groups.map(function (group) {
+				var industries = [].concat(_toConsumableArray(new Set(industryBasedGroups.map(function (group) {
 					return group.classification.industry;
 				})))); // array of distinct industries
 
 				_lodash2.default.forEach(industries, function (industry) {
 					// groups under the industry
-					var industryGroups = $scope.groups.filter(function (group) {
+					var industryGroups = industryBasedGroups.filter(function (group) {
 						return group.classification.industry === industry;
 					});
 					var industryPercent = industryGroups.length / totalGroups * 100;
@@ -50607,12 +50625,12 @@
 			};
 
 			$scope.loadGroupsDistribution = function (groupIndustriesData, groupsDistributionSeries) {
-				Highcharts.chart('groups-distribution-container', {
+				Highcharts.chart('industry-based-groups-distribution-container', {
 					chart: {
 						type: 'pie'
 					},
 					title: {
-						text: 'Groups Distribution with Drill Down'
+						text: 'Industry-based Groups Distribution with Drill Down'
 					},
 					subtitle: {
 						text: 'Source: PCAARRD KM Community'
@@ -50659,9 +50677,9 @@
 
 		angular.module('groups').controller('EditSettingsGroupController', EditSettingsGroupController);
 
-		EditSettingsGroupController.$inject = ['$scope', '$state', '$stateParams', '$q', 'GroupService', 'UserAuthenticationService', 'UserService', 'SharedUploadService', 'EditSettingsGroupService', 'ngToast'];
+		EditSettingsGroupController.$inject = ['$scope', '$state', '$stateParams', '$q', 'GroupService', 'UserAuthenticationService', 'UserService', 'SharedUploadService', 'EditSettingsGroupService', 'GroupClassificationService', 'ngToast'];
 
-		function EditSettingsGroupController($scope, $state, $stateParams, $q, GroupService, UserAuthenticationService, UserService, SharedUploadService, EditSettingsGroupService, ngToast) {
+		function EditSettingsGroupController($scope, $state, $stateParams, $q, GroupService, UserAuthenticationService, UserService, SharedUploadService, EditSettingsGroupService, GroupClassificationService, ngToast) {
 
 			GroupService.getOneGroup($stateParams.handle).then(function (result) {
 				$scope.selectedGroup = result;
@@ -50686,12 +50704,20 @@
 
 					return $q.reject(error);
 				}).then(function () {
+					if ($scope.selectedGroup.classification.type === "R&D and Tech Transfer-based") {
+						$scope.updateRDGroupClassification();
+					}
+
 					ngToast.create({
 						className: 'success',
 						content: 'Group was successfully edited. '
 					});
 					$scope.enableViewChanges = true;
 				});
+			};
+
+			$scope.updateRDGroupClassification = function () {
+				GroupClassificationService.updateGroupClassification($scope.selectedGroup.classification._id, { isps: $scope.selectedGroup.classification.isps });
 			};
 
 			$scope.onProcessEditedGroupData = function () {
@@ -50703,6 +50729,10 @@
 
 				var uploadPhoto = false,
 				    uploadCoverPhoto = false;
+
+				if ($scope.selectedGroup.classification.type === "R&D and Tech Transfer-based") {
+					$scope.selectedGroup.classification.isps = $scope.selectedGroup.classification.isps ? $scope.selectedGroup.classification.isps.toString().split(',') : [];
+				}
 
 				if ($scope.selectedPhoto && $scope.selectedPhoto.length > 0) {
 					uploadPhoto = true;
@@ -50743,6 +50773,10 @@
 						return $q.reject(error);
 					}).then(function () {
 						// after submitting edited group
+						if ($scope.selectedGroup.classification.type === "R&D and Tech Transfer-based") {
+							$scope.updateRDGroupClassification();
+						}
+
 						ngToast.create({
 							className: 'success',
 							content: 'Group was successfully edited. '
@@ -50755,6 +50789,10 @@
 					$scope.uploadPhotoAndSubmitForm($scope.selectedCoverPhoto[0], "coverPhoto");
 				} else {
 					EditSettingsGroupService.submitModifiedGroup($scope.selectedGroup).then(function () {
+						if ($scope.selectedGroup.classification.type === "R&D and Tech Transfer-based") {
+							$scope.updateRDGroupClassification();
+						}
+
 						ngToast.create({
 							className: 'success',
 							content: 'Group was successfully edited. '
