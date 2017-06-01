@@ -80,7 +80,7 @@
 			        <td ng-if="isEditingClassification(groupClassification._id) && editType ==='rd-based'"><input type="text" class="form-control" placeholder="Enter the organization's ISPs" ng-model="editedGroupClassificationFormData.isps" /></td>
 
 			        <td ng-if="!groupClassification.isUsed">-</td>
-			        <td ng-if="groupClassification.isUsed"><a style="cursor: pointer;" ng-click="goToGroup(groupClassification._id)">{{groupClassification.specificCommodity || groupClassification.isp}}</a></td>
+			        <td ng-if="groupClassification.isUsed"><a style="cursor: pointer;" ng-click="goToGroup(groupClassification._id)">{{groupClassification.specificCommodity || groupClassification.isp || groupClassification.organization}}</a></td>
 
 			        <td ng-if="!editedGroupClassificationFormData._id">
 			        	<i title="Edit" ng-if="!groupClassification.isUsed && !isEditingClassification(groupClassification._id)" class="fa fa-lg fa-pencil" style="cursor: pointer;" ng-click="onEditGroupClassification(groupClassification)" aria-hidden="true"></i>

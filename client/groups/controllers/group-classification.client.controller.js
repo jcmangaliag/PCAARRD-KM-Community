@@ -136,7 +136,7 @@ import _ from 'lodash/lodash.min';
 
 		$scope.editedGroupClassificationFormData = null;
 		$scope.editType = null;
-		$scope.sortGroupClassificationBy = ['industry', 'sector', 'isp', 'specificCommodity'];
+		$scope.sortGroupClassificationBy = ['type', 'industry', 'sector', 'isp', 'specificCommodity', 'organization', 'isps[0]'];
 		$scope.sortReverse = false;
 
 		$scope.changeSort = (groupClassificationFields) => {

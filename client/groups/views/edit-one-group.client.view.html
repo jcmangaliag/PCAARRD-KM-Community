@@ -12,6 +12,11 @@
 		    <textarea class="form-control" style="resize: vertical;" rows="3" placeholder="Enter the group's description" ng-model="selectedGroup.description" required></textarea>
 		  </div>
 
+		  <div ng-if="selectedGroup && selectedGroup.classification.type === 'R&D and Tech Transfer-based'" class="form-group">
+		    <label>Group ISPs </label><span style="font-style: italic;"> (Separate each by comma. e.g. Banana,Coconut)</span></label>
+		    <input type="text" class="form-control" placeholder="Enter the group's ISPs" ng-model="selectedGroup.classification.isps" />
+		  </div>
+
 		  <div class="form-group">
 		    <label>New Group Photo Upload</label>
 		    <shared-add-photo selected-upload-photo="selectedPhoto"></shared-add-photo>

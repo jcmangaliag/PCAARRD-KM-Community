@@ -478,9 +478,23 @@ import _ from 'lodash/lodash.min';
 			});
 		}
 
+		$scope.createGroupOptions = (groupClassification) => {
+			if (groupClassification.type === "Industry-based"){
+				return groupClassification.industry + ' -> ' + groupClassification.sector +' -> '+ groupClassification.isp +' -> '+
+					(groupClassification.specificCommodity || "(None)");
+			} else {
+				return groupClassification.organization + ' -> ' + (groupClassification.isps.length < 1? "(None)" : groupClassification.isps.join(', '));
+			}
+		}
+
 		$scope.generateGroupNameAndHandle = (classification) => {
-			$scope.addGroupFormData.name = (classification && (classification.specificCommodity || classification.isp)) || "";
-			$scope.addGroupFormData.handle = $scope.addGroupFormData.name.replace(/\s/g, "").toLowerCase();
+			if (classification && classification.type === "Industry-based"){
+				$scope.addGroupFormData.name = (classification && (classification.specificCommodity || classification.isp)) || "";
+				$scope.addGroupFormData.handle = $scope.addGroupFormData.name.replace(/\s/g, "").toLowerCase();
+			} else {
+				$scope.addGroupFormData.name = (classification && classification.organization) || "";
+				$scope.addGroupFormData.handle = $scope.addGroupFormData.name.replace(/\s/g, "").toLowerCase();
+			}	
 		}
 
 		$scope.validateAdminEmailAddress = (adminEmails) => {

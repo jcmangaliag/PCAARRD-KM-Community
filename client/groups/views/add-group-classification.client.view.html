@@ -34,7 +34,7 @@
 				<hr />
 				<form style="padding: 1% 2% 2% 2%; text-align: left;" ng-submit="onProcessRDClassificationForm()">
 					<div class="form-group">
-						<label>Organization</label>
+						<label>Organization</label><span style="font-style: italic;"> (e.g. PCAARRD)</span></label>
 				    	<input type="text" class="form-control" placeholder="Enter the group's industry" ng-model="addGroupClassificationFormData.organization" required />
 				    </div>
 
@@ -45,7 +45,7 @@
 				    <div class="form-group" ng-if="isp.enable">
 				    	<label>ISP/s</label>
 				    	<div style="white-space: nowrap;" ng-repeat="addedISP in addedISPs track by $index">
-						    <input type="text" class="form-control" style="width: 85%; display: inline;" placeholder="Enter an ISP here" ng-model="addedISPs[$index]" required /> 
+						    <input type="text" class="form-control" style="width: 85%; display: inline;" placeholder="Enter one ISP here" ng-model="addedISPs[$index]" required /> 
 						    
 						    <button title="Add" type="button" class="btn btn-primary" ng-if="$last" ng-click="addISP()"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
 

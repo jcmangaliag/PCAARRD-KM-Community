@@ -7,9 +7,9 @@ import _ from 'lodash/lodash.min';
 		.module('groups')
 		.controller('EditSettingsGroupController', EditSettingsGroupController);
 
-	EditSettingsGroupController.$inject = ['$scope', '$state', '$stateParams', '$q', 'GroupService', 'UserAuthenticationService', 'UserService', 'SharedUploadService', 'EditSettingsGroupService', 'ngToast'];
+	EditSettingsGroupController.$inject = ['$scope', '$state', '$stateParams', '$q', 'GroupService', 'UserAuthenticationService', 'UserService', 'SharedUploadService', 'EditSettingsGroupService', 'GroupClassificationService', 'ngToast'];
 
-	function EditSettingsGroupController ($scope, $state, $stateParams, $q, GroupService, UserAuthenticationService, UserService, SharedUploadService, EditSettingsGroupService, ngToast) {
+	function EditSettingsGroupController ($scope, $state, $stateParams, $q, GroupService, UserAuthenticationService, UserService, SharedUploadService, EditSettingsGroupService, GroupClassificationService, ngToast) {
 
 		GroupService.getOneGroup($stateParams.handle)
 			.then((result) => {
@@ -38,12 +38,21 @@ import _ from 'lodash/lodash.min';
 			    	return $q.reject(error);
 				})
 				.then(() => {
+					if ($scope.selectedGroup.classification.type === "R&D and Tech Transfer-based"){
+						$scope.updateRDGroupClassification();
+					}
+
 					ngToast.create({
 			    		className: 'success',
 			    		content: `Group was successfully edited. `
 			    	});
 			    	$scope.enableViewChanges = true;
 				});
+		}
+
+		$scope.updateRDGroupClassification = () => {
+			GroupClassificationService.updateGroupClassification($scope.selectedGroup.classification._id, 
+				{isps: $scope.selectedGroup.classification.isps});
 		}
 
 		$scope.onProcessEditedGroupData = () => {
@@ -54,6 +63,10 @@ import _ from 'lodash/lodash.min';
 			}
 
 			let uploadPhoto = false, uploadCoverPhoto = false;
+
+			if ($scope.selectedGroup.classification.type === "R&D and Tech Transfer-based"){
+				$scope.selectedGroup.classification.isps = $scope.selectedGroup.classification.isps? $scope.selectedGroup.classification.isps.toString().split(',') : [];
+			}
 
 			if ($scope.selectedPhoto && $scope.selectedPhoto.length > 0){
 				uploadPhoto = true;
@@ -94,6 +107,10 @@ import _ from 'lodash/lodash.min';
 				    	return $q.reject(error);
 					})
 					.then(() => {	// after submitting edited group
+						if ($scope.selectedGroup.classification.type === "R&D and Tech Transfer-based"){
+							$scope.updateRDGroupClassification();
+						}
+
 						ngToast.create({
 				    		className: 'success',
 				    		content: `Group was successfully edited. `
@@ -107,6 +124,10 @@ import _ from 'lodash/lodash.min';
 			} else {
 				EditSettingsGroupService.submitModifiedGroup($scope.selectedGroup)
 					.then(() => {
+						if ($scope.selectedGroup.classification.type === "R&D and Tech Transfer-based"){
+							$scope.updateRDGroupClassification();
+						}
+
 						ngToast.create({
 				    		className: 'success',
 				    		content: `Group was successfully edited. `

@@ -72,13 +72,21 @@
     </div>
   </div>
 
-  <h4><span style="font-weight: normal;" class="label label-default">Industry</span> <span style="font-weight: normal;" class="label label-success">{{selectedGroup.classification.industry}}</span></h4>
+  <span ng-if="selectedGroup && selectedGroup.classification.type === 'Industry-based'">
+    <h4><span style="font-weight: normal;" class="label label-default">Industry</span> <span style="font-weight: normal;" class="label label-success">{{selectedGroup.classification.industry}}</span></h4>
 
-  <h4><span style="font-weight: normal;" class="label label-default">Sector</span> <span style="font-weight: normal;" class="label label-success">{{selectedGroup.classification.sector}}</span></h4>
+    <h4><span style="font-weight: normal;" class="label label-default">Sector</span> <span style="font-weight: normal;" class="label label-success">{{selectedGroup.classification.sector}}</span></h4>
 
-  <h4><span style="font-weight: normal;" class="label label-default">ISP</span> <span style="font-weight: normal;" class="label label-success">{{selectedGroup.classification.isp}}</span></h4>
+    <h4><span style="font-weight: normal;" class="label label-default">ISP</span> <span style="font-weight: normal;" class="label label-success">{{selectedGroup.classification.isp}}</span></h4>
 
-  <h4 ng-if="selectedGroup.classification.specificCommodity"><span style="font-weight: normal;" class="label label-default">Commodity</span> <span style="font-weight: normal;" class="label label-success">{{selectedGroup.classification.specificCommodity}}</span></h4>
+    <h4 ng-if="selectedGroup.classification.specificCommodity"><span style="font-weight: normal;" class="label label-default">Commodity</span> <span style="font-weight: normal;" class="label label-success">{{selectedGroup.classification.specificCommodity}}</span></h4>
+  </span>
+
+  <span ng-if="selectedGroup && selectedGroup.classification.type === 'R&D and Tech Transfer-based'">
+    <h4><span style="font-weight: normal;" class="label label-default">Organization</span> <span style="font-weight: normal;" class="label label-success">{{selectedGroup.classification.organization}}</span></h4>
+
+    <h4 ng-if="selectedGroup.classification.isps.length > 0"><span style="font-weight: normal;" class="label label-default">ISPs</span> <span ng-repeat="isp in selectedGroup.classification.isps" style="font-weight: normal; display:inline-block; margin-right:2px;" class="label label-success">{{isp}}</span></h4>
+  </span>
 
   <p style="white-space: pre-wrap; margin-top: 25px; margin-bottom: 0px;" ng-style="selectedGroup.description.length > DESCRIPTION_LIMIT? {'margin-bottom': '0px'} : {'margin-bottom': '25px'}"><span ng-bind-html="selectedGroup.description | parseURL | emoji | limitTo: descriptionSize"></span><span ng-if="selectedGroup.description.length > descriptionSize">...</span></p>
   <span ng-if="selectedGroup.description.length > DESCRIPTION_LIMIT" style="margin-bottom: 25px; display: block;"><a href="#/" ng-click="toggleGroupDescription()">{{readGroupDescription}}</a></span>
