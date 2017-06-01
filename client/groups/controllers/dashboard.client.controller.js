@@ -279,15 +279,18 @@ import _ from 'lodash/lodash.min';
 		}
 
 		$scope.computeGroupsDistribution = () => {
-			const totalGroups = $scope.groups.length;
+			// get only industry-based groups
+			const industryBasedGroups = $scope.groups.filter((group) => group.classification.type === "Industry-based");
+
+			const totalGroups = industryBasedGroups.length;
 			let groupIndustriesData = [];
 			let groupsDistributionSeries = [];
 			
-			const industries = [...new Set($scope.groups.map((group) => group.classification.industry))];	// array of distinct industries
+			const industries = [...new Set(industryBasedGroups.map((group) => group.classification.industry))];	// array of distinct industries
 			
 			_.forEach(industries, (industry) => {
 				// groups under the industry
-				let industryGroups = $scope.groups.filter((group) => group.classification.industry === industry);
+				let industryGroups = industryBasedGroups.filter((group) => group.classification.industry === industry);
 				let industryPercent = (industryGroups.length / totalGroups) * 100;
 				groupIndustriesData.push({name: industry, y: industryPercent, drilldown: industry});
 
@@ -466,12 +469,12 @@ import _ from 'lodash/lodash.min';
 		}
 
 		$scope.loadGroupsDistribution = (groupIndustriesData, groupsDistributionSeries) => {
-			Highcharts.chart('groups-distribution-container', {
+			Highcharts.chart('industry-based-groups-distribution-container', {
 			    chart: {
 			        type: 'pie'
 			    },
 			    title: {
-			        text: 'Groups Distribution with Drill Down'
+			        text: 'Industry-based Groups Distribution with Drill Down'
 			    },
 			    subtitle: {
 			        text: 'Source: PCAARRD KM Community'
