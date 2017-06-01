@@ -50731,7 +50731,8 @@
 				    uploadCoverPhoto = false;
 
 				if ($scope.selectedGroup.classification.type === "R&D and Tech Transfer-based") {
-					$scope.selectedGroup.classification.isps = $scope.selectedGroup.classification.isps ? $scope.selectedGroup.classification.isps.toString().split(',') : [];
+					$scope.selectedGroup.classification.isps = $scope.selectedGroup.classification.isps.toString();
+					$scope.selectedGroup.classification.isps = $scope.selectedGroup.classification.isps ? $scope.selectedGroup.classification.isps.split(',') : [];
 				}
 
 				if ($scope.selectedPhoto && $scope.selectedPhoto.length > 0) {

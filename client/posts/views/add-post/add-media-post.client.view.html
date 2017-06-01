@@ -18,7 +18,7 @@
   <div ng-if="addPostFormData.mediaType === 'url'" class="form-group">
     <label for="post-ads__name">URL/s <span style="color:red;">*</span> <span style="font-style: italic;">(e.g. http://www.wikihow.com/Use-Facebook, Facebook Tutorial)</span></label>
     <div class="shared__addhashtags--body" ng-repeat="url in multipleFields.urls track by $index">
-      <input type="url" style="display: inline-block; width: 57%;" class="form-control" id="post-ads__name" placeholder="Enter a URL" ng-model="multipleFields.urls[$index].url" required />
+      <input type="url" style="display: inline-block; width: 52%;" class="form-control" id="post-ads__name" placeholder="Enter a URL" ng-model="multipleFields.urls[$index].url" required />
 
       <input type="text" style="display: inline-block; width: 30%;" class="form-control shared__addhashtags--field" id="post-ads__name" placeholder="Enter URL's title" ng-model="multipleFields.urls[$index].urlTitle" required />
   

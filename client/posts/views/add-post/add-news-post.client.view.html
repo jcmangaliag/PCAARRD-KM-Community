@@ -7,7 +7,7 @@
   <div class="form-group">
     <label for="post-ads__name">News Author/s <span style="color:red;">*</span></label>
     <div class="shared__addhashtags--body" ng-repeat="author in multipleFields.authors track by $index">
-      <input type="text" style="display: inline-block;" class="form-control shared__addhashtags--field" placeholder="Enter an author" ng-model="multipleFields.authors[$index]" required />
+      <input type="text" style="display: inline-block; width: 80%;" class="form-control" placeholder="Enter an author" ng-model="multipleFields.authors[$index]" required />
   
       <button title="Add" type="button" ng-hide="{{multipleFields.authors.length >= MAX_AUTHOR}}"  class="btn btn-primary" ng-if="$last" ng-click="addField(multipleFields.authors, MAX_AUTHOR)"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
 
