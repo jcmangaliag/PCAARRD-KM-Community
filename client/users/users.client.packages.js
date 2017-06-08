@@ -7,6 +7,7 @@ import EditSettingsUserController from './controllers/edit-settings-user.client.
 
 import userRegistrationDirective from './directives/user-registration.client.directive';
 import userLoginDirective from './directives/user-login.client.directive';
+import userTermsOfServiceDirective from './directives/user-terms-of-service.client.directive';
 
 import UserAuthenticationService from './services/user-authentication.client.service';
 import UserService from './services/user.client.service';

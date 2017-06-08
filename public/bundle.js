@@ -54538,15 +54538,19 @@
 
 	var _userLoginClient2 = _interopRequireDefault(_userLoginClient);
 
-	var _userAuthenticationClient3 = __webpack_require__(308);
+	var _userTermsOfServiceClient = __webpack_require__(308);
+
+	var _userTermsOfServiceClient2 = _interopRequireDefault(_userTermsOfServiceClient);
+
+	var _userAuthenticationClient3 = __webpack_require__(309);
 
 	var _userAuthenticationClient4 = _interopRequireDefault(_userAuthenticationClient3);
 
-	var _userClient3 = __webpack_require__(309);
+	var _userClient3 = __webpack_require__(310);
 
 	var _userClient4 = _interopRequireDefault(_userClient3);
 
-	var _editSettingsUserClient3 = __webpack_require__(310);
+	var _editSettingsUserClient3 = __webpack_require__(311);
 
 	var _editSettingsUserClient4 = _interopRequireDefault(_editSettingsUserClient3);
 
@@ -54666,14 +54670,6 @@
 					authenticate: ['UserAuthenticationService', '$stateParams', function (UserAuthenticationService, $stateParams) {
 						return UserAuthenticationService.authenticateCurrentUserOrSiteAdmin($stateParams.userID);
 					}]
-				}
-			}).state('terms-of-service', {
-				url: '/users/legal/terms-of-service',
-				templateUrl: 'users/views/user-terms-of-service.client.view.html',
-				resolve: {
-					$title: function $title() {
-						return 'Terms of Service';
-					}
 				}
 			});
 
@@ -55083,6 +55079,28 @@
 	(function () {
 		'use strict';
 
+		angular.module('users').directive('userTermsOfService', userTermsOfService);
+
+		function userTermsOfService() {
+
+			var directive = {
+				restrict: 'E',
+				templateUrl: '/users/views/user-terms-of-service.client.view.html'
+			};
+
+			return directive;
+		}
+	})();
+
+/***/ }),
+/* 309 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	(function () {
+		'use strict';
+
 		angular.module('users').factory('UserAuthenticationService', UserAuthenticationService);
 
 		UserAuthenticationService.$inject = ['$http', '$window', '$q', '$state', 'UserService', 'ngToast', '$timeout', 'GroupService', 'PostService'];
@@ -55377,7 +55395,7 @@
 	})();
 
 /***/ }),
-/* 309 */
+/* 310 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -55502,7 +55520,7 @@
 	})();
 
 /***/ }),
-/* 310 */
+/* 311 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';

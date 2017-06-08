@@ -85,9 +85,27 @@
 
   	<div class="form-group">
   		<div class="checkbox">
-		  <label><input type="checkbox" value="I agree" required> I agree to the <a ui-sref="terms-of-service" target="_blank">terms of service</a>. </label>
+		  <label><input type="checkbox" value="I agree" required> I agree to the <a href="#/" target="_blank" data-toggle="modal" data-target="#terms-of-service">terms of service</a>. </label>
 		</div>
   	</div>
+
+
+	  <div class="modal fade" id="terms-of-service" tabindex="-1" role="dialog">
+	      <div class="modal-dialog" role="document">
+	        <div class="modal-content">
+	          <div class="modal-header">
+	            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	            <h4 class="modal-title"><i class="fa fa-file-o" aria-hidden="true"></i> Terms of Service ("Terms")</h4>
+	          </div>
+	          <div class="modal-body" style="overflow-y: auto; max-height: 400px;">
+	            <user-terms-of-service></user-terms-of-service>
+	          </div>
+	          <div class="modal-footer">
+	            <button type="button" class="btn btn-default" data-dismiss="modal">Exit</button>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
 
 	  <shared-reset-submit-buttons></shared-reset-submit-buttons>
 	</form>

@@ -85,13 +85,6 @@
 						return UserAuthenticationService.authenticateCurrentUserOrSiteAdmin($stateParams.userID);
 					}]
 				}
-			})
-			.state('terms-of-service', {
-				url: '/users/legal/terms-of-service',
-				templateUrl: 'users/views/user-terms-of-service.client.view.html',
-				resolve: {
-					$title: () => 'Terms of Service',
-				}
 			});
 
 		$locationProvider.html5Mode(true);
