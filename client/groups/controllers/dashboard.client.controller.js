@@ -381,6 +381,32 @@ import _ from 'lodash/lodash.min';
 			    tooltip: {
 			         pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y}</b> post/s<br/>'
 			    },
+			    responsive: {
+			        rules: [{
+			            condition: {
+			                maxWidth: 500
+			            },
+			            chartOptions: {
+			                legend: {
+			                    align: 'center',
+			                    verticalAlign: 'bottom',
+			                    layout: 'horizontal'
+			                },
+			                yAxis: {
+			                    allowDecimals: false,
+								title: {
+								 	text: 'Number of Posts'
+								}
+			                },
+			                subtitle: {
+			                    text: 'Source: PCAARRD KM Community'
+			                },
+			                credits: {
+			                    enabled: false
+			                }
+			            }
+			        }]
+			    }
 		    });
 		}
 

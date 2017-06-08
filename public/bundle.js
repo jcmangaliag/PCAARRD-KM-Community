@@ -13815,7 +13815,7 @@
 
 
 	// module
-	exports.push([module.id, "html {\n  position: relative;\n  min-height: 100%;\n}\n\nbody {\n  margin-bottom: 350px;\n  background-color: #eeeeee;\n}\n\n.ng-toast__list {\n  list-style: none;\n}\n", ""]);
+	exports.push([module.id, "html {\n  position: relative;\n  min-height: 100%;\n}\n\nbody {\n  margin-bottom: 365px;\n  background-color: #eeeeee;\n}\n\n.ng-toast__list {\n  list-style: none;\n}\n", ""]);
 
 	// exports
 
@@ -50537,6 +50537,32 @@
 					series: topActiveGroups,
 					tooltip: {
 						pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y}</b> post/s<br/>'
+					},
+					responsive: {
+						rules: [{
+							condition: {
+								maxWidth: 500
+							},
+							chartOptions: {
+								legend: {
+									align: 'center',
+									verticalAlign: 'bottom',
+									layout: 'horizontal'
+								},
+								yAxis: {
+									allowDecimals: false,
+									title: {
+										text: 'Number of Posts'
+									}
+								},
+								subtitle: {
+									text: 'Source: PCAARRD KM Community'
+								},
+								credits: {
+									enabled: false
+								}
+							}
+						}]
 					}
 				});
 			};
@@ -51981,7 +52007,7 @@
 
 
 	// module
-	exports.push([module.id, "layout-footer {\n  position: absolute;\n  right: 0;\n  width: 100%;\n  height: 333px;\n  bottom: 0;\n  color: white;\n  padding-top: 2.5em;\n}\n\n.site-footer {\n  background-color: rgba(0, 0, 0, 0.9) !important;\n  border-top: solid 1px;\n}\n\n.site-footer__about {\n  text-align: center;\n}\n\n.site-footer__copyright {\n  background-color: #000;\n  padding: 0.5% 0;\n  color: gray;\n}\n\n@media (min-width: 768px) {\n  layout-footer {\n    position: absolute;\n    right: 0;\n    width: 100%;\n    height: 333px;\n    bottom: 0;\n    color: white;\n    padding-top: 2.5em;\n  }\n}\n", ""]);
+	exports.push([module.id, "layout-footer {\n  position: absolute;\n  right: 0;\n  width: 100%;\n  height: 348px;\n  bottom: 0;\n  color: white;\n  padding-top: 2.5em;\n}\n\n.site-footer {\n  background-color: rgba(0, 0, 0, 0.9) !important;\n  border-top: solid 1px;\n}\n\n.site-footer__about {\n  text-align: center;\n}\n\n.site-footer__copyright {\n  background-color: #000;\n  padding: 0.5% 0;\n  color: gray;\n}\n\n@media (min-width: 768px) {\n  layout-footer {\n    position: absolute;\n    right: 0;\n    width: 100%;\n    height: 348px;\n    bottom: 0;\n    color: white;\n    padding-top: 2.5em;\n  }\n}\n", ""]);
 
 	// exports
 
