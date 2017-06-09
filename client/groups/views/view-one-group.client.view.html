@@ -1,4 +1,18 @@
-<img src="{{selectedGroup.coverPhoto? selectedGroup.coverPhoto.path.split('/')[1] : '/groups/assets/images/default-group-cover-photo.png'}}" class="group-photo" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); margin-bottom: 30px;" />
+<img src="{{selectedGroup.coverPhoto? selectedGroup.coverPhoto.path.split('/')[1] : '/groups/assets/images/default-group-cover-photo.png'}}" class="group-photo" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); margin-bottom: 30px; cursor: pointer;" data-toggle="modal" data-target="#{{'group-cover-photo-' + selectedGroup._id}}" />
+
+<div class="modal fade" id="{{'group-cover-photo-' + selectedGroup._id}}" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title"> {{selectedGroup.name}} Group Cover Photo</h4>
+      </div>
+      <div class="modal-body">
+        <img src="{{selectedGroup.coverPhoto? selectedGroup.coverPhoto.path.split('/')[1] : '/groups/assets/images/default-group-cover-photo.png'}}" style="width: 100%;" />
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-3">

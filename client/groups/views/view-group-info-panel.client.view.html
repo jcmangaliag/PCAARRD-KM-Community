@@ -1,5 +1,20 @@
 <div style="margin-bottom: 25px; background-color: white; border-radius: 5px; padding: 15px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-  <img src="{{selectedGroup.photo? selectedGroup.photo.path.split('/')[1] : '/groups/assets/images/default-group-photo.png'}}" class="group-header__icon" />
+  <img src="{{selectedGroup.photo? selectedGroup.photo.path.split('/')[1] : '/groups/assets/images/default-group-photo.png'}}" class="group-header__icon" data-toggle="modal" data-target="#{{'group-photo-' + selectedGroup._id}}" style="cursor: pointer;" />
+
+  <div class="modal fade" id="{{'group-photo-' + selectedGroup._id}}" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title"> {{selectedGroup.name}} Group Photo</h4>
+        </div>
+        <div class="modal-body">
+          <img src="{{selectedGroup.photo? selectedGroup.photo.path.split('/')[1] : '/groups/assets/images/default-group-photo.png'}}" style="width: 100%;" />
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="row">
     <div class="col-xs-8 col-sm-10 col-md-8">
       <h3 style="margin-bottom: 3px;">{{selectedGroup.name}}</h3>
