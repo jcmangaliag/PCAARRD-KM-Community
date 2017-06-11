@@ -20,7 +20,7 @@
     <div ng-if="!user.currentUser || (user.currentUser.groupsJoined.indexOf(selectedGroup.handle) < 0)">
       <view-group-join-invitation></view-group-join-invitation>
     </div>
-    <view-manage-group-panel ng-if="user.currentUser && selectedGroup.admin.indexOf(user.currentUser._id) > -1"></view-manage-group-panel>
+    <view-manage-group-panel ng-if="user.currentUser && (selectedGroup.admin.indexOf(user.currentUser._id) > -1 || user.currentUser.isAdmin)"></view-manage-group-panel>
   </div>
 
   <div class="col-xs-12 col-sm-12 col-md-6">

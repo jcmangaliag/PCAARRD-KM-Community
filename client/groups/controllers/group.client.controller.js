@@ -143,29 +143,29 @@ import _ from 'lodash/lodash.min';
 
 		}
 
-		$scope.onJoinThisGroup = (userID, groupHandle) => {
+		$scope.onJoinThisGroup = (user, groupHandle) => {
 			if (!UserAuthenticationService.isLoggedIn()){
 				UserAuthenticationService.loginFirst();
 				return;
 			}
 
 			if ($scope.selectedGroup.membership === "No Approval") {
-				$scope.joinThisGroup(userID, groupHandle);
+				$scope.joinThisGroup(user._id, groupHandle);
 			} else {
-				$scope.addToPendingList(userID, groupHandle);
+				$scope.addToPendingList(user, groupHandle);
 			}
 		}
 
-		$scope.addToPendingList = (userID, groupHandle) => {
-			GroupService.addToGroupPendingMembersList(userID, groupHandle)
+		$scope.addToPendingList = (user, groupHandle) => {
+			GroupService.addToGroupPendingMembersList(user._id, groupHandle)
 				.then(() => {	    	
 					ngToast.create({
 			    		className: 'success',
 			    		content: `Group Join Request was successfully sent.`
 			    	});
 
-					$scope.groupPendingMembers.push(userID);
-					$scope.selectedGroup.pendingMembers.push(userID);
+					$scope.groupPendingMembers.push(user);
+					$scope.selectedGroup.pendingMembers.push(user._id);
 				}, () => {
 					ngToast.create({
 			    		className: 'danger',

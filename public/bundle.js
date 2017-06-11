@@ -33574,28 +33574,28 @@
 				});
 			};
 
-			$scope.onJoinThisGroup = function (userID, groupHandle) {
+			$scope.onJoinThisGroup = function (user, groupHandle) {
 				if (!UserAuthenticationService.isLoggedIn()) {
 					UserAuthenticationService.loginFirst();
 					return;
 				}
 
 				if ($scope.selectedGroup.membership === "No Approval") {
-					$scope.joinThisGroup(userID, groupHandle);
+					$scope.joinThisGroup(user._id, groupHandle);
 				} else {
-					$scope.addToPendingList(userID, groupHandle);
+					$scope.addToPendingList(user, groupHandle);
 				}
 			};
 
-			$scope.addToPendingList = function (userID, groupHandle) {
-				GroupService.addToGroupPendingMembersList(userID, groupHandle).then(function () {
+			$scope.addToPendingList = function (user, groupHandle) {
+				GroupService.addToGroupPendingMembersList(user._id, groupHandle).then(function () {
 					ngToast.create({
 						className: 'success',
 						content: 'Group Join Request was successfully sent.'
 					});
 
-					$scope.groupPendingMembers.push(userID);
-					$scope.selectedGroup.pendingMembers.push(userID);
+					$scope.groupPendingMembers.push(user);
+					$scope.selectedGroup.pendingMembers.push(user._id);
 				}, function () {
 					ngToast.create({
 						className: 'danger',
