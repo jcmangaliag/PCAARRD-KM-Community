@@ -2,7 +2,7 @@ import multerFileUpload from '../config/shared.server.multer-files-config.js';
 import multerImageUpload from '../config/shared.server.multer-image-config.js';
 
 const sharedControls = { 
-	uploadFile: (req, res) => {
+	uploadFile: (req, res) => {    // upload a file
 	   multerFileUpload(req, res, (err) => {
         if (err) {
             if (err.code === 'LIMIT_FILE_SIZE') {
@@ -19,7 +19,7 @@ const sharedControls = {
         }
     });
   },
-  uploadImage: (req, res) => {
+  uploadImage: (req, res) => {  // upload an image
     multerImageUpload(req, res, (err) => {
         if (err) {
             if (err.code === 'LIMIT_FILE_SIZE') {

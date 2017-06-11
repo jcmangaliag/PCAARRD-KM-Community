@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 const User = mongoose.model('User');
 
 const userControls = { 
-	listOne : (req, res) => {
+	listOne : (req, res) => {	// get one user
 		const userID = req.params.userID;
 
 		User.findOne({_id: userID}, (err, result) => {
@@ -15,21 +15,21 @@ const userControls = {
 			res.send({user: result});
 		});
 	},
-	list : (req, res) => {
+	list : (req, res) => {	// get all users
 		User.find((err, results) => {
 	        if (err) { return (err); }
 
 	        res.send({ users: results });
 	    });
 	},
-	listByGroup : (req, res) => {
+	listByGroup : (req, res) => {	// get users by group
 		User.find({groupsJoined: req.params.groupHandle}, (err, results) => {
 	        if (err) { return (err); }
 
 	        res.send({ users: results });
 	    });
 	},
-	listByGroupAdminstrators : (req, res) => {
+	listByGroupAdminstrators : (req, res) => {	// get users by group admins
 		const groupAdminsList = req.params.groupAdminsID.split(',');
 
 		User.find({_id: {$in: groupAdminsList}}, (err, results) => {
@@ -38,7 +38,7 @@ const userControls = {
 	        res.send({ users: results });
 	    });
 	},
-	listByGroupPendingMembers : (req, res) => {
+	listByGroupPendingMembers : (req, res) => {	// get users by pending members
 		const groupPendingMembersList = req.params.groupPendingMembersID.split(',');
 
 		User.find({_id: {$in: groupPendingMembersList}}, (err, results) => {
@@ -47,7 +47,7 @@ const userControls = {
 	        res.send({ users: results });
 	    });
 	},
-	updateOne : (req, res) => {
+	updateOne : (req, res) => {	// modify a user
 		const userID = req.params.userID;
 
 		User.findOneAndUpdate({_id: userID}, { $set: req.body }, (err) => {
@@ -56,7 +56,7 @@ const userControls = {
 			res.send("User updated.");
 		});
 	},
-	joinGroup : (req, res) => {
+	joinGroup : (req, res) => {	// add a group to user's groupjoined
 		const userID = req.params.userID;
 		const groupHandle = req.params.groupHandle;
 
@@ -66,7 +66,7 @@ const userControls = {
 			res.send("User joined a group.");
 		});
 	},
-	leaveGroup : (req, res) => {
+	leaveGroup : (req, res) => {	// remove a group to user's groupjoined
 		const userID = req.params.userID;
 		const groupHandle = req.params.groupHandle;
 

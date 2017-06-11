@@ -60,17 +60,17 @@ let UserSchema = mongoose.Schema({
 	groupsJoined: Array
 });
 
-UserSchema.methods.setPassword = function(password) {
+UserSchema.methods.setPassword = function(password) {	// set user's hash and salt
   this.salt = crypto.randomBytes(16).toString('hex');
   this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');
 }
 
-UserSchema.methods.validPassword = function(password) {
+UserSchema.methods.validPassword = function(password) {	// check hash equality
   const hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');
   return this.hash === hash;
 }
 
-UserSchema.methods.generateJwt = function() {
+UserSchema.methods.generateJwt = function() {	// create token
   let expiry = new Date();
   expiry.setDate(expiry.getDate() + 1);
 

@@ -8,18 +8,20 @@ import mongoDB from './config/core.server.db';
 import moduleRoutes from './routes/core.server.routes';
 
 const app = express();
-app.use(favicon(path.join(`${__dirname} /../../../client/core/assets`, 'images', 'favicon.ico')));
+const rootDirectory = `${__dirname} /../../..`;
+
+app.use(favicon(path.join(`${rootDirectory}/client/core/assets`, 'images', 'favicon.ico')));
 app.use(bodyParser.json());
 app.use(passport.initialize());
 
 moduleRoutes(app);
 
-app.use(express.static(`${__dirname} /../../../public`));
-app.use(express.static(`${__dirname} /../../../client`));
-app.use(express.static(`${__dirname} /../../../uploads`));
+app.use(express.static(`${rootDirectory}/public`));
+app.use(express.static(`${rootDirectory}/client`));
+app.use(express.static(`${rootDirectory}/uploads`));
 
 app.all('/*', (req, res) => {
-	res.sendFile(path.join(`${__dirname}/../../../client/core/base-view/core-content.client.view.html`));
+	res.sendFile(path.join(`${rootDirectory}/client/core/base-view/core-content.client.view.html`));
 });
 
 app.listen(appConfig.port, () => {

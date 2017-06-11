@@ -1,14 +1,14 @@
 import GroupClassification from '../models/groups-classification.server.model';
 
 const groupClassificationControls = { 
-	list : (req, res) => {
+	list : (req, res) => {	// get all group classifications
 		GroupClassification.find((err, results) => {
 	        if (err) { return (err); }
 
 	        res.send({ groupClassifications: results });
 	    });
 	},
-	post : (req, res) => {
+	post : (req, res) => {	// post a group classification
 		const classification = new GroupClassification(req.body);
 		classification.save((err) => {
 			if (err) { return (err); }
@@ -16,7 +16,7 @@ const groupClassificationControls = {
 			res.send('Group Classification saved.');
 		});
 	},
-	updateOne : (req, res) => {
+	updateOne : (req, res) => {	// modify a group classification
 		const id = req.params.id;
 
 		GroupClassification.findByIdAndUpdate(id, { $set: req.body }, (err) => {
@@ -25,7 +25,7 @@ const groupClassificationControls = {
 			res.send("Group Classification updated.");
 		});
 	},
-	removeOne : (req, res) => {
+	removeOne : (req, res) => {	// delete a group classification
 		const id = req.params.id;
 
 		GroupClassification.findByIdAndRemove(id, (err, result) => {

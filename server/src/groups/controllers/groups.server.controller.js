@@ -3,14 +3,14 @@ import Post from '../../posts/models/posts.server.model';
 import User from '../../users/models/users.server.model';
 
 const groupControls = { 
-	list : (req, res) => {
+	list : (req, res) => {	// get all groups
 		Group.find((err, results) => {
 	        if (err) { return (err); }
 
 	        res.send({ groups: results });
 	    });
 	},
-	listByMyGroups : (req, res) => {
+	listByMyGroups : (req, res) => {	// get groups joined by user
 	    const userID = req.params.userID;
 
 		User.findOne({_id: userID}, (err, result) => {
@@ -27,7 +27,7 @@ const groupControls = {
 		    });
 		});
 	},
-	listByDiscoverGroups : (req, res) => {
+	listByDiscoverGroups : (req, res) => {	// get groups not joined by user
 		const userID = req.params.userID;
 
 		User.findOne({_id: userID}, (err, result) => {
@@ -44,7 +44,7 @@ const groupControls = {
 		    });
 		});
 	},
-	listSome : (req, res) => {
+	listSome : (req, res) => {	// get all groups details of given group handles
 		const handles = req.params.handles.split(',');
 
 		Group.find({handle: {$in: handles}}, (err, results) => {
@@ -53,21 +53,21 @@ const groupControls = {
 		    res.send({groups: results });
 		});
 	},
-	listAdministeredGroups  : (req, res) => {
+	listAdministeredGroups  : (req, res) => {	// get all administered groups of user
 		Group.find({admin: req.params.userID}, (err, results) => {
 			if (err) { return (err); }
 
 		    res.send({groups: results });
 		});
 	},
-	listPendingGroups  : (req, res) => {
+	listPendingGroups  : (req, res) => {	// get all pending groups of user
 		Group.find({pendingMembers: req.params.userID}, (err, results) => {
 			if (err) { return (err); }
 
 		    res.send({groups: results });
 		});
 	},
-	listByGroupSearch: (req, res) => {
+	listByGroupSearch: (req, res) => {	// using query, search groups by name, description or tech handle used in posts (e.g. ../all?name=banana)
 		let query = {};
 
 		if (req.query.name){
@@ -98,7 +98,7 @@ const groupControls = {
 		    });
 		}
 	},
-	listOne : (req, res) => {
+	listOne : (req, res) => {	// get one group
 		const handle = req.params.handle;
 
 		Group.findOne({handle}, (err, result) => {
@@ -111,7 +111,7 @@ const groupControls = {
 			res.send({group: result});
 		});
 	},
-	post : (req, res) => {
+	post : (req, res) => {	// post one group
 		const group = new Group(req.body);
 		group.save((err) => {
 			if (err) { return (err); }
@@ -119,7 +119,7 @@ const groupControls = {
 			res.send('Group saved.');
 		});
 	},
-	updateOne : (req, res) => {
+	updateOne : (req, res) => {	// modify one group
 		const handle = req.params.handle;
 
 		Group.findOneAndUpdate({handle}, { $set: req.body }, (err) => {
@@ -128,7 +128,7 @@ const groupControls = {
 			res.send("Group updated.");
 		});
 	},
-	removeOne : (req, res) => {
+	removeOne : (req, res) => {	// delete one group
 		const handle = req.params.handle;
 
 		Group.findOneAndRemove({handle}, (err, result) => {
@@ -137,7 +137,7 @@ const groupControls = {
 			res.send("Group deleted.");
 		});
 	},
-	addAdmin : (req, res) => {
+	addAdmin : (req, res) => {	// add one admin to group
 		const userID = req.params.userID;
 		const handle = req.params.handle;
 
@@ -147,7 +147,7 @@ const groupControls = {
 			res.send("Group added an admin.");
 		});
 	},
-	removeAdmin : (req, res) => {
+	removeAdmin : (req, res) => {	// remove one admin to group
 		const userID = req.params.userID;
 		const handle = req.params.handle;
 
@@ -157,7 +157,7 @@ const groupControls = {
 			res.send("Group removed an admin.");
 		});
 	},
-	addToPendingMembers : (req, res) => {
+	addToPendingMembers : (req, res) => {	// add one pending member to group
 		const userID = req.params.userID;
 		const handle = req.params.handle;
 
@@ -167,7 +167,7 @@ const groupControls = {
 			res.send("Group added a pending member.");
 		});
 	},
-	removeFromPendingMembers : (req, res) => {
+	removeFromPendingMembers : (req, res) => {	// remove one pending member to group
 		const userID = req.params.userID;
 		const handle = req.params.handle;
 

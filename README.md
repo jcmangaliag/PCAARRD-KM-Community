@@ -1,5 +1,5 @@
 # PCAARRD KM Community
-A web application that allows its users to see, create, and join virtual spaces/groups for PCAARRD's commodities and regional consortia. Once a user becomes part of a group, he or she can participate in the group's discussions by posting, commenting, and reacting. Every group must have at least one group administrator, the one who can perform group administrative privileges. These privileges are editing group information, changing membership type, and etc.
+A web application that allows its users to see, create, and join virtual spaces/groups related to PCAARRD's commodities and regional consortia. Once a user becomes part of a group, he or she can participate in the group's discussions by posting, commenting, and reacting. Every group must have at least one group administrator, the one who can perform group administrative privileges. These privileges are editing group information, changing membership type, and etc.
 
 Categorized posting is implemented in this website. It is a feature that allows members to post a question, news, report, event, advertisement, media, or others in their groups. When viewing posts, they can choose to view posts in all categories or they can only view posts in one chosen category.
 

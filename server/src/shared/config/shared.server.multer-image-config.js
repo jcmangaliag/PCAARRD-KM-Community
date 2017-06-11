@@ -19,7 +19,7 @@ const imageFilter = (req, file, cb) => {
 
 const imageUpload = multer({
     	storage,
-    	limits: { fileSize: 10000000 },
+    	limits: { fileSize: 10000000 }, /* max 10mb per file */
     	fileFilter: imageFilter
 	}).single('sharedUploadPhoto');
 

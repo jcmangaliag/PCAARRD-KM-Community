@@ -4,7 +4,7 @@ import crypto from 'crypto';
 let User = mongoose.model('User');
 
 const userAuthControls = { 
-	register : (req, res) => {
+	register : (req, res) => {	// add user
 		let user = new User(req.body.userFormData);
 		user.setPassword(req.body.password);
 		if (req.body.enteredKey){
@@ -21,7 +21,7 @@ const userAuthControls = {
 			res.status(200).json({"token": token});
 		});
 	},
-	login : (req, res) => {
+	login : (req, res) => {	// login user
 	  passport.authenticate('local', (err, user, info) => {
 	    // If Passport throws/catches an error
 	    if (err) {
@@ -39,7 +39,7 @@ const userAuthControls = {
 	    }
 	  })(req, res);
 	},
-	allowAdminRegistration: (req, res) => {
+	allowAdminRegistration: (req, res) => {	// check valid admin reg key
 		const enteredHash = crypto.pbkdf2Sync(req.body.enteredKey, process.env.ADMIN_REG_ACCESS_SALT, 1000, 64).toString('hex');
 		if (enteredHash === process.env.ADMIN_REG_ACCESS_HASH){
 			res.status(200).json({"allow": true});
