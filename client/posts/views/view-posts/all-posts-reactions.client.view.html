@@ -1,8 +1,10 @@
+<!-- Reactions in several Posts -->
 <h5 style="display: inline; padding-right:3%;" ng-repeat="reaction in post.reactions track by $index">
+    <!-- Comment icon/button, has own ng-click function -->
     <i title="Comment" ng-if="$first" ng-click="commentOnOnePost(post.groupBelonged, post.category, post._id);" class="fa fa-comment-o fa-2x" aria-hidden="true" style="cursor: pointer;" ng-style="highlightReaction(reaction)? { 'color':'#286090' } : { 'color': '#333333' }"></i>
-
+    <!-- thumbs up, happy, sad icon/button -->
     <i title="{{reaction.name}}" ng-if="!$first" ng-click="onSetPostReaction(post, $index)" class="fa fa-2x" ng-class="{'fa-thumbs-o-up' : reaction.name=='thumbsUp', 'fa-smile-o': reaction.name=='happy', 'fa-frown-o': reaction.name=='sad'}" aria-hidden="true" style="cursor: pointer;" ng-style="highlightReaction(reaction)? { 'color':'#286090' } : { 'color': '#333333' }"></i>
-
+    <!-- reaction count -->
     <a href="#" style="margin-left: 1%; color: #333333;" data-toggle="modal" data-target="#{{post._id + reaction.name}}">{{reaction.count}}</a>
 
     <div class="modal fade" id="{{post._id + reaction.name}}" tabindex="-1" role="dialog">

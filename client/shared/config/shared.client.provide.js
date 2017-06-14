@@ -10,7 +10,7 @@
 	function provide ($provide) {
 		$provide.decorator('$uiViewScroll', function ($delegate) {
 		    return function (uiViewElement) {
-		        window.scrollTo(0, 0);	// scrolls to top when ui-view autoscroll is true
+		        window.scrollTo(0, 0);	// scrolls to top of page when ui-view autoscroll is true
 		    }; 
 		  });
 	}

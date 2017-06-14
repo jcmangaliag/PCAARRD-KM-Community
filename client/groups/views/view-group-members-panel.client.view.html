@@ -1,3 +1,4 @@
+<!-- Pending Group Members Panel -->
 <div ng-if="user.currentUser && (selectedGroup.admin.indexOf(user.currentUser._id) > -1 || user.currentUser.isAdmin)" class="post-ads" style="margin-bottom: 25px; background-color: white; border-radius: 5px; padding: 15px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
   <h4>Pending Member<span ng-if="groupPendingMembers.length > 1">s</span> <span class="badge" style="font-size: 14px;">{{groupPendingMembers.length}}</span></h4><hr />
   <div style="margin: auto; max-height: 200px; overflow-y: auto;">
@@ -57,7 +58,7 @@
     </ul>
 	</div>
 </div>
-
+<!-- Group Administrators Panel -->
 <div class="post-ads" style="margin-bottom: 25px; background-color: white; border-radius: 5px; padding: 15px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
   <h4>Administrator<span ng-if="groupAdmins.length > 1">s</span> <span class="badge" style="font-size: 14px;">{{groupAdmins.length}}</span></h4><hr />
   <div style="margin: auto; max-height: 200px; overflow-y: auto;">
@@ -95,7 +96,7 @@
     </ul>
 	</div>
 </div>
-
+<!-- Group Members Panel -->
 <div ng-if="user.currentUser && ((user.currentUser.groupsJoined.indexOf(selectedGroup.handle) > -1) || user.currentUser.isAdmin)" class="post-ads" style="margin-bottom: 25px; background-color: white; border-radius: 5px; padding: 15px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
   <h4>Member<span ng-if="groupMembers.length > 1">s</span> <span class="badge" style="font-size: 14px;">{{groupMembers.length}}</span></h4><hr />
   <div style="margin: auto; max-height: 400px; overflow-y: auto;">

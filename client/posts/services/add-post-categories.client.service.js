@@ -40,7 +40,7 @@
 			}
 		];
 
-		let currentAddPostCategory = {
+		let currentAddPostCategory = {	// selected add post category
 			postCategory: addPostCategories[0]
 		}
 
@@ -52,7 +52,7 @@
 			return currentAddPostCategory;
 		}
 
-		const setCurrentAddPostCategory = (category) => {
+		const setCurrentAddPostCategory = (category) => {	// sets the selected add post category
 			const categoryIndex = addPostCategories.map((postCategory) => postCategory.category).indexOf(category);
 			currentAddPostCategory.postCategory = addPostCategories[categoryIndex];
 		}

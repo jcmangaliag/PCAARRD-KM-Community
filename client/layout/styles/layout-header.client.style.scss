@@ -1,13 +1,5 @@
 layout-header {
 	display: block;
-	//padding: 2.32em;
-}
-
-.notification {
-	&__count {
-		font-weight: bolder; 
-		font-size: 1.3em;
-	}
 }
 
 .user-profile {
@@ -24,23 +16,6 @@ layout-header {
 
 .affix-top {
   width: 100%;
-}
-
-
-.fa-stack[data-count]:after{
-  position:absolute;
-  right:0%;
-  top:1%;
-  content: attr(data-count);
-  font-size:60%;
-  padding:.3em;
-  border-radius:999px;
-  line-height:.75em;
-  color: white;
-  background:rgba(200,0,0,.85);
-  text-align:center;
-  min-width:2em;
-  font-weight:bold;
 }
 
 #user-option-dropdown::before {
@@ -65,7 +40,7 @@ layout-header {
     top: -7px;
 }
 
-@media (max-width: 1170px) {
+@media (max-width: 1170px) {  // making the first header responsive; collapsing at 1170px
     .navbar-header {
         float: none;
     }

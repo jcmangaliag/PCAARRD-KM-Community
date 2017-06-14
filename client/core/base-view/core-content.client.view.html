@@ -10,12 +10,13 @@
 	<body>
 		<div class="container-fluid">
 			<div class="row">
+				<!-- site headers -->
 				<div class="col-sm-12 col-md-12" style="padding: 0;">
 					<layout-header></layout-header>
 				</div>
 
 				<toast style="position:fixed; top: 70px; right: 50px; z-index: 400;"></toast>
-				
+				<!-- site body -->
 				<div class="container-fluid">
 					<div class="col-sm-12 col-md-12 ">
 						<div ui-view autoscroll="true"></div>
@@ -23,6 +24,7 @@
 				</div>
 			</div>
 		</div>
+		<!-- site footer -->
 		<layout-footer></layout-footer>
 		<script src="bundle.js"></script>
 	</body>

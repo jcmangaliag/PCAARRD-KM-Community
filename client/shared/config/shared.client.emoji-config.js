@@ -10,7 +10,7 @@ import _ from 'lodash/lodash.min';
 	sharedEmoji.$inject = ['emojiConfigProvider'];
 
 	function sharedEmoji (emojiConfigProvider) {
-
+		// emoji aliases that can be used in some text forms
 		const emojiList = [
 			{ emoji: "smile", alias: ":)" },
 			{ emoji: "grinning", alias: ":D" },

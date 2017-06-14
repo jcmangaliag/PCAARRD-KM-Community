@@ -19,7 +19,7 @@
 			return groupClassificationListCopy;
 		}
 
-		const getAllGroupClassifications = () => {
+		const getAllGroupClassifications = () => {	// store all group classifications in groupClassificationList
 			const deferred = $q.defer();
 
 			$http.get('/api/groups/classifications')
@@ -34,7 +34,7 @@
 			return deferred.promise;
 		}
 
-		const submitGroupClassification = (addGroupClassificationFormData) => {
+		const submitGroupClassification = (addGroupClassificationFormData) => {	// add group classification
 			const deferred = $q.defer();
 
 			$http.post('/api/groups/classifications', addGroupClassificationFormData)

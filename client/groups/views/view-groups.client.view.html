@@ -1,9 +1,11 @@
 <section id="my-groups">
 	<div style="padding: 15px; background-color: white; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 		<div class="row">
+			<!-- group categories dropdown -->
 			<div class="col-xs-12 col-sm-6" style="margin-top: 10px;">
 				<view-groups-categories></view-groups-categories>
 			</div>
+			<!-- filter groups -->
 			<div class="col-xs-12 col-sm-6" style="margin-top: 10px;">
 				<div class="input-group pull-right">
 					<span class="input-group-addon"><i class="fa fa-filter" aria-hidden="true"></i></span>
@@ -14,6 +16,7 @@
 		<hr />
 
 		<div class="row">
+			<!-- list of groups -->
 			<div ng-repeat="group in groups.contents | orderBy: 'name' | limitTo: paginate.pageLimit(paginate.currentPage, paginate.groupsPerPage)" class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="padding: 1%;">
 				<div class="row">
 					<div class="col-xs-3" style="text-align: right;">
@@ -32,7 +35,7 @@
 				</div>
 			</div>
 		</div>
-
+		<!-- groups pagination -->
 		<div ng-if="paginate.hasMoreItems(paginate.currentPage, paginate.groupsPerPage, groups.contents.length)" class="text-center" style="margin-bottom:10px;">
 			<hr />
 			<button ng-click="paginate.loadMoreItems(paginate)" style="width: 50%;" type="button" class="btn btn-primary">See More Groups</button>

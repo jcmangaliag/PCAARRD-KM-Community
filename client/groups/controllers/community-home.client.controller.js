@@ -27,7 +27,7 @@ import _ from 'lodash/lodash.min';
 		    	});
     	}
 
-		$scope.loadUserGroups = (selectedUser) => {
+		$scope.loadUserGroups = (selectedUser) => {	// used in landing page where count of groups is stated
 			if (selectedUser.groupsJoined.length > 0){	
 				GroupService.getSomeGroups(selectedUser.groupsJoined)
 					.then((groups) => {

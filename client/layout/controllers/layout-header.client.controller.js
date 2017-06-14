@@ -10,24 +10,17 @@ import _ from 'lodash/lodash.min';
 	HeaderController.$inject = ['$scope', 'UserAuthenticationService', '$window'];
 
 	function HeaderController ($scope, UserAuthenticationService, $window) {
-		$scope.options = {
-			showOptions: false
-		}
-
-		$scope.toggleOptions = () =>{
-			$scope.options.showOptions = !$scope.options.showOptions;
-		}
 
 		$scope.user = {
 			logout: UserAuthenticationService.logout
 		}
 
-		$scope.$watch(() => {
+		$scope.$watch(() => {	// watches current logged in user
 		    return UserAuthenticationService.getCurrentUserID();
 		}, (userID) => {
 			$scope.user.isLoggedIn = UserAuthenticationService.isLoggedIn();
 			if ($scope.user.isLoggedIn){
-				$scope.eResourcesAccess = "downloads";
+				$scope.eResourcesAccess = "downloads";	// e-resources link changes if logged in
 				if ($scope.user.currentUser && userID && $scope.user.currentUser._id != userID){
 					// if the page is not updated with the current user, it will reload to update
 					$window.location.reload();
@@ -35,7 +28,7 @@ import _ from 'lodash/lodash.min';
 
 				UserAuthenticationService.getCurrentUser()
 			    	.then((result)=> {
-			    		$scope.user.currentUser = result;	
+			    		$scope.user.currentUser = result;	// gets all information about current user
 			    	});
 			} else {
 				$scope.user.currentUser = null;

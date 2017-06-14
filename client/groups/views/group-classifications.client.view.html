@@ -1,15 +1,18 @@
 <section id="group-classifications">
+	<!-- view, edit, delete group classifications panel-->
 	<div style="padding: 15px; background-color: white; margin: 0 auto 25px; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 		<div class="row">
 			<div class="col-xs-12 col-sm-6" style="margin-top: 10px;">
 				<h3 style="margin: 0;"><i class="fa fa-list-alt" aria-hidden="true"></i> Group Classification<span ng-if="groupClassifications.contents.length > 1">s</span> <span class="badge" style="font-size: 14px;">{{groupClassificationsCopy.contents.length}}</span></h3>
 			</div>
+			<!-- Group Classifications Filter -->
 			<div class="col-xs-12 col-sm-6" style="margin-top: 10px;">
 				<div class="input-group pull-right">
 					<span class="input-group-addon"><i class="fa fa-filter" aria-hidden="true"></i></span>
 					<input type="text" ng-model="searchClassificationsValue" style="display: inline-block;" class="form-control" placeholder="Filter Group Classifications">
 				</div>
 			</div>
+			<!-- Group Classifications Filter Result -->
 			<div class="col-xs-12 col-lg-12" style="margin-top: 10px;">
 			  <div ng-if="searchClassificationsValue">
 			    <h4>{{groupClassifications.contents.length}} classification<span ng-if="groupClassifications.contents.length > 1">s</span> contain<span ng-if="groupClassifications.contents.length < 2">s</span> "<span style="font-style: italic;">{{searchClassificationsValue}}</span>"</h4>
@@ -19,6 +22,7 @@
 		<hr />
 		<div class="table-responsive">
 			<table class="table table-bordered table-striped table-hover">
+				<!-- table header -->
 			    <thead>
 			      <tr>
 			      	<th>
@@ -56,8 +60,9 @@
 			      <tr ng-repeat="groupClassification in groupClassifications.contents | orderBy: sortGroupClassificationBy: sortReverse | limitTo: paginate.pageLimit(paginate.currentPage, paginate.classificationsPerPage)">
 
 			      	<td>{{groupClassification.type}}</td>
-
+			      	<!-- when not editing group classification industry -->
 			        <td ng-if="!(isEditingClassification(groupClassification._id) && editType ==='industry-based')">{{groupClassification.industry}} <span ng-if="!groupClassification.industry">-</span> </td>
+			        <!-- when editing group classification industry -->
 			        <td ng-if="isEditingClassification(groupClassification._id) && editType ==='industry-based'"><input type="text" class="form-control" placeholder="Enter the industry" ng-model="editedGroupClassificationFormData.industry" ng-style="!editedGroupClassificationFormData.industry? { 'border-color': 'red'}:'' " /></td>
 
 
@@ -107,7 +112,7 @@
 			<button ng-click="paginate.loadMoreItems(paginate)" style="width: 50%;" type="button" class="btn btn-primary" >See More Classifications</button>
 		</div>
 	</div>
-
+	<!-- modal for delete group classification -->
 	<div ng-repeat="groupClassification in groupClassifications.contents" class="modal fade" id="{{'delete' + groupClassification._id}}" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -125,7 +130,7 @@
         </div>
       </div>
     </div>
-
+    <!-- modal for unable to edit or delete group classification -->
     <div class="modal fade" id="disabled-modification" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">

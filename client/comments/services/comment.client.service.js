@@ -26,7 +26,7 @@ import _ from 'lodash/lodash.min';
 			});
 		}
 
-		const getCommentsLengthByGroupBelonged = (groupHandle) => {
+		const getCommentsLengthByGroupBelonged = (groupHandle) => {	// get number of comments in a group
 			const deferred = $q.defer();
 
 			$http.get(`/api/comments/groupBelonged/${groupHandle}/length`)
@@ -39,7 +39,7 @@ import _ from 'lodash/lodash.min';
 			return deferred.promise;
 		}
 
-		const getCommentsByUser = (referredPost, userID) => {
+		const getCommentsByUser = (referredPost, userID) => {	// get comments of a post and user
 			const deferred = $q.defer();
 
 			$http.get(`/api/comments/referredPost/${referredPost}/commentedBy/${userID}`)
@@ -52,7 +52,7 @@ import _ from 'lodash/lodash.min';
 			return deferred.promise;
 		}
 
-		const getCommentsLengthByOneUser = (userID) => {
+		const getCommentsLengthByOneUser = (userID) => {	// get number of comments of user
 			const deferred = $q.defer();
 
 			$http.get(`/api/comments/commentedBy/${userID}/length`)
@@ -90,7 +90,7 @@ import _ from 'lodash/lodash.min';
 			});
 		}
 
-		const setCommentReaction = (comment, reactionIndex, currentUser) => {
+		const setCommentReaction = (comment, reactionIndex, currentUser) => {	// modify comment's reactions
 			let reactions = comment.reactions;
 			const reactionsLength = reactions.length;
 			let duplicateReactionIndex = -1;
@@ -122,7 +122,7 @@ import _ from 'lodash/lodash.min';
 			});
 		}
 
-		const deleteCommentsByReferredPost = (postID) => {
+		const deleteCommentsByReferredPost = (postID) => {	// delete all comments of a post
 			$http.delete(`/api/comments/referredPost/${postID}`)
 			.then(response => {	
 
@@ -134,7 +134,7 @@ import _ from 'lodash/lodash.min';
 
 			$http.delete(`/api/comments/${comment._id}`)
 			.then((response) => {	
-				getComments(comment.referredPost);
+				getComments(comment.referredPost);	// updates the post's comments
 
 				ngToast.create({
 		    		className: 'success',

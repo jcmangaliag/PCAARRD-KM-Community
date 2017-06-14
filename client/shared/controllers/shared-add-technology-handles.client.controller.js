@@ -19,7 +19,7 @@ import _ from 'lodash';
 		$scope.loadingTechnologiesBarON = true;
 
 		SharedTechnologyHandlesService.getTechnologies()
-			.then((technologies) => {
+			.then((technologies) => {	// get technologies from API on other site
 				_.forEach(technologies, (technology) => $scope.technologiesList.push(technology.title));
 				$scope.loadingTechnologiesBarON = false;
 			}, (error) => {

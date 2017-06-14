@@ -15,31 +15,31 @@ import _ from 'lodash/lodash.min';
 		$scope.paginate = SharedPaginationService;
 		$scope.paginate.currentPage = 1;
 		$scope.paginate.groupsPerPage = 10;
-		$scope.sortGroupBy = ['name'];
+		$scope.sortGroupBy = ['name'];	// used in sorting the group statistics table
 		$scope.sortReverse = false;
 		$scope.trendingTopics = { selectedMonth: moment().format('MMMM'), selectedYear: moment().format('YYYY')};
 		$scope.activeGroups = { startMonth: moment.months()[0], startYear: moment().format('YYYY'), endMonth: moment().format('MMMM'), endYear: moment().format('YYYY')};
 
-		$scope.changeSort = (groupFields) => {
-			$scope.sortReverse = (_.isEqual($scope.sortGroupBy, groupFields))? !$scope.sortReverse : true;
+		$scope.changeSort = (groupFields) => {	// only allows changing sort when same field is clicked twice
+			$scope.sortReverse = (_.isEqual($scope.sortGroupBy, groupFields))? !$scope.sortReverse : true;	// default sort is reverse when clicking other fields
 			$scope.sortGroupBy = groupFields;
 		} 
 
-		$scope.$watch('searchGroupsStatisticsValue', function(value){ 
+		$scope.$watch('searchGroupsStatisticsValue', function(value){ // used in filter group statistics
 			if ($scope.groups){
 				$scope.groups = $filter('filter')($scope.groupsCopy, value);
 				$scope.paginate.currentPage = 1;
 			}
     	});
 
-		$scope.loadAllData = () => {
+		$scope.loadAllData = () => {	// loads all data needed in the dashboard and starts building the analytics
 			$q.all([	// parallel data loading
 				GroupService.getAllGroups(),
 				PostService.getAllPosts(),
 				UserService.getAllUsers()
 			]).then((results) => {
 				$scope.groups = results[0];
-				$scope.groupsCopy = _.toArray(results[0]);
+				$scope.groupsCopy = _.toArray(results[0]);	// used in filter group statistics
 				$scope.posts = results[1];
 				$scope.users = results[2];
 
@@ -54,7 +54,7 @@ import _ from 'lodash/lodash.min';
 
 		$scope.loadAllData();
 
-		$scope.getAllMonths = () => {
+		$scope.getAllMonths = () => {	// array of January, February....
 			return moment.months();
 		}
 
@@ -63,17 +63,17 @@ import _ from 'lodash/lodash.min';
 			for (let i = moment().get('year'); i > 2015; i--){
 				years.push(i);
 			}
-			return years;
+			return years;	// 2016 - current year
 		}
 
-		$scope.computeAnalytics = () => {
+		$scope.computeAnalytics = () => {	// gets the data for all charts
 			$scope.computeTopActiveGroups($scope.activeGroups.startMonth, $scope.activeGroups.startYear, $scope.activeGroups.endMonth, $scope.activeGroups.endYear);
 			$scope.computeTrendingTopics($scope.trendingTopics.selectedMonth, $scope.trendingTopics.selectedYear);
 			$scope.computeTopPopularGroups();
 			$scope.computeGroupsDistribution();
 		}
 
-		$scope.validStartEndDate = (startMonth, startYear, endMonth, endYear) => {
+		$scope.validStartEndDate = (startMonth, startYear, endMonth, endYear) => {	// start date should be earlier than end date
 			return moment(`${startMonth} ${startYear}`, 'MMMM YYYY') <= moment(`${endMonth} ${endYear}`, 'MMMM YYYY');
 		}
 
@@ -91,14 +91,14 @@ import _ from 'lodash/lodash.min';
 			);
 		}
 
-		$scope.retrievePostsOnSelectedDate = (selectedMonth, selectedYear) => {
+		$scope.retrievePostsOnSelectedDate = (selectedMonth, selectedYear) => {	// all posts on selected date
 			return $scope.posts.filter((post) =>
 				(moment(post.datePosted, 'MMMM Do YYYY, h:mm:ss a').format('MMMM') == selectedMonth) && 
 				(moment(post.datePosted, 'MMMM Do YYYY, h:mm:ss a').format('YYYY') == selectedYear)
 			);
 		}
 
-		$scope.retrieveUserAge = (user) => {
+		$scope.retrieveUserAge = (user) => {	// current date - birth date
 			return moment().diff(moment(user.birthdate, 'MMMM D YYYY'), 'years');
 		}
 

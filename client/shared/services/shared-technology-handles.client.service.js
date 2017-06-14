@@ -11,7 +11,7 @@ import _ from 'lodash';
 
 	function SharedTechnologyHandlesService ($http, $q) {
 
-		const getTechnologies = () => {
+		const getTechnologies = () => {	// get all technologies from other API
 			const deferred = $q.defer();
 
 			$http.get(`https://technology-dashboard-api.herokuapp.com/technologies`)

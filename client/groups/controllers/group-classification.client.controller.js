@@ -15,7 +15,7 @@ import _ from 'lodash/lodash.min';
 
 		$scope.addGroupClassificationFormData = {};
 
-		$scope.isp = { 
+		$scope.isp = { 	// for r&d and tech transfer-based groups isp
 			enable: false
 		};
 
@@ -48,7 +48,7 @@ import _ from 'lodash/lodash.min';
 
 		// Industry-based Classification
 
-		$scope.validateExistingGroupClassification = (formData) => {
+		$scope.validateExistingGroupClassification = (formData) => {	// checks for existing specific commodity and isp
 			GroupClassificationService.getAllGroupClassifications();
 
 			return $scope.groupClassifications.contents.map((item) => {
@@ -73,7 +73,7 @@ import _ from 'lodash/lodash.min';
 					$scope.addGroupClassificationFormData.specificCommodity = null;
 
 				GroupClassificationService.submitGroupClassification($scope.addGroupClassificationFormData)
-				.then(() => {
+				.then(() => {	// after adding group classification
 					$scope.clearGroupClassificationForm();
 					$scope.clearISPs();
 				});
@@ -88,7 +88,7 @@ import _ from 'lodash/lodash.min';
 
 		// R&D and Tech Transfer-based Classification
 
-		$scope.validateExistingRDClassification = (formData) => {
+		$scope.validateExistingRDClassification = (formData) => {	// checks for existing organization
 			GroupClassificationService.getAllGroupClassifications();
 
 			return $scope.groupClassifications.contents.map((item) => { 
@@ -109,12 +109,12 @@ import _ from 'lodash/lodash.min';
 				$scope.addGroupClassificationFormData.isUsed = false;
 				$scope.addGroupClassificationFormData.type = "R&D and Tech Transfer-based";
 
-				if ($scope.isp.enable){
+				if ($scope.isp.enable){	// include isps in the group form if isp is enabled
 					$scope.addGroupClassificationFormData.isps = $scope.addedISPs;
 				}
 
 				GroupClassificationService.submitGroupClassification($scope.addGroupClassificationFormData)
-				.then(() => {
+				.then(() => {	// after adding group classification
 					$scope.clearGroupClassificationForm();
 					$scope.clearISPs();
 				});
@@ -136,33 +136,34 @@ import _ from 'lodash/lodash.min';
 
 		$scope.editedGroupClassificationFormData = null;
 		$scope.editType = null;
-		$scope.sortGroupClassificationBy = ['type', 'industry', 'sector', 'isp', 'specificCommodity', 'organization', 'isps[0]'];
+		$scope.sortGroupClassificationBy = ['type', 'industry', 'sector', 'isp', 'specificCommodity', 'organization', 'isps[0]'];	// initial sort
 		$scope.sortReverse = false;
 
-		$scope.changeSort = (groupClassificationFields) => {
+		$scope.changeSort = (groupClassificationFields) => {	// only allows changing sort when same field is clicked twice
 			$scope.sortReverse = (_.isEqual($scope.sortGroupClassificationBy, groupClassificationFields))? !$scope.sortReverse : false;
 			$scope.sortGroupClassificationBy = groupClassificationFields;
 		} 
 
-		$scope.getExistingGroupClassification = (existingGroupClassificationIndex) => {
+		$scope.getExistingGroupClassification = (existingGroupClassificationIndex) => {	// get info of the existing group classification
 			GroupClassificationService.getAllGroupClassifications();
 
 			return $scope.groupClassifications.contents[existingGroupClassificationIndex];
 		}
 		
-		$scope.onEditGroupClassification = (groupClassification) => {
+		$scope.onEditGroupClassification = (groupClassification) => {	// editType is set to determine what fields will be editable
 			$scope.editedGroupClassificationFormData = _.cloneDeep(groupClassification);
 			$scope.editType = groupClassification.type === "Industry-based"? "industry-based" : "rd-based";
 		}
 
-		$scope.isEditingClassification = (groupClassificationID) => {
+		$scope.isEditingClassification = (groupClassificationID) => {	// determining the classification to be edited
 			return $scope.editedGroupClassificationFormData && ($scope.editedGroupClassificationFormData._id === groupClassificationID);
 		}
 
 
-		$scope.onProcessEditedIndustryClassification = () => {
+		$scope.onProcessEditedIndustryClassification = () => {	// processing before modifying in the database
 			const existingGroupClassification = $scope.validateExistingGroupClassification($scope.editedGroupClassificationFormData);
-
+			// it will only allow changes if the edited classification is not similar to any existing classification
+			// if it's similar to any existing classification, the existing classification should be only itself
 			if (existingGroupClassification < 0 || $scope.getExistingGroupClassification(existingGroupClassification)._id === $scope.editedGroupClassificationFormData._id){	
 				const updatedFields = {
 					industry: $scope.editedGroupClassificationFormData.industry,
@@ -173,7 +174,7 @@ import _ from 'lodash/lodash.min';
 				updatedFields.specificCommodity = $scope.editedGroupClassificationFormData.specificCommodity || null;
 
 				GroupClassificationService.updateGroupClassification($scope.editedGroupClassificationFormData._id, updatedFields)
-				.then(() => {
+				.then(() => {	// after editing the classification in the database
 					$scope.editedGroupClassificationFormData = null;
 					$scope.editType = null;
 
@@ -193,9 +194,10 @@ import _ from 'lodash/lodash.min';
 			}
 		}
 
-		$scope.onProcessEditedRDClassification = () => {
+		$scope.onProcessEditedRDClassification = () => {	// processing before modifying in the database
 			const existingRDClassification = $scope.validateExistingRDClassification($scope.editedGroupClassificationFormData);
-
+			// it will only allow changes if the edited classification is not similar to any existing classification
+			// if it's similar to any existing classification, the existing classification should be only itself
 			if (existingRDClassification < 0 || $scope.getExistingGroupClassification(existingRDClassification)._id === $scope.editedGroupClassificationFormData._id){	
 				const updatedFields = {
 					organization: $scope.editedGroupClassificationFormData.organization,
@@ -203,7 +205,7 @@ import _ from 'lodash/lodash.min';
 				};
 
 				GroupClassificationService.updateGroupClassification($scope.editedGroupClassificationFormData._id, updatedFields)
-				.then(() => {
+				.then(() => {	// after editing the classification in the database
 					$scope.editedGroupClassificationFormData = null;
 					$scope.editType = null;
 
@@ -223,7 +225,7 @@ import _ from 'lodash/lodash.min';
 			}
 		}
 
-		$scope.onProcessEditedGroupClassification = () => {
+		$scope.onProcessEditedGroupClassification = () => {	// determines the appropriate on process edit function 
 			if (!UserAuthenticationService.isLoggedIn()){
 				UserAuthenticationService.loginFirst();
 				return;
@@ -236,7 +238,7 @@ import _ from 'lodash/lodash.min';
 			}
 		}
 
-		$scope.disableSave = () => {
+		$scope.disableSave = () => {	// for making the save button disabled and changing its color to gray
 			if ($scope.editedGroupClassificationFormData.type === "Industry-based"){
 				return (!$scope.editedGroupClassificationFormData.industry || !$scope.editedGroupClassificationFormData.sector || !$scope.editedGroupClassificationFormData.isp);
 			} else {
@@ -258,18 +260,18 @@ import _ from 'lodash/lodash.min';
 			GroupClassificationService.deleteOneGroupClassification(groupClassification);
 		}
 
-		$scope.goToGroup = (groupClassificationID) =>{
+		$scope.goToGroup = (groupClassificationID) => { // redirects to group 
 			const groupIndex = $scope.groups.contents.map((group) => group.classification._id).indexOf(groupClassificationID);
 			$state.go('oneGroup', {handle:  $scope.groups.contents[groupIndex].handle});
 		}
 
-		$scope.$watch('searchClassificationsValue', function(value){ 
+		$scope.$watch('searchClassificationsValue', function(value){ // used in filter group classifications
 			if ($scope.groupClassifications){
 				$scope.groupClassifications.contents = $filter('filter')($scope.groupClassificationsCopy.contents, value);
 				$scope.paginate.currentPage = 1;
 			}
     	});
-
+		// get the needed data for group classifications
 		GroupClassificationService.getAllGroupClassifications();
 		$scope.groupClassifications = GroupClassificationService.getGroupClassificationList();
 		$scope.groupClassificationsCopy = GroupClassificationService.getGroupClassificationListCopy();

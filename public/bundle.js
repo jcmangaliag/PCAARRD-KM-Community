@@ -13980,11 +13980,14 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	// used as page title
+
+	// needed by ngToast
 	(function () {
 		'use strict';
 
 		angular.module('shared', ['ngToast', 'ngAnimate', 'ngSanitize', 'dbaq.emoji', 'ui.router.title']);
-	})();
+	})(); // needed by ngToast
 
 /***/ }),
 /* 34 */
@@ -14403,7 +14406,7 @@
 		sharedToast.$inject = ['ngToastProvider'];
 
 		function sharedToast(ngToastProvider) {
-			ngToastProvider.configure({
+			ngToastProvider.configure({ // toast config
 				maxNumber: 3,
 				timeout: 3000,
 				animation: 'fade'
@@ -14431,7 +14434,7 @@
 		sharedEmoji.$inject = ['emojiConfigProvider'];
 
 		function sharedEmoji(emojiConfigProvider) {
-
+			// emoji aliases that can be used in some text forms
 			var emojiList = [{ emoji: "smile", alias: ":)" }, { emoji: "grinning", alias: ":D" }, { emoji: "laughing", alias: "xD" }, { emoji: "frowning", alias: ":(" }, { emoji: "cry", alias: ":'(" }, { emoji: "joy", alias: ":')" }, { emoji: "open_mouth", alias: ":o" }, { emoji: "kissing_heart", alias: ":*" }, { emoji: "wink", alias: ";)" }, { emoji: "stuck_out_tongue", alias: ":p" }, { emoji: "expressionless", alias: ":|" }, { emoji: "blush", alias: ":$" }, { emoji: "innocent", alias: "O:)" }, { emoji: "imp", alias: ">:)" }, { emoji: "sunglasses", alias: "|-O" }, { emoji: "heart", alias: "<3" }, { emoji: "broken_heart", alias: "</3" }, { emoji: "thumbsup", alias: "(y)" }, { emoji: "ok_hand", alias: "+1" }
 
 			/* 
@@ -14620,7 +14623,7 @@
 		function provide($provide) {
 			$provide.decorator('$uiViewScroll', function ($delegate) {
 				return function (uiViewElement) {
-					window.scrollTo(0, 0); // scrolls to top when ui-view autoscroll is true
+					window.scrollTo(0, 0); // scrolls to top of page when ui-view autoscroll is true
 				};
 			});
 		}
@@ -14641,6 +14644,7 @@
 
 		function sharedTitle($titleProvider) {
 			$titleProvider.documentTitle(function ($rootScope) {
+				// title of a page
 				return $rootScope.$title ? $rootScope.$title + " | PCAARRD KM Community" : "PCAARRD KM Community";
 			});
 		}
@@ -14741,6 +14745,7 @@
 			$scope.loadingTechnologiesBarON = true;
 
 			SharedTechnologyHandlesService.getTechnologies().then(function (technologies) {
+				// get technologies from API on other site
 				_lodash2.default.forEach(technologies, function (technology) {
 					return $scope.technologiesList.push(technology.title);
 				});
@@ -31881,6 +31886,7 @@
 			$scope.selectedUploadFiles = [];
 
 			$scope.setFilesLabel = function () {
+				// rename input file textbox
 				if ($scope.selectedUploadFiles.length > 0) {
 					return $scope.selectedUploadFiles.length > 1 ? $scope.selectedUploadFiles.length + ' files selected' : $scope.selectedUploadFiles[0].name;
 				}
@@ -32009,6 +32015,7 @@
 			function link($scope, $element) {
 				$element.bind('keydown', function (e) {
 					if (e.which === 32) {
+						// disable typing space
 						e.preventDefault();
 					}
 				});
@@ -32209,6 +32216,7 @@
 			var emails = /(\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6})/gim;
 
 			return function (text) {
+				// parses url and email   
 				if (text && text.match(urls)) {
 					text = text.replace(urls, "<a href=\"$1\" target=\"_blank\">$1</a>");
 				}
@@ -32235,14 +32243,17 @@
 		function SharedPaginationService() {
 
 			var pageLimit = function pageLimit(currentPage, itemsPerPage) {
+				// limits the number of items shown
 				return currentPage * itemsPerPage;
 			};
 
 			var loadMoreItems = function loadMoreItems(paginate) {
+				// increases number of items shown by increasing curentPage
 				paginate.currentPage++;
 			};
 
 			var hasMoreItems = function hasMoreItems(currentPage, itemsPerPage, itemsLength) {
+				// checks if there are next pages
 				return currentPage < itemsLength / itemsPerPage;
 			};
 
@@ -32279,15 +32290,16 @@
 				var deferred = $q.defer();
 
 				for (var i = 0; i < selectedUploadFiles.length; i++) {
+					// uploads several files one by one
 					var formData = new FormData();
 					formData.append('sharedUploadFiles', selectedUploadFiles[i]);
 
-					$http.post('/api/uploads/files', formData, {
+					$http.post('/api/uploads/files', formData, { // uploads the file itself
 						transformRequest: angular.identity,
 						headers: { 'Content-Type': undefined }
 					}).then(function (result) {
 						if (result.data.success) {
-							uploadedFiles.push(result.data.file);
+							uploadedFiles.push(result.data.file); // pushes successfully uploaded files info to list
 							if (uploadedFiles.length === selectedUploadFiles.length) deferred.resolve(result);
 						} else {
 							deferred.reject(result);
@@ -32304,11 +32316,12 @@
 				var formData = new FormData();
 				formData.append('sharedUploadPhoto', selectedUploadPhoto);
 
-				$http.post('/api/uploads/image', formData, {
+				$http.post('/api/uploads/image', formData, { // uploads the image itself
 					transformRequest: angular.identity,
 					headers: { 'Content-Type': undefined }
 				}).then(function (result) {
 					if (result.data.success) {
+						// returns the info of successfully uploaded image
 						deferred.resolve(result);
 					} else {
 						deferred.reject(result);
@@ -32347,6 +32360,7 @@
 		function SharedTechnologyHandlesService($http, $q) {
 
 			var getTechnologies = function getTechnologies() {
+				// get all technologies from other API
 				var deferred = $q.defer();
 
 				$http.get('https://technology-dashboard-api.herokuapp.com/technologies').then(function (response) {
@@ -32591,6 +32605,8 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	(0, _exporting2.default)(_highstock2.default);
+	// highcharts for graphs and charts
+
 	(0, _drilldown2.default)(_highstock2.default);
 	(0, _treemap2.default)(_highstock2.default);
 	(0, _highchartsMore2.default)(_highstock2.default);
@@ -33325,9 +33341,7 @@
 		function groupRoutes($stateProvider, $urlRouterProvider, $locationProvider) {
 			$urlRouterProvider.otherwise('/page-not-found');
 
-			$stateProvider
-			/* View Posts from My Groups */
-			.state('communityHome', {
+			$stateProvider.state('communityHome', { // contains community feed and landing page
 				url: '/',
 				templateUrl: 'groups/views/community-home.client.view.html',
 				controller: 'CommunityHomeController',
@@ -33459,18 +33473,20 @@
 
 			/* for View One Group */
 
-			$scope.fullGroupDescription = false;
+			$scope.fullGroupDescription = false; // show full description if group's description is too long
 			$scope.readGroupDescription = "Read More";
-			$scope.DESCRIPTION_LIMIT = 1000;
+			$scope.DESCRIPTION_LIMIT = 1000; // shows default of 1000 characters in group's description
 			$scope.descriptionSize = $scope.DESCRIPTION_LIMIT;
 
 			$scope.toggleGroupDescription = function () {
+				// toggles Read More or Read Less in very long group's description
 				$scope.fullGroupDescription = !$scope.fullGroupDescription;
 				$scope.readGroupDescription = $scope.readGroupDescription == "Read Less" ? "Read More" : "Read Less";
 				$scope.descriptionSize = $scope.descriptionSize === $scope.DESCRIPTION_LIMIT ? undefined : $scope.DESCRIPTION_LIMIT;
 			};
 
 			$scope.loadPostsAnalysis = function () {
+				// post analysis bar chart
 				$scope.postsAnalysisChart = Highcharts.chart('group-posts-distribution-container', {
 					chart: {
 						type: 'bar'
@@ -33519,6 +33535,7 @@
 			};
 
 			$scope.updatePostsAnalysis = function () {
+				// modify post analysis chart
 				$scope.postsAnalysisChart.setTitle({ text: $scope.selectedGroup.name + ' Posts' }, { text: 'Source: PCAARRD KM Community' });
 				$scope.postsAnalysisChart.series[0].setData([$scope.selectedGroup.postsCount.total, $scope.selectedGroup.postsCount.question, $scope.selectedGroup.postsCount.report, $scope.selectedGroup.postsCount.media, $scope.selectedGroup.postsCount.news, $scope.selectedGroup.postsCount.event, $scope.selectedGroup.postsCount.advertisement, $scope.selectedGroup.postsCount.others], true);
 			};
@@ -33545,13 +33562,16 @@
 			};
 
 			$scope.loadGroupCommentsCount = function (groupHandle) {
+				// count the number of comments in the group
 				CommentService.getCommentsLengthByGroupBelonged(groupHandle).then(function (commentsCount) {
 					$scope.groupCommentsCount = commentsCount;
 				});
 			};
 
 			$scope.joinThisGroup = function (userID, groupHandle) {
-				UserService.joinGroup(userID, groupHandle).then(function () {
+				UserService.joinGroup(userID, groupHandle) // adding the group to user's groupsJoined
+				.then(function () {
+					// increase group's membersCount
 					return GroupService.updateGroup($scope.selectedGroup.handle, { membersCount: ++$scope.selectedGroup.membersCount });
 				}, function () {
 					ngToast.create({
@@ -33566,6 +33586,7 @@
 
 					return UserService.getOneUser(userID);
 				}).then(function (user) {
+					// update the group members UI
 					if (user._id == $scope.user.currentUser._id) {
 						$scope.user.currentUser.groupsJoined.push($scope.selectedGroup.handle);
 					}
@@ -33575,6 +33596,7 @@
 			};
 
 			$scope.onJoinThisGroup = function (user, groupHandle) {
+				// processing before joining the group
 				if (!UserAuthenticationService.isLoggedIn()) {
 					UserAuthenticationService.loginFirst();
 					return;
@@ -33583,17 +33605,19 @@
 				if ($scope.selectedGroup.membership === "No Approval") {
 					$scope.joinThisGroup(user._id, groupHandle);
 				} else {
+					// with Group Admin Approval
 					$scope.addToPendingList(user, groupHandle);
 				}
 			};
 
 			$scope.addToPendingList = function (user, groupHandle) {
-				GroupService.addToGroupPendingMembersList(user._id, groupHandle).then(function () {
+				GroupService.addToGroupPendingMembersList(user._id, groupHandle) // adding the user to group's pending members
+				.then(function () {
 					ngToast.create({
 						className: 'success',
 						content: 'Group Join Request was successfully sent.'
 					});
-
+					// to update the Group Pending Members UI
 					$scope.groupPendingMembers.push(user);
 					$scope.selectedGroup.pendingMembers.push(user._id);
 				}, function () {
@@ -33610,12 +33634,13 @@
 					return;
 				}
 
-				GroupService.removeFromGroupPendingMembersList(userID, groupHandle).then(function () {
+				GroupService.removeFromGroupPendingMembersList(userID, groupHandle) // removing the user to group's pending members
+				.then(function () {
 					ngToast.create({
 						className: 'success',
 						content: 'Group Join Request was successfully removed.'
 					});
-
+					// to update the Group Pending Members UI
 					var groupIndexInSelectedGroup = $scope.selectedGroup.pendingMembers.indexOf(userID);
 					if (groupIndexInSelectedGroup > -1) {
 						$scope.selectedGroup.pendingMembers.splice(groupIndexInSelectedGroup, 1);
@@ -33641,6 +33666,7 @@
 				}
 
 				if ($scope.selectedGroup.admin.indexOf(userID) > -1) {
+					// if group admin, also remove as group admin
 					if ($scope.selectedGroup.admin.length > 1) {
 						$scope.removeGroupAdmin(userID, groupHandle);
 					} else {
@@ -33653,7 +33679,9 @@
 					}
 				}
 
-				UserService.leaveGroup(userID, groupHandle).then(function () {
+				UserService.leaveGroup(userID, groupHandle) // removing the group to user's groupsJoined
+				.then(function () {
+					// decrease group's membersCount  	
 					return GroupService.updateGroup($scope.selectedGroup.handle, { membersCount: --$scope.selectedGroup.membersCount });
 				}, function () {
 					ngToast.create({
@@ -33665,7 +33693,7 @@
 						className: 'success',
 						content: 'Group was successfully left.'
 					});
-
+					// to update Group Members UI
 					var groupIndexInUser = $scope.user.currentUser.groupsJoined.indexOf($scope.selectedGroup.handle);
 					var groupIndexInGroup = $scope.groupMembers.map(function (user) {
 						return user._id;
@@ -33677,11 +33705,12 @@
 						$scope.groupMembers.splice(groupIndexInGroup, 1);
 					}
 
-					$scope.userMembership = false;
+					$scope.userMembership = false; // used in post controller to determine the appropriate posts to display
 				});
 			};
 
 			$scope.acceptPendingMember = function (pendingMemberID, groupHandle) {
+				// pending group member becomes group member
 				if (!UserAuthenticationService.isLoggedIn()) {
 					UserAuthenticationService.loginFirst();
 					return;
@@ -33692,6 +33721,7 @@
 			};
 
 			$scope.rejectPendingMember = function (pendingMemberID, groupHandle) {
+				// pending group member does not become group member
 				if (!UserAuthenticationService.isLoggedIn()) {
 					UserAuthenticationService.loginFirst();
 					return;
@@ -33701,12 +33731,13 @@
 			};
 
 			$scope.removeGroupAdmin = function (userID, groupHandle) {
-				GroupService.removeAdmin(userID, groupHandle).then(function () {
+				GroupService.removeAdmin(userID, groupHandle) // user is removed in group's admin list
+				.then(function () {
 					ngToast.create({
 						className: 'success',
 						content: 'Group Admin was successfully removed.'
 					});
-
+					// to update Group Admins UI
 					var groupIndexInSelectedGroup = $scope.selectedGroup.admin.indexOf(userID);
 					if (groupIndexInSelectedGroup > -1) {
 						$scope.selectedGroup.admin.splice(groupIndexInSelectedGroup, 1);
@@ -33732,6 +33763,7 @@
 				}
 
 				if ($scope.selectedGroup.admin.indexOf(memberID) > -1) {
+					// also removing as group admin if possible
 					if ($scope.selectedGroup.admin.length > 1) {
 						$scope.removeGroupAdmin(memberID, groupHandle);
 					} else {
@@ -33744,7 +33776,9 @@
 					}
 				}
 
-				UserService.leaveGroup(memberID, groupHandle).then(function () {
+				UserService.leaveGroup(memberID, groupHandle) // removing the group from user's groupsJoined
+				.then(function () {
+					// decrements the group members
 					return GroupService.updateGroup($scope.selectedGroup.handle, { membersCount: --$scope.selectedGroup.membersCount });
 				}, function () {
 					ngToast.create({
@@ -33756,7 +33790,7 @@
 						className: 'success',
 						content: 'Group member was successfully removed.'
 					});
-
+					//	to update the Group UI when current logged in user left the group
 					if (memberID === $scope.user.currentUser._id) {
 						var groupIndexInUser = $scope.user.currentUser.groupsJoined.indexOf($scope.selectedGroup.handle);
 						if (groupIndexInUser > -1) {
@@ -33782,6 +33816,7 @@
 				}
 
 				if ($scope.selectedGroup.admin.length > 1) {
+					// only allows removing group admin if it's more than one
 					$scope.removeGroupAdmin(adminID, groupHandle);
 				} else {
 					ngToast.create({
@@ -33796,6 +33831,7 @@
 			/* for View One and View All Groups */
 
 			$scope.setGroupsData = function () {
+				// used to view All Groups, My Groups, Discover Groups
 				var currentViewGroupsCategory = ViewGroupsCategoriesService.getCurrentViewGroupsCategory().category;
 				ViewGroupsCategoriesService.retrieveGroupsByCategory(currentViewGroupsCategory);
 				$scope.groups = GroupService.getGroupList();
@@ -33837,14 +33873,16 @@
 						}
 					});
 				} else if ($state.$current.name === "groups") {
+					// viewing all groups
 					ViewGroupsCategoriesService.setUserID(null);
 					if ($scope.user.isLoggedIn) {
+						// allows viewing all groups, my groups, discover groups if logged in
 						UserAuthenticationService.getCurrentUser().then(function (result) {
 							ViewGroupsCategoriesService.setUserID(result._id);
 							$scope.setGroupsData();
 						});
 					} else {
-						// for those not logged in
+						// for those not logged in, all groups is the only group category shown
 						ViewGroupsCategoriesService.setUserID("none");
 						$scope.setGroupsData();
 					}
@@ -33852,6 +33890,7 @@
 			};
 
 			$scope.$watch('searchGroupsValue', function (value) {
+				// for filter groups
 				if ($scope.groups) {
 					$scope.groups.contents = $filter('filter')($scope.groupsCopy.contents, value);
 					$scope.paginate.currentPage = 1;
@@ -33871,23 +33910,27 @@
 			/* for Create Group */
 
 			if ($state.$current.name === "createGroup") {
+				// get all users info
 				UserService.getAllUsers();
 				$scope.users = UserService.getUserList();
 			}
 
 			$scope.addGroupFormData = { classification: "" };
 
-			$scope.multipleFields = {
+			$scope.multipleFields = { // multiple group admins
 				admins: ['']
 			};
 
 			$scope.MIN_ADMIN = 1;
 
 			$scope.addField = function (fieldArray) {
+				// pushes to multipleFields.admins list
 				fieldArray.push('');
 			};
 
 			$scope.removeField = function (fieldArray, minField) {
+				// pops to multipleFields.admins list
+				fieldArray.push('');
 				if (fieldArray.length > minField) {
 					fieldArray.pop();
 				}
@@ -33901,6 +33944,7 @@
 			};
 
 			$scope.createGroupOptions = function (groupClassification) {
+				// format the group classification in its options
 				if (groupClassification.type === "Industry-based") {
 					return groupClassification.industry + ' -> ' + groupClassification.sector + ' -> ' + groupClassification.isp + ' -> ' + (groupClassification.specificCommodity || "(None)");
 				} else {
@@ -33909,6 +33953,7 @@
 			};
 
 			$scope.generateGroupNameAndHandle = function (classification) {
+				// generates group name and handle right after choosing group classification
 				if (classification && classification.type === "Industry-based") {
 					$scope.addGroupFormData.name = classification && (classification.specificCommodity || classification.isp) || "";
 					$scope.addGroupFormData.handle = $scope.addGroupFormData.name.replace(/\s/g, "").toLowerCase();
@@ -33919,6 +33964,7 @@
 			};
 
 			$scope.validateAdminEmailAddress = function (adminEmails) {
+				// validate if email entered in group admins already exist in the app
 				var _iteratorNormalCompletion = true;
 				var _didIteratorError = false;
 				var _iteratorError = undefined;
@@ -33952,6 +33998,7 @@
 			};
 
 			$scope.convertEmailToUserID = function (adminEmails) {
+				// return the user ids of group admin emails
 				var userList = $scope.users.contents;
 				return adminEmails.map(function (adminEmail) {
 					return userList[userList.map(function (user) {
@@ -33961,6 +34008,7 @@
 			};
 
 			$scope.onProcessGroupData = function () {
+				// procesing before creating the group
 				var classificationID = $scope.addGroupFormData.classification._id;
 				var groupHandle = $scope.addGroupFormData.handle;
 
@@ -33969,7 +34017,8 @@
 					return;
 				}
 
-				UserAuthenticationService.getCurrentUser().then(function (result) {
+				UserAuthenticationService.getCurrentUser() // get the info of logged in user
+				.then(function (result) {
 					$scope.addGroupFormData.createdBy = result._id;
 
 					var validatedEmails = $scope.validateAdminEmailAddress($scope.multipleFields.admins);
@@ -34001,8 +34050,9 @@
 					delete $scope.addGroupFormData.classification.isUsed;
 					delete $scope.addGroupFormData.classification.__v;
 
-					return GroupService.submitGroup($scope.addGroupFormData);
+					return GroupService.submitGroup($scope.addGroupFormData); // create the group
 				}).then(function () {
+					// update user classification as used, update group admins groupsJoined with this group
 					GroupClassificationService.updateGroupClassification(classificationID, { isUsed: true });
 
 					_lodash2.default.forEach($scope.addGroupFormData.admin, function (admin) {
@@ -49848,7 +49898,7 @@
 
 			$scope.addGroupClassificationFormData = {};
 
-			$scope.isp = {
+			$scope.isp = { // for r&d and tech transfer-based groups isp
 				enable: false
 			};
 
@@ -49882,6 +49932,7 @@
 			// Industry-based Classification
 
 			$scope.validateExistingGroupClassification = function (formData) {
+				// checks for existing specific commodity and isp
 				GroupClassificationService.getAllGroupClassifications();
 
 				return $scope.groupClassifications.contents.map(function (item) {
@@ -49905,6 +49956,7 @@
 					if (!$scope.addGroupClassificationFormData.specificCommodity) $scope.addGroupClassificationFormData.specificCommodity = null;
 
 					GroupClassificationService.submitGroupClassification($scope.addGroupClassificationFormData).then(function () {
+						// after adding group classification
 						$scope.clearGroupClassificationForm();
 						$scope.clearISPs();
 					});
@@ -49920,6 +49972,7 @@
 			// R&D and Tech Transfer-based Classification
 
 			$scope.validateExistingRDClassification = function (formData) {
+				// checks for existing organization
 				GroupClassificationService.getAllGroupClassifications();
 
 				return $scope.groupClassifications.contents.map(function (item) {
@@ -49941,10 +49994,12 @@
 					$scope.addGroupClassificationFormData.type = "R&D and Tech Transfer-based";
 
 					if ($scope.isp.enable) {
+						// include isps in the group form if isp is enabled
 						$scope.addGroupClassificationFormData.isps = $scope.addedISPs;
 					}
 
 					GroupClassificationService.submitGroupClassification($scope.addGroupClassificationFormData).then(function () {
+						// after adding group classification
 						$scope.clearGroupClassificationForm();
 						$scope.clearISPs();
 					});
@@ -49964,32 +50019,38 @@
 
 			$scope.editedGroupClassificationFormData = null;
 			$scope.editType = null;
-			$scope.sortGroupClassificationBy = ['type', 'industry', 'sector', 'isp', 'specificCommodity', 'organization', 'isps[0]'];
+			$scope.sortGroupClassificationBy = ['type', 'industry', 'sector', 'isp', 'specificCommodity', 'organization', 'isps[0]']; // initial sort
 			$scope.sortReverse = false;
 
 			$scope.changeSort = function (groupClassificationFields) {
+				// only allows changing sort when same field is clicked twice
 				$scope.sortReverse = _lodash2.default.isEqual($scope.sortGroupClassificationBy, groupClassificationFields) ? !$scope.sortReverse : false;
 				$scope.sortGroupClassificationBy = groupClassificationFields;
 			};
 
 			$scope.getExistingGroupClassification = function (existingGroupClassificationIndex) {
+				// get info of the existing group classification
 				GroupClassificationService.getAllGroupClassifications();
 
 				return $scope.groupClassifications.contents[existingGroupClassificationIndex];
 			};
 
 			$scope.onEditGroupClassification = function (groupClassification) {
+				// editType is set to determine what fields will be editable
 				$scope.editedGroupClassificationFormData = _lodash2.default.cloneDeep(groupClassification);
 				$scope.editType = groupClassification.type === "Industry-based" ? "industry-based" : "rd-based";
 			};
 
 			$scope.isEditingClassification = function (groupClassificationID) {
+				// determining the classification to be edited
 				return $scope.editedGroupClassificationFormData && $scope.editedGroupClassificationFormData._id === groupClassificationID;
 			};
 
 			$scope.onProcessEditedIndustryClassification = function () {
+				// processing before modifying in the database
 				var existingGroupClassification = $scope.validateExistingGroupClassification($scope.editedGroupClassificationFormData);
-
+				// it will only allow changes if the edited classification is not similar to any existing classification
+				// if it's similar to any existing classification, the existing classification should be only itself
 				if (existingGroupClassification < 0 || $scope.getExistingGroupClassification(existingGroupClassification)._id === $scope.editedGroupClassificationFormData._id) {
 					var updatedFields = {
 						industry: $scope.editedGroupClassificationFormData.industry,
@@ -50000,6 +50061,7 @@
 					updatedFields.specificCommodity = $scope.editedGroupClassificationFormData.specificCommodity || null;
 
 					GroupClassificationService.updateGroupClassification($scope.editedGroupClassificationFormData._id, updatedFields).then(function () {
+						// after editing the classification in the database
 						$scope.editedGroupClassificationFormData = null;
 						$scope.editType = null;
 
@@ -50019,8 +50081,10 @@
 			};
 
 			$scope.onProcessEditedRDClassification = function () {
+				// processing before modifying in the database
 				var existingRDClassification = $scope.validateExistingRDClassification($scope.editedGroupClassificationFormData);
-
+				// it will only allow changes if the edited classification is not similar to any existing classification
+				// if it's similar to any existing classification, the existing classification should be only itself
 				if (existingRDClassification < 0 || $scope.getExistingGroupClassification(existingRDClassification)._id === $scope.editedGroupClassificationFormData._id) {
 					var updatedFields = {
 						organization: $scope.editedGroupClassificationFormData.organization,
@@ -50028,6 +50092,7 @@
 					};
 
 					GroupClassificationService.updateGroupClassification($scope.editedGroupClassificationFormData._id, updatedFields).then(function () {
+						// after editing the classification in the database
 						$scope.editedGroupClassificationFormData = null;
 						$scope.editType = null;
 
@@ -50047,6 +50112,7 @@
 			};
 
 			$scope.onProcessEditedGroupClassification = function () {
+				// determines the appropriate on process edit function 
 				if (!UserAuthenticationService.isLoggedIn()) {
 					UserAuthenticationService.loginFirst();
 					return;
@@ -50060,6 +50126,7 @@
 			};
 
 			$scope.disableSave = function () {
+				// for making the save button disabled and changing its color to gray
 				if ($scope.editedGroupClassificationFormData.type === "Industry-based") {
 					return !$scope.editedGroupClassificationFormData.industry || !$scope.editedGroupClassificationFormData.sector || !$scope.editedGroupClassificationFormData.isp;
 				} else {
@@ -50082,6 +50149,7 @@
 			};
 
 			$scope.goToGroup = function (groupClassificationID) {
+				// redirects to group 
 				var groupIndex = $scope.groups.contents.map(function (group) {
 					return group.classification._id;
 				}).indexOf(groupClassificationID);
@@ -50089,12 +50157,13 @@
 			};
 
 			$scope.$watch('searchClassificationsValue', function (value) {
+				// used in filter group classifications
 				if ($scope.groupClassifications) {
 					$scope.groupClassifications.contents = $filter('filter')($scope.groupClassificationsCopy.contents, value);
 					$scope.paginate.currentPage = 1;
 				}
 			});
-
+			// get the needed data for group classifications
 			GroupClassificationService.getAllGroupClassifications();
 			$scope.groupClassifications = GroupClassificationService.getGroupClassificationList();
 			$scope.groupClassificationsCopy = GroupClassificationService.getGroupClassificationListCopy();
@@ -50119,9 +50188,9 @@
 		function ViewGroupsCategoriesController($scope, ViewGroupsCategoriesService) {
 			var setCurrentViewGroupsCategory = ViewGroupsCategoriesService.setCurrentViewGroupsCategory;
 
-			$scope.setCurrentViewGroupsCategory = _.partial(setCurrentViewGroupsCategory);
-			$scope.currentViewGroupsCategory = ViewGroupsCategoriesService.getCurrentViewGroupsCategory();
-			$scope.viewGroupsCategories = ViewGroupsCategoriesService.getViewGroupsCategories();
+			$scope.setCurrentViewGroupsCategory = _.partial(setCurrentViewGroupsCategory); // sets the current category and the appropriate data
+			$scope.currentViewGroupsCategory = ViewGroupsCategoriesService.getCurrentViewGroupsCategory(); // current group category
+			$scope.viewGroupsCategories = ViewGroupsCategoriesService.getViewGroupsCategories(); // all group categories
 		}
 	})();
 
@@ -50155,17 +50224,19 @@
 			$scope.paginate = SharedPaginationService;
 			$scope.paginate.currentPage = 1;
 			$scope.paginate.groupsPerPage = 10;
-			$scope.sortGroupBy = ['name'];
+			$scope.sortGroupBy = ['name']; // used in sorting the group statistics table
 			$scope.sortReverse = false;
 			$scope.trendingTopics = { selectedMonth: (0, _moment2.default)().format('MMMM'), selectedYear: (0, _moment2.default)().format('YYYY') };
 			$scope.activeGroups = { startMonth: _moment2.default.months()[0], startYear: (0, _moment2.default)().format('YYYY'), endMonth: (0, _moment2.default)().format('MMMM'), endYear: (0, _moment2.default)().format('YYYY') };
 
 			$scope.changeSort = function (groupFields) {
-				$scope.sortReverse = _lodash2.default.isEqual($scope.sortGroupBy, groupFields) ? !$scope.sortReverse : true;
+				// only allows changing sort when same field is clicked twice
+				$scope.sortReverse = _lodash2.default.isEqual($scope.sortGroupBy, groupFields) ? !$scope.sortReverse : true; // default sort is reverse when clicking other fields
 				$scope.sortGroupBy = groupFields;
 			};
 
 			$scope.$watch('searchGroupsStatisticsValue', function (value) {
+				// used in filter group statistics
 				if ($scope.groups) {
 					$scope.groups = $filter('filter')($scope.groupsCopy, value);
 					$scope.paginate.currentPage = 1;
@@ -50173,10 +50244,11 @@
 			});
 
 			$scope.loadAllData = function () {
+				// loads all data needed in the dashboard and starts building the analytics
 				$q.all([// parallel data loading
 				GroupService.getAllGroups(), PostService.getAllPosts(), UserService.getAllUsers()]).then(function (results) {
 					$scope.groups = results[0];
-					$scope.groupsCopy = _lodash2.default.toArray(results[0]);
+					$scope.groupsCopy = _lodash2.default.toArray(results[0]); // used in filter group statistics
 					$scope.posts = results[1];
 					$scope.users = results[2];
 
@@ -50193,6 +50265,7 @@
 			$scope.loadAllData();
 
 			$scope.getAllMonths = function () {
+				// array of January, February....
 				return _moment2.default.months();
 			};
 
@@ -50201,10 +50274,11 @@
 				for (var i = (0, _moment2.default)().get('year'); i > 2015; i--) {
 					years.push(i);
 				}
-				return years;
+				return years; // 2016 - current year
 			};
 
 			$scope.computeAnalytics = function () {
+				// gets the data for all charts
 				$scope.computeTopActiveGroups($scope.activeGroups.startMonth, $scope.activeGroups.startYear, $scope.activeGroups.endMonth, $scope.activeGroups.endYear);
 				$scope.computeTrendingTopics($scope.trendingTopics.selectedMonth, $scope.trendingTopics.selectedYear);
 				$scope.computeTopPopularGroups();
@@ -50212,6 +50286,7 @@
 			};
 
 			$scope.validStartEndDate = function (startMonth, startYear, endMonth, endYear) {
+				// start date should be earlier than end date
 				return (0, _moment2.default)(startMonth + ' ' + startYear, 'MMMM YYYY') <= (0, _moment2.default)(endMonth + ' ' + endYear, 'MMMM YYYY');
 			};
 
@@ -50232,12 +50307,14 @@
 			};
 
 			$scope.retrievePostsOnSelectedDate = function (selectedMonth, selectedYear) {
+				// all posts on selected date
 				return $scope.posts.filter(function (post) {
 					return (0, _moment2.default)(post.datePosted, 'MMMM Do YYYY, h:mm:ss a').format('MMMM') == selectedMonth && (0, _moment2.default)(post.datePosted, 'MMMM Do YYYY, h:mm:ss a').format('YYYY') == selectedYear;
 				});
 			};
 
 			$scope.retrieveUserAge = function (user) {
+				// current date - birth date
 				return (0, _moment2.default)().diff((0, _moment2.default)(user.birthdate, 'MMMM D YYYY'), 'years');
 			};
 
@@ -50707,7 +50784,8 @@
 
 		function EditSettingsGroupController($scope, $state, $stateParams, $q, GroupService, UserAuthenticationService, UserService, SharedUploadService, EditSettingsGroupService, GroupClassificationService, ngToast) {
 
-			GroupService.getOneGroup($stateParams.handle).then(function (result) {
+			GroupService.getOneGroup($stateParams.handle) // get all info of selected group
+			.then(function (result) {
 				$scope.selectedGroup = result;
 			}, function (error) {
 				// show 404 not found page
@@ -50716,10 +50794,11 @@
 			// Edit Group
 
 			$scope.uploadPhotoAndSubmitForm = function (photo, photoIdentifier) {
+				// used when uploading group photo or cover photo
 				$scope.progressBarON = true;
 				SharedUploadService.uploadPhoto(photo).then(function (result) {
 					$scope.progressBarON = false;
-					$scope.selectedGroup[photoIdentifier] = result.data.image;
+					$scope.selectedGroup[photoIdentifier] = result.data.image; // storing the uploaded photo info to group data
 					return EditSettingsGroupService.submitModifiedGroup($scope.selectedGroup);
 				}, function (error) {
 					$scope.progressBarON = false;
@@ -50730,8 +50809,9 @@
 
 					return $q.reject(error);
 				}).then(function () {
+					// after editing the group successfully
 					if ($scope.selectedGroup.classification.type === "R&D and Tech Transfer-based") {
-						$scope.updateRDGroupClassification();
+						$scope.updateRDGroupClassification(); // also update r&d group classification for changes
 					}
 
 					ngToast.create({
@@ -50743,10 +50823,12 @@
 			};
 
 			$scope.updateRDGroupClassification = function () {
+				// update isps
 				GroupClassificationService.updateGroupClassification($scope.selectedGroup.classification._id, { isps: $scope.selectedGroup.classification.isps });
 			};
 
 			$scope.onProcessEditedGroupData = function () {
+				// processing before submitting edited group data
 
 				if (!UserAuthenticationService.isLoggedIn()) {
 					UserAuthenticationService.loginFirst();
@@ -50757,6 +50839,7 @@
 				    uploadCoverPhoto = false;
 
 				if ($scope.selectedGroup.classification.type === "R&D and Tech Transfer-based") {
+					// makes isps array type
 					$scope.selectedGroup.classification.isps = $scope.selectedGroup.classification.isps.toString();
 					$scope.selectedGroup.classification.isps = $scope.selectedGroup.classification.isps ? $scope.selectedGroup.classification.isps.split(',') : [];
 				}
@@ -50773,7 +50856,7 @@
 					$scope.progressBarON = true;
 					SharedUploadService.uploadPhoto($scope.selectedPhoto[0]).then(function (result) {
 						// after uploading group photo
-						$scope.selectedGroup.photo = result.data.image;
+						$scope.selectedGroup.photo = result.data.image; // storing the uploaded photo info to group data
 
 						return SharedUploadService.uploadPhoto($scope.selectedCoverPhoto[0]);
 					}, function (error) {
@@ -50787,7 +50870,7 @@
 					}).then(function (result) {
 						// after uploading group cover photo
 						$scope.progressBarON = false;
-						$scope.selectedGroup.coverPhoto = result.data.image;
+						$scope.selectedGroup.coverPhoto = result.data.image; // storing the uploaded photo info to group data
 
 						return EditSettingsGroupService.submitModifiedGroup($scope.selectedGroup);
 					}, function (error) {
@@ -50799,9 +50882,9 @@
 
 						return $q.reject(error);
 					}).then(function () {
-						// after submitting edited group
+						// after editing the group successfully
 						if ($scope.selectedGroup.classification.type === "R&D and Tech Transfer-based") {
-							$scope.updateRDGroupClassification();
+							$scope.updateRDGroupClassification(); // also update r&d group classification for changes
 						}
 
 						ngToast.create({
@@ -50817,7 +50900,7 @@
 				} else {
 					EditSettingsGroupService.submitModifiedGroup($scope.selectedGroup).then(function () {
 						if ($scope.selectedGroup.classification.type === "R&D and Tech Transfer-based") {
-							$scope.updateRDGroupClassification();
+							$scope.updateRDGroupClassification(); // also update r&d group classification for changes
 						}
 
 						ngToast.create({
@@ -50832,6 +50915,7 @@
 			// Group Settings
 
 			if ($state.$current.name === "oneGroupSettings") {
+				// get info of all users
 				UserService.getAllUsers();
 				$scope.users = UserService.getUserList();
 			}
@@ -50847,6 +50931,7 @@
 			};
 
 			$scope.toggleAddNewGroupAdmins = function () {
+				// enables or disables adding group admin
 				$scope.newGroupAdmins.enable = !$scope.newGroupAdmins.enable;
 			};
 
@@ -50868,6 +50953,7 @@
 			};
 
 			$scope.validateAdminEmailAddress = function (adminEmails) {
+				// returns true if all emails exist in the app
 				var _iteratorNormalCompletion = true;
 				var _didIteratorError = false;
 				var _iteratorError = undefined;
@@ -50901,6 +50987,7 @@
 			};
 
 			$scope.convertEmailToUserID = function (adminEmails) {
+				// set of emails to set of user id
 				var userList = $scope.users.contents;
 				return adminEmails.map(function (adminEmail) {
 					return userList[userList.map(function (user) {
@@ -50910,6 +50997,7 @@
 			};
 
 			$scope.validateNewAdminsMembership = function (adminIDs, group) {
+				// returns true if all new admins are members of group
 				for (var i = 0; i < adminIDs.length; i++) {
 					var memberIndex = $scope.users.contents.map(function (user) {
 						return user._id;
@@ -50930,6 +51018,7 @@
 				}
 
 				if ($scope.newGroupAdmins.enable) {
+					// only when new group admins added
 					var validatedEmails = $scope.validateAdminEmailAddress($scope.multipleFields.admins);
 					if (validatedEmails !== true) {
 						ngToast.create({
@@ -50953,6 +51042,7 @@
 					}
 
 					_lodash2.default.forEach(convertedAdmins, function (convertedAdmin) {
+						// adds only the admins that are not yet in group admin list
 						if ($scope.selectedGroup.admin.indexOf(convertedAdmin) < 0) {
 							$scope.selectedGroup.admin.push(convertedAdmin);
 						}
@@ -51009,6 +51099,7 @@
 			}
 
 			$scope.loadUserGroups = function (selectedUser) {
+				// used in landing page where count of groups is stated
 				if (selectedUser.groupsJoined.length > 0) {
 					GroupService.getSomeGroups(selectedUser.groupsJoined).then(function (groups) {
 						$scope.userGroups = groups;
@@ -51274,6 +51365,7 @@
 			};
 
 			var getAllGroups = function getAllGroups() {
+				// All Groups
 				var deferred = $q.defer();
 
 				$http.get('/api/groups').then(function (response) {
@@ -51288,6 +51380,7 @@
 			};
 
 			var getMyGroups = function getMyGroups(userID) {
+				// My Groups
 				var deferred = $q.defer();
 
 				$http.get('/api/groups/my-groups/' + userID).then(function (response) {
@@ -51303,6 +51396,7 @@
 			};
 
 			var getDiscoverGroups = function getDiscoverGroups(userID) {
+				// Discover Groups
 				var deferred = $q.defer();
 
 				$http.get('/api/groups/discover-groups/' + userID).then(function (response) {
@@ -51318,6 +51412,7 @@
 			};
 
 			var getSomeGroups = function getSomeGroups(groupHandlesList) {
+				// get info of several groups
 				var deferred = $q.defer();
 
 				var groupsList = groupHandlesList.toString();
@@ -51331,6 +51426,7 @@
 			};
 
 			var getUserAdministeredGroups = function getUserAdministeredGroups(userID) {
+				// administered groups of user
 				var deferred = $q.defer();
 
 				$http.get('/api/groups/administered/' + userID).then(function (response) {
@@ -51343,6 +51439,7 @@
 			};
 
 			var getUserPendingGroups = function getUserPendingGroups(userID) {
+				// pending groups of user
 				var deferred = $q.defer();
 
 				$http.get('/api/groups/pending/' + userID).then(function (response) {
@@ -51355,6 +51452,7 @@
 			};
 
 			var getOneGroup = function getOneGroup(groupHandle) {
+				// one group
 				var deferred = $q.defer();
 
 				$http.get('/api/groups/' + groupHandle).then(function (response) {
@@ -51379,6 +51477,7 @@
 			};
 
 			var submitGroup = function submitGroup(addGroupFormData) {
+				// add group
 				var deferred = $q.defer();
 
 				$http.post('/api/groups', addGroupFormData).then(function (response) {
@@ -51394,6 +51493,7 @@
 			};
 
 			var removeAdmin = function removeAdmin(userID, groupHandle) {
+				// remove user to group's admin list
 				var deferred = $q.defer();
 
 				$http.put('/api/groups/' + groupHandle + '/remove-admin/' + userID).then(function (response) {
@@ -51406,6 +51506,7 @@
 			};
 
 			var addToGroupPendingMembersList = function addToGroupPendingMembersList(userID, groupHandle) {
+				// add user to group's pending list
 				var deferred = $q.defer();
 
 				$http.put('/api/groups/' + groupHandle + '/add-to-pending-members/' + userID).then(function (response) {
@@ -51418,6 +51519,7 @@
 			};
 
 			var removeFromGroupPendingMembersList = function removeFromGroupPendingMembersList(userID, groupHandle) {
+				// remove user to group's pending list
 				var deferred = $q.defer();
 
 				$http.put('/api/groups/' + groupHandle + '/remove-from-pending-members/' + userID).then(function (response) {
@@ -51475,6 +51577,7 @@
 			};
 
 			var getAllGroupClassifications = function getAllGroupClassifications() {
+				// store all group classifications in groupClassificationList
 				var deferred = $q.defer();
 
 				$http.get('/api/groups/classifications').then(function (response) {
@@ -51489,6 +51592,7 @@
 			};
 
 			var submitGroupClassification = function submitGroupClassification(addGroupClassificationFormData) {
+				// add group classification
 				var deferred = $q.defer();
 
 				$http.post('/api/groups/classifications', addGroupClassificationFormData).then(function (response) {
@@ -51556,13 +51660,14 @@
 
 			var viewGroupsCategories = ["All Groups", "My Groups", "Discover Groups"];
 
-			var currentViewGroupsCategory = {
+			var currentViewGroupsCategory = { // selected group category
 				category: viewGroupsCategories[0]
 			};
 
 			var userID = null;
 
 			var getViewGroupsCategories = function getViewGroupsCategories() {
+				// returns the group categories
 				if (userID === "none") {
 					return ["All Groups"];
 				} else {
@@ -51571,6 +51676,7 @@
 			};
 
 			var getCurrentViewGroupsCategory = function getCurrentViewGroupsCategory() {
+				// returns the selected group category
 				if (userID === "none") {
 					return { category: viewGroupsCategories[0] };
 				} else {
@@ -51579,6 +51685,7 @@
 			};
 
 			var setCurrentViewGroupsCategory = function setCurrentViewGroupsCategory(category) {
+				// changes selected group category and loads appropriate groups
 				currentViewGroupsCategory.category = category;
 				retrieveGroupsByCategory(currentViewGroupsCategory.category);
 			};
@@ -51588,6 +51695,7 @@
 			};
 
 			var retrieveGroupsByCategory = function retrieveGroupsByCategory(category) {
+				// loads a set of groups depending on the selected group category
 				var deferred = $q.defer();
 
 				switch (category) {
@@ -51655,6 +51763,7 @@
 		function EditSettingsGroupService($http, $q) {
 
 			var submitModifiedGroup = function submitModifiedGroup(updatedFields) {
+				// update group
 				var deferred = $q.defer();
 
 				$http.put('/api/groups/' + updatedFields.handle, updatedFields).then(function (response) {
@@ -51755,7 +51864,7 @@
 
 
 	// module
-	exports.push([module.id, "/* CUSTOMIZE THE CAROUSEL\n-------------------------------------------------- */\n/* Carousel base class */\n.carousel {\n  height: 500px;\n  margin-bottom: 60px;\n}\n\n/* Since positioning the image, we need to help out the caption */\n.carousel-caption {\n  z-index: 10;\n  padding-left: 10px;\n  padding-right: 10px;\n}\n\n/* Declare heights because of positioning of img element */\n.carousel .item {\n  height: 500px;\n  background-color: #777;\n}\n\n.carousel-inner > .item > img {\n  position: absolute;\n  top: 0;\n  left: 0;\n  min-width: 100%;\n  height: 500px;\n  object-fit: cover;\n}\n\n/* MARKETING CONTENT\n-------------------------------------------------- */\n/* Center align the text within the three columns below the carousel */\n.marketing .col-lg-4 {\n  margin-bottom: 20px;\n}\n\n.marketing h3 {\n  font-weight: normal;\n  margin-right: 10px;\n  margin-left: 10px;\n}\n\n.marketing .col-lg-4 p {\n  margin-right: 10px;\n  margin-left: 10px;\n}\n\n/* RESPONSIVE CSS\n-------------------------------------------------- */\n@media (min-width: 768px) {\n  /* Bump up size of carousel content */\n  .carousel-caption p {\n    margin-bottom: 20px;\n    font-size: 21px;\n    line-height: 1.4;\n  }\n}\n\n@media (min-width: 768px) {\n  /* Bump up size of carousel content */\n  .carousel-caption p {\n    margin-bottom: 20px;\n    font-size: 21px;\n    line-height: 1.4;\n  }\n}\n\n.features-list {\n  display: table;\n  height: 100%;\n  width: 100%;\n}\n\n.features-list .main-feature {\n  display: table-cell;\n  width: 33%;\n  height: 100%;\n}\n\n.features-list .main-feature li.list-group-item {\n  border: none;\n  background-color: transparent;\n}\n\n@media only screen and (max-width: 992px) {\n  .features-list {\n    display: block;\n  }\n  .features-list .main-feature {\n    display: block;\n    width: 100%;\n  }\n}\n", ""]);
+	exports.push([module.id, "/* CUSTOMIZE THE CAROUSEL\n-------------------------------------------------- */\n/* Carousel base class */\n.carousel {\n  height: 500px;\n  margin-bottom: 60px;\n}\n\n/* Since positioning the image, we need to help out the caption */\n.carousel-caption {\n  z-index: 10;\n  padding-left: 10px;\n  padding-right: 10px;\n}\n\n/* Declare heights because of positioning of img element */\n.carousel .item {\n  height: 500px;\n  background-color: #777;\n}\n\n.carousel-inner > .item > img {\n  position: absolute;\n  top: 0;\n  left: 0;\n  min-width: 100%;\n  height: 500px;\n  object-fit: cover;\n}\n\n/* MARKETING CONTENT\n-------------------------------------------------- */\n/* Center align the text within the three columns below the carousel */\n.marketing .col-lg-4 {\n  margin-bottom: 20px;\n}\n\n.marketing h3 {\n  font-weight: normal;\n  margin-right: 10px;\n  margin-left: 10px;\n}\n\n.marketing .col-lg-4 p {\n  margin-right: 10px;\n  margin-left: 10px;\n}\n\n/* RESPONSIVE CSS\n-------------------------------------------------- */\n@media (min-width: 768px) {\n  /* Bump up size of carousel content */\n  .carousel-caption p {\n    margin-bottom: 20px;\n    font-size: 21px;\n    line-height: 1.4;\n  }\n}\n\n@media (min-width: 768px) {\n  /* Bump up size of carousel content */\n  .carousel-caption p {\n    margin-bottom: 20px;\n    font-size: 21px;\n    line-height: 1.4;\n  }\n}\n\n/* Landing Page Features Styles */\n.features-list {\n  display: table;\n  height: 100%;\n  width: 100%;\n}\n\n.features-list .main-feature {\n  display: table-cell;\n  width: 33%;\n  height: 100%;\n}\n\n.features-list .main-feature li.list-group-item {\n  border: none;\n  background-color: transparent;\n}\n\n@media only screen and (max-width: 992px) {\n  .features-list {\n    display: block;\n  }\n  .features-list .main-feature {\n    display: block;\n    width: 100%;\n  }\n}\n", ""]);
 
 	// exports
 
@@ -51808,7 +51917,7 @@
 		'use strict';
 
 		angular.module('layout', ['mgcrea.bootstrap.affix']);
-	})();
+	})(); // using affix on second header
 
 /***/ }),
 /* 239 */
@@ -51843,31 +51952,25 @@
 		HeaderController.$inject = ['$scope', 'UserAuthenticationService', '$window'];
 
 		function HeaderController($scope, UserAuthenticationService, $window) {
-			$scope.options = {
-				showOptions: false
-			};
-
-			$scope.toggleOptions = function () {
-				$scope.options.showOptions = !$scope.options.showOptions;
-			};
 
 			$scope.user = {
 				logout: UserAuthenticationService.logout
 			};
 
 			$scope.$watch(function () {
+				// watches current logged in user
 				return UserAuthenticationService.getCurrentUserID();
 			}, function (userID) {
 				$scope.user.isLoggedIn = UserAuthenticationService.isLoggedIn();
 				if ($scope.user.isLoggedIn) {
-					$scope.eResourcesAccess = "downloads";
+					$scope.eResourcesAccess = "downloads"; // e-resources link changes if logged in
 					if ($scope.user.currentUser && userID && $scope.user.currentUser._id != userID) {
 						// if the page is not updated with the current user, it will reload to update
 						$window.location.reload();
 					}
 
 					UserAuthenticationService.getCurrentUser().then(function (result) {
-						$scope.user.currentUser = result;
+						$scope.user.currentUser = result; // gets all information about current user
 					});
 				} else {
 					$scope.user.currentUser = null;
@@ -51940,7 +52043,7 @@
 
 
 	// module
-	exports.push([module.id, "layout-header {\n  display: block;\n}\n\n.notification__count {\n  font-weight: bolder;\n  font-size: 1.3em;\n}\n\n.user-profile__pic {\n  margin-right: 0.5em;\n}\n\n.affix {\n  top: 0;\n  width: 100%;\n  z-index: 100;\n}\n\n.affix-top {\n  width: 100%;\n}\n\n.fa-stack[data-count]:after {\n  position: absolute;\n  right: 0%;\n  top: 1%;\n  content: attr(data-count);\n  font-size: 60%;\n  padding: .3em;\n  border-radius: 999px;\n  line-height: .75em;\n  color: white;\n  background: rgba(200, 0, 0, 0.85);\n  text-align: center;\n  min-width: 2em;\n  font-weight: bold;\n}\n\n#user-option-dropdown::before {\n  border-bottom: 9px solid rgba(0, 0, 0, 0.2);\n  border-left: 9px solid transparent;\n  border-right: 9px solid transparent;\n  content: \"\";\n  display: inline-block;\n  right: 11px;\n  position: absolute;\n  top: -8px;\n}\n\n#user-option-dropdown::after {\n  border-bottom: 8px solid #FFFFFF;\n  border-left: 9px solid transparent;\n  border-right: 9px solid transparent;\n  content: \"\";\n  display: inline-block;\n  right: 11px;\n  position: absolute;\n  top: -7px;\n}\n\n@media (max-width: 1170px) {\n  .navbar-header {\n    float: none;\n  }\n  .navbar-header .pcaarrd-pic {\n    width: 80%;\n  }\n  .navbar-left, .navbar-right {\n    float: none !important;\n  }\n  .navbar-toggle {\n    display: block;\n  }\n  .navbar-collapse {\n    border-top: 1px solid transparent;\n    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);\n  }\n  .navbar-fixed-top {\n    top: 0;\n    border-width: 0 0 1px;\n  }\n  .navbar-collapse.collapse {\n    display: none !important;\n  }\n  .navbar-nav {\n    float: none !important;\n    margin-top: 7.5px;\n  }\n  .navbar-nav > li {\n    float: none;\n  }\n  .navbar-nav > li > a {\n    padding-top: 10px;\n    padding-bottom: 10px;\n  }\n  .collapse.in {\n    display: block !important;\n  }\n}\n", ""]);
+	exports.push([module.id, "layout-header {\n  display: block;\n}\n\n.user-profile__pic {\n  margin-right: 0.5em;\n}\n\n.affix {\n  top: 0;\n  width: 100%;\n  z-index: 100;\n}\n\n.affix-top {\n  width: 100%;\n}\n\n#user-option-dropdown::before {\n  border-bottom: 9px solid rgba(0, 0, 0, 0.2);\n  border-left: 9px solid transparent;\n  border-right: 9px solid transparent;\n  content: \"\";\n  display: inline-block;\n  right: 11px;\n  position: absolute;\n  top: -8px;\n}\n\n#user-option-dropdown::after {\n  border-bottom: 8px solid #FFFFFF;\n  border-left: 9px solid transparent;\n  border-right: 9px solid transparent;\n  content: \"\";\n  display: inline-block;\n  right: 11px;\n  position: absolute;\n  top: -7px;\n}\n\n@media (max-width: 1170px) {\n  .navbar-header {\n    float: none;\n  }\n  .navbar-header .pcaarrd-pic {\n    width: 80%;\n  }\n  .navbar-left, .navbar-right {\n    float: none !important;\n  }\n  .navbar-toggle {\n    display: block;\n  }\n  .navbar-collapse {\n    border-top: 1px solid transparent;\n    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);\n  }\n  .navbar-fixed-top {\n    top: 0;\n    border-width: 0 0 1px;\n  }\n  .navbar-collapse.collapse {\n    display: none !important;\n  }\n  .navbar-nav {\n    float: none !important;\n    margin-top: 7.5px;\n  }\n  .navbar-nav > li {\n    float: none;\n  }\n  .navbar-nav > li > a {\n    padding-top: 10px;\n    padding-bottom: 10px;\n  }\n  .collapse.in {\n    display: block !important;\n  }\n}\n", ""]);
 
 	// exports
 
@@ -52007,7 +52110,7 @@
 
 
 	// module
-	exports.push([module.id, "layout-footer {\n  position: absolute;\n  right: 0;\n  width: 100%;\n  height: 348px;\n  bottom: 0;\n  color: white;\n  padding-top: 2.5em;\n}\n\n.site-footer {\n  background-color: rgba(0, 0, 0, 0.9) !important;\n  border-top: solid 1px;\n}\n\n.site-footer__about {\n  text-align: center;\n}\n\n.site-footer__copyright {\n  background-color: #000;\n  padding: 0.5% 0;\n  color: gray;\n}\n\n@media (min-width: 768px) {\n  layout-footer {\n    position: absolute;\n    right: 0;\n    width: 100%;\n    height: 348px;\n    bottom: 0;\n    color: white;\n    padding-top: 2.5em;\n  }\n}\n", ""]);
+	exports.push([module.id, "layout-footer {\n  position: absolute;\n  width: 100%;\n  height: 348px;\n  bottom: 0;\n  color: white;\n  padding-top: 2.5em;\n}\n\n.site-footer {\n  background-color: rgba(0, 0, 0, 0.9) !important;\n  border-top: solid 1px;\n}\n\n.site-footer__about {\n  text-align: center;\n}\n\n.site-footer__copyright {\n  background-color: #000;\n  padding: 0.5% 0;\n  color: gray;\n}\n", ""]);
 
 	// exports
 
@@ -52412,7 +52515,7 @@
 				category: AddPostCategoriesService.getCurrentAddPostCategory().postCategory.category,
 				showPublic: true
 			};
-			$scope.multipleFields = {
+			$scope.multipleFields = { // used in adding multiple authors and URLs
 				authors: [''],
 				urls: [{ url: '', urlTitle: '' }]
 			};
@@ -52424,6 +52527,7 @@
 
 			$scope.loadAdditionalFormFields = function () {
 				if ($scope.addPostFormData.category === "event") {
+					// sets initial start and end date of event
 					$scope.addPostFormData.startDateTime = $scope.defaultDatetime;
 					$scope.endDateTime = {
 						enable: false,
@@ -52431,6 +52535,7 @@
 					};
 				}
 				if ($scope.addPostFormData.category === "report") {
+					// sets initial date of report
 					$scope.addPostFormData.dateTime = $scope.defaultDatetime;
 				}
 
@@ -52439,32 +52544,35 @@
 
 				if ($scope.user.isLoggedIn) {
 					UserAuthenticationService.getCurrentUser().then(function (result) {
-						$scope.user.currentUser = result;
+						$scope.user.currentUser = result; // gets all info of logged in user
 					});
 				}
 			};
 
 			$scope.toggleEndDateTime = function () {
+				// enables or disables adding event end date
 				$scope.endDateTime.enable = !$scope.endDateTime.enable;
 			};
 
 			$scope.addField = function (fieldArray, maxField) {
 				if (fieldArray.length < maxField) {
 					if (fieldArray === $scope.multipleFields.urls) {
-						fieldArray.push({ url: '', urlTitle: '' });
+						fieldArray.push({ url: '', urlTitle: '' }); // pushing in multipleFields.urls
 					} else {
-						fieldArray.push('');
+						fieldArray.push(''); // pushing in multipleFields.authors
 					}
 				}
 			};
 
 			$scope.removeField = function (fieldArray, minField) {
+				// used by author and url multiplefields
 				if (fieldArray.length > minField) {
 					fieldArray.pop();
 				}
 			};
 
 			$scope.clearMultipleFields = function () {
+				// clearing both author and url multiplefields
 				_lodash2.default.forOwn($scope.multipleFields, function (fieldArray) {
 					fieldArray.length = 0;
 					if (fieldArray === $scope.multipleFields.urls) {
@@ -52476,15 +52584,16 @@
 			};
 
 			$scope.removeFiles = function () {
+				// clearing files; not sure if this is still used
 				$scope.addPostFormData.files = [];
 			};
 
 			$scope.clearForm = function () {
 				var category = $scope.addPostFormData.category;
 				$scope.addPostFormData = null;
-				$scope.clearUploadFiles();
-				$scope.clearHashtags();
-				$scope.clearTechnologyHandles();
+				$scope.clearUploadFiles(); // function is found at SharedAddFilesController
+				$scope.clearHashtags(); // function is found at SharedAddHashtagsController
+				$scope.clearTechnologyHandles(); // function is found at SharedAddTechnologyHandlesController
 				$scope.technologyHandle.enable = false;
 				$scope.clearMultipleFields();
 
@@ -52492,7 +52601,7 @@
 					$scope.addPostFormData = {
 						startDateTime: $scope.defaultDatetime
 					};
-					//delete $scope.addPostFormData.endDateTime;
+
 					$scope.endDateTime.enable = false;
 				}
 
@@ -52508,6 +52617,7 @@
 			};
 
 			$scope.onProcessPostData = function (postCategory) {
+				// processing before adding post
 
 				if (!UserAuthenticationService.isLoggedIn()) {
 					UserAuthenticationService.loginFirst();
@@ -52515,6 +52625,7 @@
 				}
 
 				if (postCategory === 'advertisement' && $scope.price) {
+					// makes price with two decimal places
 					$scope.addPostFormData.price = $scope.price.toFixed(2);
 				}
 
@@ -52538,7 +52649,7 @@
 				if ($scope.technologyHandle.enable) {
 					$scope.addPostFormData.technologyHandles = $scope.selectedTechnologies;
 				}
-				$scope.addPostFormData.hashtags = $scope.hashtags;
+				$scope.addPostFormData.hashtags = $scope.hashtags; // from SharedAddHashtagsController
 				$scope.addPostFormData.datePosted = (0, _moment2.default)().format('MMMM Do YYYY, h:mm:ss a');
 				$scope.addPostFormData.reactions = [{
 					name: "comments",
@@ -52569,12 +52680,14 @@
 				if (postCategory === 'media' && $scope.addPostFormData.mediaType === 'url') {
 					$scope.addPostFormData.urls = $scope.multipleFields.urls;
 				} else if ($scope.selectedUploadFiles.length > 0) {
+					// with file/s uploaded
 					var uploadedFiles = [];
 					$scope.progressBarON = true;
-					SharedUploadService.uploadFiles($scope.selectedUploadFiles, uploadedFiles).then(function (result) {
+					SharedUploadService.uploadFiles($scope.selectedUploadFiles, uploadedFiles) // upload files
+					.then(function (result) {
 						$scope.progressBarON = false;
-						$scope.addPostFormData.files = uploadedFiles;
-						return $scope.submitPost($scope.addPostFormData);
+						$scope.addPostFormData.files = uploadedFiles; // get the uploaded files data
+						return $scope.submitPost($scope.addPostFormData); // adds post
 					}, function (error) {
 						$scope.progressBarON = false;
 						ngToast.create({
@@ -52591,14 +52704,17 @@
 					return;
 				}
 
-				$scope.submitPost($scope.addPostFormData).then(function () {
+				$scope.submitPost($scope.addPostFormData) // add post for no files uploaded
+				.then(function () {
 					$scope.onSetGroupPosts(postCategory);
 					$scope.clearForm();
 				});
 			};
 
 			$scope.onSetGroupPosts = function (postCategory) {
+				// update group's post counts after adding a post
 				GroupService.getOneGroup($scope.selectedGroup.handle).then(function (refreshedGroup) {
+					// load the group
 					refreshedGroup.postsCount.total++;
 					refreshedGroup.postsCount[postCategory]++;
 					GroupService.updateGroup(refreshedGroup.handle, { postsCount: refreshedGroup.postsCount });
@@ -52629,9 +52745,9 @@
 		function AddPostCategoriesController($scope, AddPostCategoriesService) {
 			var setCurrentAddPostCategory = AddPostCategoriesService.setCurrentAddPostCategory;
 
-			$scope.setCurrentAddPostCategory = _.partial(setCurrentAddPostCategory);
-			$scope.currentAddPostCategory = AddPostCategoriesService.getCurrentAddPostCategory();
-			$scope.addPostCategories = AddPostCategoriesService.getAddPostCategories();
+			$scope.setCurrentAddPostCategory = _.partial(setCurrentAddPostCategory); // sets the selected add post category
+			$scope.currentAddPostCategory = AddPostCategoriesService.getCurrentAddPostCategory(); // gets the selected add post category
+			$scope.addPostCategories = AddPostCategoriesService.getAddPostCategories(); // gets all the add post categories
 		}
 	})();
 
@@ -52660,22 +52776,25 @@
 
 		function PostController($scope, $state, $stateParams, PostService, CommentService, GroupService, ViewPostsCategoriesService, SharedPaginationService, UserAuthenticationService, $filter, ngToast) {
 
-			PostService.setGroupBelonged($stateParams.handle);
-			$scope.groupBelonged = $stateParams.handle;
+			PostService.setGroupBelonged($stateParams.handle); // PostService keeps track of the parent group/element of posts (e.g. from a group, from community feed, from user profile)
+			$scope.groupBelonged = $stateParams.handle; // can be a group handle, --my-groups--, --user--
 
 			$scope.paginate = SharedPaginationService;
 			$scope.paginate.currentPage = 1;
 			$scope.paginate.postsPerPage = 5;
 
 			$scope.commentOnOnePost = function (groupHandle, postCategory, postID) {
+				// redirects to write a comment form
 				$state.go('oneGroup.viewOne' + (postCategory.charAt(0).toUpperCase() + postCategory.slice(1)) + 'Post', { handle: groupHandle, postID: postID, '#': 'write-comment' });
 			};
 
 			$scope.clearForm = function () {
+				// not sure if this is still used
 				$scope.clearHashtags();
 			};
 
 			$scope.setPostsData = function () {
+				// load the appropriate posts after determining the selected post category
 				var currentViewPostsCategory = ViewPostsCategoriesService.getCurrentViewPostsCategory().postCategory.category;
 				ViewPostsCategoriesService.retrievePostsByCategory(currentViewPostsCategory);
 				$scope.posts = PostService.getPostList();
@@ -52686,7 +52805,7 @@
 				if ($stateParams.postID) {
 					// if viewing one post
 					PostService.getOnePost($stateParams.postID).then(function (result) {
-						$scope.selectedPost = result;
+						$scope.selectedPost = result; // all info of one post
 					}, function (error) {
 						// show 404 not found page
 					});
@@ -52694,7 +52813,7 @@
 					// if viewing many posts
 					if ($stateParams.handle === '--user--') {
 						// in user profile
-						ViewPostsCategoriesService.setUser($stateParams.userID);
+						ViewPostsCategoriesService.setUser($stateParams.userID); // memberOfGroup is null here
 						$scope.setPostsData();
 					} else {
 						// in community feed or in specific group
@@ -52702,15 +52821,14 @@
 						$scope.user.isLoggedIn = UserAuthenticationService.isLoggedIn();
 						if ($scope.user.isLoggedIn) {
 							UserAuthenticationService.getCurrentUser().then(function (result) {
-								/*if ($stateParams.handle === '--my-groups--'){
-	       	$scope.user.currentUser = result;
-	       }*/
+								// load all info of logged in user
+								// memberOfGroup = if logged in user is member of the current group
 								var memberOfGroup = $stateParams.handle === '--my-groups--' || result.groupsJoined.indexOf($stateParams.handle) > -1 ? true : false;
 								ViewPostsCategoriesService.setUser(result._id, memberOfGroup);
 								$scope.setPostsData();
 							});
 						} else if ($stateParams.handle !== '--my-groups--') {
-							// in specific group, still show posts
+							// not logged in. in specific group, still show posts
 							ViewPostsCategoriesService.setUser(null, false);
 							$scope.setPostsData();
 						}
@@ -52719,6 +52837,7 @@
 			};
 
 			$scope.$watch(function () {
+				// tracks all the time if the logged in user is a member of the group to determine which posts should be visible
 				return $scope.userMembership;
 			}, function () {
 				$scope.getPostData();
@@ -52726,14 +52845,15 @@
 
 			$scope.onSetPostReaction = function (post, reactionIndex) {
 				if (UserAuthenticationService.isLoggedIn() && $scope.user.currentUser && $scope.user.currentUser.groupsJoined.indexOf(post.groupBelonged) > -1) {
+					// if logged in user is group member
 					PostService.getOnePost(post._id).then(function (result) {
 						var user = {
 							_id: $scope.user.currentUser._id,
 							name: $scope.user.currentUser.name.first + ' ' + $scope.user.currentUser.name.last
 						};
 
-						PostService.setPostReaction($scope, result, reactionIndex, user);
-						post.reactions = result.reactions;
+						PostService.setPostReaction($scope, result, reactionIndex, user); // adds reaction to a post
+						post.reactions = result.reactions; // to update the Reactions UI
 					}, function (error) {
 						// show 404 not found page
 					});
@@ -52746,10 +52866,12 @@
 			};
 
 			$scope.returnToGroup = function (groupHandle) {
+				// Go Back in view one post
 				$state.go('oneGroup', { handle: groupHandle });
 			};
 
 			$scope.$watch('searchPostsValue', function (value) {
+				// filter posts
 				if ($scope.posts) {
 					$scope.posts.contents = $filter('filter')($scope.postsCopy.contents, value);
 					$scope.resetCurrentPage();
@@ -52767,11 +52889,13 @@
 			$scope.getPostData();
 
 			if ($stateParams.handle === '--my-groups--' || $stateParams.handle === '--user--') {
+				// load all groups info
 				GroupService.getAllGroups();
 				$scope.groups = GroupService.getGroupList();
 			}
 
 			$scope.getGroupName = function (groupHandle) {
+				// find the group name given a group handle
 				var groupIndex = $scope.groups.contents.map(function (group) {
 					return group.handle;
 				}).indexOf(groupHandle);
@@ -52786,10 +52910,12 @@
 			};
 
 			$scope.showDeletePostButton = function (post) {
+				// sets delete button visible to post author === logged in user, and to group admin
 				var isGroupAdmin = false;
 				var isCurrentUser = $scope.user.currentUser && (post && post.postedBy._id) === $scope.user.currentUser._id;
 
 				if ($state.current.name.indexOf('oneGroup') >= 0) {
+					// if viewing one group
 					isGroupAdmin = $scope.user.currentUser && $scope.selectedGroup.admin.indexOf($scope.user.currentUser._id) > -1;
 				} else {
 					isGroupAdmin = $scope.user.currentUser && $scope.checkIfGroupAdmin(post.groupBelonged, $scope.user.currentUser._id);
@@ -52799,12 +52925,14 @@
 			};
 
 			$scope.highlightReaction = function (selectedReaction) {
+				// highlight the reaction that logged in user selected before
 				return $scope.user.currentUser && selectedReaction.users.map(function (user) {
 					return user._id;
 				}).indexOf($scope.user.currentUser._id) >= 0;
 			};
 
 			$scope.onDeleteOnePost = function (post) {
+				// processing before deleting post
 				if (!UserAuthenticationService.isLoggedIn()) {
 					UserAuthenticationService.loginFirst();
 				} else {
@@ -52830,9 +52958,9 @@
 		function ViewPostsCategoriesController($scope, $stateParams, ViewPostsCategoriesService, UserAuthenticationService) {
 			var setCurrentViewPostsCategory = ViewPostsCategoriesService.setCurrentViewPostsCategory;
 
-			$scope.setCurrentViewPostsCategory = _.partial(setCurrentViewPostsCategory);
-			$scope.currentViewPostsCategory = ViewPostsCategoriesService.getCurrentViewPostsCategory();
-			$scope.viewPostsCategories = ViewPostsCategoriesService.getViewPostsCategories();
+			$scope.setCurrentViewPostsCategory = _.partial(setCurrentViewPostsCategory); // sets the selected view post category and the appropriate posts
+			$scope.currentViewPostsCategory = ViewPostsCategoriesService.getCurrentViewPostsCategory(); // gets the selected view post category
+			$scope.viewPostsCategories = ViewPostsCategoriesService.getViewPostsCategories(); // gets all the view post categories
 		}
 	})();
 
@@ -53417,7 +53545,6 @@
 		PostService.$inject = ['$http', 'ngToast', '$q', 'CommentService', 'GroupService', 'UserService'];
 
 		function PostService($http, ngToast, $q, CommentService, GroupService, UserService) {
-			// to do: check if there's err in http requests
 
 			var postList = { contents: [] },
 			    postListCopy = { contents: [] },
@@ -53454,8 +53581,9 @@
 			};
 
 			var getPostsByGroupAndCategory = function getPostsByGroupAndCategory(category, memberOfGroup) {
+				// gets posts of a certain category from a group
 				var deferred = $q.defer();
-				var config = memberOfGroup ? {} : { params: { showPublic: true } };
+				var config = memberOfGroup ? {} : { params: { showPublic: true } }; // if memberOfGroup === true, allows showing private posts
 
 				$http.get('/api/posts/group-belonged/' + groupBelonged + '/category/' + category, config).then(function (response) {
 					postList.contents = response.data.posts;
@@ -53470,8 +53598,9 @@
 			};
 
 			var getAllPostsByGroup = function getAllPostsByGroup(memberOfGroup) {
+				// gets all posts from a group
 				var deferred = $q.defer();
-				var config = memberOfGroup ? {} : { params: { showPublic: true } };
+				var config = memberOfGroup ? {} : { params: { showPublic: true } }; // if memberOfGroup === true, allows showing private posts
 
 				$http.get('/api/posts/group-belonged/' + groupBelonged, config).then(function (response) {
 					postList.contents = response.data.posts;
@@ -53485,6 +53614,7 @@
 			};
 
 			var getPostsByMyGroupsAndCategory = function getPostsByMyGroupsAndCategory(category, userID) {
+				// gets posts of a certain category from logged in user's groups
 				var deferred = $q.defer();
 
 				UserService.getOneUser(userID).then(function (response) {
@@ -53506,6 +53636,7 @@
 			};
 
 			var getAllPostsByMyGroups = function getAllPostsByMyGroups(userID) {
+				// gets all posts from logged in user's groups
 				var deferred = $q.defer();
 
 				UserService.getOneUser(userID).then(function (response) {
@@ -53527,6 +53658,7 @@
 			};
 
 			var getPostsByUserAndCategory = function getPostsByUserAndCategory(category, userID) {
+				// gets posts of a certain category from a user
 				var deferred = $q.defer();
 				$http.get('/api/posts/user/' + userID + '/category/' + category).then(function (response) {
 					postList.contents = response.data.posts;
@@ -53540,6 +53672,7 @@
 			};
 
 			var getAllPostsByUser = function getAllPostsByUser(userID) {
+				// gets all posts of a certain category from a user
 				var deferred = $q.defer();
 				$http.get('/api/posts/user/' + userID).then(function (response) {
 					postList.contents = response.data.posts;
@@ -53553,6 +53686,7 @@
 			};
 
 			var getAllPostsCountByUser = function getAllPostsCountByUser(userID) {
+				// returns the number of posts of a user
 				var deferred = $q.defer();
 				$http.get('/api/posts/user/' + userID + '/length').then(function (response) {
 					deferred.resolve(response.data.postsLength);
@@ -53576,6 +53710,7 @@
 			};
 
 			var setPostReaction = function setPostReaction($scope, post, reactionIndex, currentUser) {
+				// set the post's thumbsup, comment, happy, sad
 				$scope.selectedPost = post;
 				var reactions = $scope.selectedPost.reactions;
 				var reactionsLength = reactions.length;
@@ -53617,9 +53752,11 @@
 			};
 
 			var decrementCommentsCount = function decrementCommentsCount(post, comment, userCommentsCount, userID) {
+				// decrement the count of comments of a post
 				post.reactions[0].count--;
 
 				if (userCommentsCount < 1) {
+					// removes the user in comments' users list if he/she has no more comment
 					var userIndex = post.reactions[0].users.map(function (user) {
 						return user._id;
 					}).indexOf(userID);
@@ -53628,32 +53765,33 @@
 					}
 				}
 
-				$http.put('/api/posts/reactions/' + post._id, {
+				$http.put('/api/posts/reactions/' + post._id, { // update reactions
 					reactions: post.reactions
 				}).then(function (response) {});
 			};
 
 			var deleteOnePost = function deleteOnePost($scope, $stateParams, post) {
 				$http.delete('/api/posts/' + post._id).then(function (response) {
-					CommentService.deleteCommentsByReferredPost(post._id);
+					CommentService.deleteCommentsByReferredPost(post._id); // deletes all comments of a deleted post
 
 					GroupService.getOneGroup(post.groupBelonged).then(function (refreshedGroup) {
+						// refreshes the group after post deletion
 						refreshedGroup.postsCount.total--;
 						refreshedGroup.postsCount[post.category]--;
-						GroupService.updateGroup(refreshedGroup.handle, { postsCount: refreshedGroup.postsCount });
+						GroupService.updateGroup(refreshedGroup.handle, { postsCount: refreshedGroup.postsCount }); // updating the post count of group
 						if ($scope.selectedGroup) {
 							$scope.selectedGroup.postsCount = refreshedGroup.postsCount;
-							$scope.updatePostsAnalysis();
+							$scope.updatePostsAnalysis(); // reflects changes in Post Analysis UI
 						}
 					}, function (error) {
 						// show 404 not found page
 					});
 
 					if ($stateParams.postID) {
-						// if viewing one post
+						// if viewing one post, return to group
 						$scope.returnToGroup($stateParams.handle);
 					} else {
-						$scope.getPostData();
+						$scope.getPostData(); // reloads posts
 					}
 
 					ngToast.create({
@@ -53700,6 +53838,7 @@
 		function AddPostService($http, ngToast, ViewPostsCategoriesService, $q) {
 
 			var submitPost = function submitPost(addPostFormData) {
+				// add post
 				var deferred = $q.defer();
 
 				$http.post('/api/posts', addPostFormData).then(function (response) {
@@ -53760,7 +53899,7 @@
 				title: "Post Others"
 			}];
 
-			var currentAddPostCategory = {
+			var currentAddPostCategory = { // selected add post category
 				postCategory: addPostCategories[0]
 			};
 
@@ -53773,6 +53912,7 @@
 			};
 
 			var setCurrentAddPostCategory = function setCurrentAddPostCategory(category) {
+				// sets the selected add post category
 				var categoryIndex = addPostCategories.map(function (postCategory) {
 					return postCategory.category;
 				}).indexOf(category);
@@ -53828,7 +53968,7 @@
 				title: "Others Posts"
 			}];
 
-			var currentViewPostsCategory = {
+			var currentViewPostsCategory = { // selected view post category
 				postCategory: viewPostsCategories[0]
 			};
 
@@ -53844,6 +53984,7 @@
 			};
 
 			var setCurrentViewPostsCategory = function setCurrentViewPostsCategory(category) {
+				// sets the selected view post category and loads the appropriate posts
 				var categoryIndex = viewPostsCategories.map(function (postCategory) {
 					return postCategory.category;
 				}).indexOf(category);
@@ -53853,30 +53994,35 @@
 
 			var setUser = function setUser(userid, memberOfCurrentGroup) {
 				userID = userid;
-				memberOfGroup = memberOfCurrentGroup;
+				memberOfGroup = memberOfCurrentGroup; // true or false
 			};
 
 			var retrievePostsByCategory = function retrievePostsByCategory(category) {
+				// loads the appropriate posts
 				var deferred = $q.defer();
 
 				if (category === "all") {
 					if (PostService.getGroupBelonged() === '--my-groups--') {
-						// no need to check memberOfGroup
-						PostService.getAllPostsByMyGroups(userID).then(function (results) {
+						// in community feed. no need to check memberOfGroup
+						PostService.getAllPostsByMyGroups(userID) // loads all posts from logged in user's groups
+						.then(function (results) {
 							deferred.resolve();
 						}, function (error) {
 							// posts not found
 							deferred.reject(error);
 						});
 					} else if (PostService.getGroupBelonged() === '--user--') {
-						PostService.getAllPostsByUser(userID).then(function (results) {
+						// in user profile
+						PostService.getAllPostsByUser(userID) // loads all posts (public) of a user
+						.then(function (results) {
 							deferred.resolve();
 						}, function (error) {
 							// posts not found
 							deferred.reject(error);
 						});
 					} else {
-						PostService.getAllPostsByGroup(memberOfGroup).then(function (results) {
+						PostService.getAllPostsByGroup(memberOfGroup) // loads all posts of a group
+						.then(function (results) {
 							deferred.resolve();
 						}, function (error) {
 							// posts not found
@@ -53885,7 +54031,9 @@
 					}
 				} else {
 					if (PostService.getGroupBelonged() === '--my-groups--') {
+						// in community feed
 						PostService.getPostsByMyGroupsAndCategory(currentViewPostsCategory.postCategory.category, userID).then(function (results) {
+							// loads posts of a certain category from logged in user's groups
 							deferred.resolve();
 						}, function (error) {
 							// posts not found
@@ -53893,6 +54041,7 @@
 						});
 					} else if (PostService.getGroupBelonged() === '--user--') {
 						PostService.getPostsByUserAndCategory(currentViewPostsCategory.postCategory.category, userID).then(function (results) {
+							// loads posts of a certain category (public) of a user
 							deferred.resolve();
 						}, function (error) {
 							// posts not found
@@ -53900,6 +54049,7 @@
 						});
 					} else {
 						PostService.getPostsByGroupAndCategory(currentViewPostsCategory.postCategory.category, memberOfGroup).then(function (results) {
+							// loads posts of a certain category of a group
 							deferred.resolve();
 						}, function (error) {
 							// posts not found
@@ -54144,6 +54294,7 @@
 
 			if ($scope.user.isLoggedIn) {
 				UserAuthenticationService.getCurrentUser().then(function (result) {
+					// get all info of logged in user
 					$scope.user.currentUser = result;
 				});
 			}
@@ -54158,6 +54309,7 @@
 			};
 
 			$scope.onProcessCommentData = function (postID) {
+				// processing before submitting comment
 				if (!UserAuthenticationService.isLoggedIn()) {
 					UserAuthenticationService.loginFirst();
 					return;
@@ -54169,7 +54321,7 @@
 				if ($scope.technologyHandle.enable) {
 					$scope.addCommentFormData.technologyHandles = $scope.selectedTechnologies;
 				}
-				$scope.addCommentFormData.hashtags = $scope.hashtags;
+				$scope.addCommentFormData.hashtags = $scope.hashtags; // from SharedAddHashtags controller
 
 				$scope.addCommentFormData.dateCommented = (0, _moment2.default)().format('MMMM Do YYYY, h:mm:ss a');
 				$scope.addCommentFormData.reactions = [{
@@ -54196,16 +54348,17 @@
 				var commentedBy = $scope.addCommentFormData.commentedBy;
 
 				if ($scope.selectedUploadFiles.length > 0) {
-					var uploadedFiles = [];
+					var uploadedFiles = []; // will contain info of uploaded files
 					$scope.progressBarON = true;
 					SharedUploadService.uploadFiles($scope.selectedUploadFiles, uploadedFiles).then(function (result) {
 						$scope.progressBarON = false;
 						$scope.addCommentFormData.files = uploadedFiles;
 
-						$scope.submitComment(_lodash2.default.cloneDeep($scope.addCommentFormData));
-						PostService.getOnePost($scope.selectedPost._id) // check post for update
+						$scope.submitComment(_lodash2.default.cloneDeep($scope.addCommentFormData)); // submit processed comment
+						PostService.getOnePost($scope.selectedPost._id) // check post for update in its comment count
 						.then(function (result) {
-							PostService.setPostReaction($scope, result, 0, commentedBy); // increment post's comment count
+							// increment post's comment count; result = the post object, 0 = index of comment in post's reactions array
+							PostService.setPostReaction($scope, result, 0, commentedBy);
 						}, function (error) {
 							// show 404 not found page
 						});
@@ -54219,10 +54372,12 @@
 						});
 					});
 				} else {
-					$scope.submitComment(_lodash2.default.cloneDeep($scope.addCommentFormData));
-					PostService.getOnePost($scope.selectedPost._id) // check post for update
+					// if no files to be uploaded
+					$scope.submitComment(_lodash2.default.cloneDeep($scope.addCommentFormData)); // submit processed comment
+					PostService.getOnePost($scope.selectedPost._id) // check post for update in its comment count
 					.then(function (result) {
-						PostService.setPostReaction($scope, result, 0, commentedBy); // increment post's comment count
+						// update post's reaction (increasing comment's count and users); result = the updated post object, 0 = index of comment in post's reactions array
+						PostService.setPostReaction($scope, result, 0, commentedBy);
 					}, function (error) {
 						// show 404 not found page
 					});
@@ -54232,15 +54387,17 @@
 			};
 
 			$scope.onSetCommentReaction = function (comment, selectedGroupHandle, reactionIndex) {
+				// processing the user who reacted to a comment
 				if (UserAuthenticationService.isLoggedIn() && $scope.user.currentUser && $scope.user.currentUser.groupsJoined.indexOf(selectedGroupHandle) > -1) {
 					CommentService.getOneComment(comment._id).then(function (result) {
 						var user = {
 							_id: $scope.user.currentUser._id,
 							name: $scope.user.currentUser.name.first + ' ' + $scope.user.currentUser.name.last
 						};
-
+						// update comment's reaction (increasing a reaction's count and users); result = the updated comment object, 
+						// reactionIndex = index of a reaction in comment's reactions array
 						CommentService.setCommentReaction(result, reactionIndex, user);
-						comment.reactions = result.reactions;
+						comment.reactions = result.reactions; // update the comment's reaction in UI
 					}, function (error) {
 						// show 404 not found page
 					});
@@ -54257,21 +54414,21 @@
 					UserAuthenticationService.loginFirst();
 				} else {
 					CommentService.deleteOneComment(comment).then(function (result) {
-						return PostService.getOnePost($scope.selectedPost._id); // update selected post
+						return PostService.getOnePost($scope.selectedPost._id); // to update selected post
 					}, function (error) {
 						return $q.reject(error);
 						// comment to be deleted not found
 					}).then(function (result) {
 						$scope.selectedPost = result;
-						// find all comments of the same author of the current post
+						// find all comments of the same user of the current post to accurately change post's comment reaction's users
 						return CommentService.getCommentsByUser($state.params.postID, comment.commentedBy._id);
 					}, function (error) {
 						return $q.reject(error);
-						// referred post not found, but not possible since comments are removed after post deletion
 					}).then(function (results) {
+						// decrement post's comment count and remove the user in users list of he has no more comments in the post
+						// comment = comment object, results.length = number of comments a user has in a post 
 						PostService.decrementCommentsCount($scope.selectedPost, comment, results.length, comment.commentedBy._id);
 					}, function (error) {
-						// all comments of the author are not found
 						ngToast.create({
 							className: 'danger',
 							content: 'Error: The comment was not found.'
@@ -54283,12 +54440,14 @@
 			CommentService.getComments($state.params.postID);
 
 			$scope.highlightReaction = function (selectedReaction) {
+				// highlight the reaction which the logged in user selected before
 				return $scope.user.currentUser && selectedReaction.users.map(function (user) {
 					return user._id;
 				}).indexOf($scope.user.currentUser._id) >= 0;
 			};
 
 			$scope.showDeleteCommentButton = function (comment) {
+				// only the comment's author or group admin can delete a comment
 				var isGroupAdmin = $scope.user.currentUser && $scope.selectedGroup.admin.indexOf($scope.user.currentUser._id) > -1;
 				var isCurrentUser = $scope.user.currentUser && (comment && comment.commentedBy._id) === $scope.user.currentUser._id;
 
@@ -54401,6 +54560,7 @@
 			};
 
 			var getCommentsLengthByGroupBelonged = function getCommentsLengthByGroupBelonged(groupHandle) {
+				// get number of comments in a group
 				var deferred = $q.defer();
 
 				$http.get('/api/comments/groupBelonged/' + groupHandle + '/length').then(function (response) {
@@ -54413,6 +54573,7 @@
 			};
 
 			var getCommentsByUser = function getCommentsByUser(referredPost, userID) {
+				// get comments of a post and user
 				var deferred = $q.defer();
 
 				$http.get('/api/comments/referredPost/' + referredPost + '/commentedBy/' + userID).then(function (response) {
@@ -54425,6 +54586,7 @@
 			};
 
 			var getCommentsLengthByOneUser = function getCommentsLengthByOneUser(userID) {
+				// get number of comments of user
 				var deferred = $q.defer();
 
 				$http.get('/api/comments/commentedBy/' + userID + '/length').then(function (response) {
@@ -54460,6 +54622,7 @@
 			};
 
 			var setCommentReaction = function setCommentReaction(comment, reactionIndex, currentUser) {
+				// modify comment's reactions
 				var reactions = comment.reactions;
 				var reactionsLength = reactions.length;
 				var duplicateReactionIndex = -1;
@@ -54493,6 +54656,7 @@
 			};
 
 			var deleteCommentsByReferredPost = function deleteCommentsByReferredPost(postID) {
+				// delete all comments of a post
 				$http.delete('/api/comments/referredPost/' + postID).then(function (response) {});
 			};
 
@@ -54500,7 +54664,7 @@
 				var deferred = $q.defer();
 
 				$http.delete('/api/comments/' + comment._id).then(function (response) {
-					getComments(comment.referredPost);
+					getComments(comment.referredPost); // updates the post's comments
 
 					ngToast.create({
 						className: 'success',
@@ -54728,13 +54892,14 @@
 
 		function UserAuthenticationController($scope, $state, UserAuthenticationService, UserService, ngToast) {
 			$scope.addUserFormData = {};
-			$scope.adminRegistration = { allow: false };
+			$scope.adminRegistration = { allow: false }; // for site admin registration
 			UserService.getAllUsers();
-			$scope.users = UserService.getUserList();
+			$scope.users = UserService.getUserList(); // contains all users info
 
 			$scope.occupationList = ["Student", "Farmer", "Researcher / Scientist", "Academician", "Policymaker", "Entrepreneur", "Extension worker", "Media", "Others"];
 
 			$scope.validateAdminRegistration = function () {
+				// validate admin registration access key entered
 				UserAuthenticationService.allowAdminRegistration($scope.adminRegistration.enteredAccessKey).then(function (response) {
 					$scope.adminRegistration.allow = response;
 				}, function (response) {
@@ -54748,7 +54913,7 @@
 			};
 
 			$scope.getAllMonths = function () {
-				return _moment2.default.months();
+				return _moment2.default.months(); // array of January, February, ...
 			};
 
 			$scope.getAllDays = function () {
@@ -54756,7 +54921,7 @@
 				for (var i = 1; i <= 31; i++) {
 					days.push(i);
 				}
-				return days;
+				return days; // 31 days
 			};
 
 			$scope.getAllYears = function () {
@@ -54764,7 +54929,7 @@
 				for (var i = (0, _moment2.default)().get('year'); i >= 1900; i--) {
 					years.push(i);
 				}
-				return years;
+				return years; // year 1900 - current year
 			};
 
 			$scope.clearUserFormData = function () {
@@ -54774,12 +54939,14 @@
 			};
 
 			$scope.usedEmail = function () {
+				// checks if email entered into the form already exists
 				return $scope.users.contents.map(function (user) {
 					return user.email;
 				}).indexOf($scope.addUserFormData.email) > -1 ? true : false;
 			};
 
 			$scope.onProcessUserData = function () {
+				// processing user data before registering the user
 				if ($scope.enteredPassword !== $scope.reenteredPassword) {
 					ngToast.create({
 						className: 'warning',
@@ -54801,7 +54968,7 @@
 				$scope.addUserFormData.birthdate = $scope.selectedMonth + ' ' + $scope.selectedDay + ' ' + $scope.selectedYear;
 				$scope.addUserFormData.photo = null;
 
-				$scope.addUserFormData.infoVisibility = {
+				$scope.addUserFormData.infoVisibility = { // visibility of all personal info
 					location: true,
 					birthdate: true,
 					occupation: true,
@@ -54810,7 +54977,7 @@
 					contactNumber: true,
 					about: true
 				};
-
+				// register the user
 				UserAuthenticationService.register($scope.addUserFormData, $scope.reenteredPassword, $scope.adminRegistration.enteredAccessKey).then(function () {
 					ngToast.create({
 						className: 'success',
@@ -54827,6 +54994,7 @@
 			};
 
 			$scope.onProcessLoginData = function () {
+				// logging in
 				UserAuthenticationService.login($scope.loginData).then(function () {
 					$state.go("communityHome");
 				}, function (response) {
@@ -54864,20 +55032,21 @@
 
 		function UserController($scope, $stateParams, UserService, UserAuthenticationService, GroupService, CommentService, PostService) {
 
-			$scope.fullUserDescription = false;
+			$scope.fullUserDescription = false; // show full description if user profile's about is too long
 			$scope.readUserDescription = "Read More";
-			$scope.DESCRIPTION_LIMIT = 1000;
+			$scope.DESCRIPTION_LIMIT = 1000; // shows default of 1000 characters in user profile's about
 			$scope.descriptionSize = $scope.DESCRIPTION_LIMIT;
 			$scope.user = {};
 			$scope.user.isLoggedIn = UserAuthenticationService.isLoggedIn();
 
 			if ($scope.user.isLoggedIn) {
 				UserAuthenticationService.getCurrentUser().then(function (result) {
-					$scope.user.currentUser = result;
+					$scope.user.currentUser = result; // get logged in user's info
 				});
 			}
 
 			UserService.getOneUser($stateParams.userID).then(function (result) {
+				// loads user data and other data related to the user
 				$scope.selectedUser = result;
 				$scope.loadUserGroups($scope.selectedUser);
 				$scope.loadUserAdministeredGroups($scope.selectedUser);
@@ -54889,12 +55058,15 @@
 			});
 
 			$scope.toggleUserDescription = function () {
+				// toggles Read More or Read Less in very long user's about
 				$scope.fullUserDescription = !$scope.fullUserDescription;
 				$scope.readUserDescription = $scope.readUserDescription == "Read Less" ? "Read More" : "Read Less";
+				// description size limit can be removed if Read More is clicked
 				$scope.descriptionSize = $scope.descriptionSize === $scope.DESCRIPTION_LIMIT ? undefined : $scope.DESCRIPTION_LIMIT;
 			};
 
 			$scope.loadUserGroups = function (selectedUser) {
+				// load all groups of the user
 				if (selectedUser.groupsJoined.length > 0) {
 					GroupService.getSomeGroups(selectedUser.groupsJoined).then(function (groups) {
 						$scope.userGroups = groups;
@@ -54905,24 +55077,28 @@
 			};
 
 			$scope.loadUserAdministeredGroups = function (selectedUser) {
+				// load administered groups of the user
 				GroupService.getUserAdministeredGroups(selectedUser._id).then(function (groups) {
 					$scope.userAdminGroups = groups;
 				});
 			};
 
 			$scope.loadUserPendingGroups = function (selectedUser) {
+				// load pending groups of the user
 				GroupService.getUserPendingGroups(selectedUser._id).then(function (groups) {
 					$scope.userPendingGroups = groups;
 				});
 			};
 
 			$scope.loadUserPostsCount = function (selectedUser) {
+				// load the number of posts of the user
 				PostService.getAllPostsCountByUser(selectedUser._id).then(function (postsLength) {
 					$scope.userPostsLength = postsLength;
 				});
 			};
 
 			$scope.loadUserCommentsCount = function (selectedUser) {
+				// load the number of comments of the user
 				CommentService.getCommentsLengthByOneUser(selectedUser._id).then(function (commentsLength) {
 					$scope.userCommentsLength = commentsLength;
 				});
@@ -54958,17 +55134,18 @@
 			$scope.occupationList = ["Student", "Farmer", "Researcher / Scientist", "Academician", "Policymaker", "Entrepreneur", "Extension worker", "Media", "Others"];
 
 			UserService.getOneUser($stateParams.userID).then(function (result) {
+				// load user data
 				$scope.selectedUser = result;
 				$scope.selectedMonth = (0, _moment2.default)($scope.selectedUser.birthdate, 'MMMM Do YYYY').format('MMMM');
 				$scope.selectedDay = (0, _moment2.default)($scope.selectedUser.birthdate, 'MMMM Do YYYY').format('D');
 				$scope.selectedYear = (0, _moment2.default)($scope.selectedUser.birthdate, 'MMMM Do YYYY').format('YYYY');
-				$scope.firstName = angular.copy($scope.selectedUser.name.first);
+				$scope.firstName = angular.copy($scope.selectedUser.name.first); // sets the label "Edit <first name>'s' Information"
 			}, function (error) {
 				// show 404 not found page
 			});
 
 			$scope.getAllMonths = function () {
-				return _moment2.default.months();
+				return _moment2.default.months(); // array of January, February, ...
 			};
 
 			$scope.getAllDays = function () {
@@ -54976,7 +55153,7 @@
 				for (var i = 1; i <= 31; i++) {
 					days.push(i);
 				}
-				return days;
+				return days; // 31 days
 			};
 
 			$scope.getAllYears = function () {
@@ -54984,10 +55161,11 @@
 				for (var i = (0, _moment2.default)().get('year'); i >= 1900; i--) {
 					years.push(i);
 				}
-				return years;
+				return years; // year 1900 - current year
 			};
 
 			$scope.onProcessEditedUserData = function () {
+				// processing before submitting edited user info
 				if (!UserAuthenticationService.isLoggedIn()) {
 					UserAuthenticationService.loginFirst();
 					return;
@@ -54996,13 +55174,15 @@
 				$scope.selectedUser.birthdate = $scope.selectedMonth + ' ' + $scope.selectedDay + ' ' + $scope.selectedYear;
 
 				if ($scope.selectedPhoto && $scope.selectedPhoto.length > 0) {
+					// if there's a photo to upload
 					$scope.progressBarON = true;
 					SharedUploadService.uploadPhoto($scope.selectedPhoto[0]).then(function (result) {
 						// after uploading user photo
 						$scope.progressBarON = false;
-						$scope.selectedUser.photo = result.data.image;
+						$scope.selectedUser.photo = result.data.image; // getting the uploaded photo info
 						return EditSettingsUserService.submitModifiedUser($scope.selectedUser);
 					}, function (error) {
+						// error uploading the photo
 						$scope.progressBarON = false;
 						ngToast.create({
 							className: 'danger',
@@ -55019,12 +55199,14 @@
 						$window.location.reload();
 					});
 				} else {
+					// no photo to upload
 					EditSettingsUserService.submitModifiedUser($scope.selectedUser).then(function () {
 						UserAuthenticationService.getCurrentUser().then(function (user) {
+							// if logged in user === selected user, header needs reloading to update logged in user
 							if (user._id === $scope.selectedUser._id) {
 								$window.location.reload();
 							} else {
-								$scope.firstName = $scope.selectedUser.name.first;
+								$scope.firstName = $scope.selectedUser.name.first; // sets the first name label to edited ones
 								$scope.enableViewChanges = true;
 							}
 						});
@@ -55037,6 +55219,7 @@
 			};
 
 			$scope.onProcessSettingsUserData = function () {
+				// processing before submitting edited user settings
 				if (!UserAuthenticationService.isLoggedIn()) {
 					UserAuthenticationService.loginFirst();
 					return;
@@ -55147,6 +55330,7 @@
 			};
 
 			var isLoggedIn = function isLoggedIn() {
+				// determines logged in by checking for token that is not expired
 				var token = getToken();
 				var payload = void 0;
 
@@ -55161,6 +55345,7 @@
 			};
 
 			var getCurrentUserID = function getCurrentUserID() {
+				// gets the id of the logged in user
 				if (isLoggedIn()) {
 					var token = getToken();
 					var payload = token.split('.')[1];
@@ -55174,6 +55359,7 @@
 			};
 
 			var getCurrentUser = function getCurrentUser() {
+				// gets all info of logged in user
 				if (isLoggedIn()) {
 					var deferred = $q.defer();
 
@@ -55183,7 +55369,7 @@
 					payload = JSON.parse(payload);
 
 					UserService.getOneUser(payload._id).then(function (result) {
-						deferred.resolve(result);
+						deferred.resolve(result); // contains all info of user
 					}, function (error) {
 						// show 404 not found page
 						deferred.reject(result);
@@ -55198,12 +55384,13 @@
 				var requestBody = { userFormData: userFormData, password: password };
 
 				if (userFormData.isAdmin && !enteredAccessKey) {
+					// if user got access to admin reg without entering access key
 					deferred.reject({ data: { message: 'Invalid Access Key!!' } });
 					return deferred.promise;
-				} else if (userFormData.isAdmin) requestBody.enteredKey = enteredAccessKey;
+				} else if (userFormData.isAdmin) requestBody.enteredKey = enteredAccessKey; // will later check for the validity of entered access key
 
 				$http.post('/api/users/register/', requestBody).then(function (response) {
-					saveToken(response.data.token);
+					saveToken(response.data.token); // after register, automatically logs in the user
 					deferred.resolve(response.data.token);
 				}, function (response) {
 					deferred.reject(response);
@@ -55216,6 +55403,7 @@
 				var deferred = $q.defer();
 
 				$http.post('/api/users/login/', userCredentials).then(function (response) {
+					// success login
 					saveToken(response.data.token);
 					deferred.resolve(response.data.token);
 				}, function (response) {
@@ -55226,6 +55414,7 @@
 			};
 
 			var allowAdminRegistration = function allowAdminRegistration(enteredKey) {
+				// checks for validity of entered admin reg access key
 				var deferred = $q.defer();
 
 				$http.post('api/users/allow-admin-registration', { enteredKey: enteredKey }).then(function (response) {
@@ -55238,6 +55427,7 @@
 			};
 
 			var loginFirst = function loginFirst() {
+				// redirects to login page
 				ngToast.create({
 					className: 'danger',
 					content: 'You are currently not logged in. Please sign in first!'
@@ -55359,7 +55549,7 @@
 			};
 
 			var authenticatePostVisiblity = function authenticatePostVisiblity(groupHandle, postID) {
-				// proper visibility of private posts; always visible to site admin
+				// proper visibility of private posts; visible to group member and site admin
 				var deferred = $q.defer();
 				var selectedPost = {};
 
@@ -55367,6 +55557,7 @@
 					selectedPost = post;
 
 					if (selectedPost.showPublic) {
+						// public posts are always visible
 						deferred.resolve();
 					} else if (isLoggedIn()) {
 						// if private post and logged in = check if group member
@@ -55389,7 +55580,7 @@
 						deferred.reject();
 					}
 				}, function () {
-					// fail to current user
+					// fail to load current user
 					$timeout(function () {
 						return $state.go('oneGroup', { handle: groupHandle });
 					});
@@ -55442,6 +55633,7 @@
 			};
 
 			var getAllUsersByGroup = function getAllUsersByGroup(groupHandle) {
+				// get users info by group
 				var deferred = $q.defer();
 
 				$http.get('/api/users/group/' + groupHandle).then(function (response) {
@@ -55455,6 +55647,7 @@
 			};
 
 			var getAllUsers = function getAllUsers() {
+				// get all users info
 				var deferred = $q.defer();
 
 				$http.get('/api/users').then(function (response) {
@@ -55468,6 +55661,7 @@
 			};
 
 			var getAllGroupAdminstrators = function getAllGroupAdminstrators(groupAdminsID) {
+				// get group admins info
 				var deferred = $q.defer();
 				var groupAdmins = groupAdminsID.toString();
 				$http.get('/api/users/group-adminstrators/' + groupAdmins).then(function (response) {
@@ -55480,6 +55674,7 @@
 			};
 
 			var getAllGroupPendingMembers = function getAllGroupPendingMembers(groupPendingMembersID) {
+				// get pending members info
 				var deferred = $q.defer();
 				var groupPendingMembers = groupPendingMembersID.toString();
 
@@ -55509,6 +55704,7 @@
 			};
 
 			var joinGroup = function joinGroup(userID, groupHandle) {
+				// add the group handle to user's groupsJoined
 				var deferred = $q.defer();
 
 				$http.put('/api/users/' + userID + '/join-group/' + groupHandle).then(function (response) {
@@ -55521,6 +55717,7 @@
 			};
 
 			var leaveGroup = function leaveGroup(userID, groupHandle) {
+				// remove the group handle to user's groupsJoined
 				var deferred = $q.defer();
 
 				$http.put('/api/users/' + userID + '/leave-group/' + groupHandle).then(function (response) {

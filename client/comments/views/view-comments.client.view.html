@@ -8,9 +8,9 @@
 		    <div class="col-xs-2 col-sm-2" style="text-align: right;">
 		      <delete-comment></delete-comment>
 		    </div>
-		  </div>
+	  	</div>
 		
-
+	  	<!-- comment body -->
       	<p ng-bind-html="comment.comment | parseURL | emoji" style="white-space: pre-wrap; margin-top: 5px;"></p>
 	    	
     	<shared-view-files selected-files="comment.files"></shared-view-files>
@@ -20,12 +20,13 @@
     	<shared-view-hashtags selected-hashtags="comment.hashtags"></shared-view-hashtags>
 
       	<div style=" margin-top: 6px; border-radius: 5px; background-color: white;">
-
+      	<!-- Comment's reactions -->
       		<h5 style="display: inline; padding-right:3%;" ng-repeat="reaction in comment.reactions">
+      			<!-- reaction icon -->
 		        <i title="{{reaction.name}}" ng-click="onSetCommentReaction(comment, selectedGroup.handle, $index)" class="fa fa-2x" ng-class="{'fa-thumbs-o-up' : reaction.name=='thumbsUp', 'fa-smile-o': reaction.name=='happy', 'fa-frown-o': reaction.name=='sad'}" aria-hidden="true" style="cursor: pointer;" ng-style="highlightReaction(reaction)? { 'color':'#286090' } : { 'color': '#333333' }"></i>
-
+		        <!-- reaction count -->
 		        <a href="#" style="margin-left: 1%; color: #333333;" data-toggle="modal" data-target="#{{comment._id + reaction.name}}">{{reaction.count}}</a>
-
+		        <!-- reaction modal containing users -->
 		        <div class="modal fade" id="{{comment._id + reaction.name}}" tabindex="-1" role="dialog">
 		          <div class="modal-dialog" role="document">
 		            <div class="modal-content">

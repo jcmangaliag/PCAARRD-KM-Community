@@ -11,8 +11,7 @@
 		$urlRouterProvider.otherwise('/page-not-found');
 
 		$stateProvider
-			/* View Posts from My Groups */
-			.state('communityHome', {
+			.state('communityHome', {	// contains community feed and landing page
 				url: '/',
 				templateUrl: 'groups/views/community-home.client.view.html',
 				controller: 'CommunityHomeController',

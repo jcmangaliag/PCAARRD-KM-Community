@@ -5,6 +5,7 @@
 		<h3 style="margin: 0;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit {{user.currentUser && user.currentUser._id === selectedUser._id? "My" : firstName + "'s"}} Information</h3>
 	</div>
 	<hr />
+	<!-- Edit User form -->
 	<form style="padding: 1% 2% 2% 2%; text-align: left;" ng-submit="onProcessEditedUserData()">
 
 		<div class="form-group" style="width:49%; display: inline-block;">
@@ -25,7 +26,6 @@
 		        <option value="Female">Female</option>
 		    </select>
 		  </div>
-
 
 		  <div class="form-group">
 		    <label style="display: block;">Birthdate <span style="color:red;">*</span></label>

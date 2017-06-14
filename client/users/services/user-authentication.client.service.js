@@ -22,7 +22,7 @@
 		  $state.go('communityHome');
 		}
 
-		const isLoggedIn = () => {
+		const isLoggedIn = () => {	// determines logged in by checking for token that is not expired
 		  const token = getToken();
 		  let payload;
 
@@ -36,7 +36,7 @@
 		  }
 		}
 
-		const getCurrentUserID = () => {
+		const getCurrentUserID = () => {	// gets the id of the logged in user
  		  if(isLoggedIn()){
  		    const token = getToken();
  		    let payload = token.split('.')[1];
@@ -49,7 +49,7 @@
  		  }
  		}
 
-		const getCurrentUser = () => {
+		const getCurrentUser = () => {	// gets all info of logged in user
 			if (isLoggedIn()) {
 				const deferred = $q.defer();
 
@@ -60,7 +60,7 @@
 
 				UserService.getOneUser(payload._id)
 				    .then((result) => {
-						deferred.resolve(result);
+						deferred.resolve(result);	// contains all info of user
 					}, (error) => {
 						// show 404 not found page
 						deferred.reject(result);
@@ -74,15 +74,15 @@
 			const deferred = $q.defer();
 			const requestBody = {userFormData, password};
 
-			if (userFormData.isAdmin && !enteredAccessKey){
+			if (userFormData.isAdmin && !enteredAccessKey){	// if user got access to admin reg without entering access key
 				deferred.reject({data: {message: 'Invalid Access Key!!'}});
 				return deferred.promise;
 			} else if (userFormData.isAdmin)
-				requestBody.enteredKey = enteredAccessKey;
+				requestBody.enteredKey = enteredAccessKey;	// will later check for the validity of entered access key
 
 			$http.post('/api/users/register/', requestBody)
 			.then(response => {
-				saveToken(response.data.token);
+				saveToken(response.data.token);	// after register, automatically logs in the user
 		    	deferred.resolve(response.data.token);
 			}, (response) => {
 				deferred.reject(response);
@@ -95,7 +95,7 @@
 			const deferred = $q.defer();
 
 			$http.post('/api/users/login/', userCredentials)
-			.then(response => {
+			.then(response => {	// success login
 				saveToken(response.data.token);
 				deferred.resolve(response.data.token);
 			}, (response) => {
@@ -105,7 +105,7 @@
 			return deferred.promise;
 		}
 
-		const allowAdminRegistration = (enteredKey) => {
+		const allowAdminRegistration = (enteredKey) => {	// checks for validity of entered admin reg access key
 			const deferred = $q.defer();
 
 			$http.post('api/users/allow-admin-registration', {enteredKey})
@@ -118,7 +118,7 @@
 			return deferred.promise;
 		}
 
-		const loginFirst = () => {
+		const loginFirst = () => {	// redirects to login page
 			ngToast.create({
 	    		className: 'danger',
 	    		content: `You are currently not logged in. Please sign in first!`
@@ -233,7 +233,7 @@
 			return deferred.promise;
 		}
 
-		const authenticatePostVisiblity = (groupHandle, postID) => {	// proper visibility of private posts; always visible to site admin
+		const authenticatePostVisiblity = (groupHandle, postID) => {	// proper visibility of private posts; visible to group member and site admin
 			const deferred = $q.defer();
 			let selectedPost = {};
 
@@ -241,7 +241,7 @@
 				.then((post) => {
 					selectedPost = post;
 
-					if (selectedPost.showPublic){
+					if (selectedPost.showPublic){	// public posts are always visible
 						deferred.resolve();
 					} else if (isLoggedIn()) {	// if private post and logged in = check if group member
 						return getCurrentUser();
@@ -259,7 +259,7 @@
 						$timeout(() => $state.go(`oneGroup`, {handle: groupHandle}));
 						deferred.reject();
 					}
-				}, () => {	// fail to current user
+				}, () => {	// fail to load current user
 					$timeout(() => $state.go(`oneGroup`, {handle: groupHandle}));
 					deferred.reject();
 				})

@@ -1,5 +1,6 @@
+<!-- group cover photo -->
 <img src="{{selectedGroup.coverPhoto? selectedGroup.coverPhoto.path.split('/')[1] : '/groups/assets/images/default-group-cover-photo.png'}}" class="group-photo" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); margin-bottom: 30px; cursor: pointer;" data-toggle="modal" data-target="#{{'group-cover-photo-' + selectedGroup._id}}" />
-
+<!--  group cover photo modal -->
 <div class="modal fade" id="{{'group-cover-photo-' + selectedGroup._id}}" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -15,6 +16,7 @@
 </div>
 
 <div class="row">
+  <!-- first column -->
   <div class="col-xs-12 col-sm-12 col-md-3">
     <view-group-info-panel></view-group-info-panel>
     <div ng-if="!user.currentUser || (user.currentUser.groupsJoined.indexOf(selectedGroup.handle) < 0)">
@@ -22,8 +24,9 @@
     </div>
     <view-manage-group-panel ng-if="user.currentUser && (selectedGroup.admin.indexOf(user.currentUser._id) > -1 || user.currentUser.isAdmin)"></view-manage-group-panel>
   </div>
-
+  <!-- second column -->
   <div class="col-xs-12 col-sm-12 col-md-6">
+    <!-- add post, view all posts -->
     <div ng-if="'oneGroup' | isState">
 
       <add-post ng-if="user.currentUser && (user.currentUser.groupsJoined.indexOf(selectedGroup.handle) > -1)"></add-post>
@@ -41,12 +44,12 @@
     
       <view-posts></view-posts>
     </div>
-
+    <!-- view one post -->
     <div ng-if="!('oneGroup' | isState)" id="read-post">
       <view-post></view-post>
     </div>
   </div>
-
+  <!-- third column -->
   <div class="col-xs-12 col-sm-12 col-md-3">
     <view-group-posts-statistics-panel></view-group-posts-statistics-panel>
     <view-group-members-panel></view-group-members-panel>

@@ -12,9 +12,9 @@ import _ from 'lodash/lodash.min';
 
 	function UserAuthenticationController ($scope, $state, UserAuthenticationService, UserService, ngToast) {
 		$scope.addUserFormData = {};
-		$scope.adminRegistration = {allow: false};
+		$scope.adminRegistration = {allow: false};	// for site admin registration
 		UserService.getAllUsers();
-		$scope.users = UserService.getUserList();
+		$scope.users = UserService.getUserList();	// contains all users info
 
 		$scope.occupationList = [
 			"Student", 
@@ -28,7 +28,7 @@ import _ from 'lodash/lodash.min';
 			"Others"
 		];		
 
-		$scope.validateAdminRegistration = () => {
+		$scope.validateAdminRegistration = () => {	// validate admin registration access key entered
 			UserAuthenticationService.allowAdminRegistration($scope.adminRegistration.enteredAccessKey)
 				.then((response) =>{
 					$scope.adminRegistration.allow = response;
@@ -42,8 +42,8 @@ import _ from 'lodash/lodash.min';
 				});
 		}
 
-		$scope.getAllMonths = () => {
-			return moment.months();
+		$scope.getAllMonths = () => {	
+			return moment.months();	// array of January, February, ...
 		}
 
 		$scope.getAllDays = () => {
@@ -51,7 +51,7 @@ import _ from 'lodash/lodash.min';
 			for (let i = 1; i <= 31; i++){
 				days.push(i);
 			}
-			return days;
+			return days;	// 31 days
 		}
 
 		$scope.getAllYears = () => {
@@ -59,7 +59,7 @@ import _ from 'lodash/lodash.min';
 			for (let i = moment().get('year'); i >= 1900; i--){
 				years.push(i);
 			}
-			return years;
+			return years;	// year 1900 - current year
 		}
 
 		$scope.clearUserFormData = () => {
@@ -68,11 +68,11 @@ import _ from 'lodash/lodash.min';
 			$scope.selectedMonth = $scope.selectedDay = $scope.selectedYear = $scope.enteredPassword = $scope.reenteredPassword = "";
 		}
 
-		$scope.usedEmail = () => {
+		$scope.usedEmail = () => {	// checks if email entered into the form already exists
 			return $scope.users.contents.map((user) => user.email).indexOf($scope.addUserFormData.email) > -1? true: false;
 		} 
 
-		$scope.onProcessUserData = () => {
+		$scope.onProcessUserData = () => {	// processing user data before registering the user
 			if($scope.enteredPassword !== $scope.reenteredPassword){
 				ngToast.create({
 		    		className: 'warning',
@@ -94,7 +94,7 @@ import _ from 'lodash/lodash.min';
 			$scope.addUserFormData.birthdate = `${$scope.selectedMonth} ${$scope.selectedDay} ${$scope.selectedYear}`;
 			$scope.addUserFormData.photo = null;
 
-			$scope.addUserFormData.infoVisibility = {
+			$scope.addUserFormData.infoVisibility = {	// visibility of all personal info
 				location: true,
 				birthdate: true,
 				occupation: true,
@@ -103,7 +103,7 @@ import _ from 'lodash/lodash.min';
 				contactNumber: true,
 				about: true
 			}
-
+			// register the user
 			UserAuthenticationService.register($scope.addUserFormData, $scope.reenteredPassword, $scope.adminRegistration.enteredAccessKey)
 				.then(() => {
 					ngToast.create({
@@ -120,7 +120,7 @@ import _ from 'lodash/lodash.min';
 				});
 		}
 
-		$scope.onProcessLoginData = () => {
+		$scope.onProcessLoginData = () => {	// logging in
 			UserAuthenticationService.login($scope.loginData)
 				.then(() => {
 					$state.go("communityHome");

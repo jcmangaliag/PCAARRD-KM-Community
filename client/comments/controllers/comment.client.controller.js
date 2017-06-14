@@ -24,7 +24,7 @@ import _ from 'lodash/lodash.min';
 
 		if ($scope.user.isLoggedIn){
 			UserAuthenticationService.getCurrentUser()
-		    	.then((result)=> {
+		    	.then((result)=> {	// get all info of logged in user
 		    		$scope.user.currentUser = result;
 		    	});
 	    }
@@ -38,7 +38,7 @@ import _ from 'lodash/lodash.min';
 			$scope.clearHashtags();
 		}
 		
-		$scope.onProcessCommentData = (postID) => {
+		$scope.onProcessCommentData = (postID) => {	// processing before submitting comment
 			if (!UserAuthenticationService.isLoggedIn()){
 				UserAuthenticationService.loginFirst();
 				return;
@@ -50,7 +50,7 @@ import _ from 'lodash/lodash.min';
 			if ($scope.technologyHandle.enable){
 				$scope.addCommentFormData.technologyHandles = $scope.selectedTechnologies;
 			}
-			$scope.addCommentFormData.hashtags = $scope.hashtags;
+			$scope.addCommentFormData.hashtags = $scope.hashtags;	// from SharedAddHashtags controller
 
 			$scope.addCommentFormData.dateCommented = moment().format('MMMM Do YYYY, h:mm:ss a');
 			$scope.addCommentFormData.reactions = [
@@ -82,17 +82,18 @@ import _ from 'lodash/lodash.min';
 			const commentedBy = $scope.addCommentFormData.commentedBy;
 
 			if ($scope.selectedUploadFiles.length > 0){
-				let uploadedFiles = [];
+				let uploadedFiles = [];	// will contain info of uploaded files
 				$scope.progressBarON = true;
 				SharedUploadService.uploadFiles($scope.selectedUploadFiles, uploadedFiles)
 					.then((result) => {
 						$scope.progressBarON = false;
 						$scope.addCommentFormData.files = uploadedFiles;
 						
-						$scope.submitComment(_.cloneDeep($scope.addCommentFormData));
-						PostService.getOnePost($scope.selectedPost._id)	// check post for update
+						$scope.submitComment(_.cloneDeep($scope.addCommentFormData));	// submit processed comment
+						PostService.getOnePost($scope.selectedPost._id)	// check post for update in its comment count
 							.then((result) => {
-								PostService.setPostReaction($scope, result, 0, commentedBy);	// increment post's comment count
+								// increment post's comment count; result = the post object, 0 = index of comment in post's reactions array
+								PostService.setPostReaction($scope, result, 0, commentedBy);	
 							}, (error) => {
 								// show 404 not found page
 							});
@@ -106,11 +107,12 @@ import _ from 'lodash/lodash.min';
 				    		content: `Error: ${error.data.message}`
 				    	});
 					})
-			} else {
-				$scope.submitComment(_.cloneDeep($scope.addCommentFormData));
-				PostService.getOnePost($scope.selectedPost._id)	// check post for update
+			} else {	// if no files to be uploaded
+				$scope.submitComment(_.cloneDeep($scope.addCommentFormData));	// submit processed comment
+				PostService.getOnePost($scope.selectedPost._id)	// check post for update in its comment count
 					.then((result) => {
-						PostService.setPostReaction($scope, result, 0, commentedBy);	// increment post's comment count
+						// update post's reaction (increasing comment's count and users); result = the updated post object, 0 = index of comment in post's reactions array
+						PostService.setPostReaction($scope, result, 0, commentedBy);
 					}, (error) => {
 						// show 404 not found page
 					});
@@ -119,7 +121,7 @@ import _ from 'lodash/lodash.min';
 			}
 		}
 
-		$scope.onSetCommentReaction = (comment, selectedGroupHandle, reactionIndex) => {
+		$scope.onSetCommentReaction = (comment, selectedGroupHandle, reactionIndex) => {	// processing the user who reacted to a comment
 			if (UserAuthenticationService.isLoggedIn() && $scope.user.currentUser && $scope.user.currentUser.groupsJoined.indexOf(selectedGroupHandle) > -1){
 				CommentService.getOneComment(comment._id)
 					.then((result) => {
@@ -127,9 +129,10 @@ import _ from 'lodash/lodash.min';
 							_id: $scope.user.currentUser._id, 
 							name: `${$scope.user.currentUser.name.first} ${$scope.user.currentUser.name.last}`
 						};
-
-						CommentService.setCommentReaction(result, reactionIndex, user);
-						comment.reactions = result.reactions;
+						// update comment's reaction (increasing a reaction's count and users); result = the updated comment object, 
+						// reactionIndex = index of a reaction in comment's reactions array
+						CommentService.setCommentReaction(result, reactionIndex, user);	
+						comment.reactions = result.reactions;	// update the comment's reaction in UI
 					}, (error) => {
 						// show 404 not found page
 					});
@@ -147,23 +150,23 @@ import _ from 'lodash/lodash.min';
 			} else {
 				CommentService.deleteOneComment(comment)
 				.then((result) => {
-					return PostService.getOnePost($scope.selectedPost._id);	// update selected post
+					return PostService.getOnePost($scope.selectedPost._id);	// to update selected post
 				}, (error) => {
 					return $q.reject(error);
 					// comment to be deleted not found
 				})
 				.then((result) => {
 					$scope.selectedPost = result;
-					// find all comments of the same author of the current post
+					// find all comments of the same user of the current post to accurately change post's comment reaction's users
 					return CommentService.getCommentsByUser($state.params.postID, comment.commentedBy._id);
 				}, (error) => {
 					return $q.reject(error);
-					// referred post not found, but not possible since comments are removed after post deletion
 				})
 				.then((results) => {	
+					// decrement post's comment count and remove the user in users list of he has no more comments in the post
+					// comment = comment object, results.length = number of comments a user has in a post 
 					PostService.decrementCommentsCount($scope.selectedPost, comment, results.length, comment.commentedBy._id);
 				}, (error) => {
-					// all comments of the author are not found
 					ngToast.create({
 			    		className: 'danger',
 			    		content: `Error: The comment was not found.`
@@ -174,11 +177,11 @@ import _ from 'lodash/lodash.min';
 
 		CommentService.getComments($state.params.postID);
 
-		$scope.highlightReaction = (selectedReaction) => {
+		$scope.highlightReaction = (selectedReaction) => {	// highlight the reaction which the logged in user selected before
 			return $scope.user.currentUser && selectedReaction.users.map((user)=> user._id).indexOf($scope.user.currentUser._id) >=0; 
 		}
 
-		$scope.showDeleteCommentButton = (comment) => {
+		$scope.showDeleteCommentButton = (comment) => {	// only the comment's author or group admin can delete a comment
 			const isGroupAdmin = $scope.user.currentUser && $scope.selectedGroup.admin.indexOf($scope.user.currentUser._id) > -1;
 			const isCurrentUser = $scope.user.currentUser && ((comment && comment.commentedBy._id) === $scope.user.currentUser._id);		
 			

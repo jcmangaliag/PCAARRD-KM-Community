@@ -15,7 +15,7 @@
 			return userList;
 		}
 
-		const getAllUsersByGroup = (groupHandle) => {
+		const getAllUsersByGroup = (groupHandle) => {	// get users info by group
 			const deferred = $q.defer();
 
 			$http.get(`/api/users/group/${groupHandle}`)
@@ -29,7 +29,7 @@
 			return deferred.promise;
 		}
 
-		const getAllUsers = () => {
+		const getAllUsers = () => {	// get all users info
 			const deferred = $q.defer();
 
 			$http.get(`/api/users`)
@@ -43,7 +43,7 @@
 			return deferred.promise;
 		}
 
-		const getAllGroupAdminstrators = (groupAdminsID) => {
+		const getAllGroupAdminstrators = (groupAdminsID) => {	// get group admins info
 			const deferred = $q.defer();
 			const groupAdmins = groupAdminsID.toString();
 			$http.get(`/api/users/group-adminstrators/${groupAdmins}`)
@@ -56,7 +56,7 @@
 			return deferred.promise;
 		}
 
-		const getAllGroupPendingMembers = (groupPendingMembersID) => {
+		const getAllGroupPendingMembers = (groupPendingMembersID) => {	// get pending members info
 			const deferred = $q.defer();
 			const groupPendingMembers = groupPendingMembersID.toString();
 
@@ -87,7 +87,7 @@
 			return deferred.promise;
 		}
 
-		const joinGroup = (userID, groupHandle) => {
+		const joinGroup = (userID, groupHandle) => {	// add the group handle to user's groupsJoined
 			const deferred = $q.defer();
 
 			$http.put(`/api/users/${userID}/join-group/${groupHandle}`)
@@ -100,7 +100,7 @@
 			return deferred.promise;
 		}
 
-		const leaveGroup = (userID, groupHandle) => {
+		const leaveGroup = (userID, groupHandle) => {	// remove the group handle to user's groupsJoined
 			const deferred = $q.defer();
 
 			$http.put(`/api/users/${userID}/leave-group/${groupHandle}`)

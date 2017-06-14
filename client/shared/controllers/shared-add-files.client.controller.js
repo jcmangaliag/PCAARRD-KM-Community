@@ -11,7 +11,7 @@
 
 		$scope.selectedUploadFiles = [];
 
-		$scope.setFilesLabel = () => {
+		$scope.setFilesLabel = () => {	// rename input file textbox
 			if ($scope.selectedUploadFiles.length > 0){
 				return $scope.selectedUploadFiles.length > 1? `${$scope.selectedUploadFiles.length} files selected` : $scope.selectedUploadFiles[0].name;
 			}

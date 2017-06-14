@@ -1,6 +1,6 @@
 <div style="margin-bottom: 25px; background-color: white; border-radius: 5px; padding: 15px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
   <img src="{{selectedGroup.photo? selectedGroup.photo.path.split('/')[1] : '/groups/assets/images/default-group-photo.png'}}" class="group-header__icon" data-toggle="modal" data-target="#{{'group-photo-' + selectedGroup._id}}" style="cursor: pointer;" />
-
+  <!-- modal for group photo -->
   <div class="modal fade" id="{{'group-photo-' + selectedGroup._id}}" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -21,6 +21,7 @@
       <p style="color: gray;">@{{selectedGroup.handle}}</p>
     </div>
     <div ng-if="user.currentUser" class="col-xs-4 col-sm-2 col-md-4" style="padding-left: 0;">
+      <!-- join, cancel request, or leave the group button and modal -->
       <div style="margin-top: 20px;">
         <button ng-if="user.currentUser.groupsJoined.indexOf(selectedGroup.handle) < 0 && selectedGroup.pendingMembers.indexOf(user.currentUser._id) < 0" title="Join the Group" type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#{{'join' + selectedGroup.handle}}"><i class="fa fa-sign-in fa-lg" aria-hidden="true"></i> Join</button>
 
@@ -86,7 +87,7 @@
       </div>
     </div>
   </div>
-
+  <!-- group classifications of industry-based group -->
   <span ng-if="selectedGroup && selectedGroup.classification.type === 'Industry-based'">
     <h4><span style="font-weight: normal;" class="label label-default">Industry</span> <span style="font-weight: normal;" class="label label-success">{{selectedGroup.classification.industry}}</span></h4>
 
@@ -96,13 +97,13 @@
 
     <h4 ng-if="selectedGroup.classification.specificCommodity"><span style="font-weight: normal;" class="label label-default">Commodity</span> <span style="font-weight: normal;" class="label label-success">{{selectedGroup.classification.specificCommodity}}</span></h4>
   </span>
-
+  <!-- group classifications of r&d and tech transfer-based group -->
   <span ng-if="selectedGroup && selectedGroup.classification.type === 'R&D and Tech Transfer-based'">
     <h4><span style="font-weight: normal;" class="label label-default">Organization</span> <span style="font-weight: normal;" class="label label-success">{{selectedGroup.classification.organization}}</span></h4>
 
     <h4 ng-if="selectedGroup.classification.isps.length > 0"><span style="font-weight: normal;" class="label label-default">ISPs</span> <span ng-repeat="isp in selectedGroup.classification.isps" style="font-weight: normal; display:inline-block; margin-right:2px;" class="label label-success">{{isp}}</span></h4>
   </span>
-
+  <!-- group description -->
   <p style="white-space: pre-wrap; margin-top: 25px; margin-bottom: 0px;" ng-style="selectedGroup.description.length > DESCRIPTION_LIMIT? {'margin-bottom': '0px'} : {'margin-bottom': '25px'}"><span ng-bind-html="selectedGroup.description | parseURL | emoji | limitTo: descriptionSize"></span><span ng-if="selectedGroup.description.length > descriptionSize">...</span></p>
   <span ng-if="selectedGroup.description.length > DESCRIPTION_LIMIT" style="margin-bottom: 25px; display: block;"><a href="#/" ng-click="toggleGroupDescription()">{{readGroupDescription}}</a></span>
 

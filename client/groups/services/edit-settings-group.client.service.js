@@ -11,7 +11,7 @@ import _ from 'lodash/lodash.min';
 
 	function EditSettingsGroupService ($http, $q) {
 
-		const submitModifiedGroup = (updatedFields) => {
+		const submitModifiedGroup = (updatedFields) => {	// update group
 			const deferred = $q.defer();
 
 			$http.put(`/api/groups/${updatedFields.handle}`, updatedFields)

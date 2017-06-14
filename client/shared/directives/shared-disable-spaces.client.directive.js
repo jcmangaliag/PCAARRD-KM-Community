@@ -14,7 +14,7 @@
 
 		function link ($scope, $element) {
 	      $element.bind('keydown', function(e) {
-                if (e.which === 32) {
+                if (e.which === 32) {	// disable typing space
                     e.preventDefault();
                 }
             });

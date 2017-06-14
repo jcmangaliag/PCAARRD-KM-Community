@@ -9,7 +9,7 @@ import _ from 'lodash/lodash.min';
 
 	PostService.$inject = ['$http', 'ngToast', '$q', 'CommentService', 'GroupService', 'UserService'];
 
-	function PostService ($http, ngToast, $q, CommentService, GroupService, UserService) { // to do: check if there's err in http requests
+	function PostService ($http, ngToast, $q, CommentService, GroupService, UserService) {
 
 		let postList = { contents: [] }, postListCopy = { contents: [] }, groupBelonged;
 
@@ -44,9 +44,9 @@ import _ from 'lodash/lodash.min';
 			return deferred.promise;
 		}
 
-		const getPostsByGroupAndCategory = (category, memberOfGroup) => {
+		const getPostsByGroupAndCategory = (category, memberOfGroup) => {	// gets posts of a certain category from a group
 			const deferred = $q.defer();
-			const config = memberOfGroup? {} : {params: {showPublic : true}};	
+			const config = memberOfGroup? {} : {params: {showPublic : true}};	// if memberOfGroup === true, allows showing private posts
 
 			$http.get(`/api/posts/group-belonged/${groupBelonged}/category/${category}`, config)
 			.then((response) => {
@@ -61,9 +61,9 @@ import _ from 'lodash/lodash.min';
 			return deferred.promise;
 		}
 
-		const getAllPostsByGroup = (memberOfGroup) => {
+		const getAllPostsByGroup = (memberOfGroup) => {	// gets all posts from a group
 			const deferred = $q.defer();
-			const config = memberOfGroup? {} : {params: {showPublic : true}};
+			const config = memberOfGroup? {} : {params: {showPublic : true}};	// if memberOfGroup === true, allows showing private posts
 
 			$http.get(`/api/posts/group-belonged/${groupBelonged}`, config)
 			.then((response) => {
@@ -77,7 +77,7 @@ import _ from 'lodash/lodash.min';
 			return deferred.promise;
 		}
 
-		const getPostsByMyGroupsAndCategory = (category, userID) => {
+		const getPostsByMyGroupsAndCategory = (category, userID) => {	// gets posts of a certain category from logged in user's groups
 			const deferred = $q.defer();
 
 			UserService.getOneUser(userID)
@@ -99,7 +99,7 @@ import _ from 'lodash/lodash.min';
 			return deferred.promise;
 		}
 
-		const getAllPostsByMyGroups = (userID) => {
+		const getAllPostsByMyGroups = (userID) => {	// gets all posts from logged in user's groups
 			const deferred = $q.defer();
 			
 			UserService.getOneUser(userID)
@@ -121,7 +121,7 @@ import _ from 'lodash/lodash.min';
 			return deferred.promise;
 		}
 
-		const getPostsByUserAndCategory = (category, userID) => {
+		const getPostsByUserAndCategory = (category, userID) => {	// gets posts of a certain category from a user
 			const deferred = $q.defer();
 			$http.get(`/api/posts/user/${userID}/category/${category}`)
 			.then((response) => {
@@ -135,7 +135,7 @@ import _ from 'lodash/lodash.min';
 			return deferred.promise;
 		}
 
-		const getAllPostsByUser = (userID) => {
+		const getAllPostsByUser = (userID) => {	// gets all posts of a certain category from a user
 			const deferred = $q.defer();
 			$http.get(`/api/posts/user/${userID}`)
 			.then((response) => {
@@ -149,7 +149,7 @@ import _ from 'lodash/lodash.min';
 			return deferred.promise;
 		}
 
-		const getAllPostsCountByUser = (userID) => {
+		const getAllPostsCountByUser = (userID) => {	// returns the number of posts of a user
 			const deferred = $q.defer();
 			$http.get(`/api/posts/user/${userID}/length`)
 			.then((response) => {
@@ -174,7 +174,7 @@ import _ from 'lodash/lodash.min';
 			return deferred.promise;
 		}
 
-		const setPostReaction = ($scope, post, reactionIndex, currentUser) => {
+		const setPostReaction = ($scope, post, reactionIndex, currentUser) => {	// set the post's thumbsup, comment, happy, sad
 			$scope.selectedPost = post;
 			let reactions = $scope.selectedPost.reactions;
 			const reactionsLength = reactions.length;
@@ -212,17 +212,17 @@ import _ from 'lodash/lodash.min';
 			});
 		}
 
-		const decrementCommentsCount = (post, comment, userCommentsCount, userID) => {
+		const decrementCommentsCount = (post, comment, userCommentsCount, userID) => {	// decrement the count of comments of a post
 			post.reactions[0].count--;
 			
-			if (userCommentsCount < 1){
+			if (userCommentsCount < 1){	// removes the user in comments' users list if he/she has no more comment
 				const userIndex = post.reactions[0].users.map((user) => user._id).indexOf(userID);
 				if (userIndex > -1){
 					post.reactions[0].users.splice(userIndex, 1);
 				}
 			}
 
-			$http.put(`/api/posts/reactions/${post._id}`, {
+			$http.put(`/api/posts/reactions/${post._id}`, {	// update reactions
 				reactions: post.reactions
 			}).then(response => {
 
@@ -232,25 +232,25 @@ import _ from 'lodash/lodash.min';
 		const deleteOnePost = ($scope, $stateParams, post) => {
 			$http.delete(`/api/posts/${post._id}`)
 			.then(response => {	
-				CommentService.deleteCommentsByReferredPost(post._id);
+				CommentService.deleteCommentsByReferredPost(post._id);	// deletes all comments of a deleted post
 
 				GroupService.getOneGroup(post.groupBelonged)
-				.then((refreshedGroup) => {
+				.then((refreshedGroup) => {	// refreshes the group after post deletion
 					refreshedGroup.postsCount.total--;
 					refreshedGroup.postsCount[post.category]--;
-					GroupService.updateGroup(refreshedGroup.handle, {postsCount: refreshedGroup.postsCount});
+					GroupService.updateGroup(refreshedGroup.handle, {postsCount: refreshedGroup.postsCount});	// updating the post count of group
 					if ($scope.selectedGroup){
 						$scope.selectedGroup.postsCount = refreshedGroup.postsCount;
-						$scope.updatePostsAnalysis();
+						$scope.updatePostsAnalysis();	// reflects changes in Post Analysis UI
 					}
 				}, (error) => {
 					// show 404 not found page
 				});
 
-				if ($stateParams.postID){	// if viewing one post
+				if ($stateParams.postID){	// if viewing one post, return to group
 					$scope.returnToGroup($stateParams.handle);	
 				} else {
-					$scope.getPostData();	
+					$scope.getPostData();	// reloads posts
 				}
 
 				ngToast.create({

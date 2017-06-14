@@ -3,11 +3,13 @@
 	<div class="row">
 		<div ng-repeat="file in selectedFiles track by $index">
 			<div ng-switch on ="file.mimetype">
+				<!-- view images -->
 				<div ng-switch-when="image/gif|image/jpg|image/jpeg|image/jpe|image/tiff|image/png|image/bmp" ng-switch-when-separator="|">
 					<div class="col-xs-12 col-sm-10 col-md-8 col-lg-8" style="padding: 10px;">
 						<a title="{{file.originalname}}" href="{{file.path.split('/')[1]}}" target="_blank"><img style="width: 100%;" src="{{file.path.split('/')[1]}}" alt="Image not found" /></a>
 					</div>
 				</div>
+				<!-- view videos -->
 				<div ng-switch-when="video/mp4|video/webm|video/ogg" ng-switch-when-separator="|">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 15px;">
 						<video title="{{file.originalname}}" width="100%" controls>
@@ -16,6 +18,7 @@
 						</video>
 					</div> 
 				</div>
+				<!-- view audio -->
 				<div ng-switch-when="audio/mp3|audio/mpeg|audio/wav|audio/ogg" ng-switch-when-separator="|">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 15px;">
 						<audio title="{{file.originalname}}" width="100%" controls>
@@ -24,6 +27,7 @@
 						</audio>
 					</div> 
 				</div>
+				<!-- view others -->
 				<div ng-switch-default>
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<h5 title="{{file.originalname}}"><a href="{{file.path.split('/')[1]}}" target="_blank">{{file.originalname}}</a></h5>

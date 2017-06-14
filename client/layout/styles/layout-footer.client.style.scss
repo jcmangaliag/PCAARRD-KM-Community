@@ -1,8 +1,7 @@
-$footer-height: 348px;
+$footer-height: 348px;	// depends on the height of footer contents
 
 layout-footer {
 	position: absolute;
-	right: 0;
 	width: 100%;
 	height: $footer-height;
 	bottom: 0;
@@ -10,7 +9,7 @@ layout-footer {
 	padding-top: 2.5em;
 }
 
-.site-footer {
+.site-footer {	
 	background-color: rgba(0,0,0,0.9) !important;
 	border-top: solid 1px;
 
@@ -22,17 +21,5 @@ layout-footer {
 		background-color: #000;
 		padding: 0.5% 0;
 		color: gray;
-	}
-}
-
-@media (min-width: 768px) {
-  layout-footer {
-		position: absolute;
-		right: 0;
-		width: 100%;
-		height: $footer-height;
-		bottom: 0;
-		color: white;
-		padding-top: 2.5em;
 	}
 }

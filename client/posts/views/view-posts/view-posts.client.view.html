@@ -1,5 +1,6 @@
+<!-- View All Posts -->
 <div id="view-posts" class="post-ads" ng-if="posts.contents.length > 0" style="margin-bottom: 25px; background-color: white; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); padding: 5px;">
-
+	<!-- load several posts -->
 	<div ng-repeat="post in posts.contents | orderBy:'':true | limitTo: paginate.pageLimit(paginate.currentPage, paginate.postsPerPage)" ng-switch="post.category">
 
 		<div style="margin: 15px; border-radius: 8px;"> 
@@ -37,7 +38,7 @@
 		<hr ng-if="!$last" />
 	</div>
 
-
+	<!-- posts pagination -->
 	<div ng-if="paginate.hasMoreItems(paginate.currentPage, paginate.postsPerPage, posts.contents.length)" class="text-center" style="margin-bottom:10px;">
 		<hr />
 		<button ng-click="paginate.loadMoreItems(paginate)" style="width: 50%;" type="button" class="btn btn-primary" >Load More Posts</button>

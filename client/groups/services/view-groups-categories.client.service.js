@@ -15,13 +15,13 @@
 				"Discover Groups"
 		];
 
-		let currentViewGroupsCategory = {
+		let currentViewGroupsCategory = {	// selected group category
 			category: viewGroupsCategories[0]
 		}
 
 		let userID = null;
 
-		const getViewGroupsCategories = () => {
+		const getViewGroupsCategories = () => {	// returns the group categories
 			if (userID === "none") {
 				return ["All Groups"];
 			} else {
@@ -29,7 +29,7 @@
 			}
 		}
 
-		const getCurrentViewGroupsCategory = () => {
+		const getCurrentViewGroupsCategory = () => {	// returns the selected group category
 			if (userID === "none") {
 				return {category: viewGroupsCategories[0]};
 			} else {
@@ -37,7 +37,7 @@
 			}
 		}
 
-		const setCurrentViewGroupsCategory = (category) => {
+		const setCurrentViewGroupsCategory = (category) => {	// changes selected group category and loads appropriate groups
 			currentViewGroupsCategory.category = category;
 			retrieveGroupsByCategory(currentViewGroupsCategory.category);
 		}
@@ -46,7 +46,7 @@
 			userID = userid;
 		}
 
-		const retrieveGroupsByCategory = (category) => {
+		const retrieveGroupsByCategory = (category) => {	// loads a set of groups depending on the selected group category
 			const deferred = $q.defer();
 
 			switch (category){

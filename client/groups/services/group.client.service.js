@@ -21,7 +21,7 @@ import _ from 'lodash/lodash.min';
 			return groupListCopy;
 		}
 
-		const getAllGroups = () => {
+		const getAllGroups = () => {	// All Groups
 			const deferred = $q.defer();
 
 			$http.get('/api/groups')
@@ -36,7 +36,7 @@ import _ from 'lodash/lodash.min';
 			return deferred.promise;
 		}
 
-		const getMyGroups = (userID) => {
+		const getMyGroups = (userID) => {	// My Groups
 			const deferred = $q.defer();
 
 			$http.get(`/api/groups/my-groups/${userID}`)
@@ -52,7 +52,7 @@ import _ from 'lodash/lodash.min';
 			return deferred.promise;
 		}
 
-		const getDiscoverGroups = (userID) => {
+		const getDiscoverGroups = (userID) => {	// Discover Groups
 			const deferred = $q.defer();
 
 			$http.get(`/api/groups/discover-groups/${userID}`)
@@ -68,7 +68,7 @@ import _ from 'lodash/lodash.min';
 			return deferred.promise;
 		}
 
-		const getSomeGroups = (groupHandlesList) => {
+		const getSomeGroups = (groupHandlesList) => {	// get info of several groups
 			const deferred = $q.defer();
 
 			const groupsList = groupHandlesList.toString();
@@ -82,7 +82,7 @@ import _ from 'lodash/lodash.min';
 			return deferred.promise;
 		}
 
-		const getUserAdministeredGroups = (userID) => {
+		const getUserAdministeredGroups = (userID) => {	// administered groups of user
 			const deferred = $q.defer();
 			
 			$http.get(`/api/groups/administered/${userID}`)
@@ -95,7 +95,7 @@ import _ from 'lodash/lodash.min';
 			return deferred.promise;
 		}
 
-		const getUserPendingGroups = (userID) => {
+		const getUserPendingGroups = (userID) => {	// pending groups of user
 			const deferred = $q.defer();
 			
 			$http.get(`/api/groups/pending/${userID}`)
@@ -108,7 +108,7 @@ import _ from 'lodash/lodash.min';
 			return deferred.promise;
 		}
 
-		const getOneGroup = (groupHandle) => {
+		const getOneGroup = (groupHandle) => {	// one group
 			const deferred = $q.defer();
 			
 			$http.get(`/api/groups/${groupHandle}`)
@@ -134,7 +134,7 @@ import _ from 'lodash/lodash.min';
 			return deferred.promise;
 		}
 
-		const submitGroup = (addGroupFormData) => {
+		const submitGroup = (addGroupFormData) => {	// add group
 			const deferred = $q.defer();
 
 			$http.post('/api/groups', addGroupFormData)
@@ -150,7 +150,7 @@ import _ from 'lodash/lodash.min';
 			return deferred.promise;
 		}
 
-		const removeAdmin = (userID, groupHandle) => {
+		const removeAdmin = (userID, groupHandle) => {	// remove user to group's admin list
 			const deferred = $q.defer();
 
 			$http.put(`/api/groups/${groupHandle}/remove-admin/${userID}`)
@@ -163,7 +163,7 @@ import _ from 'lodash/lodash.min';
 			return deferred.promise;
 		}
 
-		const addToGroupPendingMembersList = (userID, groupHandle) => {
+		const addToGroupPendingMembersList = (userID, groupHandle) => {	// add user to group's pending list
 			const deferred = $q.defer();
 
 			$http.put(`/api/groups/${groupHandle}/add-to-pending-members/${userID}`)
@@ -176,7 +176,7 @@ import _ from 'lodash/lodash.min';
 			return deferred.promise;
 		}
 
-		const removeFromGroupPendingMembersList = (userID, groupHandle) => {
+		const removeFromGroupPendingMembersList = (userID, groupHandle) => {	// remove user to group's pending list
 			const deferred = $q.defer();
 
 			$http.put(`/api/groups/${groupHandle}/remove-from-pending-members/${userID}`)

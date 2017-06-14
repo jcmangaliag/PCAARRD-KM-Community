@@ -9,9 +9,9 @@
 
 	function ViewGroupsCategoriesController ($scope, ViewGroupsCategoriesService) {
 		const {setCurrentViewGroupsCategory} = ViewGroupsCategoriesService;
-		$scope.setCurrentViewGroupsCategory = _.partial(setCurrentViewGroupsCategory);
-		$scope.currentViewGroupsCategory = ViewGroupsCategoriesService.getCurrentViewGroupsCategory();
-		$scope.viewGroupsCategories = ViewGroupsCategoriesService.getViewGroupsCategories();
+		$scope.setCurrentViewGroupsCategory = _.partial(setCurrentViewGroupsCategory);	// sets the current category and the appropriate data
+		$scope.currentViewGroupsCategory = ViewGroupsCategoriesService.getCurrentViewGroupsCategory();	// current group category
+		$scope.viewGroupsCategories = ViewGroupsCategoriesService.getViewGroupsCategories();	// all group categories
 	}
 
 })();

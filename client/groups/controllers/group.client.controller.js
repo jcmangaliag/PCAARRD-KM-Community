@@ -14,18 +14,18 @@ import _ from 'lodash/lodash.min';
 		
 		/* for View One Group */
 
-		$scope.fullGroupDescription = false;
+		$scope.fullGroupDescription = false;	// show full description if group's description is too long
 		$scope.readGroupDescription = "Read More";
-		$scope.DESCRIPTION_LIMIT = 1000;
+		$scope.DESCRIPTION_LIMIT = 1000;	// shows default of 1000 characters in group's description
 		$scope.descriptionSize = $scope.DESCRIPTION_LIMIT;
 
-		$scope.toggleGroupDescription = () => {
+		$scope.toggleGroupDescription = () => {	// toggles Read More or Read Less in very long group's description
 			$scope.fullGroupDescription = !$scope.fullGroupDescription;
 			$scope.readGroupDescription = $scope.readGroupDescription == "Read Less"? "Read More" : "Read Less";
 			$scope.descriptionSize = $scope.descriptionSize === $scope.DESCRIPTION_LIMIT? undefined : $scope.DESCRIPTION_LIMIT;
 		}
 
-		$scope.loadPostsAnalysis = () => {
+		$scope.loadPostsAnalysis = () => {	// post analysis bar chart
 			$scope.postsAnalysisChart = Highcharts.chart('group-posts-distribution-container', {
 			    chart: {
 			        type: 'bar'
@@ -73,7 +73,7 @@ import _ from 'lodash/lodash.min';
 			});
 		}
 
-		$scope.updatePostsAnalysis = () => {
+		$scope.updatePostsAnalysis = () => {	// modify post analysis chart
 			$scope.postsAnalysisChart.setTitle({text: `${$scope.selectedGroup.name} Posts`}, {text: 'Source: PCAARRD KM Community'});
 			$scope.postsAnalysisChart.series[0].setData([
 				$scope.selectedGroup.postsCount.total,
@@ -108,7 +108,7 @@ import _ from 'lodash/lodash.min';
 				});
 		}
 
-		$scope.loadGroupCommentsCount = (groupHandle) => {
+		$scope.loadGroupCommentsCount = (groupHandle) => {	// count the number of comments in the group
 			CommentService.getCommentsLengthByGroupBelonged(groupHandle)
 				.then((commentsCount) => {
 					$scope.groupCommentsCount = commentsCount;
@@ -116,8 +116,8 @@ import _ from 'lodash/lodash.min';
 		}
 
 		$scope.joinThisGroup = (userID, groupHandle) => {
-			UserService.joinGroup(userID, groupHandle)
-				.then(() => {
+			UserService.joinGroup(userID, groupHandle)	// adding the group to user's groupsJoined
+				.then(() => {	// increase group's membersCount
 					return GroupService.updateGroup($scope.selectedGroup.handle, {membersCount: ++$scope.selectedGroup.membersCount});
 				}, () => {
 					ngToast.create({
@@ -133,7 +133,7 @@ import _ from 'lodash/lodash.min';
 
 					return UserService.getOneUser(userID)
 				})
-				.then((user) => {
+				.then((user) => {	// update the group members UI
 					if (user._id == $scope.user.currentUser._id){
 						$scope.user.currentUser.groupsJoined.push($scope.selectedGroup.handle);
 					}
@@ -143,7 +143,7 @@ import _ from 'lodash/lodash.min';
 
 		}
 
-		$scope.onJoinThisGroup = (user, groupHandle) => {
+		$scope.onJoinThisGroup = (user, groupHandle) => {	// processing before joining the group
 			if (!UserAuthenticationService.isLoggedIn()){
 				UserAuthenticationService.loginFirst();
 				return;
@@ -151,19 +151,19 @@ import _ from 'lodash/lodash.min';
 
 			if ($scope.selectedGroup.membership === "No Approval") {
 				$scope.joinThisGroup(user._id, groupHandle);
-			} else {
+			} else {	// with Group Admin Approval
 				$scope.addToPendingList(user, groupHandle);
 			}
 		}
 
 		$scope.addToPendingList = (user, groupHandle) => {
-			GroupService.addToGroupPendingMembersList(user._id, groupHandle)
+			GroupService.addToGroupPendingMembersList(user._id, groupHandle)	// adding the user to group's pending members
 				.then(() => {	    	
 					ngToast.create({
 			    		className: 'success',
 			    		content: `Group Join Request was successfully sent.`
 			    	});
-
+					// to update the Group Pending Members UI
 					$scope.groupPendingMembers.push(user);
 					$scope.selectedGroup.pendingMembers.push(user._id);
 				}, () => {
@@ -180,13 +180,13 @@ import _ from 'lodash/lodash.min';
 				return;
 			}
 
-			GroupService.removeFromGroupPendingMembersList(userID, groupHandle)
+			GroupService.removeFromGroupPendingMembersList(userID, groupHandle)	// removing the user to group's pending members
 				.then(() => {	    	
 					ngToast.create({
 			    		className: 'success',
 			    		content: `Group Join Request was successfully removed.`
 			    	});
-
+					// to update the Group Pending Members UI
 					const groupIndexInSelectedGroup = $scope.selectedGroup.pendingMembers.indexOf(userID);
 					if (groupIndexInSelectedGroup > -1){
 						$scope.selectedGroup.pendingMembers.splice(groupIndexInSelectedGroup, 1);
@@ -209,7 +209,7 @@ import _ from 'lodash/lodash.min';
 				return;
 			}
 
-			if ($scope.selectedGroup.admin.indexOf(userID) > -1){
+			if ($scope.selectedGroup.admin.indexOf(userID) > -1){	// if group admin, also remove as group admin
 				if ($scope.selectedGroup.admin.length > 1){
 					$scope.removeGroupAdmin(userID, groupHandle);
 				} else {
@@ -222,8 +222,8 @@ import _ from 'lodash/lodash.min';
 				}
 			}
 
-			UserService.leaveGroup(userID, groupHandle)
-				.then(() => {	    	
+			UserService.leaveGroup(userID, groupHandle)	// removing the group to user's groupsJoined
+				.then(() => {	  // decrease group's membersCount  	
 					return GroupService.updateGroup($scope.selectedGroup.handle, {membersCount: --$scope.selectedGroup.membersCount});
 				}, () => {
 					ngToast.create({
@@ -236,7 +236,7 @@ import _ from 'lodash/lodash.min';
 			    		className: 'success',
 			    		content: `Group was successfully left.`
 			    	});
-
+					// to update Group Members UI
 					const groupIndexInUser = $scope.user.currentUser.groupsJoined.indexOf($scope.selectedGroup.handle);
 			    	const groupIndexInGroup = $scope.groupMembers.map((user) => user._id).indexOf(userID);
 					if (groupIndexInUser > -1){
@@ -246,12 +246,12 @@ import _ from 'lodash/lodash.min';
 						$scope.groupMembers.splice(groupIndexInGroup, 1);
 					}
 
-					$scope.userMembership = false;
+					$scope.userMembership = false;	// used in post controller to determine the appropriate posts to display
 				});
 
 		}
 
-		$scope.acceptPendingMember = (pendingMemberID, groupHandle) => {
+		$scope.acceptPendingMember = (pendingMemberID, groupHandle) => {	// pending group member becomes group member
 			if (!UserAuthenticationService.isLoggedIn()){
 				UserAuthenticationService.loginFirst();
 				return;
@@ -261,7 +261,7 @@ import _ from 'lodash/lodash.min';
 			$scope.joinThisGroup(pendingMemberID, groupHandle);
 		}
 
-		$scope.rejectPendingMember = (pendingMemberID, groupHandle) => {
+		$scope.rejectPendingMember = (pendingMemberID, groupHandle) => {	// pending group member does not become group member
 			if (!UserAuthenticationService.isLoggedIn()){
 				UserAuthenticationService.loginFirst();
 				return;
@@ -271,13 +271,13 @@ import _ from 'lodash/lodash.min';
 		}
 
 		$scope.removeGroupAdmin = (userID, groupHandle) => {
-			GroupService.removeAdmin(userID, groupHandle)
+			GroupService.removeAdmin(userID, groupHandle)	// user is removed in group's admin list
 				.then(() => {	    	
 					ngToast.create({
 			    		className: 'success',
 			    		content: `Group Admin was successfully removed.`
 			    	});
-
+					// to update Group Admins UI
 					const groupIndexInSelectedGroup = $scope.selectedGroup.admin.indexOf(userID);
 					if (groupIndexInSelectedGroup > -1){
 						$scope.selectedGroup.admin.splice(groupIndexInSelectedGroup, 1);
@@ -300,7 +300,7 @@ import _ from 'lodash/lodash.min';
 				return;
 			}
 
-			if ($scope.selectedGroup.admin.indexOf(memberID) > -1){
+			if ($scope.selectedGroup.admin.indexOf(memberID) > -1){	// also removing as group admin if possible
 				if ($scope.selectedGroup.admin.length > 1){
 					$scope.removeGroupAdmin(memberID, groupHandle);
 				} else {
@@ -313,8 +313,8 @@ import _ from 'lodash/lodash.min';
 				}
 			}
 
-			UserService.leaveGroup(memberID, groupHandle)
-				.then(() => {	    	
+			UserService.leaveGroup(memberID, groupHandle)	// removing the group from user's groupsJoined
+				.then(() => {	// decrements the group members
 					return GroupService.updateGroup($scope.selectedGroup.handle, {membersCount: --$scope.selectedGroup.membersCount});
 				}, () => {
 					ngToast.create({
@@ -322,12 +322,12 @@ import _ from 'lodash/lodash.min';
 			    		content: `Failed to remove group member.`
 			    	});
 				})
-				.then(()=> {
+				.then(()=> {	
 					ngToast.create({
 			    		className: 'success',
 			    		content: `Group member was successfully removed.`
 			    	});
-
+					//	to update the Group UI when current logged in user left the group
 					if (memberID === $scope.user.currentUser._id){
 						const groupIndexInUser = $scope.user.currentUser.groupsJoined.indexOf($scope.selectedGroup.handle);
 				    	if (groupIndexInUser > -1){
@@ -350,7 +350,7 @@ import _ from 'lodash/lodash.min';
 				return;
 			}
 
-			if ($scope.selectedGroup.admin.length > 1){
+			if ($scope.selectedGroup.admin.length > 1){	// only allows removing group admin if it's more than one
 				$scope.removeGroupAdmin(adminID, groupHandle);
 			} else {
 				ngToast.create({
@@ -367,7 +367,7 @@ import _ from 'lodash/lodash.min';
 
 		/* for View One and View All Groups */
 
-		$scope.setGroupsData = () => {
+		$scope.setGroupsData = () => {	// used to view All Groups, My Groups, Discover Groups
 			const currentViewGroupsCategory = ViewGroupsCategoriesService.getCurrentViewGroupsCategory().category;
 			ViewGroupsCategoriesService.retrieveGroupsByCategory(currentViewGroupsCategory);
 			$scope.groups = GroupService.getGroupList();
@@ -409,22 +409,22 @@ import _ from 'lodash/lodash.min';
 			    	});
 
 
-			} else if ($state.$current.name === "groups") {
+			} else if ($state.$current.name === "groups") {	// viewing all groups
 				ViewGroupsCategoriesService.setUserID(null);
-		    	if ($scope.user.isLoggedIn){
+		    	if ($scope.user.isLoggedIn){	// allows viewing all groups, my groups, discover groups if logged in
 		    		UserAuthenticationService.getCurrentUser()
 				    	.then((result)=> {
 				    		ViewGroupsCategoriesService.setUserID(result._id);
 				    		$scope.setGroupsData();
 				    	});
-		    	} else {	// for those not logged in
+		    	} else {	// for those not logged in, all groups is the only group category shown
 		    		ViewGroupsCategoriesService.setUserID("none");
 		    		$scope.setGroupsData();
 		    	}
 			}
 		}
 
-		$scope.$watch('searchGroupsValue', function(value){ 
+		$scope.$watch('searchGroupsValue', function(value){ // for filter groups
 			if ($scope.groups){
 				$scope.groups.contents = $filter('filter')($scope.groupsCopy.contents, value);
 				$scope.paginate.currentPage = 1;
@@ -448,24 +448,25 @@ import _ from 'lodash/lodash.min';
 
 		/* for Create Group */
 
-		if ($state.$current.name === "createGroup"){
+		if ($state.$current.name === "createGroup"){	// get all users info
 			UserService.getAllUsers();
 			$scope.users = UserService.getUserList();
 		}
 
 		$scope.addGroupFormData = { classification: "" };
 
-		$scope.multipleFields = {
+		$scope.multipleFields = {	// multiple group admins
 			admins: [''],
 		};
 
 		$scope.MIN_ADMIN = 1;
 
-		$scope.addField = (fieldArray) => {
+		$scope.addField = (fieldArray) => {	// pushes to multipleFields.admins list
 			fieldArray.push('');
 		}
 
-		$scope.removeField = (fieldArray, minField) => {
+		$scope.removeField = (fieldArray, minField) => {	// pops to multipleFields.admins list
+			fieldArray.push('');
 			if (fieldArray.length > minField){
 				fieldArray.pop();
 			}
@@ -478,7 +479,7 @@ import _ from 'lodash/lodash.min';
 			});
 		}
 
-		$scope.createGroupOptions = (groupClassification) => {
+		$scope.createGroupOptions = (groupClassification) => {	// format the group classification in its options
 			if (groupClassification.type === "Industry-based"){
 				return groupClassification.industry + ' -> ' + groupClassification.sector +' -> '+ groupClassification.isp +' -> '+
 					(groupClassification.specificCommodity || "(None)");
@@ -487,7 +488,7 @@ import _ from 'lodash/lodash.min';
 			}
 		}
 
-		$scope.generateGroupNameAndHandle = (classification) => {
+		$scope.generateGroupNameAndHandle = (classification) => {	// generates group name and handle right after choosing group classification
 			if (classification && classification.type === "Industry-based"){
 				$scope.addGroupFormData.name = (classification && (classification.specificCommodity || classification.isp)) || "";
 				$scope.addGroupFormData.handle = $scope.addGroupFormData.name.replace(/\s/g, "").toLowerCase();
@@ -497,7 +498,7 @@ import _ from 'lodash/lodash.min';
 			}	
 		}
 
-		$scope.validateAdminEmailAddress = (adminEmails) => {
+		$scope.validateAdminEmailAddress = (adminEmails) => {	// validate if email entered in group admins already exist in the app
 			for (let adminEmail of adminEmails){
 				if ($scope.users.contents.map((user) => user.email).indexOf(adminEmail) < 0){
 					return adminEmail;
@@ -507,7 +508,7 @@ import _ from 'lodash/lodash.min';
 			return true;
 		}
 
-		$scope.convertEmailToUserID = (adminEmails) => {
+		$scope.convertEmailToUserID = (adminEmails) => {	// return the user ids of group admin emails
 			const userList = $scope.users.contents;
 			return adminEmails.map((adminEmail) => {
 					return userList[userList.map((user) => user.email).indexOf(adminEmail)]._id; 
@@ -515,7 +516,7 @@ import _ from 'lodash/lodash.min';
 			);
 		}
 
-		$scope.onProcessGroupData = () => {
+		$scope.onProcessGroupData = () => {	// procesing before creating the group
 			const classificationID = $scope.addGroupFormData.classification._id;
 			const groupHandle = $scope.addGroupFormData.handle;
 
@@ -524,7 +525,7 @@ import _ from 'lodash/lodash.min';
 				return;
 			}
 			
-			UserAuthenticationService.getCurrentUser()
+			UserAuthenticationService.getCurrentUser()	// get the info of logged in user
 				.then((result)=> {
 		    		$scope.addGroupFormData.createdBy = result._id;	
 
@@ -557,9 +558,9 @@ import _ from 'lodash/lodash.min';
 					delete $scope.addGroupFormData.classification.isUsed;
 					delete $scope.addGroupFormData.classification.__v;
 
-					return GroupService.submitGroup($scope.addGroupFormData);
+					return GroupService.submitGroup($scope.addGroupFormData);	// create the group
 		    	})
-		    	.then(()=> {
+		    	.then(()=> {	// update user classification as used, update group admins groupsJoined with this group
 		    		GroupClassificationService.updateGroupClassification(classificationID, {isUsed: true});
 
 					_.forEach($scope.addGroupFormData.admin, (admin) => {

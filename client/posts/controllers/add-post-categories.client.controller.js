@@ -9,9 +9,9 @@
 
 	function AddPostCategoriesController ($scope, AddPostCategoriesService) {
 		const {setCurrentAddPostCategory} = AddPostCategoriesService;
-		$scope.setCurrentAddPostCategory = _.partial(setCurrentAddPostCategory);
-		$scope.currentAddPostCategory = AddPostCategoriesService.getCurrentAddPostCategory();
-		$scope.addPostCategories = AddPostCategoriesService.getAddPostCategories();
+		$scope.setCurrentAddPostCategory = _.partial(setCurrentAddPostCategory);	// sets the selected add post category
+		$scope.currentAddPostCategory = AddPostCategoriesService.getCurrentAddPostCategory();	// gets the selected add post category
+		$scope.addPostCategories = AddPostCategoriesService.getAddPostCategories();	// gets all the add post categories
 	}
 
 })();

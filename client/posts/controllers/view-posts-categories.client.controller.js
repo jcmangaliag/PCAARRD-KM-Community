@@ -9,9 +9,9 @@
 
 	function ViewPostsCategoriesController ($scope, $stateParams, ViewPostsCategoriesService, UserAuthenticationService) {
 		const {setCurrentViewPostsCategory} = ViewPostsCategoriesService;
-		$scope.setCurrentViewPostsCategory = _.partial(setCurrentViewPostsCategory);
-		$scope.currentViewPostsCategory = ViewPostsCategoriesService.getCurrentViewPostsCategory();
-		$scope.viewPostsCategories = ViewPostsCategoriesService.getViewPostsCategories();
+		$scope.setCurrentViewPostsCategory = _.partial(setCurrentViewPostsCategory);	// sets the selected view post category and the appropriate posts
+		$scope.currentViewPostsCategory = ViewPostsCategoriesService.getCurrentViewPostsCategory();	// gets the selected view post category
+		$scope.viewPostsCategories = ViewPostsCategoriesService.getViewPostsCategories();	// gets all the view post categories
 	}
 
 })();

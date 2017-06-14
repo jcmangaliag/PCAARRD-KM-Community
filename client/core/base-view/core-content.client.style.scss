@@ -1,9 +1,10 @@
-$footer-height: 365px;
+$footer-height: 365px;	// footer contents height + space height between body and footer
 
 html {
   position: relative;
   min-height: 100%;
 }
+
 body {
   margin-bottom: $footer-height;
   background-color: #eeeeee;

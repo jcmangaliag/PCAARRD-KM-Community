@@ -1,5 +1,7 @@
 <div class="row">
+	<!-- Left Column of User Profile -->
 	<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+		<!-- contains user photo, name, email, user type -->
 		<div style="padding: 15px; margin-bottom: 25px; background-color: white; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 			<img src="{{selectedUser.photo? selectedUser.photo.path.split('/')[1] : '/users/assets/images/default-user-photo.png'}}" style="border-radius: 25px; padding: 20px; width: 100%; max-width: 500px; cursor: pointer;" data-toggle="modal" data-target="#{{'user-photo-' + selectedUser._id}}">
 
@@ -21,7 +23,7 @@
 			<p style="color: gray;">{{selectedUser.email}}</p>
 			<h4 style="margin-top: 20px;"><span style="font-weight: normal;" class="label label-primary">{{selectedUser.isAdmin? 'Site Administrator' : 'Regular User'}}</span></h4>
 		</div>
-
+		<!-- contains user statistics -->
 		<div style="padding: 15px; margin-bottom: 25px; background-color: white; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 
 			<h4>User Statistics</h4><hr />
@@ -34,7 +36,7 @@
 
 			 <h4><span style="font-weight: normal;" class="label label-success">{{userCommentsLength}}</span> <span style="font-weight: normal;" class="label label-default">Comment<span ng-if="userCommentsLength > 1">s</span></span></h4>
 		</div>
-
+		<!-- contains edit user and user settings buttons -->
 		<div ng-if="user.currentUser && (user.currentUser._id === selectedUser._id || user.currentUser.isAdmin)" class="post-ads" style="margin-bottom: 25px; background-color: white; border-radius: 5px; padding: 15px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 		  <h4>Manage {{user.currentUser && user.currentUser._id === selectedUser._id? "My" : selectedUser.name.first + "'s"}} Profile</h4><hr />
 		  <div>
@@ -42,7 +44,7 @@
 		    <button ui-sref="settings-user({userID: selectedUser._id})" title="Change User Settings" type="button" class="btn btn-primary"><i class="fa fa-cog fa-lg" aria-hidden="true"></i> Settings</button>
 		  </div>
 		</div>
-
+		<!-- contains user's personal information -->
 		<div style="padding: 15px; margin-bottom: 25px; background-color: white; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 
 			<h4>Personal Information</h4><hr />
@@ -97,8 +99,9 @@
 			</div>
 		</div>
 	</div>
-
+	<!-- Middle Column of User Profile -->
 	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+		<!-- contains user's public posts -->
 		<div id="view-posts" class="post-ads" style="margin-bottom: 25px; background-color: white; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); padding: 5px;"><h3 style="margin-top: 20px; padding-left: 10px;">{{user.currentUser && user.currentUser._id === selectedUser._id? "My" : selectedUser.name.first + "'s"}} Public Posts</h3><hr />
 			<div class="row" style="margin: 1% 0px; padding: 0 10px;">
 			  <posts-filter-panel></posts-filter-panel>
@@ -107,8 +110,9 @@
 		<view-posts></view-posts>
 	</div>
 
-
+	<!-- Right Column of User Profile -->
 	<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+		<!-- contains user's administered groups -->
 		<div class="post-ads" style="margin-bottom: 25px; background-color: white; border-radius: 5px; padding: 15px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 		  <h4>{{user.currentUser && user.currentUser._id === selectedUser._id? "My" : selectedUser.name.first + "'s"}} Administered Group<span ng-if="userAdminGroups.length > 1">s</span> <span class="badge" style="font-size: 14px;">{{userAdminGroups.length}}</span></h4><hr />
 		  <div style="margin: auto; max-height: 400px; overflow-y: auto;">
@@ -121,7 +125,7 @@
 		    </ul>
 			</div>
 		</div>
-
+		<!-- contains user's groups -->
 		<div class="post-ads" style="margin-bottom: 25px; background-color: white; border-radius: 5px; padding: 15px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 		  <h4>{{user.currentUser && user.currentUser._id === selectedUser._id? "My" : selectedUser.name.first + "'s"}} Group<span ng-if="userGroups.length > 1">s</span> <span class="badge" style="font-size: 14px;">{{userGroups.length}}</span></h4><hr />
 		  <div style="margin: auto; max-height: 400px; overflow-y: auto;">
@@ -134,7 +138,7 @@
 		    </ul>
 			</div>
 		</div>
-
+		<!-- contains user's pending groups -->
 		<div ng-if="user.currentUser && (user.currentUser._id === selectedUser._id || user.currentUser.isAdmin)" class="post-ads" style="margin-bottom: 25px; background-color: white; border-radius: 5px; padding: 15px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 		  <h4>{{user.currentUser && user.currentUser._id === selectedUser._id? "My" : selectedUser.name.first + "'s"}} Pending Group<span ng-if="userPendingGroups.length > 1">s</span> <span class="badge" style="font-size: 14px;">{{userPendingGroups.length}}</span></h4><hr />
 		  <div style="margin: auto; max-height: 400px; overflow-y: auto;">

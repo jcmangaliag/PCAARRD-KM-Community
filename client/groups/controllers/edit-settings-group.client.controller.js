@@ -11,7 +11,7 @@ import _ from 'lodash/lodash.min';
 
 	function EditSettingsGroupController ($scope, $state, $stateParams, $q, GroupService, UserAuthenticationService, UserService, SharedUploadService, EditSettingsGroupService, GroupClassificationService, ngToast) {
 
-		GroupService.getOneGroup($stateParams.handle)
+		GroupService.getOneGroup($stateParams.handle)	// get all info of selected group
 			.then((result) => {
 				$scope.selectedGroup = result;
 			}, (error) => {
@@ -21,12 +21,12 @@ import _ from 'lodash/lodash.min';
 
 		// Edit Group
 
-		$scope.uploadPhotoAndSubmitForm = (photo, photoIdentifier) => {
+		$scope.uploadPhotoAndSubmitForm = (photo, photoIdentifier) => {	// used when uploading group photo or cover photo
 			$scope.progressBarON = true;
 			SharedUploadService.uploadPhoto(photo)
 				.then((result) => {	
 					$scope.progressBarON = false;
-					$scope.selectedGroup[photoIdentifier] = result.data.image;
+					$scope.selectedGroup[photoIdentifier] = result.data.image;	// storing the uploaded photo info to group data
 					return EditSettingsGroupService.submitModifiedGroup($scope.selectedGroup);
 				}, (error) => {
 					$scope.progressBarON = false;
@@ -37,9 +37,9 @@ import _ from 'lodash/lodash.min';
 
 			    	return $q.reject(error);
 				})
-				.then(() => {
+				.then(() => {	// after editing the group successfully
 					if ($scope.selectedGroup.classification.type === "R&D and Tech Transfer-based"){
-						$scope.updateRDGroupClassification();
+						$scope.updateRDGroupClassification();	// also update r&d group classification for changes
 					}
 
 					ngToast.create({
@@ -50,12 +50,12 @@ import _ from 'lodash/lodash.min';
 				});
 		}
 
-		$scope.updateRDGroupClassification = () => {
+		$scope.updateRDGroupClassification = () => {	// update isps
 			GroupClassificationService.updateGroupClassification($scope.selectedGroup.classification._id, 
 				{isps: $scope.selectedGroup.classification.isps});
 		}
 
-		$scope.onProcessEditedGroupData = () => {
+		$scope.onProcessEditedGroupData = () => {	// processing before submitting edited group data
 
 			if (!UserAuthenticationService.isLoggedIn()){
 				UserAuthenticationService.loginFirst();
@@ -64,7 +64,7 @@ import _ from 'lodash/lodash.min';
 
 			let uploadPhoto = false, uploadCoverPhoto = false;
 
-			if ($scope.selectedGroup.classification.type === "R&D and Tech Transfer-based"){
+			if ($scope.selectedGroup.classification.type === "R&D and Tech Transfer-based"){	// makes isps array type
 				$scope.selectedGroup.classification.isps = $scope.selectedGroup.classification.isps.toString();
 				$scope.selectedGroup.classification.isps = $scope.selectedGroup.classification.isps? $scope.selectedGroup.classification.isps.split(',') : [];
 			}
@@ -81,7 +81,7 @@ import _ from 'lodash/lodash.min';
 				$scope.progressBarON = true;
 				SharedUploadService.uploadPhoto($scope.selectedPhoto[0])
 					.then((result) => {	// after uploading group photo
-						$scope.selectedGroup.photo = result.data.image;
+						$scope.selectedGroup.photo = result.data.image;	// storing the uploaded photo info to group data
 
 						return SharedUploadService.uploadPhoto($scope.selectedCoverPhoto[0]);
 					}, (error) => {
@@ -95,7 +95,7 @@ import _ from 'lodash/lodash.min';
 					})
 					.then((result) => {	// after uploading group cover photo
 						$scope.progressBarON = false;
-						$scope.selectedGroup.coverPhoto = result.data.image;
+						$scope.selectedGroup.coverPhoto = result.data.image;	// storing the uploaded photo info to group data
 
 						return EditSettingsGroupService.submitModifiedGroup($scope.selectedGroup);
 					}, (error) => {
@@ -107,9 +107,9 @@ import _ from 'lodash/lodash.min';
 
 				    	return $q.reject(error);
 					})
-					.then(() => {	// after submitting edited group
+					.then(() => {	// after editing the group successfully
 						if ($scope.selectedGroup.classification.type === "R&D and Tech Transfer-based"){
-							$scope.updateRDGroupClassification();
+							$scope.updateRDGroupClassification();	// also update r&d group classification for changes
 						}
 
 						ngToast.create({
@@ -126,7 +126,7 @@ import _ from 'lodash/lodash.min';
 				EditSettingsGroupService.submitModifiedGroup($scope.selectedGroup)
 					.then(() => {
 						if ($scope.selectedGroup.classification.type === "R&D and Tech Transfer-based"){
-							$scope.updateRDGroupClassification();
+							$scope.updateRDGroupClassification();	// also update r&d group classification for changes
 						}
 
 						ngToast.create({
@@ -141,7 +141,7 @@ import _ from 'lodash/lodash.min';
 
 		// Group Settings
 
-		if ($state.$current.name === "oneGroupSettings"){
+		if ($state.$current.name === "oneGroupSettings"){	// get info of all users
 			UserService.getAllUsers();
 			$scope.users = UserService.getUserList();
 		}
@@ -156,7 +156,7 @@ import _ from 'lodash/lodash.min';
 			enable: false
 		};
 
-		$scope.toggleAddNewGroupAdmins = () => {
+		$scope.toggleAddNewGroupAdmins = () => {	// enables or disables adding group admin
 			$scope.newGroupAdmins.enable = !$scope.newGroupAdmins.enable;
 		}
 
@@ -177,7 +177,7 @@ import _ from 'lodash/lodash.min';
 			});
 		}
 
-		$scope.validateAdminEmailAddress = (adminEmails) => {
+		$scope.validateAdminEmailAddress = (adminEmails) => {	// returns true if all emails exist in the app
 			for (let adminEmail of adminEmails){
 				if ($scope.users.contents.map((user) => user.email).indexOf(adminEmail) < 0){
 					return adminEmail;
@@ -187,7 +187,7 @@ import _ from 'lodash/lodash.min';
 			return true;
 		}
 
-		$scope.convertEmailToUserID = (adminEmails) => {
+		$scope.convertEmailToUserID = (adminEmails) => {	// set of emails to set of user id
 			const userList = $scope.users.contents;
 			return adminEmails.map((adminEmail) => {
 					return userList[userList.map((user) => user.email).indexOf(adminEmail)]._id; 
@@ -195,7 +195,7 @@ import _ from 'lodash/lodash.min';
 			);
 		}
 
-		$scope.validateNewAdminsMembership = (adminIDs, group) => {
+		$scope.validateNewAdminsMembership = (adminIDs, group) => {	// returns true if all new admins are members of group
 			for (let i = 0; i < adminIDs.length; i++){
 				const memberIndex = $scope.users.contents.map((user) => user._id).indexOf(adminIDs[i]);
 				if (memberIndex > -1 && $scope.users.contents[memberIndex].groupsJoined.indexOf(group.handle) < 0){
@@ -206,14 +206,14 @@ import _ from 'lodash/lodash.min';
 			return true;
 		}
 
-		$scope.onProcessSettingsGroupData = () => {
+		$scope.onProcessSettingsGroupData = () => {	
 
 			if (!UserAuthenticationService.isLoggedIn()){
 				UserAuthenticationService.loginFirst();
 				return;
 			}
 			
-			if ($scope.newGroupAdmins.enable){
+			if ($scope.newGroupAdmins.enable){	// only when new group admins added
 				const validatedEmails = $scope.validateAdminEmailAddress($scope.multipleFields.admins);
 				if (validatedEmails !== true){
 					ngToast.create({
@@ -236,7 +236,7 @@ import _ from 'lodash/lodash.min';
 			    	return;
 				}
 
-				_.forEach(convertedAdmins, (convertedAdmin) => {
+				_.forEach(convertedAdmins, (convertedAdmin) => {	// adds only the admins that are not yet in group admin list
 					if ($scope.selectedGroup.admin.indexOf(convertedAdmin) < 0){
 						$scope.selectedGroup.admin.push(convertedAdmin);
 					}

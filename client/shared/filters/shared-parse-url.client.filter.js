@@ -10,7 +10,7 @@
 		var urls = /(\b(https?|ftp):\/\/[A-Z0-9+&@#\/%?=~_|!:,.;-]*[-A-Z0-9+&@#\/%=~_|])/gim
 	    var emails = /(\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6})/gim
 
-	    return (text) => {     
+	    return (text) => {  // parses url and email   
 	        if(text && text.match(urls)) {
 	            text = text.replace(urls, "<a href=\"$1\" target=\"_blank\">$1</a>");
 	        }

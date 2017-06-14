@@ -14,11 +14,11 @@ import _ from 'lodash/lodash.min';
 
 		const {submitPost} = AddPostService;
 		$scope.submitPost = _.partial(submitPost);
-		$scope.addPostFormData = {
+		$scope.addPostFormData = {	
 			category: AddPostCategoriesService.getCurrentAddPostCategory().postCategory.category,
 			showPublic: true
 		};
-		$scope.multipleFields = {
+		$scope.multipleFields = {	// used in adding multiple authors and URLs
 			authors: [''],
 			urls: [{url: '', urlTitle: ''}]
 		};
@@ -29,14 +29,14 @@ import _ from 'lodash/lodash.min';
 		$scope.defaultDatetime = moment().format('MMMM D YYYY, h:mm A');
 		
 		$scope.loadAdditionalFormFields = () => {
-			if ($scope.addPostFormData.category === "event"){
+			if ($scope.addPostFormData.category === "event"){	// sets initial start and end date of event
 				$scope.addPostFormData.startDateTime = $scope.defaultDatetime;
 				$scope.endDateTime = { 
 					enable: false, 
 					selected: $scope.defaultDatetime 
 				};
 			}
-			if ($scope.addPostFormData.category === "report"){
+			if ($scope.addPostFormData.category === "report"){	// sets initial date of report
 				$scope.addPostFormData.dateTime = $scope.defaultDatetime;
 			}
 
@@ -46,32 +46,32 @@ import _ from 'lodash/lodash.min';
 			if ($scope.user.isLoggedIn){
 				UserAuthenticationService.getCurrentUser()
 			    	.then((result)=> {
-			    		$scope.user.currentUser = result;
+			    		$scope.user.currentUser = result;	// gets all info of logged in user
 			    	});
 		    }
 		}
 
-		$scope.toggleEndDateTime = () => {
+		$scope.toggleEndDateTime = () => {	// enables or disables adding event end date
 			$scope.endDateTime.enable = !$scope.endDateTime.enable;
 		}
 
 		$scope.addField = (fieldArray, maxField) => {
 			if (fieldArray.length < maxField){
-				if (fieldArray === $scope.multipleFields.urls){
-					fieldArray.push({url: '', urlTitle: ''});
+				if (fieldArray === $scope.multipleFields.urls){	
+					fieldArray.push({url: '', urlTitle: ''});	// pushing in multipleFields.urls
 				} else {
-					fieldArray.push('');
+					fieldArray.push('');	// pushing in multipleFields.authors
 				}
 			}
 		}
 
-		$scope.removeField = (fieldArray, minField) => {
+		$scope.removeField = (fieldArray, minField) => {	// used by author and url multiplefields
 			if (fieldArray.length > minField){
 				fieldArray.pop();
 			}
 		}
 
-		$scope.clearMultipleFields = () => {
+		$scope.clearMultipleFields = () => {	// clearing both author and url multiplefields
 			_.forOwn($scope.multipleFields, (fieldArray) => { 
 				fieldArray.length = 0;
 				if (fieldArray === $scope.multipleFields.urls){
@@ -82,16 +82,16 @@ import _ from 'lodash/lodash.min';
 			});
 		}
 
-		$scope.removeFiles = () => {
+		$scope.removeFiles = () => {	// clearing files; not sure if this is still used
 			$scope.addPostFormData.files = [];
 		}
 
 		$scope.clearForm = () => {
 			const category = $scope.addPostFormData.category;
 			$scope.addPostFormData = null;
-			$scope.clearUploadFiles();
-			$scope.clearHashtags();
-			$scope.clearTechnologyHandles();
+			$scope.clearUploadFiles();	// function is found at SharedAddFilesController
+			$scope.clearHashtags();	// function is found at SharedAddHashtagsController
+			$scope.clearTechnologyHandles();	// function is found at SharedAddTechnologyHandlesController
 			$scope.technologyHandle.enable = false;
 			$scope.clearMultipleFields();
 
@@ -99,7 +99,7 @@ import _ from 'lodash/lodash.min';
 				$scope.addPostFormData = { 
 					startDateTime: $scope.defaultDatetime
 				};
-				//delete $scope.addPostFormData.endDateTime;
+
 				$scope.endDateTime.enable = false;
 			}
 
@@ -114,14 +114,14 @@ import _ from 'lodash/lodash.min';
 			$scope.addPostFormData = {category: category, showPublic: true};
 		}
 
-		$scope.onProcessPostData = (postCategory) => {
+		$scope.onProcessPostData = (postCategory) => {	// processing before adding post
 
 			if (!UserAuthenticationService.isLoggedIn()){
 				UserAuthenticationService.loginFirst();
 				return;
 			}
 
-			if (postCategory === 'advertisement' && $scope.price){
+			if (postCategory === 'advertisement' && $scope.price){	// makes price with two decimal places
 				$scope.addPostFormData.price = $scope.price.toFixed(2);
 			}
 
@@ -145,7 +145,7 @@ import _ from 'lodash/lodash.min';
 			if ($scope.technologyHandle.enable){
 				$scope.addPostFormData.technologyHandles = $scope.selectedTechnologies;
 			}
-			$scope.addPostFormData.hashtags = $scope.hashtags;
+			$scope.addPostFormData.hashtags = $scope.hashtags;	// from SharedAddHashtagsController
 			$scope.addPostFormData.datePosted = moment().format('MMMM Do YYYY, h:mm:ss a');
 			$scope.addPostFormData.reactions = [
 				{ 
@@ -181,14 +181,14 @@ import _ from 'lodash/lodash.min';
 			if (postCategory === 'media' && $scope.addPostFormData.mediaType === 'url'){
 				$scope.addPostFormData.urls = $scope.multipleFields.urls;
 
-			} else if ($scope.selectedUploadFiles.length > 0){
+			} else if ($scope.selectedUploadFiles.length > 0){	// with file/s uploaded
 				let uploadedFiles = [];
 				$scope.progressBarON = true;
-				SharedUploadService.uploadFiles($scope.selectedUploadFiles, uploadedFiles)
+				SharedUploadService.uploadFiles($scope.selectedUploadFiles, uploadedFiles)	// upload files
 					.then((result) => {
 						$scope.progressBarON = false;
-						$scope.addPostFormData.files = uploadedFiles;
-						return $scope.submitPost($scope.addPostFormData);
+						$scope.addPostFormData.files = uploadedFiles;	// get the uploaded files data
+						return $scope.submitPost($scope.addPostFormData);	// adds post
 					}, (error) => {
 						$scope.progressBarON = false;
 						ngToast.create({
@@ -206,16 +206,16 @@ import _ from 'lodash/lodash.min';
 				return;
 			}
 
-			$scope.submitPost($scope.addPostFormData)
+			$scope.submitPost($scope.addPostFormData)	// add post for no files uploaded
 				.then(() => {
 					$scope.onSetGroupPosts(postCategory);
 					$scope.clearForm();
 				});
 		}
 
-		$scope.onSetGroupPosts = (postCategory) => {
+		$scope.onSetGroupPosts = (postCategory) => {	// update group's post counts after adding a post
 			GroupService.getOneGroup($scope.selectedGroup.handle)
-				.then((refreshedGroup) => {
+				.then((refreshedGroup) => {	// load the group
 					refreshedGroup.postsCount.total++;
 					refreshedGroup.postsCount[postCategory]++;
 					GroupService.updateGroup(refreshedGroup.handle, {postsCount: refreshedGroup.postsCount});

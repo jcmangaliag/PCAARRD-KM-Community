@@ -9,7 +9,7 @@
 
 	function AddPostService ($http, ngToast, ViewPostsCategoriesService, $q) {
 
-		const submitPost = (addPostFormData) => {
+		const submitPost = (addPostFormData) => {	// add post
 			const deferred = $q.defer();
 
 			$http.post('/api/posts', addPostFormData)
