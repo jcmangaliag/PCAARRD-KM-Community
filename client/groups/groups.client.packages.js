@@ -21,6 +21,7 @@ import communityFeedDirective from './directives/community-feed.client.directive
 
 import GroupService from './services/group.client.service';
 import GroupClassificationService from './services/group-classification.client.service';
+import SliderService from './services/slider.client.service';
 import ViewGroupsCategoriesService from './services/view-groups-categories.client.service';
 import EditSettingsGroupService from './services/edit-settings-group.client.service';
 
