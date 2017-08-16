@@ -1,6 +1,6 @@
 (() => {
 	'use strict';
-	
+
 	angular
 		.module('groups')
 		.config(groupRoutes);
@@ -30,19 +30,30 @@
 					$title: () => 'See Groups'
 				}
 			})
+			.state('manageHomeSlider', {
+				url: '/manage-home-slider',
+				template: '<manage-home-slider>',
+				controller: 'ManageHomeSliderController',
+				resolve: {
+					$title: () => 'Home Slider',
+					authenticate: ['UserAuthenticationService', (UserAuthenticationService) => {
+						return UserAuthenticationService.authenticateSiteAdmin();
+					}]
+				}
+			})
 			.state('manageGroupClassification', {
-				url: '/manage-group-classification',	
+				url: '/manage-group-classification',
 				template: '<add-group-classification></add-group-classification><group-classifications></group-classifications>',
 				controller: 'GroupClassificationController',
 				resolve: {
 					$title: () => 'Group Classifications',
 					authenticate: ['UserAuthenticationService', (UserAuthenticationService) => {
 						return UserAuthenticationService.authenticateSiteAdmin();
-					}] 
+					}]
 				}
 			})
 			.state('createGroup', {
-				url: '/create-group',	
+				url: '/create-group',
 				templateUrl: 'groups/views/create-group.client.view.html',
 				controller: 'GroupController',
 				resolve: {
@@ -53,28 +64,28 @@
 				}
 			})
 			.state('oneGroup', {
-				url: '/groups/:handle',	
+				url: '/groups/:handle',
 				templateUrl: 'groups/views/view-one-group.client.view.html',
 				controller: 'GroupController',
 				resolve: {
 					selectedGroup: ['GroupService', '$stateParams', (GroupService, $stateParams) => {
-						return GroupService.getOneGroup($stateParams.handle);				
+						return GroupService.getOneGroup($stateParams.handle);
 					}],
 					$title: ['selectedGroup', (selectedGroup) => `${selectedGroup.name}`]
 				}
 			})
 			.state('oneGroupEdit', {
-				url: '/groups/:handle/edit',	
+				url: '/groups/:handle/edit',
 				templateUrl: 'groups/views/edit-one-group.client.view.html',
 				controller: 'EditSettingsGroupController',
 				resolve: {
 					selectedGroup: ['GroupService', '$stateParams', (GroupService, $stateParams) => {
-						return GroupService.getOneGroup($stateParams.handle);				
+						return GroupService.getOneGroup($stateParams.handle);
 					}],
 					$title: ['selectedGroup', (selectedGroup) => `${selectedGroup.name} - Edit`],
 					authenticate: ['UserAuthenticationService', '$stateParams', (UserAuthenticationService, $stateParams) => {
 						return UserAuthenticationService.authenticateGroupAdminOrSiteAdmin($stateParams.handle);
-					}] 
+					}]
 				}
 			})
 			.state('oneGroupSettings', {
@@ -83,7 +94,7 @@
 				controller: 'EditSettingsGroupController',
 				resolve: {
 					selectedGroup: ['GroupService', '$stateParams', (GroupService, $stateParams) => {
-						return GroupService.getOneGroup($stateParams.handle);				
+						return GroupService.getOneGroup($stateParams.handle);
 					}],
 					$title: ['selectedGroup', (selectedGroup) => `${selectedGroup.name} - Settings`],
 					authenticate: ['UserAuthenticationService', '$stateParams', (UserAuthenticationService, $stateParams) => {
@@ -107,4 +118,3 @@
 	}
 
 })();
-
