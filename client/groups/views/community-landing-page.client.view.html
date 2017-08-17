@@ -6,13 +6,13 @@
   </ol>
   <div class="carousel-inner" role="listbox">
     <div class="item" ng-repeat="slider in sliders" ng-class="{ 'active' : $first }">
-      <img ng-src="{{ slider.backgroundImage }}" alt="Slide">
+      <img ng-src="{{ slider.backgroundImage }}" alt="{{ slider.caption.title }}">
       <div class="container">
-        <div class="carousel-caption" ng-style="{'background-color': '{{ slider.caption.rgbaColor }}'}">
+        <div class="carousel-caption" style="background-color: rgba(0,39,150,0.5);">
           <h1> {{ slider.caption.title }} </h1>
           <p> {{ slider.caption.description }} </p>
           <p ng-if="slider.caption.actionButton.shouldUse">
-            <a class="btn btn-lg" ng-class="'btn-' + slider.caption.actionButton.colorType" ui-sref="{{ slider.caption.actionButton.sref }}" role="button">
+            <a class="btn btn-lg btn-success" ui-sref="{{ slider.caption.actionButton.sref }}" role="button">
               {{ slider.caption.actionButton.text }}
             </a>
           </p>

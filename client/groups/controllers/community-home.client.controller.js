@@ -7,9 +7,9 @@ import _ from 'lodash/lodash.min';
 		.module('groups')
 		.controller('CommunityHomeController', CommunityHomeController);
 
-	CommunityHomeController.$inject = ['$scope', 'UserAuthenticationService', 'GroupService', 'SliderService'];
+	CommunityHomeController.$inject = ['$scope', 'UserAuthenticationService', 'GroupService', 'HomepageService'];
 
-	function CommunityHomeController ($scope, UserAuthenticationService, GroupService, SliderService) {
+	function CommunityHomeController ($scope, UserAuthenticationService, GroupService, HomepageService) {
 		$scope.$watch(() => {
 		    return UserAuthenticationService.isLoggedIn();
 		}, (isLoggedIn) => {
@@ -41,7 +41,7 @@ import _ from 'lodash/lodash.min';
 		$scope.sliders = [];
 
 		// Fetch slides from server
-		SliderService.getSliders()
+		HomepageService.getSliders()
 			.then((result) => {
 				$scope.sliders = result;
 			});

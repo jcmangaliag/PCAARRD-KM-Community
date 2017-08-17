@@ -5,11 +5,11 @@ import _ from 'lodash/lodash.min';
 
 	angular
 		.module('groups')
-		.factory('SliderService', SliderService);
+		.factory('HomepageService', HomepageService);
 
-	SliderService.$inject = ['$http', 'ngToast', '$q'];
+	HomepageService.$inject = ['$http', 'ngToast', '$q'];
 
-	function SliderService ($http, ngToast, $q) {
+	function HomepageService ($http, ngToast, $q) {
 
 		let sliders = [];
 

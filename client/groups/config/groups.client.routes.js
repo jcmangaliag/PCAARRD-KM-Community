@@ -30,12 +30,12 @@
 					$title: () => 'See Groups'
 				}
 			})
-			.state('manageHomeSlider', {
-				url: '/manage-home-slider',
-				template: '<manage-home-slider>',
-				controller: 'ManageHomeSliderController',
+			.state('manageHomepage', {
+				url: '/manage-home-page',
+				template: '<manage-homepage>',
+				controller: 'ManageHomepageController',
 				resolve: {
-					$title: () => 'Home Slider',
+					$title: () => 'Manage Homepage',
 					authenticate: ['UserAuthenticationService', (UserAuthenticationService) => {
 						return UserAuthenticationService.authenticateSiteAdmin();
 					}]
