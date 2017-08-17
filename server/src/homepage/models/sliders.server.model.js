@@ -11,10 +11,8 @@ let SliderSchema = new mongoose.Schema({
         actionButton: {
             shouldUse: Boolean,
             text: String,
-            colorType: String,
             sref: String
-        },
-        rgbaColor: String
+        }
     },
     order: {
         type: Number,

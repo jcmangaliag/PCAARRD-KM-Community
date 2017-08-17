@@ -1,7 +1,7 @@
 import Slider from '../models/sliders.server.model';
 import sliderCtrl from '../controllers/sliders.server.controller';
 
-const sliderRoutes = (app) => {
+const homepageRoutes = (app) => {
 
   app.route('/api/sliders')
     .get(sliderCtrl.getAll)
@@ -13,4 +13,4 @@ const sliderRoutes = (app) => {
 
 };
 
-export default sliderRoutes;
+export default homepageRoutes;

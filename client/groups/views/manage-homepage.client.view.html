@@ -24,7 +24,10 @@
                   <div class="caption">
                     <h3> [Slide {{ slider.order }}] {{ slider.caption.title }} </h3>
                     <p> {{ slider.caption.description }} </p>
-                    <p><a href="#" class="btn btn-primary" role="button">Edit</a> <a href="#" class="btn btn-default" role="button">Delete</a></p>
+                    <p>
+                        <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#edit-slider-modal" role="button">Edit</a>
+                        <a href="#" class="btn btn-default" role="button">Delete</a>
+                    </p>
                   </div>
                 </div>
               </div>
@@ -35,7 +38,7 @@
         <div class="col-md-12" style="padding: 15px; background-color: white; margin-bottom: 25px; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
             <div class="row">
                 <div class="col-sm-6 col-md-4">
-                    <h3 style="margin: 0;"> Feature and Descriptions </h3>
+                    <h3 style="margin: 0;"> Features and Descriptions </h3>
                 </div>
             </div>
             <hr />
@@ -44,54 +47,59 @@
     </div>
 
     <!-- Edit Slider Modal -->
-    <!-- <div class="col-md-4" style="padding: 15px; background-color: white; margin-bottom: 25px; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-        <div class="row">
-            <div class="col-sm-12">
-                <h3 style="margin: 0;"><i class="fa fa-plus" aria-hidden="true"></i> Add Slide</h3>
-                <hr />
-            </div>
-            <div class="col-sm-12">
-                <form>
+    <div class="modal fade" id="edit-slider-modal" tabindex="-1" role="dialog" aria-labelledby="edit-slider-modal-label">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="edit-slider-modal-label">Edit Slide</h4>
+          </div>
+          <div class="modal-body">
+            <form>
+                <div class="form-group">
+                    <label for="slideOrder">Slide Order</label>
+                    <input type="text" class="form-control" id="slideOrder" placeholder="Slide Order">
+                </div>
+                <div class="form-group">
+                    <label for="captionTitle">Caption Title</label>
+                    <input type="text" class="form-control" id="captionTitle" placeholder="Caption Title">
+                </div>
+                <div class="form-group">
+                    <label for="captionDescription">Caption Description</label>
+                    <textarea class="form-control" id="captionDescription" placeholder="Caption Description" rows="3"></textarea>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="toggleAddActionButton"> Add Action Button
+                    </label>
+                </div>
+                <div ng-show="toggleAddActionButton" class="col-sm-12">
+                    <h4 style="margin:0;"> Action Button Details </h4>
+                    <hr />
                     <div class="form-group">
-                        <label for="slideOrder">Slide Order</label>
-                        <input type="text" class="form-control" id="slideOrder" placeholder="Slide Order">
-                    </div>
-                    <div class="form-group">
-                        <label for="captionTitle">Caption Title</label>
-                        <input type="text" class="form-control" id="captionTitle" placeholder="Caption Title">
-                    </div>
-                    <div class="form-group">
-                        <label for="captionDescription">Caption Description</label>
-                        <textarea class="form-control" id="captionDescription" placeholder="Caption Description" rows="3"></textarea>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" ng-model="toggleAddActionButton"> Add Action Button
-                        </label>
-                    </div>
-                    <div ng-show="toggleAddActionButton" class="col-sm-12">
-                        <h4 style="margin:0;"> Action Button Details </h4>
-                        <hr />
-                        <div class="form-group">
-                            <label for="actionButtonText">Text</label>
-                            <input type="text" class="form-control" id="actionButtonText" placeholder="Action Button Text">
-                        </div>
-                        <div class="form-group">
-                            <label for="actionButtonSref">Sref</label>
-                            <input type="text" class="form-control" id="actionButtonSref" placeholder="Action Button Sref">
-                        </div>
-                        <hr />
+                        <label for="actionButtonText">Text</label>
+                        <input type="text" class="form-control" id="actionButtonText" placeholder="Action Button Text">
                     </div>
                     <div class="form-group">
-                        <label for="backgroundImage">Background Image</label>
-                        <input type="file" id="backgroundImage">
-                        <p class="help-block">Upload image you want for your background image.</p>
+                        <label for="actionButtonSref">Sref</label>
+                        <input type="text" class="form-control" id="actionButtonSref" placeholder="Action Button Sref">
                     </div>
-                    <shared-reset-submit-buttons></shared-reset-submit-buttons>
-                </form>
-            </div>
+                    <hr />
+                </div>
+                <div class="form-group">
+                    <label for="backgroundImage">Background Image</label>
+                    <input type="file" id="backgroundImage">
+                    <p class="help-block">Upload image you want for your background image.</p>
+                </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Update Slide</button>
+          </div>
         </div>
-    </div> -->
+      </div>
+    </div>
 
     <!-- Delete Slider Modal -->
 
