@@ -42,18 +42,18 @@ const webpackConfig = {
 					'autoprefixer?browsers=last 3 versions',
 					'sass?outputStyle=expanded'
 				]
-			}, 
+			},
 			{
 				test: /bootstrap-sass\/assets\/javascripts\//,
 				loader: 'imports?jQuery=jquery'
 			},
-			{ 
-				test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, 
-				loader: "url-loader?limit=10000&mimetype=application/font-woff" 
+			{
+				test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+				loader: "url-loader?limit=10000&mimetype=application/font-woff"
 			},
-      		{ 
-      			test: /\.(ttf|eot|svg|jpe?g|png|gif|ico)(\?v=[0-9]\.[0-9]\.[0-9])?$/, 
-      			loader: "file-loader" 
+      		{
+      			test: /\.(ttf|eot|svg|jpe?g|png|gif|ico)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      			loader: "file-loader"
       		},
       		{
 	            test: /angular\.min\.js$/,
