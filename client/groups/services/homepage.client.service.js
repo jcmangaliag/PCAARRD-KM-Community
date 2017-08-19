@@ -7,9 +7,9 @@ import _ from 'lodash/lodash.min';
 		.module('groups')
 		.factory('HomepageService', HomepageService);
 
-	HomepageService.$inject = ['$http', 'ngToast', '$q'];
+	HomepageService.$inject = ['$http', 'ngToast', '$q', 'SharedUploadService'];
 
-	function HomepageService ($http, ngToast, $q) {
+	function HomepageService ($http, ngToast, $q, SharedUploadService) {
 
 		let sliders = [];
 
@@ -28,17 +28,12 @@ import _ from 'lodash/lodash.min';
 			return deferred.promise;
 		}
 
-		const createSlider = (addSlideFormData) => {
-			const deffered = $q.defer();
+		const editSlider = (editSliderFormData) => {
+			const deferred = $q.defer();
 
-			$http.post('/api/sliders', addSlideFormData)
+			$http.put(`/api/sliders/${editSliderFormData._id}`, editSliderFormData)
 				.then((response) => {
 					deferred.resolve(response);
-
-					ngToast.create({
-			    		className: 'success',
-			    		content: `Slide was successfully created. `
-			    	});
 				}, (response) => {
 					deferred.reject(response);
 				});
@@ -46,25 +41,23 @@ import _ from 'lodash/lodash.min';
 			return deferred.promise;
 		}
 
-		// const editSlider = (editSliderFormData) => {
-		// $http.put(`/api/groups/${groupHandle}`, updatedFields)
-		// 	.then(response => {
-		// 		deferred.resolve(response);
-		// 		// should refresh the one group
-		// 	}, (response) => {
-		// 		deferred.reject(response);
-		// 	});
-		//
-		// 	return deferred.promise;
-		// }
+		const deleteSlider = (sliderId) => {
+			const deferred = $q.defer();
 
-		// const deleteSlider = (sliderId) => {
-		//
-		// }
+			$http.delete(`/api/sliders/${sliderId}`)
+				.then((response) => {
+					deferred.resolve(response);
+				}, (response) => {
+					deferred.reject(response);
+				});
+
+			return deferred.promise;
+		}
 
 		return {
 			getSliders,
-			createSlider
+			editSlider,
+			deleteSlider
 		};
 	}
 

@@ -10,15 +10,6 @@ const sliderControls = {
             res.send({sliders: docs});
         });
     },
-    add : (req, res) => {
-        // Create a slider instance
-        const slider = new Slider(req.body);
-        slider.save(function(error){
-            if(error) console.log(error);
-
-            res.send('Slider saved');
-        });
-    },
     edit : (req, res) => {
         // Update a slider
         const id = req.params.sliderId;
