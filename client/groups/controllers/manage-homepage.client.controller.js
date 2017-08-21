@@ -17,12 +17,12 @@ import _ from 'lodash/lodash.min';
 		$scope.sliders = [];
 		$scope.features = [];
 		$scope.edit = {};
+		$scope.editFeature = {};
 		$scope.delete = {};
 
 		/**
 		 * Methods
 		 */
-
 		// Fetch slides from server
 		HomepageService.getSliders()
 			.then((result) => {
@@ -33,12 +33,11 @@ import _ from 'lodash/lodash.min';
 		HomepageService.getFeatures()
 			.then((result) => {
 				$scope.features = result;
-				console.log($scope.features);
 			});
 
 		// Find sliderId from fetched slides then edit
 		$scope.toggleEditSliderModal = (sliderId) => {
-			$scope.showDialog = true;
+			$scope.showEditSlider = true;
 			$scope.edit = _.find($scope.sliders, {'_id' : sliderId});
 		};
 
@@ -52,7 +51,7 @@ import _ from 'lodash/lodash.min';
 				HomepageService.editSlider($scope.edit)
 					.then(() => {
 						// After editing the slider successfully
-						$scope.showDialog = false;
+						$scope.showEditSlider = false;
 
 						ngToast.create({
 				    		className: 'success',
@@ -84,7 +83,7 @@ import _ from 'lodash/lodash.min';
 				})
 				.then(() => {
 					// After editing the slider successfully
-					$scope.showDialog = false;
+					$scope.showEditSlider = false;
 
 					ngToast.create({
 			    		className: 'success',
@@ -112,6 +111,41 @@ import _ from 'lodash/lodash.min';
 					ngToast.create({
 						className: 'success',
 						content: `Slider was successfully deleted. `
+					});
+				});
+		}
+
+		// Find featureId from fetched features then edit
+		$scope.toggleEditFeatureModal = (featureId) => {
+			$scope.showEditFeature = true;
+			$scope.editFeature = _.find($scope.features, {'_id' : featureId});
+		}
+
+		// Add feature point field. Input fields must have a max length of 5
+		$scope.addFeaturePoint = () => {
+			if($scope.editFeature.points.length < 5) $scope.editFeature.points.push({ text: '' });
+		}
+
+		// Remove feature point field. Input fields must have a min length of 1
+		$scope.removeFeaturePoint = () => {
+			if($scope.editFeature.points.length > 1) $scope.editFeature.points.pop();
+		}
+
+		// Update the edited feature
+		$scope.updateFeature = () => {
+			// Check if there are no empty fields
+			for(let i = 0; i < $scope.editFeature.points.length; i++){
+				if (!$scope.editFeature.points[i].text) $scope.editFeature.points.splice(i,1);
+			}
+
+			HomepageService.editFeature($scope.editFeature)
+				.then(() => {
+					// After editing the slider successfully
+					$scope.showEditFeature = false;
+
+					ngToast.create({
+						className: 'success',
+						content: `Feature was successfully edited. `
 					});
 				});
 		}

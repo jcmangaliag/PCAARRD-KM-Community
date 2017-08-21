@@ -68,11 +68,25 @@ import _ from 'lodash/lodash.min';
 			return deferred.promise;
 		}
 
+		const editFeature = (editFeatureFormData) => {
+			const deferred = $q.defer();
+
+			$http.put(`/api/features/${editFeatureFormData._id}`, editFeatureFormData)
+				.then((response) => {
+					deferred.resolve(response);
+				}, (response) => {
+					deferred.reject(response);
+				});
+
+			return deferred.promise;
+		}
+
 		return {
 			getSliders,
 			editSlider,
 			deleteSlider,
-			getFeatures
+			getFeatures,
+			editFeature
 		};
 	}
 
