@@ -12,6 +12,7 @@ import _ from 'lodash/lodash.min';
 	function HomepageService ($http, ngToast, $q, SharedUploadService) {
 
 		let sliders = [];
+		let features = [];
 
 		const getSliders = () => {
 			const deferred = $q.defer();
@@ -54,10 +55,38 @@ import _ from 'lodash/lodash.min';
 			return deferred.promise;
 		}
 
+		const getFeatures = () => {
+			const deferred = $q.defer();
+
+			$http.get('/api/features')
+				.then((response) => {
+					deferred.resolve(response.data.features);
+				}, (response) => {
+					deferred.reject(response);
+				});
+
+			return deferred.promise;
+		}
+
+		const editFeature = (editFeatureFormData) => {
+			const deferred = $q.defer();
+
+			$http.put(`/api/features/${editFeatureFormData._id}`, editFeatureFormData)
+				.then((response) => {
+					deferred.resolve(response);
+				}, (response) => {
+					deferred.reject(response);
+				});
+
+			return deferred.promise;
+		}
+
 		return {
 			getSliders,
 			editSlider,
-			deleteSlider
+			deleteSlider,
+			getFeatures,
+			editFeature
 		};
 	}
 
