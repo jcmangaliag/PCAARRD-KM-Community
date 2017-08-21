@@ -34,34 +34,13 @@
 
 <div class="marketing">
   <div class="features-list">
-    <div class="main-feature">
+    <div ng-repeat="feature in features" class="main-feature">
       <div style="margin: 20px auto; padding: 0.5%; height: 90%; width: 90%;">
-        <h3><i class="fa fa-users" aria-hidden="true"></i> Virtual Spaces / Groups</h3><hr />
+        <h3><i class="fa" ng-class="feature.icon" aria-hidden="true"></i> {{ feature.title }} </h3><hr />
         <ul class="list-group">
-          <li class="list-group-item"><i class="fa fa-check-square-o" aria-hidden="true"></i> Groups are commodities from PCAARRD.</li>
-          <li class="list-group-item"><i class="fa fa-check-square-o" aria-hidden="true"></i> Groups are classified by industry, sector, ISP, and specific commodity</li>
-          <li class="list-group-item"><i class="fa fa-check-square-o" aria-hidden="true"></i> Group members can react and comment on posts.</li>
-          <li class="list-group-item"><i class="fa fa-check-square-o" aria-hidden="true"></i> Group members can read private posts.</li>
-        </ul>
-      </div>
-    </div>
-    <div class="main-feature">
-      <div style="margin: 20px auto; padding: 0.5%; height: 90%; width: 90%;">
-        <h3><i class="fa fa-file-text" aria-hidden="true"></i> Categorized Posts</h3><hr />
-        <ul class="list-group">
-          <li class="list-group-item"><i class="fa fa-check-square-o" aria-hidden="true"></i> Posts are categorized by Question, Incident Report, Event, Media, Advertisement, News, and Others.</li>
-          <li class="list-group-item"><i class="fa fa-check-square-o" aria-hidden="true"></i> Post's input fields depend on its category.</li>
-          <li class="list-group-item"><i class="fa fa-check-square-o" aria-hidden="true"></i> Posts can be viewed by category.</li>
-          <li class="list-group-item"><i class="fa fa-check-square-o" aria-hidden="true"></i> Posts analysis in every group is displayed.</li>
-      </div>
-    </div>
-    <div class="main-feature">
-      <div style="margin: 20px auto; padding: 0.5%; height: 90%; width: 90%;">
-        <h3><i class="fa fa-rss" aria-hidden="true"></i> Community Feed</h3><hr />
-        <ul class="list-group">
-          <li class="list-group-item"><i class="fa fa-check-square-o" aria-hidden="true"></i> Community Feed is composed of latest posts from the joined groups.</li>
-          <li class="list-group-item"><i class="fa fa-check-square-o" aria-hidden="true"></i> Community Feed allows reacting to posts without going to the groups.</li>
-          <li class="list-group-item"><i class="fa fa-check-square-o" aria-hidden="true"></i> Community Feed is always up-to-date.</li>
+          <li ng-repeat="point in feature.points" class="list-group-item">
+            <i class="fa fa-check-square-o" aria-hidden="true"></i> {{ point }}
+          </li>
         </ul>
       </div>
     </div>

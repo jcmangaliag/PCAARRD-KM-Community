@@ -39,11 +39,18 @@ import _ from 'lodash/lodash.min';
 		}
 
 		$scope.sliders = [];
+		$scope.features = [];
 
 		// Fetch slides from server
 		HomepageService.getSliders()
 			.then((result) => {
 				$scope.sliders = result;
+			});
+
+		// Fetch slides from server
+		HomepageService.getFeatures()
+			.then((result) => {
+				$scope.features = result;
 			});
 	}
 

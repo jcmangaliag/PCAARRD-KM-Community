@@ -15,6 +15,7 @@ import _ from 'lodash/lodash.min';
 		 * Properties
 		 */
 		$scope.sliders = [];
+		$scope.features = [];
 		$scope.edit = {};
 		$scope.delete = {};
 
@@ -26,6 +27,13 @@ import _ from 'lodash/lodash.min';
 		HomepageService.getSliders()
 			.then((result) => {
 				$scope.sliders = result;
+			});
+
+		// Fetch features from server
+		HomepageService.getFeatures()
+			.then((result) => {
+				$scope.features = result;
+				console.log($scope.features);
 			});
 
 		// Find sliderId from fetched slides then edit

@@ -5,6 +5,9 @@ let FeatureSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    icon: {
+        type: String
+    },
     points: {
         type: Array,
         required: true
