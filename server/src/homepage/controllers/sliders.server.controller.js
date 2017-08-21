@@ -7,7 +7,55 @@ const sliderControls = {
         Slider.find(function(error, docs){
             if(error) return(error);
 
-            res.send({sliders: docs});
+            if(!docs.length) {
+                // Create default slider instances if no docs are returned
+                let defaultSliders = [
+                    {
+                        backgroundImage: '/groups/assets/images/community.jpg',
+                        caption: {
+                            title: 'Strong Community',
+                            description: 'Build an interactive and solid community driven by purpose, and united in achieving common goals.',
+                            actionButton:{
+                                shouldUse: false,
+                                text: '',
+                                sref: ''
+                            }
+                        },
+                        order: 1
+                    },
+                    {
+                        backgroundImage: '/groups/assets/images/fruits-vegetables-collage.jpg',
+                        caption: {
+                            title: 'Plenty of Groups',
+                            description: 'Many groups under crops, livestocks, and many more are there to fulfill your interests. You can join in any of them.',
+                            actionButton:{
+                                shouldUse: true,
+                                text: 'See Groups',
+                                sref: 'Groups'
+                            }
+                        },
+                        order: 2
+                    },
+                    {
+                        backgroundImage: '/groups/assets/images/engage-people-conversation.jpg',
+                        caption: {
+                            title: 'Limitless Conversations',
+                            description: 'Engage in learning conversations with other people within your groups. Always try to post something nice and helpful.',
+                            actionButton:{
+                                shouldUse: true,
+                                text: 'Join Now',
+                                sref: 'register'
+                            }
+                        },
+                        order: 3
+                    }
+                ];
+
+                Slider.insertMany(defaultSliders, (error, docs) => {
+                    res.send({sliders: docs})
+                });
+            }
+            else res.send({sliders: docs});
         });
     },
     edit : (req, res) => {
