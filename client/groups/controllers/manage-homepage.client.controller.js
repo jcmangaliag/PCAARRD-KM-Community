@@ -38,6 +38,7 @@ import _ from 'lodash/lodash.min';
 		// Find sliderId from fetched slides then edit
 		$scope.toggleEditSliderModal = (sliderId) => {
 			$scope.showEditSlider = true;
+			if($scope.selectedPhoto) $scope.selectedPhoto = '';
 			$scope.edit = _.find($scope.sliders, {'_id' : sliderId});
 		};
 
@@ -74,6 +75,7 @@ import _ from 'lodash/lodash.min';
 					return HomepageService.editSlider($scope.edit);
 				}, (error) => {
 					$scope.progressBarON = false;
+
 					ngToast.create({
 			    		className: 'danger',
 			    		content: `Error: ${error.data.message}`
