@@ -1,4 +1,6 @@
 import mongoose from 'mongoose';
+
+const fs = require('fs');
 const Slider = mongoose.model('Slider');
 
 const sliderControls = {
@@ -31,7 +33,7 @@ const sliderControls = {
                             actionButton:{
                                 shouldUse: true,
                                 text: 'See Groups',
-                                sref: 'Groups'
+                                sref: 'groups'
                             }
                         },
                         order: 2
@@ -62,6 +64,24 @@ const sliderControls = {
         // Update a slider
         const id = req.params.sliderId;
 
+        // Delete old file if there is a new file uploaded
+        Slider.findById(id, function(error, result){
+            const oldFilename = result.backgroundImage;
+            const newFilename = req.body.backgroundImage;
+
+            if(oldFilename !== newFilename){
+                fs.unlink(`./uploads/${oldFilename}`, (error) => {
+                    if(error){
+                        console.error(error);
+                        return;
+                    }
+
+                    console.log(`Successfully deleted ./uploads/${oldFilename}`);
+                });
+            }
+        });
+
+        // Then update document in MongoDB
         Slider.findByIdAndUpdate(id, req.body, function(error){
         	if(error) console.log(error);
 
@@ -72,6 +92,21 @@ const sliderControls = {
         // Delete a slider
         const id = req.params.sliderId;
 
+        // Delete file in filesystem first
+        Slider.findById(id, function(error, result){
+            const filename = result.backgroundImage;
+
+            fs.unlink(`./uploads/${filename}`, (error) => {
+                if(error){
+                    console.error(error);
+                    return;
+                }
+
+                console.log(`Successfully deleted ./uploads/${filename}`);
+            });
+        });
+
+        // Then delete document in MongoDB
         Slider.findByIdAndRemove(id, function(error, result){
         	if(error) return (error);
         	else if (result === null) return res.status(404).send('Slider not found!');
