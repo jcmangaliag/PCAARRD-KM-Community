@@ -7,6 +7,7 @@ import ViewGroupsCategoriesController from './controllers/view-groups-categories
 import DashboardController from './controllers/dashboard.client.controller';
 import EditSettingsGroupController from './controllers/edit-settings-group.client.controller';
 import CommunityHomeController from './controllers/community-home.client.controller';
+import ManageHomepageController from './controllers/manage-homepage.client.controller';
 
 import groupClassificationsDirective from './directives/group-classifications.client.directive';
 import addGroupClassificationDirective from './directives/add-group-classification.client.directive';
@@ -18,11 +19,13 @@ import viewGroupPostsStatisticsPanelDirective from './directives/view-group-post
 import viewGroupJoinInvitationDirective from './directives/view-group-join-invitation.client.directive';
 import communityLandingPageDirective from './directives/community-landing-page.client.directive';
 import communityFeedDirective from './directives/community-feed.client.directive';
+import manageHomepageDirective from './directives/manage-homepage.client.directive';
 
 import GroupService from './services/group.client.service';
 import GroupClassificationService from './services/group-classification.client.service';
 import ViewGroupsCategoriesService from './services/view-groups-categories.client.service';
 import EditSettingsGroupService from './services/edit-settings-group.client.service';
+import HomepageService from './services/homepage.client.service';
 
 import viewOneGroupStyle from './styles/view-one-group.client.style.scss';
 import communityHomeStyle from './styles/community-home.client.style.scss';
