@@ -12,6 +12,7 @@ const featureControls = {
                 let defaultFeatures = [
                     {
                         title: 'Virtual Spaces / Groups',
+                        icon: 'fa-users',
                         points: [
                             { text: "Groups are commodities from PCAARRD." },
                             { text: "Groups are classified by industry, sector, ISP, and specific commodity." },
@@ -21,6 +22,7 @@ const featureControls = {
                     },
                     {
                         title: 'Categorized Posts',
+                        icon: 'fa-file-text',
                         points: [
                             { text: "Posts are categorized by Question, Incident Report, Event, Media, Advertisement, News, and Others." },
                             { text: "Post's input fields depend on its category." },
@@ -30,6 +32,7 @@ const featureControls = {
                     },
                     {
                         title: 'Community Feed',
+                        icon: 'fa-rss',
                         points: [
                             { text: "Community Feed is composed of latest posts from the joined groups." },
                             { text: "Community Feed allows reacting to posts without going to the groups." },
