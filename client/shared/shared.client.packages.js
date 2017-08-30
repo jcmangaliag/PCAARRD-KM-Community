@@ -21,6 +21,7 @@ import SharedFormLegendsDirective from './directives/shared-form-legends.client.
 import SharedFileModelDirective from './directives/shared-file-model.client.directive';
 import SharedProgressBarDirective from  './directives/shared-progress-bar.client.directive';
 import SharedAddPhotoDirective from './directives/shared-add-photo.client.directive';
+import SharedCustomModalDirective from './directives/shared-custom-modal.client.directive'
 
 import sharedParseURL from './filters/shared-parse-url.client.filter';
 

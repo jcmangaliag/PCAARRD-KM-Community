@@ -1,0 +1,206 @@
+<section id="manage-homepage">
+    <div class="row">
+        <div class="col-md-12" style="padding: 15px; background-color: white; margin-bottom: 25px; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+            <div class="row">
+                <div class="col-sm-6 col-md-2">
+                    <h3 style="margin: 0;"><i class="fa fa-home" aria-hidden="true"></i> Manage Homepage </h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Home Slider -->
+        <div class="col-md-12" style="padding: 15px; background-color: white; margin-bottom: 25px; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+            <div class="row">
+                <div class="col-sm-6 col-md-2">
+                    <h3 style="margin: 0;"> Home Slider </h3>
+                </div>
+            </div>
+            <hr />
+            <!-- View Slides -->
+            <div class="row">
+              <div class="col-sm-6 col-md-4" ng-repeat="slider in sliders">
+                <div class="thumbnail">
+                  <img ng-src="{{ slider.backgroundImage }}" alt="{{ slider.caption.title }}" style="max-height:250px;">
+                  <div class="caption">
+                    <h3> [Slider {{ slider.order }}] {{ slider.caption.title }} </h3>
+                    <p> {{ slider.caption.description }} </p>
+                    <p>
+                        <a href="#" ng-click="toggleEditSliderModal(slider._id)" title="Edit Slider" class="btn btn-primary" data-target="#editSliderModal" role="button">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" ng-click="toggleDeleteSliderModal(slider._id)" title="Remove Slider" class="btn btn-danger" data-toggle="modal" data-target="#deleteSliderModal" role="button">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </a>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <!-- Feature and Descriptions -->
+        <div class="col-md-12" style="padding: 15px; background-color: white; margin-bottom: 25px; border-radius: 5px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+            <div class="row">
+                <div class="col-sm-6 col-md-4">
+                    <h3 style="margin: 0;"> Features and Descriptions </h3>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div ng-repeat="feature in features" class="col-sm-6 col-md-4">
+                    <div class="panel panel-default">
+                      <div class="panel-heading" style="overflow:auto;">
+                        <h4>
+                            <i class="fa" ng-class="feature.icon" aria-hidden="true"></i>
+                            {{ feature.title }}
+                            <a href="#" ng-click="toggleEditFeatureModal(feature._id)" title="Edit Feature" class="btn btn-primary pull-right" data-target="#editFeatureModal" role="button">
+                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                            </a>
+                        </h4>
+                      </div>
+                      <div class="panel-body">
+                          <ul>
+                            <li ng-repeat="point in feature.points"> {{ point.text }} </li>
+                          </ul>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Edit Slider Modal -->
+    <div custom-modal modal-visible="showEditSlider" class="modal fade" id="editSliderModal" tabindex="-1" role="dialog" aria-labelledby="editSliderModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button ng-click="showEditSlider = false" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="editSliderModalLabel">Edit Slider {{ edit.order }}</h4>
+          </div>
+          <div class="modal-body">
+            <form>
+                <div class="form-group">
+                    <label for="captionTitle">Caption Title</label>
+                    <input ng-model="edit.caption.title" type="text" class="form-control" id="captionTitle" placeholder="Caption Title">
+                </div>
+                <div class="form-group">
+                    <label for="captionDescription">Caption Description</label>
+                    <textarea ng-model="edit.caption.description" class="form-control" id="captionDescription" placeholder="Caption Description" rows="3"></textarea>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input ng-model="edit.caption.actionButton.shouldUse" type="checkbox"> Add Action Button
+                    </label>
+                </div>
+                <div ng-show="edit.caption.actionButton.shouldUse" class="col-sm-12">
+                    <h4 style="margin:0;"> Action Button Details </h4>
+                    <hr />
+                    <div class="form-group">
+                        <label for="actionButtonText">Text</label>
+                        <input ng-model="edit.caption.actionButton.text" type="text" class="form-control" id="actionButtonText" placeholder="Action Button Text">
+                    </div>
+                    <div class="form-group">
+                        <label for="actionButtonSref">Sref</label>
+                        <select ng-model="edit.caption.actionButton.sref" class="form-control" id="actionButtonSref">
+                          <option value="">-- Please select --</option>
+                          <option>communityHome</option>
+                          <option>groups</option>
+                          <option>register</option>
+                          <option>login</option>
+                        </select>
+                    </div>
+                    <hr />
+                </div>
+                <div class="form-group">
+                    <label for="backgroundImage">Background Image</label>
+                    <shared-add-photo id="backgroundImage" selected-upload-photo="selectedPhoto"></shared-add-photo>
+                    <p class="help-block">If no file is chosen, then the current image is used.</p>
+                </div>
+                <shared-progress-bar></shared-progress-bar>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button ng-click="showEditSlider = false" type="button" class="btn btn-default">Close</button>
+            <button ng-click="updateSlider()" ng-disabled="progressBarON" type="button" class="btn btn-success">Update Slider</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete Slider Modal -->
+    <div class="modal fade" id="deleteSliderModal" tabindex="-1" role="dialog" aria-labelledby="deleteSliderModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="deleteSliderModalLabel">Delete Slider {{ delete.order }}</h4>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to remove the selected slider?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button ng-click="removeSlider()" type="button" class="btn btn-danger" data-dismiss="modal">Delete Slider</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Feature Modal -->
+    <div custom-modal modal-visible="showEditFeature" class="modal fade" id="editFeatureModal" tabindex="-1" role="dialog" aria-labelledby="editFeatureModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button ng-click="showEditFeature = false" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="editFeatureModalLabel">Edit Feature</h4>
+          </div>
+          <div class="modal-body">
+            <form>
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input ng-model="editFeature.title" type="text" class="form-control" id="title" placeholder="Title">
+                </div>
+                <div class="form-group">
+                    <label for="icon">Icon</label>
+                    <input ng-model="editFeature.icon" type="text" class="form-control" id="icon" placeholder="Icon">
+                    <p class="help-block">
+                        Check <a href="http://fontawesome.io/icons/" target="_blank">Font Awesome</a> to know the name of the icon. Be sure to have "fa" prefix.
+                    </p>
+                </div>
+
+                <div style="margin: 0 2rem 0 2rem;">
+                    <hr />
+                    <h4 style="margin-top:0; overflow:auto;" >
+                        Points
+                    </h4>
+                    <div ng-repeat="point in editFeature.points" class="form-group row">
+                        <div class="col-sm-10">
+                            <input ng-model="point.text" type="text" class="form-control" placeholder="Point">
+                        </div>
+                        <div ng-if="$last" class="col-sm-1">
+                            <button ng-click="addFeaturePoint()" title="Add Point" type="button" class="btn btn-primary">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div ng-if="$last" class="col-sm-1">
+                            <button ng-click="removeFeaturePoint()" title="Remove Point" type="button" class="btn btn-danger">
+                                <i class="fa fa-minus" aria-hidden="true"></i>
+                            </button>
+                        </div>
+
+                    </div>
+                    <hr />
+                </div>
+
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button ng-click="showEditFeature = false" type="button" class="btn btn-default">Close</button>
+            <button ng-click="updateFeature()" type="button" class="btn btn-success" data-dismiss="modal">Update Feature</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+</section>
