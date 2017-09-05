@@ -25,16 +25,45 @@
 						</a>
 					</div>
 					<div class="col-xs-9">
+						<div ng-if="user.isLoggedIn && user.currentUser.isAdmin" class="dropdown pull-right">
+							<!-- Dropdown -->
+							<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu-{{$index}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+								<i class="fa fa-cog" aria-hidden="true"></i>
+							</button>
+							<ul ng-if="group.isPublished" class="dropdown-menu" aria-labelledby="dropdownMenu-{{$index}}">
+								<li>
+									<a ng-click="toggleUnpublishGroupModal(group._id)" href="#" data-toggle="modal" data-target="#unpublishGroupModal">
+										Unpublish
+									</a>
+								</li>
+							</ul>
+							<ul ng-if="!group.isPublished" class="dropdown-menu" aria-labelledby="dropdownMenu-{{$index}}">
+								<li>
+									<a ng-click="togglePublishGroupModal(group._id)" href="#" data-toggle="modal" data-target="#publishGroupModal">
+										Publish
+									</a>
+								</li>
+								<li>
+									<a ng-click="toggleDeleteGroupModal(group._id)" href="#" data-toggle="modal" data-target="#deleteGroupModal">
+										Delete
+									</a>
+								</li>
+							</ul>
+						</div>
 						<div>
 							<a ui-sref="oneGroup({handle: group.handle})" style="color: #333333;"><h4 style="font-weight: bolder; display: inline;"><span ng-bind="group.name"></span></h4></a> <p style="color: gray;">@<span ng-bind="group.handle"></span></p>
 						</div>
 						<p style="color: gray; white-space: pre-wrap; min-height: 60px; max-height: 60px;" data-ng-bind="group.description | parseURL | emoji" data-ellipsis></p>
 						<h4 style="display: inline;"><span class="label label-success">{{group.membersCount}} Member<span ng-if="group.membersCount > 1">s</span></span></h4>
 						<h4 style="display: inline;"><span class="label label-primary">{{group.postsCount.total}} Post<span ng-if="group.postsCount.total > 1">s</span></span></h4>
-						<h4 style="display: inline; cursor: pointer;">
-							<span ng-if="user.isLoggedIn && user.currentUser.isAdmin" class="label label-warning"> Unpublish </span>
-							<span ng-if="user.isLoggedIn && user.currentUser.isAdmin" class="label label-info"> Publish </span>
-						</h4>
+						<div ng-if="user.isLoggedIn && user.currentUser.isAdmin" style="display: inline;">
+							<h4 ng-if="group.isPublished" style="display: inline;">
+								<span class="label label-info"> Published </span>
+							</h4>
+							<h4 ng-if="!group.isPublished" style="display: inline;">
+								<span class="label label-warning"> Unpublished </span>
+							</h4>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -44,5 +73,63 @@
 			<hr />
 			<button ng-click="paginate.loadMoreItems(paginate)" style="width: 50%;" type="button" class="btn btn-primary">See More Groups</button>
 		</div>
+
+		<!-- Publish Group Modal -->
+	    <div class="modal fade" id="publishGroupModal" tabindex="-1" role="dialog" aria-labelledby="publishGroupModalLabel">
+	      <div class="modal-dialog" role="document">
+	        <div class="modal-content">
+	          <div class="modal-header">
+	            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	            <h4 class="modal-title" id="publishGroupModalLabel">Publish {{ publishGroupData.name }} Group</h4>
+	          </div>
+	          <div class="modal-body">
+	            <p>Are you sure you want to publish the selected group?</p>
+	          </div>
+	          <div class="modal-footer">
+	            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	            <button ng-click="publishGroup()" type="button" class="btn btn-success" data-dismiss="modal">Publish Group</button>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+
+		<!-- Unpublish Group Modal -->
+	    <div class="modal fade" id="unpublishGroupModal" tabindex="-1" role="dialog" aria-labelledby="unpublishGroupModalLabel">
+	      <div class="modal-dialog" role="document">
+	        <div class="modal-content">
+	          <div class="modal-header">
+	            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	            <h4 class="modal-title" id="unpublishGroupModalLabel">Unpublish {{ unpublishGroupData.name }} Group</h4>
+	          </div>
+	          <div class="modal-body">
+	            <p>Are you sure you want to unpublish the selected group?</p>
+	          </div>
+	          <div class="modal-footer">
+	            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	            <button ng-click="unpublishGroup()" type="button" class="btn btn-warning" data-dismiss="modal">Unpublish Group</button>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+
+		<!-- Delete Group Modal -->
+	    <div class="modal fade" id="deleteGroupModal" tabindex="-1" role="dialog" aria-labelledby="deleteGroupModalLabel">
+	      <div class="modal-dialog" role="document">
+	        <div class="modal-content">
+	          <div class="modal-header">
+	            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	            <h4 class="modal-title" id="deleteGroupModalLabel">Delete {{ deleteGroupData.name }} Group</h4>
+	          </div>
+	          <div class="modal-body">
+	            <p>Are you sure you want to delete the selected group? Its data and photos will be deleted too.</p>
+	          </div>
+	          <div class="modal-footer">
+	            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	            <button ng-click="deleteGroup()" type="button" class="btn btn-danger" data-dismiss="modal">Delete Group</button>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+
 	</div>
 </section>

@@ -2,7 +2,7 @@ import _ from 'lodash/lodash.min';
 
 (() => {
 	'use strict';
-	
+
 	angular
 		.module('groups')
 		.factory('GroupService', GroupService);
@@ -59,7 +59,7 @@ import _ from 'lodash/lodash.min';
 			.then((response) => {
 				groupList.contents = response.data.groups;
 				groupListCopy.contents = _.toArray(response.data.groups);
-				
+
 				deferred.resolve(response.data.groups);
 			}, (response) => {
 				deferred.reject(response);
@@ -84,7 +84,7 @@ import _ from 'lodash/lodash.min';
 
 		const getUserAdministeredGroups = (userID) => {	// administered groups of user
 			const deferred = $q.defer();
-			
+
 			$http.get(`/api/groups/administered/${userID}`)
 			.then((response) => {
 				deferred.resolve(response.data.groups);
@@ -97,7 +97,7 @@ import _ from 'lodash/lodash.min';
 
 		const getUserPendingGroups = (userID) => {	// pending groups of user
 			const deferred = $q.defer();
-			
+
 			$http.get(`/api/groups/pending/${userID}`)
 			.then((response) => {
 				deferred.resolve(response.data.groups);
@@ -110,7 +110,7 @@ import _ from 'lodash/lodash.min';
 
 		const getOneGroup = (groupHandle) => {	// one group
 			const deferred = $q.defer();
-			
+
 			$http.get(`/api/groups/${groupHandle}`)
 			.then((response) => {
 				deferred.resolve(response.data.group);
@@ -189,8 +189,18 @@ import _ from 'lodash/lodash.min';
 			return deferred.promise;
 		}
 
+		const publishGroup = (groupId) => {
+			
+		}
 
-	
+		const unpublishGroup = (groupId) => {
+
+		}
+
+		const deleteGroup = (groupId) => {
+
+		}
+
 		return {
 			getGroupList,
 			getGroupListCopy,
@@ -205,9 +215,11 @@ import _ from 'lodash/lodash.min';
 			submitGroup,
 			removeAdmin,
 			addToGroupPendingMembersList,
-			removeFromGroupPendingMembersList
+			removeFromGroupPendingMembersList,
+			publishGroup,
+			unpublishGroup,
+			deleteGroup
 		};
 	}
 
 })();
-

@@ -36,7 +36,7 @@ import _ from 'lodash/lodash.min';
 				$scope.eResourcesAccess = "";
 			}
 		});
-		
+
 		/* for View One Group */
 
 		$scope.fullGroupDescription = false;	// show full description if group's description is too long
@@ -467,10 +467,6 @@ import _ from 'lodash/lodash.min';
 		$scope.getGroupData();
 
 
-
-
-
-
 		/* for Create Group */
 
 		if ($state.$current.name === "createGroup"){	// get all users info
@@ -603,6 +599,38 @@ import _ from 'lodash/lodash.min';
 
 		GroupClassificationService.getAllGroupClassifications();
 		$scope.groupClassifications = GroupClassificationService.getGroupClassificationList();
+
+		/**
+		 * For Publishing/Unpublishing/Deleting a Group
+		 */
+
+		$scope.publishGroupData = {};
+		$scope.unpublishGroupData = {};
+		$scope.deleteGroupData = {};
+
+		$scope.togglePublishGroupModal = (groupId) => {
+			$scope.publishGroupData = _.find($scope.groups.contents, {'_id' : groupId});
+		};
+
+		$scope.toggleUnpublishGroupModal = (groupId) => {
+			$scope.unpublishGroupData = _.find($scope.groups.contents, {'_id' : groupId});
+		};
+
+		$scope.toggleDeleteGroupModal = (groupId) => {
+			$scope.deleteGroupData = _.find($scope.groups.contents, {'_id' : groupId});
+		};
+
+		$scope.publishGroup = () => {
+			console.log('Publish');
+		};
+
+		$scope.unpublishGroup = () => {
+			console.log('Unpublish');
+		};
+
+		$scope.deleteGroup = () => {
+			console.log('Delete');
+		};
 
 	}
 
