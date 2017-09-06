@@ -1,8 +1,12 @@
 import Group from '../models/groups.server.model';
+import GroupClassification from '../models/groups-classification.server.model';
+import Comment from '../../comments/models/comments.server.model';
 import Post from '../../posts/models/posts.server.model';
 import User from '../../users/models/users.server.model';
 
-const groupControls = { 
+const fs = require('fs');
+
+const groupControls = {
 	list : (req, res) => {	// get all groups
 		Group.find((err, results) => {
 	        if (err) { return (err); }
@@ -14,8 +18,8 @@ const groupControls = {
 	    const userID = req.params.userID;
 
 		User.findOne({_id: userID}, (err, result) => {
-			if (err) { 
-				return (err);  
+			if (err) {
+				return (err);
 			} else if (result === null) {
 				return res.status(404).send('User not found!');
 			}
@@ -31,8 +35,8 @@ const groupControls = {
 		const userID = req.params.userID;
 
 		User.findOne({_id: userID}, (err, result) => {
-			if (err) { 
-				return (err);  
+			if (err) {
+				return (err);
 			} else if (result === null) {
 				return res.status(404).send('User not found!');
 			}
@@ -72,7 +76,7 @@ const groupControls = {
 
 		if (req.query.name){
 			query.name = { "$regex": `^${req.query.name}$`, "$options": "i"};
-		} 
+		}
 
 		if (req.query.description){
 			query.description = { "$regex": `\\b${req.query.description}\\b`, "$options": "i"};
@@ -83,7 +87,7 @@ const groupControls = {
 		        if (err) { return (err); }
 
 		        query.handle = {"$in": results};
-		        
+
 		        Group.find(query, (err, results) => {
 			        if (err) { return (err); }
 
@@ -102,12 +106,12 @@ const groupControls = {
 		const handle = req.params.handle;
 
 		Group.findOne({handle}, (err, result) => {
-			if (err) { 
-				return (err);  
+			if (err) {
+				return (err);
 			} else if (result === null) {
 				return res.status(404).send('Group not found!');
 			}
-			
+
 			res.send({group: result});
 		});
 	},
@@ -177,6 +181,72 @@ const groupControls = {
 			res.send("Group removed a pending member.");
 		});
 	},
+	toggleIsPublished : (req, res) => {	 // update isPublished field of Group
+		const id = req.params.groupId;
+
+		Group.findByIdAndUpdate(id, req.body, function(error){
+        	if(error) return(error);
+
+        	res.send("Group updated");
+        });
+	},
+	removeGroup : (req, res) => { 	// remove Group and its related models
+		const id = req.params.groupId;
+
+		Group.findById(id, function(error, result){
+			// Remove photo and cover photo if there is any
+			const photoFilename = (result.photo) ? result.photo.filename : '';
+			const coverPhotoFilename = (result.coverPhoto) ? result.coverPhoto.filename : '';
+
+			if(photoFilename){
+				// Remove photoFilename from filesystem
+				fs.unlink(`./uploads/${photoFilename}`, (error) => {
+	                if(error){
+	                    console.error(error);
+	                    return;
+	                }
+
+	                console.log(`Successfully deleted ./uploads/${photoFilename}`);
+	            });
+			}
+
+			if(coverPhotoFilename){
+				// Remove coverPhotoFilename from filesystem
+				fs.unlink(`./uploads/${coverPhotoFilename}`, (error) => {
+	                if(error){
+	                    console.error(error);
+	                    return;
+	                }
+
+	                console.log(`Successfully deleted ./uploads/${coverPhotoFilename}`);
+	            });
+			}
+
+			// Remove posts
+			Post.remove({groupBelonged: result.handle}, (error) => {
+				if(error) return(error);
+			});
+
+			// Remove comments
+			Comment.remove({groupBelonged: result.handle}, (error) => {
+				if(error) return(error);
+			});
+
+			// Upddate Group Classification
+			GroupClassification.findByIdAndUpdate(result.classification._id, {isUsed: false}, (error) => {
+				if(error) return(error);
+			});
+
+		});
+
+		// Remove Group in MongoDB
+		Group.findByIdAndRemove(id, (error, result) => {
+        	if(error) return (error);
+        	else if (result === null) return res.status(404).send('Group not found!');
+
+        	res.send("Group deleted.");
+        });
+	}
 }
 
 export default groupControls;
