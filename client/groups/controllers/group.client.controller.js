@@ -603,33 +603,67 @@ import _ from 'lodash/lodash.min';
 		/**
 		 * For Publishing/Unpublishing/Deleting a Group
 		 */
-
 		$scope.publishGroupData = {};
 		$scope.unpublishGroupData = {};
 		$scope.deleteGroupData = {};
 
-		$scope.togglePublishGroupModal = (groupId) => {
+		$scope.openPublishGroupModal = (groupId) => { 	// open publish group modal
 			$scope.publishGroupData = _.find($scope.groups.contents, {'_id' : groupId});
 		};
 
-		$scope.toggleUnpublishGroupModal = (groupId) => {
+		$scope.openUnpublishGroupModal = (groupId) => {		// open unpublish group modal
 			$scope.unpublishGroupData = _.find($scope.groups.contents, {'_id' : groupId});
 		};
 
-		$scope.toggleDeleteGroupModal = (groupId) => {
+		$scope.openDeleteGroupModal = (groupId) => { 	// open delete group modal
 			$scope.deleteGroupData = _.find($scope.groups.contents, {'_id' : groupId});
 		};
 
-		$scope.publishGroup = () => {
-			console.log('Publish');
+		$scope.publishGroup = () => { 	// update isPublished field of Group in database to true
+			const groupId = $scope.publishGroupData._id;
+
+			GroupService.toggleIsPublishedGroup(groupId, {isPublished: true})
+				.then(() => {
+					// update local data on group
+					$scope.publishGroupData.isPublished = true;
+
+					ngToast.create({
+						className: 'success',
+						content: `Group is now published. `
+					});
+				});
 		};
 
-		$scope.unpublishGroup = () => {
-			console.log('Unpublish');
+		$scope.unpublishGroup = () => {   // update isPublished field of Group in database to false
+			const groupId = $scope.unpublishGroupData._id;
+
+			GroupService.toggleIsPublishedGroup(groupId, {isPublished: false})
+				.then(() => {
+					// update local data on group
+					$scope.unpublishGroupData.isPublished = false;
+
+					ngToast.create({
+						className: 'success',
+						content: `Group is now unpublished. `
+					});
+				});
 		};
 
-		$scope.deleteGroup = () => {
-			console.log('Delete');
+		$scope.deleteGroup = () => {	// delete group
+			const groupId = $scope.deleteGroupData._id;
+
+			GroupService.removeGroup(groupId)
+				.then(() => {
+					// update local data on group
+					_.remove($scope.groups.contents, (group) => {
+						return group._id === $scope.deleteGroupData._id
+					});
+
+					ngToast.create({
+						className: 'success',
+						content: `Group was successfully deleted. `
+					});
+				});
 		};
 
 	}

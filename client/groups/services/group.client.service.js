@@ -189,16 +189,30 @@ import _ from 'lodash/lodash.min';
 			return deferred.promise;
 		}
 
-		const publishGroup = (groupId) => {
-			
+		const toggleIsPublishedGroup = (groupId, toggleIsPublishedData) => {		// publish a group
+			const deferred = $q.defer();
+
+			$http.put(`/api/groups/toggle-publish/${groupId}`, toggleIsPublishedData)
+				.then((response) => {
+					deferred.resolve(response);
+				}, (response) => {
+					deferred.reject(response);
+				});
+
+			return deferred.promise;
 		}
 
-		const unpublishGroup = (groupId) => {
+		const removeGroup = (groupId) => { 		// delete a group
+			const deferred = $q.defer();
 
-		}
+			$http.delete(`/api/groups/toggle-publish/${groupId}`)
+				.then((response) => {
+					deferred.resolve(response);
+				}, (response) => {
+					deferred.reject(response);
+				});
 
-		const deleteGroup = (groupId) => {
-
+			return deferred.promise;
 		}
 
 		return {
@@ -216,9 +230,8 @@ import _ from 'lodash/lodash.min';
 			removeAdmin,
 			addToGroupPendingMembersList,
 			removeFromGroupPendingMembersList,
-			publishGroup,
-			unpublishGroup,
-			deleteGroup
+			toggleIsPublishedGroup,
+			removeGroup
 		};
 	}
 
