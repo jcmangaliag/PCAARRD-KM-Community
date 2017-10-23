@@ -35,7 +35,7 @@ const groupsRoutes = (app) => {
   app.route('/api/groups/pending/:userID')
     .get(groupCtrl.listPendingGroups);
 
-  app.route('/api/groups/search/all') 
+  app.route('/api/groups/search/all')
     .get(groupCtrl.listByGroupSearch);
 
   app.route('/api/groups/:handle/add-admin/:userID')
@@ -49,6 +49,10 @@ const groupsRoutes = (app) => {
 
   app.route('/api/groups/:handle/remove-from-pending-members/:userID')
     .put(groupCtrl.removeFromPendingMembers);
+
+  app.route('/api/groups/toggle-publish/:groupId')
+    .put(groupCtrl.toggleIsPublished)
+    .delete(groupCtrl.removeGroup);
 };
 
 export default groupsRoutes;

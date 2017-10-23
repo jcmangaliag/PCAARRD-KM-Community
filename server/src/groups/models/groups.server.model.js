@@ -43,7 +43,11 @@ const GroupSchema = mongoose.Schema({
     	type: String,
     	required: true
     },
-    pendingMembers: Array
+    pendingMembers: Array,
+	isPublished: {
+		type: Boolean,
+		default: true
+	}
 });
 
 export default mongoose.model('Group', GroupSchema);
